@@ -8,7 +8,7 @@ import AuthenticationForm from '../../components/AuthenticationForm';
 
 import { ILogin } from './interface'
 
-import { useFormik, FormikConfig } from 'formik';
+import { useFormik } from 'formik';
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup';
 
@@ -38,9 +38,7 @@ function Login() {
     const formik = useFormik({ 
         initialValues, 
         validationSchema, 
-        onSubmit: (value) => {
-            console.log(value)
-        }
+        onSubmit
     })
   return (
     <AuthenticationForm>
@@ -58,7 +56,7 @@ function Login() {
             <small className='block mt-3 text-lg text-grey-300'>Log in to your account</small>
             </div>
 
-            <form className='my-10'>
+            <form className='my-10' onSubmit={formik.handleSubmit}>
             <div className='flex justify-start gap-3'>
                 <FormInput 
                 type='email' 
@@ -76,7 +74,7 @@ function Login() {
 
             <p className='text-sm mb-3'>Forgotten your password?   <Link to="/forget-password" className='text-crimson'>Reset password</Link></p>
 
-            <Button color="#FF5000">
+            <Button type='submit' color="#FF5000">
                 <p className='text-white font-semibold text-sm'>Login</p>
             </Button>
             </form>

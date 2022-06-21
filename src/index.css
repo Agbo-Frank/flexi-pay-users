@@ -15,3 +15,6 @@
 html{
   overflow-x: hidden;
 }
+.card-shadow {
+  box-shadow: 20px 50px rgba(25, 0, 254, 0.05)
+}

@@ -51,7 +51,7 @@ function ForgetPassword() {
             <small className='block mt-3 text-lg text-grey-300'>A password reset code will be sent to your email</small>
             </div>
 
-            <form className='my-10'>
+            <form className='my-10' onSubmit={formik.handleSubmit}>
             <div className='flex flex-col justify-start gap-3 w-1/2'>
                 <FormInput 
                 type='email' 
@@ -64,7 +64,7 @@ function ForgetPassword() {
                     <Button outline={true} color="#FF5000">
                         <p className='font-semibold text-sm'>Cancel</p>
                     </Button>
-                    <Button color="#FF5000">
+                    <Button type='submit' color="#FF5000">
                         <p className='font-semibold text-sm'>Send Code</p>
                     </Button>
                 </div>

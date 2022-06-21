@@ -17,13 +17,27 @@ module.exports = {
           100: '#E8E5FF',
           200: '#555555',
           300: '#8D8D8D',
-          400: '#C3C3C3'
+          400: '#C3C3C3',
+          500: '#F5F5F5',
+          600: '#C9C9D0',
+          700: '#A0A0A1'
         },
         crimson: '#FF5000'
+      },
+      borderRadius: {
+        '4xl': '30px',
+        '5xl': '40px'
+      },
+      padding: {
+        'fp-5': '5%',
+        'fp-10': '10%'
       },
       width: {
         'fp-desk': '1280px',
         'fp-600': '670px'
+      },
+      boxShadow:{
+        'card-shadow': '0 20px 50px rgba(25, 0, 254, 0.05)'
       },
       transitionProperty: {
         'display': 'display',
