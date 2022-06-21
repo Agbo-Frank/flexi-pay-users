@@ -6,6 +6,8 @@ import HeartIcon from "../../components/icons/HeartIcon";
 import Iicon from "../../components/icons/interface";
 import WalletIcon from "../../components/icons/WalletIcon";
 
+import supportImage from '../../asset/supportImage.png'
+
 interface ICardProps {
     Icon: React.FC<Iicon>;
     name: string;
@@ -46,39 +48,57 @@ function Overview(): JSX.Element {
             <Card Icon={BagIcon} count={5} name="order items"/>
             <Card Icon={WalletIcon} count={0} name="balance"/>
         </div>
-        <div className="flex items-center justify-between">
-            <div className="bg-white rounded-4xl p-5">
+
+        <div className="flex items-center justify-between my-7 gap-5">
+            <div className="bg-white rounded-4xl p-5 w-1/2">
                 <h3 className="text-primary-dark-blue text-xl font-semibold">Account Details</h3>
-                <div className="rounded-4xl border border-grey-100 py-10 mt-10 px-7 pr-24">
-                    <div>
+                <div className="rounded-4xl border border-grey-100 pt-10 pb-5 mt-10 px-7 w-11/12">
+                    <div className="text-grey-200 leading-7 capitalize">
                         <p>mr John dole</p>
                         <p>09093284414</p>
                         <p>mrjohndoe@gmail.com</p>
                     </div>
-                    <Button type="button" color="#FF5000" outline={true}>
-                        <div className="flex gap-3">
-                            <EditIcon size="25" color="#FF5000"/>
-                            <p>Edit Profile</p>
-                        </div>
-                    </Button>
+                    <div className="mt-14">
+                        <Button type="button" color="#FF5000" outline={true}>
+                            <div className="flex gap-3">
+                                <EditIcon size="25" color="#FF5000"/>
+                                <p>Edit Profile</p>
+                            </div>
+                        </Button>
+                    </div>
                 </div>
             </div>
-            <div>
-                <h3>Accoun Details</h3>
-                <div>
-                    <div>
+            <div className="bg-white rounded-4xl p-5 w-1/2">
+                <h3 className="text-primary-dark-blue text-xl font-semibold">Account Details</h3>
+                <div className="rounded-4xl border border-grey-100 pt-10 pb-5 mt-10 px-7 w-11/12">
+                    <div className="text-grey-200 leading-7 capitalize">
                         <p>mr John dole</p>
                         <p>09093284414</p>
                         <p>mrjohndoe@gmail.com</p>
                     </div>
-                    <Button type="button" color="#FF5000" outline={true}>
-                        <div>
-                            <EditIcon size="25" color="#FF5000"/>
-                            <p>Edit Profile</p>
-                        </div>
-                    </Button>`
+                    <div className="mt-14">
+                        <Button type="button" color="#FF5000" outline={true}>
+                            <div className="flex gap-3">
+                                <EditIcon size="25" color="#FF5000"/>
+                                <p>Edit Profile</p>
+                            </div>
+                        </Button>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <div className="bg-primary-dark-blue items-center flex justify-between rounded-5xl pr-5">
+            <div className="flex gap-6 items-center text-white w-4/6">
+                <img src={supportImage} alt="support-img"/>
+                <p>
+                    <p className="font-semibold text-2xl">Do you have any complains???</p>
+                    <p className="text-sm">kindly reach out to our customer care, we will be happy to answer and assist you</p>
+                </p>
+            </div>
+            <Button type="button" color="#FF5000">
+                Contact Us
+            </Button>
         </div>
       </div>
     );
