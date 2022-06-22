@@ -10,7 +10,7 @@ function Button({ children, color, type = 'button', outline = false }: IButtonPr
     return (
     <button 
     type={type} 
-    className='border border-solid rounded-full py-3 px-8 hover:opacity-50'
+    className='border border-solid rounded-full py-3 px-4 min-w-max w-fit hover:opacity-50'
     style={{
         color: outline ? color : 'white',
         borderColor: color,

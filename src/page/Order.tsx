@@ -9,6 +9,10 @@ import Button from "../components/Button"
 
 import TV from '../asset/monitor.png'
 import DashboardWrapper from "../components/DashboardWrapper"
+import TrackIcon from "../components/icons/TrackIcon"
+import DocIcon from "../components/icons/DocIcon"
+import StarIcon from "../components/icons/StarIcon"
+import OrderDetails from "../components/Models/OrderDetails"
 
 
 interface IOrderDetails {
@@ -26,27 +30,52 @@ function Details({ type }: IOrderDetails){
     )
 }
 
-function Order () {
+function Buttons ({type}: IOrderDetails): JSX.Element{
+    if(type === 'processing'){
+        return(
+            <Button color="#ff5000" outline>
+                <div className="flex gap-3">
+                    <TrackIcon color="#ff5000" size="20"/>
+                    <p className="text-primary-orange-200">Track Item</p>
+                </div>
+            </Button>
+        )
+    }
+    else if(type === 'delivered'){
+        return (<>
+            <Button color="#ff5000" >
+                <div className="flex gap-3">
+                    <DocIcon color='white' size="20" />
+                    <p className="text-white">See Details</p>
+                </div>
+            </Button>
+            <Button color="#ff5000" outline>
+                <div className="flex gap-3">
+                    <StarIcon color="#ff5000" size="20"/>
+                    <p className="text-primary-orange-200">Rate Item</p>
+                </div>
+            </Button>
+        </>)
+    }
+    return(<>
+        <Button color="#ff5000" >
+            <div className="flex gap-3">
+                <TrackIcon color='white' size="20" />
+                <p className="text-white">Track Items</p>
+            </div>
+        </Button>
+        <Button color="#ff5000" outline>
+            <p className="text-primary-orange-200 text-center">Cancel</p>
+        </Button>
+    </>)
+}
+
+function Order ({type}: IOrderDetails) {
     return(
         <ItemWrapper 
         img={TV} 
-        lower={
-            <>
-                <Button color="#ff5000" >
-                    <div className="flex gap-3">
-                        <CartIcon color='white' size="20" />
-                        <p className="text-white">Add to Cart</p>
-                    </div>
-                </Button>
-                <Button color="#ff5000" outline>
-                    <div className="flex gap-3">
-                        <TrashIcon color="#ff5000" size="20"/>
-                        <p className="text-primary-orange-200">Remove</p>
-                    </div>
-                </Button>
-            </>
-        }
-        upper={<Details type="processing" />}
+        lower={<Buttons type={type}/>}
+        upper={<Details type={type} />}
         />     
     )
 }
@@ -54,17 +83,19 @@ function Order () {
 
 function Orders (){
     return(
-        <DashboardWrapper>
-            <div className="bg-white w-full min-h-400 rounded-4xl py-5 px-4">
-                <h3 className="text-primary-dark-blue text-lg font-semibold">Order (0)</h3>
-                {/* <Empty name="order" Icon={BagIcon}/> */}
-                <div className="w-full mt-8 mb-2 overflow-y-auto h-screen scrollbar">
-                    <Order />
-                    <Order />
-                    <Order />
+        <>
+            <DashboardWrapper>
+                <div className="bg-white w-full min-h-400 rounded-4xl py-5 px-4">
+                    <h3 className="text-primary-dark-blue text-lg font-semibold">Order (0)</h3>
+                    {/* <Empty name="order" Icon={BagIcon}/> */}
+                    <div className="w-full mt-8 mb-2 overflow-y-auto h-screen scrollbar">
+                        <Order type="processing"/>
+                        <Order type="delivered"/>
+                        <Order type="pending"/>
+                    </div>
                 </div>
-            </div>
-        </DashboardWrapper>
+            </DashboardWrapper>
+        </>
     )
 }
 

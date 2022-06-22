@@ -15,9 +15,9 @@ function CartSummary(){
         <div className="w-full flex justify-between mb-5">
             <div className="flex justify-between w-8/12 gap-3">
                 <div className="w-3/4">
-                    <img src={TV} className="w-full h-full object-contain rounded-lg" />
+                    <img src={TV} className="w-full h-auto object-contain rounded-lg" />
                 </div>
-                <p className="text-xs text-grey-200">Anti Blue Computer And Phone Glasses.</p>
+                <p className="text-sm text-grey-200">Anti Blue Computer And Phone Glasses.</p>
             </div>
 
             <div>
@@ -102,7 +102,7 @@ function Carts (){
 
                         <div className="flex justify-center my-3">
                             <Button color="#FF5000">
-                                <div className="flex gap-4">
+                                <div className="flex gap-2 mx-3">
                                     <BagIcon  size="20" color="white"/>
                                     <p>CheckOut Now</p>
                                 </div>

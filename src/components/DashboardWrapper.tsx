@@ -4,11 +4,18 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import React from "react";
 
+import OrderDetails from "./Models/OrderDetails";
+import ProductReview from "./Models/ProductReview";
+import Tracker from "./Models/Tracker";
+
 
 function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
     return(
         <Body bgColor="bg-grey-500">
             <div className="w-full h-fit">
+                {/* <OrderDetails /> */}
+                {/* <ProductReview /> */}
+                <Tracker />
                 <Header />
                 <Categories />
                 <ul className="flex xl:px-fp-5 2xl:px-fp-10 my-6 text-sm">

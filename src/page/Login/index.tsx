@@ -75,7 +75,7 @@ function Login() {
             <p className='text-sm mb-3'>Forgotten your password?   <Link to="/forget-password" className='text-crimson'>Reset password</Link></p>
 
             <Button type='submit' color="#FF5000">
-                <p className='text-white font-semibold text-sm'>Login</p>
+                <p className='text-white font-semibold text-sm mx-6'>Login</p>
             </Button>
             </form>
         </div>

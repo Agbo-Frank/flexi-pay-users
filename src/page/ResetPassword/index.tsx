@@ -62,7 +62,7 @@ function ResetPassword() {
                     label="Password"
                     formik={formik}/>
                     <Button type='submit' color="#FF5000">
-                        <p className='text-white font-semibold text-sm'>Submit Code</p>
+                        <p className='text-white font-semibold text-sm mx-4'>Submit Code</p>
                     </Button>
                 </div>
             </form>

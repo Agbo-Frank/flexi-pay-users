@@ -132,7 +132,7 @@ function Register() {
             </div> 
 
             <Button color="#FF5000" type="submit">
-                <p className='text-white text-sm font-semibold'>Register</p>
+                <p className='text-white text-sm font-semibold mx-5'>Register</p>
             </Button>
             </form>
         </div>

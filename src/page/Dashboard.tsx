@@ -65,7 +65,7 @@ function Dashboard (): JSX.Element {
                             </div>
                             <div className="mt-14">
                                 <Button type="button" color="#FF5000" outline={true}>
-                                    <div className="flex gap-3">
+                                    <div className="flex gap-3 mx-3">
                                         <EditIcon size="25" color="#FF5000"/>
                                         <p>Edit Profile</p>
                                     </div>
@@ -83,7 +83,7 @@ function Dashboard (): JSX.Element {
                             </div>
                             <div className="mt-14">
                                 <Button type="button" color="#FF5000" outline={true}>
-                                    <div className="flex gap-3">
+                                    <div className="flex gap-3 mx-3">
                                         <EditIcon size="25" color="#FF5000"/>
                                         <p>Edit Profile</p>
                                     </div>
@@ -102,7 +102,7 @@ function Dashboard (): JSX.Element {
                         </p>
                     </div>
                     <Button type="button" color="#FF5000">
-                        Contact Us
+                        <p className="mx-3">Contact Us</p>
                     </Button>
                 </div>
             </div>

@@ -11,7 +11,9 @@ module.exports = {
           'blue': '#1900FE',
           'dark-blue': '#000541',
           'orange-200': '#FF5000',
-          'orange-100': '#E78405'
+          'orange-100': '#E78405',
+          'black': 'rgba(0, 0, 0, 0.6)',
+          'orange-300': '#FFF9F7'
         },
         grey: {
           100: '#E8E5FF',
@@ -20,7 +22,9 @@ module.exports = {
           400: '#C3C3C3',
           500: '#F5F5F5',
           600: '#C9C9D0',
-          700: '#A0A0A1'
+          700: '#A0A0A1',
+          800: '#999aa8',
+          900: '#F9F8FF'
         },
         crimson: '#FF5000'
       },
@@ -36,11 +40,14 @@ module.exports = {
         'fp-desk': '1280px',
         'fp-600': '670px',
         'fp-500': '550px',
+        'fp-700': '680px',
       },
       height: {
         'fp-desk': '1280px',
         'fp-600': '670px',
         'fp-500': '1050px',
+        'fp-700': '700px',
+        'fp-80': '80vh'
       },
       boxShadow:{
         'card-shadow': '0 20px 50px rgba(25, 0, 254, 0.05)'
@@ -52,7 +59,9 @@ module.exports = {
         '400': '400px'
       },
       maxHeight: {
-        '800': '800px'
+        '800': '800px',
+        '700': '720px',
+        '400': '80vh'
       }
     },
   },
