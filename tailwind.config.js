@@ -34,13 +34,25 @@ module.exports = {
       },
       width: {
         'fp-desk': '1280px',
-        'fp-600': '670px'
+        'fp-600': '670px',
+        'fp-500': '550px',
+      },
+      height: {
+        'fp-desk': '1280px',
+        'fp-600': '670px',
+        'fp-500': '1050px',
       },
       boxShadow:{
         'card-shadow': '0 20px 50px rgba(25, 0, 254, 0.05)'
       },
       transitionProperty: {
         'display': 'display',
+      },
+      minHeight: {
+        '400': '400px'
+      },
+      maxHeight: {
+        '800': '800px'
       }
     },
   },
