@@ -4,11 +4,18 @@ import TV from '../../asset/monitor.png'
 import StarIcon from "../icons/StarIcon"
 import { useState } from "react"
 
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleProductReview } from "../../redux/slice/modalSlice";
+import { RootState } from "../../redux/store";
+
 
 function ProductReview(){
     let [isReport, setIsReport] = useState(false)
+
+    const productReview: boolean = useSelector((state: RootState) => state.modal.productReview)
+    const dispatch = useDispatch()
     return(
-        <ModelWrapper>
+        <ModelWrapper isOpen={productReview} closeModal={() => dispatch(toggleProductReview())}>
             <div className="h-full overflow-y-auto scrollbar relative">
                 <div className="sticky top-0 left-0 bg-white">
                     <div className="flex w-11/12 mx-4">
@@ -57,8 +64,8 @@ function ProductReview(){
                 }
                 
 
-                <div className="mx-auto my-3 flex justify-center">
-                    <Button color="#FF5000">
+                <div className="mx-auto my-3 flex justify-center w-5/12">
+                    <Button color="#FF5000" >
                         <div className="flex gap-3">
                             {!isReport && <StarIcon color="white" size="20" />}
                             <p className="white">Submit {!isReport ? 'Review' : 'Report' }</p>

@@ -54,7 +54,7 @@ function SideBar(): JSX.Element {
     // let currentLocation = location.pathname.split('/')[2]
     console.log(currentLocation)
   return (
-    <div className="w-56 2xl:w-2/12 bg-white pt-9 pb-2 rounded-4xl">
+    <div className="w-56 2xl:w-2/12 bg-white pt-9 pb-2 rounded-4xl h-fit">
         <div>
             <SideBarItem 
             active={currentLocation === '' ? true : false}  
@@ -86,19 +86,20 @@ function SideBar(): JSX.Element {
             <line x1="1" y1="1" x2="170" y2="1" stroke="#A0A0A1" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 8"/>
         </svg>
         <div>
-            {/* <SideBarItem 
+            <SideBarItem 
             active={currentLocation === 'profile' ? true : false} 
-            Icon={ProfilBG} name="profile" link="profile"/>
+            Icon={ProfilBG} name="profile" link="profile"
+            handleClick={setLocation}/>
 
             <SideBarItem 
             active={currentLocation === 'setting' ? true : false} 
             Icon={GearIcon} name="setting" link="setting"
-            handleClick/>
+            handleClick={setLocation}/>
 
             <SideBarItem 
             active={currentLocation === 'support' ? true : false} 
             Icon={HeadPhoneIcon} name="support" link="support"
-            handleClick/> */}
+            handleClick={setLocation}/>
 
         </div>
         <div className="bg-primary-dark-blue py-6 px-3 rounded-3xl flex gap-3 text-white mt-10 justify-center mr-2 ml-5">

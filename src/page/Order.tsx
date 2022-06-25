@@ -13,10 +13,22 @@ import TrackIcon from "../components/icons/TrackIcon"
 import DocIcon from "../components/icons/DocIcon"
 import StarIcon from "../components/icons/StarIcon"
 import OrderDetails from "../components/Models/OrderDetails"
+import { useState, Dispatch, SetStateAction } from "react"
+
+import { useDispatch } from 'react-redux'
+import { seeOrderDetails, trackOrder, toggleProductReview } from "../redux/slice/modalSlice"
+
+
+
+
+interface IOrderModel {
+    orderDetails: boolean
+}
 
 
 interface IOrderDetails {
-    type: 'pending' | 'delivered' | 'processing'
+    type: 'pending' | 'delivered' | 'processing',
+    openModel?: Dispatch<SetStateAction<IOrderModel>>
 }
 
 function Details({ type }: IOrderDetails){
@@ -30,58 +42,65 @@ function Details({ type }: IOrderDetails){
     )
 }
 
-function Buttons ({type}: IOrderDetails): JSX.Element{
+function Buttons ({type, openModel}: IOrderDetails): JSX.Element{
+    const dispatch = useDispatch()
+
     if(type === 'processing'){
         return(
-            <Button color="#ff5000" outline>
-                <div className="flex gap-3">
-                    <TrackIcon color="#ff5000" size="20"/>
-                    <p className="text-primary-orange-200">Track Item</p>
+            <Button color="#ff5000" outline onClick={() => dispatch(trackOrder())}>
+                <div className="flex gap-2 items-center">
+                    <TrackIcon color="#ff5000" size="17"/>
+                    <p className="text-primary-orange-200 text-sm">Track Item</p>
                 </div>
             </Button>
         )
     }
     else if(type === 'delivered'){
-        return (<>
-            <Button color="#ff5000" >
-                <div className="flex gap-3">
-                    <DocIcon color='white' size="20" />
-                    <p className="text-white">See Details</p>
+        return (
+        <>
+             <Button color="#ff5000" onClick={() => dispatch(seeOrderDetails())}>
+                <div className="flex gap-2 items-center">
+                    <DocIcon color='white' size="17" />
+                    <p className="text-white text-sm">See Details</p>
                 </div>
             </Button>
-            <Button color="#ff5000" outline>
-                <div className="flex gap-3">
-                    <StarIcon color="#ff5000" size="20"/>
-                    <p className="text-primary-orange-200">Rate Item</p>
+            <Button color="#ff5000" outline onClick={() => dispatch(toggleProductReview())}>
+                <div className="flex gap-2 items-center">
+                    <StarIcon color="#ff5000" size="17"/>
+                    <p className="text-primary-orange-200 text-sm">Rate Item</p>
                 </div>
             </Button>
-        </>)
+        </>
+        )
     }
     return(<>
-        <Button color="#ff5000" >
-            <div className="flex gap-3">
-                <TrackIcon color='white' size="20" />
-                <p className="text-white">Track Items</p>
+        <Button color="#ff5000" onClick={() => dispatch(trackOrder())}>
+            <div className="flex gap-2 items-center">
+                <TrackIcon color='white' size="17" />
+                <p className="text-white text-sm">Track Items</p>
             </div>
         </Button>
         <Button color="#ff5000" outline>
-            <p className="text-primary-orange-200 text-center">Cancel</p>
+            <p className="text-primary-orange-200 text-center text-sm">Cancel</p>
         </Button>
     </>)
 }
 
-function Order ({type}: IOrderDetails) {
+function Order ({type, openModel}: IOrderDetails) {
     return(
         <ItemWrapper 
-        img={TV} 
-        lower={<Buttons type={type}/>}
-        upper={<Details type={type} />}
+            img={TV} 
+            lower={<Buttons type={type} openModel={openModel}/>}
+            upper={<Details type={type} />}
         />     
     )
 }
 
 
 function Orders (){
+    let [openModel, setOpenModel] = useState<IOrderModel>({
+        orderDetails: false
+    })
     return(
         <>
             <DashboardWrapper>
@@ -89,9 +108,9 @@ function Orders (){
                     <h3 className="text-primary-dark-blue text-lg font-semibold">Order (0)</h3>
                     {/* <Empty name="order" Icon={BagIcon}/> */}
                     <div className="w-full mt-8 mb-2 overflow-y-auto h-screen scrollbar">
-                        <Order type="processing"/>
-                        <Order type="delivered"/>
-                        <Order type="pending"/>
+                        <Order type="processing" openModel={setOpenModel}/>
+                        <Order type="delivered" openModel={setOpenModel}/>
+                        <Order type="pending" openModel={setOpenModel}/>
                     </div>
                 </div>
             </DashboardWrapper>

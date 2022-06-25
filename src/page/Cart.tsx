@@ -8,6 +8,7 @@ import PlusIcon from "../components/icons/PlusIcon"
 import Button from "../components/Button"
 import BagIcon from "../components/icons/Bag"
 import DashboardWrapper from "../components/DashboardWrapper"
+import CheckoutSummary from "../components/Checkout"
 
 
 function CartSummary(){
@@ -64,8 +65,8 @@ function Cart(){
 function Carts (){
     return(
         <DashboardWrapper>
-            <div className="flex justify-between gap-5 w-full">
-                <div className="bg-white min-h-400 rounded-4xl py-6 border w-7/12">
+            <div className="flex justify-between gap-5 w-full h-full">
+                <div className="bg-white min-h-400 rounded-4xl py-6 border w-7/12 h-full">
                     <div className="flex justify-between w-10/12 mx-6">
                         <h3 className="text-lg text-primary-dark-blue font-semibold">Carts(0)</h3>
 
@@ -75,7 +76,7 @@ function Carts (){
                         </div>
                     </div>
 
-                    <div className="w-full mt-8 mb-2 overflow-y-auto h-screen scrollbar">
+                    <div className="w-full h-full mt-8 mb-2 overflow-y-auto scrollbar">
                         <Cart />
                         <Cart />
                         <Cart />
@@ -85,30 +86,8 @@ function Carts (){
                 </div>
 
 
-                <div className="bg-white min-h-400 rounded-4xl py-6 px-6 border w-5/12 self-start">
-                    <h2 className="text-lg text-primary-dark-blue font-semibold">Order Summary</h2>
-
-                    <div className="my-4 border-b border-solid border-grey-100">
-                        <CartSummary />
-                        <CartSummary />
-                        <CartSummary />
-                    </div>
-
-                    <div className="w-full">
-                        <p className="flex justify-between">
-                            <p className="text-grey-200">Sub Total:</p>
-                            <p className="text-primary-dark-blue text-lg font-semibold">9,900</p>
-                        </p>
-
-                        <div className="flex justify-center my-3">
-                            <Button color="#FF5000">
-                                <div className="flex gap-2 mx-3">
-                                    <BagIcon  size="20" color="white"/>
-                                    <p>CheckOut Now</p>
-                                </div>
-                            </Button>
-                        </div>
-                    </div>
+                <div className="w-5/12">
+                    <CheckoutSummary />
                 </div>
             </div>
         </DashboardWrapper>

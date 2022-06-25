@@ -15,7 +15,12 @@ function Categories (): JSX.Element {
                 <p>electronics</p>
                 <p>home & kitchen</p>
             </div>
-            <a className="py-3 rounded-full px-5 bg-white text-primary-orange-200">Sell on <span className="text-primary-blue">FlexiPay</span></a>
+            <div className="w-fit h-fit p-1 overflow-hidden rounded-full">
+                <div className="relative flex w-fit h-fit">
+                    <div className="absolute inline-flex top-0 left-0 rounded-full animate-ping h-full w-full bg-white opacity-100"></div>
+                    <a className="relative py-3 rounded-full px-5 bg-white text-primary-orange-200">Sell on <span className="text-primary-blue">FlexiPay</span></a>
+                </div>
+            </div>
         </div>
     )
 }

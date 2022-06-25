@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import './index.css';
 import Carts from './page/Cart';
+import CheckOut from './page/CheckOut';
 import Dashboard from './page/Dashboard';
 import ForgetPassword from './page/ForgetPassword/index';
 import Login from './page/Login/index';
@@ -20,6 +21,7 @@ function App() {
       <Route path='/cart' element={<Carts />} />
       <Route path='/order' element={<Orders />} />
       <Route path='/saved-items' element={<SavedItems />} />
+      <Route path='/checkout' element={<CheckOut />} />
     </Routes>
   );
 }

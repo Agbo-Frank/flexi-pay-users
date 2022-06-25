@@ -2,6 +2,10 @@ import ModelWrapper from "./ModelWrapper";
 import TV from '../../asset/monitor.png'
 import MarkCircleIcon from "../icons/MarkCircleIcon";
 
+import { useSelector, useDispatch } from "react-redux";
+
+import { RootState } from '../../redux/store'
+import { trackOrder  } from '../../redux/slice/modalSlice'
 
 interface ITrackRec {
     name: string;
@@ -29,8 +33,10 @@ function TrackRec({ name, color, date, style, line = false}: ITrackRec){
 }
 
 function Tracker(){
+    const isOpen: boolean = useSelector((state: RootState) => state.modal.trackOrder)
+    const dispatch = useDispatch()
     return(
-        <ModelWrapper>
+        <ModelWrapper isOpen={isOpen} closeModal={() => dispatch(trackOrder())}>
             <div className="h-full overflow-y-auto scrollbar relative">
                 <div className="sticky top-0 left-0 bg-white z-50 pb-2">
                     <h2 className="text-lg text-primary-dark-blue font-semibold m-4 mx-5">Tracker Item</h2>

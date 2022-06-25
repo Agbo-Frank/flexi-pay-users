@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { IRegister } from './interface'
 import { useFormik, FormikConfig } from 'formik';
 import * as Yup from 'yup';
+import Switch from '../../components/Switch';
 
 function Register() {
     let [hasReferral, setHasReferral] = useState<boolean>(true)
@@ -70,7 +71,7 @@ function Register() {
             <small className='block mt-3 text-lg text-grey-300'>Register your account</small>
             </div>
 
-            <form className='my-12' onSubmit={formik.handleSubmit}>
+            <form className='my-12 w-10/12' onSubmit={formik.handleSubmit}>
             <div className='flex justify-start gap-3'>
                 <FormInput 
                 type='text' 
@@ -115,12 +116,11 @@ function Register() {
             </div>
 
             <div className={`mt-4 ${hasReferral && 'mb-6'}`}>
-                <div className='flex items-center gap-3' onClick={() => setHasReferral(!hasReferral)}>
-                <div className={`w-8 rounded-full bg-primary-blue p-0.5 ${!hasReferral ? 'bg-primary-blue' : 'bg-grey-400'}`}>
-                        <div className={`bg-white w-4 h-4 rounded-full ${hasReferral ? '' : 'ml-auto'}`}></div>
-                    </div>
-                    <p>Do you have a referal code?</p>
-                </div>
+                <Switch 
+                    label='Do you have a referal code?'
+                    isTrue={hasReferral}
+                    handleClick={setHasReferral}
+                />
                 <div className={`w-2/6 mt-4 transition-display duration-1000 ${hasReferral ? 'hidden' : ' block'}`}>
                     <FormInput 
                     type='text' 
@@ -131,9 +131,11 @@ function Register() {
                 </div>
             </div> 
 
-            <Button color="#FF5000" type="submit">
-                <p className='text-white text-sm font-semibold mx-5'>Register</p>
-            </Button>
+            <div className='w-3/12'>
+                <Button type='submit' color="#FF5000">
+                    <p className='text-white font-semibold text-sm'>Register</p>
+                </Button>
+            </div>
             </form>
         </div>
     </AuthenticationForm>

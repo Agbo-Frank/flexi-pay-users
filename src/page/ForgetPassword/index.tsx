@@ -52,23 +52,23 @@ function ForgetPassword() {
             </div>
 
             <form className='my-10' onSubmit={formik.handleSubmit}>
-            <div className='flex flex-col justify-start gap-3 w-1/2'>
-                <FormInput 
-                type='email' 
-                Icon={MailIcon} 
-                name="email" 
-                label="Email"
-                formik={formik} />
+                <div className='flex flex-col justify-start gap-3 w-5/12'>
+                    <FormInput 
+                    type='email' 
+                    Icon={MailIcon} 
+                    name="email" 
+                    label="Email"
+                    formik={formik} />
 
-                <div className='flex justify-between items-center w-full'>
-                    <Button outline={true} color="#FF5000">
-                        <p className='font-semibold text-sm mx-5'>Cancel</p>
-                    </Button>
-                    <Button type='submit' color="#FF5000">
-                        <p className='font-semibold text-sm mx-5'>Send Code</p>
-                    </Button>
+                    <div className='flex justify-between items-center w-full gap-6'>
+                        <Button outline={true} color="#FF5000">
+                            <p className='font-semibold text-sm mx-5'>Cancel</p>
+                        </Button>
+                        <Button type='submit' color="#FF5000">
+                            <p className='font-semibold text-sm mx-5'>Send Code</p>
+                        </Button>
+                    </div>
                 </div>
-            </div>
             </form>
         </div>
     </AuthenticationForm>

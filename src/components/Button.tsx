@@ -1,21 +1,18 @@
 import React from 'react';
+import { IButtonProps } from './interface'
 
-interface IButtonProps extends  React.PropsWithChildren{
-    type?: ('button' | 'submit');
-    outline?: boolean;
-    color: string
-}
-
-function Button({ children, color, type = 'button', outline = false }: IButtonProps): JSX.Element {
+function Button({ children, color, type = 'button', outline = false, onClick, disable = false }: IButtonProps): JSX.Element {
     return (
     <button 
-    type={type} 
-    className='border border-solid rounded-full py-3 px-4 min-w-max w-fit hover:opacity-50'
+    type={type}
+    disabled={disable}
+    className={`border border-solid rounded-full py-3 px-4 min-w-max w-full hover:opacity-50 ${disable && 'opacity-50'} flex justify-center`}
     style={{
         color: outline ? color : 'white',
         borderColor: color,
         backgroundColor: outline ? 'white' : color
-    }}>
+    }}
+    onClick={onClick}>
         { children }
     </button>
     );

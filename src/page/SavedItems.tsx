@@ -15,24 +15,24 @@ function SavedItem () {
         lower={
             <>
                 <Button color="#ff5000" >
-                    <div className="flex gap-3">
-                        <CartIcon color='white' size="20" />
-                        <p className="text-white">Add to Cart</p>
+                    <div className="flex items-center gap-2">
+                        <CartIcon color='white' size="17" />
+                        <p className="text-white text-sm">Add to Cart</p>
                     </div>
                 </Button>
                 <Button color="#ff5000" outline>
-                    <div className="flex gap-3">
-                        <TrashIcon color="#ff5000" size="20"/>
-                        <p className="text-primary-orange-200">Remove</p>
+                    <div className="flex items-center gap-2">
+                        <TrashIcon color="#ff5000" size="17"/>
+                        <p className="text-primary-orange-200 text-sm">Remove</p>
                     </div>
                 </Button>
             </>
         }
         upper={
-            <>
+            <div className="flex flex-col w-9/12 h-full items-stretch">
                 <p className="w-9/12 text-grey-200">43" inches D-LED TV +1 years Warranty - Black</p>
-                <p className="font-bold text-primary-dark-blue">150, 000</p>
-            </>
+                <p className="font-bold text-primary-dark-blue text-sm">150, 000</p>
+            </div>
         }
         />
             

@@ -63,9 +63,9 @@ function Dashboard (): JSX.Element {
                                 <p>09093284414</p>
                                 <p>mrjohndoe@gmail.com</p>
                             </div>
-                            <div className="mt-14">
+                            <div className="mt-14 w-6/12">
                                 <Button type="button" color="#FF5000" outline={true}>
-                                    <div className="flex gap-3 mx-3">
+                                    <div className="flex gap-3 items-center">
                                         <EditIcon size="25" color="#FF5000"/>
                                         <p>Edit Profile</p>
                                     </div>
@@ -81,9 +81,9 @@ function Dashboard (): JSX.Element {
                                 <p>09093284414</p>
                                 <p>mrjohndoe@gmail.com</p>
                             </div>
-                            <div className="mt-14">
+                            <div className="mt-14 w-6/12">
                                 <Button type="button" color="#FF5000" outline={true}>
-                                    <div className="flex gap-3 mx-3">
+                                    <div className="flex gap-3 items-center">
                                         <EditIcon size="25" color="#FF5000"/>
                                         <p>Edit Profile</p>
                                     </div>
@@ -101,9 +101,11 @@ function Dashboard (): JSX.Element {
                             <p className="text-sm">kindly reach out to our customer care, we will be happy to answer and assist you</p>
                         </p>
                     </div>
-                    <Button type="button" color="#FF5000">
-                        <p className="mx-3">Contact Us</p>
-                    </Button>
+                    <div className="w-2/12">
+                        <Button type="button" color="#FF5000">
+                            <p className="mx-3">Contact Us</p>
+                        </Button>
+                    </div>
                 </div>
             </div>
         </DashboardWrapper>

@@ -5,11 +5,15 @@ import Button from "../Button";
 import BagIcon from "../icons/Bag";
 import CalenderIcon from "../icons/CalenderIcon";
 
+import { useDispatch, useSelector } from 'react-redux'
+import { seeOrderDetails } from "../../redux/slice/modalSlice";
+import { RootState } from "../../redux/store";
 
 function OrderDetails(){
-
+    const orderDetails: boolean = useSelector((state: RootState) => state.modal.orderDetails)
+    const dispatch = useDispatch()
     return(
-        <ModelWrapper>
+        <ModelWrapper isOpen={orderDetails} closeModal={() => dispatch(seeOrderDetails())}>
             <div className="h-full overflow-y-auto scrollbar relative">
                 <div className="sticky top-0 left-0 bg-white">
                     <h2 className="text-lg text-primary-dark-blue font-semibold m-4">Order Details</h2>

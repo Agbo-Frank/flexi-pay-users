@@ -13,7 +13,7 @@ module.exports = {
           'orange-200': '#FF5000',
           'orange-100': '#E78405',
           'black': 'rgba(0, 0, 0, 0.6)',
-          'orange-300': '#FFF9F7'
+          'orange-300': '#FFF9F7',
         },
         grey: {
           100: '#E8E5FF',
@@ -39,6 +39,8 @@ module.exports = {
       width: {
         'fp-desk': '1280px',
         'fp-600': '670px',
+        '500': '500px',
+        'fp-450': '440px',
         'fp-500': '550px',
         'fp-700': '680px',
       },
