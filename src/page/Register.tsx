@@ -1,22 +1,17 @@
-import Logo from '../../components/icons/logo';
-import UserIcon from '../../components/icons/UserIcon';
-import MailIcon from '../../components/icons/MailIcon';
-import PadLock from '../../components/icons/PadLock';
-import PhoneIcon from '../../components/icons/PhoneIcon';
-import UserIconPlus from '../../components/icons/UserIconPlus';
+import { Logo, UserIcon, MailIcon, PadLock, PhoneIcon, UserIconPlus } from '../components/icons';
 
-import Button from '../../components/Button';
-import FormInput from '../../components/FormInput';
-import AuthenticationForm from '../../components/AuthenticationForm'
+import Button from '../components/Button';
+import FormInput from '../components/FormInput';
+import AuthenticationForm from '../components/AuthenticationForm'
 
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
 import { IRegister } from './interface'
 import { useFormik, FormikConfig } from 'formik';
 import * as Yup from 'yup';
-import Switch from '../../components/Switch';
+import Switch from '../components/Switch';
 
-function Register() {
+export function Register() {
     let [hasReferral, setHasReferral] = useState<boolean>(true)
 
     let initialValues: IRegister = {
@@ -119,7 +114,7 @@ function Register() {
                 <Switch 
                     label='Do you have a referal code?'
                     isTrue={hasReferral}
-                    handleClick={setHasReferral}
+                    handleClick={() => setHasReferral(state => !state)}
                 />
                 <div className={`w-2/6 mt-4 transition-display duration-1000 ${hasReferral ? 'hidden' : ' block'}`}>
                     <FormInput 

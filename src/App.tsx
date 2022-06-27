@@ -1,14 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
 import './index.css';
-import Carts from './page/Cart';
-import CheckOut from './page/CheckOut';
-import Dashboard from './page/Dashboard';
-import ForgetPassword from './page/ForgetPassword/index';
-import Login from './page/Login/index';
-import Orders from './page/Order';
-import Register from './page/Register/index';
-import ResetPassword from './page/ResetPassword/index';
-import SavedItems from './page/SavedItems';
+import {
+  Carts, CheckOut, 
+  Login, Orders, Dashboard,
+  ForgetPassword, Register,
+  ResetPassword, SavedItems 
+} from './page';
 
 function App() {
   return (
@@ -22,6 +19,7 @@ function App() {
       <Route path='/order' element={<Orders />} />
       <Route path='/saved-items' element={<SavedItems />} />
       <Route path='/checkout' element={<CheckOut />} />
+      <Route path='/wallet' element={<CheckOut />} />
     </Routes>
   );
 }

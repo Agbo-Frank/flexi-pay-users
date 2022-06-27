@@ -1,59 +1,41 @@
 import Empty from "../components/Empty"
-import CartIcon from "../components/icons/CartIcon"
-import TrashIcon from "../components/icons/TrashIcon"
+import {CartIcon, TrashIcon, MinusIcon, PlusIcon, BagIcon} from "../components/icons"
 
 import TV from '../asset/monitor.png'
-import MinusIcon from "../components/icons/MinusIcon"
-import PlusIcon from "../components/icons/PlusIcon"
 import Button from "../components/Button"
-import BagIcon from "../components/icons/Bag"
 import DashboardWrapper from "../components/DashboardWrapper"
 import CheckoutSummary from "../components/Checkout"
+import { useState } from "react"
 
-
-function CartSummary(){
-    return(
-        <div className="w-full flex justify-between mb-5">
-            <div className="flex justify-between w-8/12 gap-3">
-                <div className="w-3/4">
-                    <img src={TV} className="w-full h-auto object-contain rounded-lg" />
-                </div>
-                <p className="text-sm text-grey-200">Anti Blue Computer And Phone Glasses.</p>
-            </div>
-
-            <div>
-                <p className="font-medium text-primary-dark-blue ml-auto">6,650</p>
-                <small className="text-xs block ml-auto text-grey-700">x2</small>
-            </div>
-        </div>
-    )
-}
-
-function Cart(){
+export function Cart(){
+    let [rmColor, setRmColor] = useState("#A0A0A1")
     return(
         <div 
-        className="flex justify-between shadow hover:shadow-lg border hover:border-0 border-solid border-grey-100 px-4 py-3 mx-6 mb-7 rounded-3xl">
+        className="flex justify-between shadow hover:shadow-lg border hover:border-0 border-solid border-grey-100 px-4 py-3 mx-6 rounded-3xl">
             <div>
-                <div className="flex gap-3 items-center">
+                <div className="flex gap-3 items-stretch">
                     <img src={TV} className="w-36 h-36 rounded-xl object-contain"/>
-                    <div className="w-7/12">
-                        <p className="text-grey-200">Anti Blue Computer And Phone Glasses</p>
-                        <small className="text-grey-200">Qty: 1</small>
+                    <div className="w-7/12 flex flex-col justify-around">
+                        <p className="text-grey-200 text-sm">Anti Blue Computer And Phone Glasses</p>
+                        <small className="text-grey-200 text-sm font-medium">Qty: 1</small>
+                        <p 
+                        className="flex gap-1 items-center text-grey-700 cursor-pointer hover:text-crimson" 
+                        onMouseEnter={() => setRmColor('#FF5000')}
+                        onMouseLeave={() => setRmColor("#A0A0A1")}>
+                            <TrashIcon color={rmColor} size="14"/>
+                            <p className="text-sm">Remove</p>
+                        </p>
                     </div>
                 </div>
-                <p className="flex gap-2 items-center text-grey-700">
-                    <TrashIcon color="#A0A0A1" size="14"/>
-                    <p className="text-sm">Remove From Cart</p>
-                </p>
             </div>
-            <div className="self-end">
-                <p className="font-semibold text-primary-dark-blue text-lg mb-4">3,300</p>
+            <div className="flex flex-col justify-end">
+                <p className="font-medium ml-auto text-primary-dark-blue text-lg mb-4">₦ 3,300</p>
                 <div className="flex justify-between items-center gap-3">
-                    <div className="rounded-full font-bold text-white bg-primary-orange-200 w-5 h-5 flex justify-center items-center text-xl">
+                    <div className="rounded-full cursor-pointer font-bold text-white bg-primary-orange-200 w-5 opacity-50 h-5 flex justify-center items-center text-xl">
                         <MinusIcon color="white" size="14" />
                     </div>
-                    <div className="font-semibold text-lg"> 1 </div>
-                    <div className="rounded-full font-bold text-white bg-primary-orange-200 w-5 h-5 flex justify-center items-center text-xl">
+                    <div className="font-medium text-lg"> 1 </div>
+                    <div className="rounded-full cursor-pointer font-bold text-white bg-primary-orange-200 w-5 h-5 flex justify-center items-center text-xl">
                         <PlusIcon size="14" color="white" />
                     </div>
                 </div>
@@ -62,11 +44,13 @@ function Cart(){
     )
 }
 
-function Carts (){
+export function Carts (){
     return(
         <DashboardWrapper>
             <div className="flex justify-between gap-5 w-full h-full">
-                <div className="bg-white min-h-400 rounded-4xl py-6 border w-7/12 h-full">
+                <div 
+                    className="bg-white rounded-4xl py-6 border w-7/12">
+
                     <div className="flex justify-between w-10/12 mx-6">
                         <h3 className="text-lg text-primary-dark-blue font-semibold">Carts(0)</h3>
 
@@ -76,7 +60,11 @@ function Carts (){
                         </div>
                     </div>
 
-                    <div className="w-full h-full mt-8 mb-2 overflow-y-auto scrollbar">
+                    <div className="flex flex-col gap-5 w-full mt-8 mb-2 overflow-y-auto scrollbar h-screen">
+                        <Cart />
+                        <Cart />
+                        <Cart />
+                        <Cart />
                         <Cart />
                         <Cart />
                         <Cart />
@@ -86,7 +74,7 @@ function Carts (){
                 </div>
 
 
-                <div className="w-5/12">
+                <div className="w-5/12 relative">
                     <CheckoutSummary />
                 </div>
             </div>

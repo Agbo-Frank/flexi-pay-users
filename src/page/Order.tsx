@@ -1,7 +1,9 @@
 import BagIcon from "../components/icons/Bag"
-import HeartIcon from "../components/icons/HeartIcon"
-import CartIcon from "../components/icons/CartIcon"
-import TrashIcon from "../components/icons/TrashIcon"
+import {
+    HeartIcon, CartIcon, 
+    TrashIcon, TrackIcon, 
+    DocIcon, StarIcon
+} from "../components/icons"
 
 import ItemWrapper from "../components/ItemWrapper"
 import Empty from "../components/Empty"
@@ -9,9 +11,6 @@ import Button from "../components/Button"
 
 import TV from '../asset/monitor.png'
 import DashboardWrapper from "../components/DashboardWrapper"
-import TrackIcon from "../components/icons/TrackIcon"
-import DocIcon from "../components/icons/DocIcon"
-import StarIcon from "../components/icons/StarIcon"
 import OrderDetails from "../components/Models/OrderDetails"
 import { useState, Dispatch, SetStateAction } from "react"
 
@@ -33,12 +32,12 @@ interface IOrderDetails {
 
 function Details({ type }: IOrderDetails){
     return(
-        <>
+        <div className="flex flex-col w-11/12 h-full items-stretch justify-evenly">
             <p>43" inches D-LED TV +1 years Warranty - Black</p>
             <small className="text-grey-200">orderId: 345679</small>
-            <p className={`${ type } text-white px-2 py-1 rounded-sm uppercase text-xs w-fit`}>{ type }</p>
+            <p className={`${ type } text-white p-1 px-2 rounded-sm uppercase text-xs w-fit`}>{ type }</p>
             {/* <p className="font-bold text-primary-dark-blue">150, 000</p> */}
-        </>
+        </div>
     )
 }
 
@@ -97,17 +96,20 @@ function Order ({type, openModel}: IOrderDetails) {
 }
 
 
-function Orders (){
+export function Orders (){
     let [openModel, setOpenModel] = useState<IOrderModel>({
         orderDetails: false
     })
     return(
         <>
             <DashboardWrapper>
-                <div className="bg-white w-full min-h-400 rounded-4xl py-5 px-4">
+                <div className="bg-white w-full rounded-4xl py-5 px-4">
                     <h3 className="text-primary-dark-blue text-lg font-semibold">Order (0)</h3>
                     {/* <Empty name="order" Icon={BagIcon}/> */}
                     <div className="w-full mt-8 mb-2 overflow-y-auto h-screen scrollbar">
+                        <Order type="processing" openModel={setOpenModel}/>
+                        <Order type="delivered" openModel={setOpenModel}/>
+                        <Order type="pending" openModel={setOpenModel}/>
                         <Order type="processing" openModel={setOpenModel}/>
                         <Order type="delivered" openModel={setOpenModel}/>
                         <Order type="pending" openModel={setOpenModel}/>

@@ -4,26 +4,30 @@ import Button from "../components/Button"
 import Categories from "../components/Categories"
 import CheckoutSummary from "../components/Checkout"
 import Header from "../components/Header"
-import NoLocationIcon from "../components/icons/NoLocationIcon"
 import AddAddressModel from "../components/Models/AddAddressModel"
 import Switch from "../components/Switch"
 
-import CreditCard from "../components/icons/CreditCardicon"
-import WalletIcon from "../components/icons/WalletIcon"
-import NoWalletIcon from "../components/icons/NoWallet"
-import MasterCardIcon from "../components/icons/MasterCard"
+import { CreditCardIcon, WalletIcon, NoWalletIcon, MasterCardIcon, NoLocationIcon } from "../components/icons"
 import SelectInput from "../components/SelectInput"
 import { toggleAddAddress, toggleAddCreditcard } from "../redux/slice/modalSlice"
 
 import { useDispatch } from "react-redux"
 import AddCreditCard from "../components/Models/AddCreditcard"
+import CreditCard from "../components/CreditCard"
 
-function CheckOut(){
-    let [door, setDoor] = useState(true)
-    let [station, setStation] = useState(true)
-    let [instant, setInstant] = useState(true)
-    let [installment, setInstallment] = useState(true)
+export function CheckOut(){
     let [activePaymentMethod, setActivePaymentMenthod] = useState(true)
+
+    let [orderConfig, setOrderConfig] = useState({
+        door: false,
+        station: false,
+        instant: {
+            isTrue: false,
+            card: true,
+            wallet: false
+        },
+        installment: false
+    })
 
     let dispatch = useDispatch()
 
@@ -66,6 +70,7 @@ function CheckOut(){
                                         <p>Nigeria.</p>
                                     </div>
                                 </div> */}
+
                                 {/* empty address */}
                                 <div className="flex flex-col justify-center w-5/12 mx-auto my-3">
                                     <div className="mx-auto">
@@ -83,18 +88,20 @@ function CheckOut(){
 
                                 <div className="flex gap-4 items-center my-3">
                                     <Switch
-                                        label="PickUp Station"
-                                        isTrue={station}
-                                        handleClick={setStation} 
+                                        label="Door Delivery"
+                                        isTrue={orderConfig.door}
+                                        handleClick={() =>setOrderConfig(state => {
+                                            return {...state, door: !state.door}
+                                        })} 
                                     />
                                     <Switch
-                                        label="Door Delivery"
-                                        isTrue={door}
-                                        handleClick={setDoor} 
+                                        label="PickUp Station"
+                                        isTrue={orderConfig.station}
+                                        handleClick={() => setOrderConfig((state) => ({...state, station: !state.station}))} 
                                     />
                                 </div>
                                 {
-                                    !door && 
+                                    orderConfig.door && 
                                     (
                                         <div className="my-3">
                                             <p className="text-sm text-grey-200 font-light my-5">Your item(s) will be delivered to your delivery address, it might take about 48Hours to get to you</p>
@@ -103,7 +110,7 @@ function CheckOut(){
                                     )
                                 }
                                 {
-                                    !station &&
+                                    orderConfig.station &&
                                     (
                                         <div>
                                             <p className="my-3 mt-5">Delivery Cost: Free</p>
@@ -120,74 +127,126 @@ function CheckOut(){
                             <div className="border rounded-4xl px-6 py-4">
                                 <div className="flex justify-between">
                                     <h3 className="text-primary-dark-blue font-medium mb-2">Payment Method</h3>
-                                    <CreditCard size="30" color="#555555" />
+                                    <CreditCardIcon size="30" color="#555555" />
                                 </div>
 
                                 <div className="flex gap-4 items-center my-3">
                                     <Switch
                                         label="Cash"
-                                        isTrue={instant}
-                                        handleClick={setInstant} 
+                                        isTrue={orderConfig.instant.isTrue}
+                                        handleClick={() => setOrderConfig(state => ({
+                                            ...state, 
+                                            instant: {...state.instant, isTrue: !state.instant.isTrue}
+                                        }))} 
                                     />
                                     <Switch
                                         label="Installmental"
-                                        isTrue={installment}
-                                        handleClick={setInstallment} 
+                                        isTrue={orderConfig.installment}
+                                        handleClick={() => setOrderConfig(state => ({
+                                            ...state, 
+                                            installment: !state.installment
+                                        }))} 
                                     />
                                 </div>
 
-                                <div>
-                                    <p>Complete Payment Using:</p>
-                                    <div className="flex items-center my-3 w-96">
-                                        <div className="flex gap-2 items-center w-1/2 text-sm cursor-pointer hover:bg-grey-500 p-2">
-                                            <CreditCard  size="16" color={activePaymentMethod ? '#1900FE' : "#8D8D8D"}/>
-                                            <p className={`${activePaymentMethod ? 'text-primary-blue' : 'text-grey-300'}`}>Saved Card</p>
-                                        </div>
+                                {
+                                    orderConfig.instant.isTrue &&
+                                    <div className="mt-10">
+                                        <p>Complete Payment Using:</p>
+                                        <div className="flex items-center my-3 w-96">
+                                            <div 
+                                            className="flex gap-2 items-center w-1/2 text-sm cursor-pointer hover:bg-grey-500 p-2"
+                                            onClick={() => setOrderConfig(state => ({...state, instant: {...state.instant, card: true}}))}>
+                                                <CreditCardIcon  size="16" color={orderConfig.instant.card ? '#1900FE' : "#8D8D8D"}/>
+                                                <p className={`${orderConfig.instant.card ? 'text-primary-blue' : 'text-grey-300'}`}>Saved Card</p>
+                                            </div>
 
-                                        <div className="flex gap-2 items-center text-sm w-1/2 cursor-pointer hover:bg-grey-500 p-2">
-                                            <WalletIcon  size="16" color={!activePaymentMethod ? '#1900FE' : "#8D8D8D"}/>
-                                            <p className={`${!activePaymentMethod ? 'text-primary-blue' : 'text-grey-300'}`}>
-                                                Wallet
-                                            </p>
-                                        </div>
-                                    </div>
-                                    
-                                    {/* empty cards */}
-
-                                    {/* <div className="flex flex-col justify-center items-center bg-grey-900 rounded-4xl mb-4 mt-9 pt-12 pb-6">
-                                        <NoWalletIcon size="45" color="#E8E5FF"/>
-                                        <p className="text-center font-light text-grey-700 w-7/12">
-                                            You don’t have nay saved card yet, 
-                                            kindly add and save new card
-                                        </p>
-                                        <p className="text-primary-orange-200 flex items-center gap-3 text-sm mt-5 cursor-pointer">
-                                            <WalletIcon color="#FF5000" size="17"/>
-                                            <span>Add New Card</span>
-                                        </p>
-                                    </div> */}
-
-                                    <div className="flex flex-col bg-grey-900 rounded-4xl mb-4 mt-9 p-5">
-                                        <div className="flex justify-between items-center">
-                                            <p>Your Cards</p>
-                                            <p className="text-primary-orange-200 flex items-center gap-3 text-sm cursor-pointer" 
-                                            onClick={() => dispatch(toggleAddCreditcard())}>
-                                                <WalletIcon color="#FF5000" size="17"/>
-                                                <span>Add New Card</span>
-                                            </p>
-                                        </div>
-
-                                        <div className="border border-primary-blue rounded-2xl flex flex-col w-80 px-4 py-3 my-4 text-primary-blue">
-                                            <p className="mt-3">23****53***3</p>
-                                            <p>Mr John Doe</p>
-                                            <div className="flex gap-2 items-center text-sm w-fit ml-auto mt-4">
-                                                <MasterCardIcon size="24"/>
-                                                <p>Master Card</p>
+                                            <div 
+                                            className="flex gap-2 items-center text-sm w-1/2 cursor-pointer hover:bg-grey-500 p-2"
+                                            onClick={() => setOrderConfig(state => ({...state, instant: {...state.instant, card: false}}))}>
+                                                <WalletIcon  size="16" color={!orderConfig.instant.card ? '#1900FE' : "#8D8D8D"}/>
+                                                <p className={`${!orderConfig.instant.card ? 'text-primary-blue' : 'text-grey-300'}`}>
+                                                    Wallet
+                                                </p>
                                             </div>
                                         </div>
-                                        <Switch label="Save this card for future use" isTrue={activePaymentMethod} handleClick={setActivePaymentMenthod}/>
-                                    </div>
+                                        
+                                        {/* cards */}
+                                        <>
+                                            {/* 
+                                                <div className="flex flex-col justify-center items-center bg-grey-900 rounded-4xl mb-4 mt-9 pt-12 pb-6">
+                                                    <NoWalletIcon size="45" color="#E8E5FF"/>
+                                                    <p className="text-center font-light text-grey-700 w-7/12">
+                                                        You don’t have any saved card yet, 
+                                                        kindly add and save new card
+                                                    </p>
+                                                    <p className="text-primary-orange-200 flex items-center gap-3 text-sm mt-5 cursor-pointer">
+                                                        <WalletIcon color="#FF5000" size="17"/>
+                                                        <span>Add New Card</span>
+                                                    </p>
+                                                </div>  
+                                            */}
+                                       
+                                            {
+                                                orderConfig.instant.card &&
+                                                <div className="flex flex-col bg-grey-900 rounded-4xl mb-4 mt-9 p-5">
+                                                    <div className="flex justify-between items-center">
+                                                        <p>Your Cards</p>
+                                                        <p className="text-primary-orange-200 flex items-center gap-3 text-sm cursor-pointer" 
+                                                        onClick={() => dispatch(toggleAddCreditcard())}>
+                                                                <CreditCardIcon color="#FF5000" size="17"/>
+                                                                <span>Add New Card</span>
+                                                        </p>
+                                                    </div>
 
-                                </div>
+                                                    <CreditCard />
+                                                    <Switch 
+                                                        label="Save this card for future use" 
+                                                        isTrue={activePaymentMethod} handleClick={() => setActivePaymentMenthod}
+                                                    />
+                                                </div> 
+                                            }
+                                        </>
+
+                                            {/* wallet */}
+                                        <>
+                                        {
+                                            !orderConfig.instant.card &&
+                                            <div className="bg-grey-900 rounded-4xl mb-4 mt-9 p-5">
+                                                <div className="flex justify-between items-center">
+                                                    <p>Your Wallet</p>
+                                                    <p className="text-primary-orange-200 flex items-center gap-3 text-sm cursor-pointer" 
+                                                    onClick={() => dispatch(toggleAddCreditcard())}>
+                                                        <WalletIcon color="#FF5000" size="17"/>
+                                                        <span>Fund Wallet</span>
+                                                    </p>
+                                                </div>
+
+                                                <div className="flex items-center gap-4 flex-col w-full border border-grey-100 rounded-4xl p-4 mt-7">
+                                                    <p className="self-start text-grey-700 text-sm">Wallet ID: Flexi237</p>
+                                                    {/* <>
+                                                        <NoWalletIcon size="50" color="#E8E5FF"/>
+                                                        <p className="text-md font-medium">Insufficient Fund</p>
+                                                        {/* <p className="text-center font-light text-grey-700 w-7/12">
+                                                            Your balance is lae
+                                                        </p>
+                                                        <p className="text-primary-orange-200 flex items-center gap-3 text-sm mt-5 cursor-pointer">
+                                                            <span>View Balance</span>
+                                                        </p>
+                                                    </> */}
+
+                                                        <p className="font-semibold text-700">Balance</p>
+                                                        <p className="text-md font-medium text-primary-dark-blue">₦ 20, 000 - ₦ 10,000</p>
+                                                        <p className="text-center font-light text-sm text-grey-700 w-7/12">
+                                                            You will be deducted ₦ 10,900 from your wallet balance 
+                                                        </p>
+                                                </div>
+                                                
+                                            </div> 
+                                        }
+                                        </>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>

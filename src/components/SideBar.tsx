@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
 
 import BagIcon from "./icons/Bag";
 import CartIcon from "./icons/CartIcon";
 import DashboardIcon from "./icons/DashboardIcon";
 import GearIcon from "./icons/GearIcon";
 import HeadPhoneIcon from "./icons/HeadPhoneIcon";
-import HeartIcon from "./icons/HeartIcon";
+import {HeartIcon} from "./icons";
 import LogOutIcon from "./icons/LogOutIcon";
 import ProfilBG from "./icons/ProfilBG";
 import WalletIcon from "./icons/WalletIcon";
@@ -24,15 +24,20 @@ interface ISideBarItem {
 
 
 function SideBarItem ({ active = false, Icon, name, link, handleClick}: ISideBarItem): JSX.Element {
-    let [active_, setActive] = useState(active)
+    let [active_, setActive] = useState(false)
+    let nav = useRef<HTMLAnchorElement>(null);
 
-    const location = useLocation()
-
-    function click(){
-        handleClick(link)
-    }
+    useLayoutEffect(() => {
+        if(nav.current?.classList.contains('active')){
+            setActive(true)
+        }
+    })
+    
     return(
-        <NavLink to={`/${link}`} className="flex gap-2 mb-3 items-center cursor-pointer sidebar" 
+        <NavLink 
+        ref={nav}
+        to={`/${link}`} 
+        className="flex gap-2 mb-3 items-center cursor-pointer sidebar" 
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => {if(!active)setActive(false)}}
         onClick={() => handleClick(link)}
@@ -54,30 +59,25 @@ function SideBar(): JSX.Element {
     // let currentLocation = location.pathname.split('/')[2]
     console.log(currentLocation)
   return (
-    <div className="w-56 2xl:w-2/12 bg-white pt-9 pb-2 rounded-4xl h-fit">
+    <div className="w-56 h-fit 2xl:w-2/12 bg-white pt-9 pb-2 rounded-4xl">
         <div>
             <SideBarItem 
-            active={currentLocation === '' ? true : false}  
-            Icon={DashboardIcon} name="overview" link=""
+            Icon={DashboardIcon} name="overview" link="dashboard"
             handleClick={setLocation}/>
 
             <SideBarItem 
-            active={currentLocation === 'wallet' ? true : false} 
             Icon={WalletIcon} name="wallet" link="wallet"
             handleClick={setLocation}/>
 
             <SideBarItem 
-            active={currentLocation === 'cart' ? true : false} 
             Icon={CartIcon} name="cart" link="cart"
             handleClick={setLocation}/>
 
             <SideBarItem 
-            active={currentLocation === 'saveditems' ? true : false} 
             Icon={HeartIcon} name="saved items" link="saved-items"
             handleClick={setLocation}/>
 
             <SideBarItem 
-            active={currentLocation === 'order' ? true : false} 
             Icon={BagIcon} name="order" link="order"
             handleClick={setLocation}/>
 
@@ -87,17 +87,14 @@ function SideBar(): JSX.Element {
         </svg>
         <div>
             <SideBarItem 
-            active={currentLocation === 'profile' ? true : false} 
             Icon={ProfilBG} name="profile" link="profile"
             handleClick={setLocation}/>
 
             <SideBarItem 
-            active={currentLocation === 'setting' ? true : false} 
             Icon={GearIcon} name="setting" link="setting"
             handleClick={setLocation}/>
 
             <SideBarItem 
-            active={currentLocation === 'support' ? true : false} 
             Icon={HeadPhoneIcon} name="support" link="support"
             handleClick={setLocation}/>
 

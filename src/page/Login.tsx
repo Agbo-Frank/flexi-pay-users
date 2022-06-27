@@ -1,10 +1,8 @@
-import Logo from '../../components/icons/logo';
-import MailIcon from '../../components/icons/MailIcon';
-import PadLock from '../../components/icons/PadLock';
+import { Logo, MailIcon, PadLock } from '../components/icons';
 
-import Button from '../../components/Button';
-import FormInput from '../../components/FormInput';
-import AuthenticationForm from '../../components/AuthenticationForm';
+import Button from '../components/Button';
+import FormInput from '../components/FormInput';
+import AuthenticationForm from '../components/AuthenticationForm';
 
 import { ILogin } from './interface'
 
@@ -12,7 +10,7 @@ import { useFormik } from 'formik';
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup';
 
-function Login() {
+export function Login() {
 
     let initialValues: ILogin = {
         email: '',

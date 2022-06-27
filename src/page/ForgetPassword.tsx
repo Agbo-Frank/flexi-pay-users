@@ -1,9 +1,8 @@
-import Logo from '../../components/icons/logo';
-import MailIcon from '../../components/icons/MailIcon';
-import AuthenticationForm from '../../components/AuthenticationForm';
+import { Logo, MailIcon } from '../components/icons';
+import AuthenticationForm from '../components/AuthenticationForm';
 
-import FormInput from '../../components/FormInput';
-import Button from '../../components/Button';
+import FormInput from '../components/FormInput';
+import Button from '../components/Button';
 
 import { IForgetPassword } from './interface'
 
@@ -11,7 +10,7 @@ import { Link } from 'react-router-dom'
 import { useFormik, FormikConfig } from 'formik';
 import * as Yup from 'yup';
 
-function ForgetPassword() {
+export function ForgetPassword() {
     let initialValues: IForgetPassword = {
         email: '',
     }

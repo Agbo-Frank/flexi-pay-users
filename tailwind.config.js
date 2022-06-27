@@ -42,14 +42,15 @@ module.exports = {
         '500': '500px',
         'fp-450': '440px',
         'fp-500': '550px',
-        'fp-700': '680px',
+        'fp-700': '680px'
       },
       height: {
         'fp-desk': '1280px',
         'fp-600': '670px',
         'fp-500': '1050px',
         'fp-700': '700px',
-        'fp-80': '80vh'
+        'fp-80': '80vh',
+        'fp-130': '132vh'
       },
       boxShadow:{
         'card-shadow': '0 20px 50px rgba(25, 0, 254, 0.05)'

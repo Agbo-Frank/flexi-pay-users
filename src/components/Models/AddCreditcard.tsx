@@ -1,5 +1,4 @@
 import FormInput from "../FormInput";
-import UserIcon from "../icons/UserIcon";
 import AlertWrapper from "./AlertWrapper";
 
 import { useFormik } from 'formik';
@@ -7,9 +6,7 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux'
 
 import { ICreditCard } from "../interface";
-import CreditCard from "../icons/CreditCardicon";
-import CalenderIcon from "../icons/CalenderIcon";
-import CvvIcon from "../icons/CvvIcon";
+import {CvvIcon, UserIcon, CalenderIcon, CreditCardIcon } from "../icons";
 import Switch from "../Switch";
 import { useState } from "react";
 import Button from "../Button";
@@ -62,7 +59,7 @@ function AddCreditCard () {
     return(
         <AlertWrapper isOpen={addCreditCard}>
             <p className="text-lg px-4 text-grey-200 font-medium mb-6 sticky left-0">Enter Card Details</p>
-            <form className="px-3">
+            <form className="px-3" onSubmit={formik.handleSubmit}>
                 <div className="flex w-full justify-between items-center gap-4">
                     <FormInput 
                         type="text"
@@ -74,7 +71,7 @@ function AddCreditCard () {
                     <FormInput 
                         type="text"
                         name="cardNumber"
-                        Icon={CreditCard}
+                        Icon={CreditCardIcon}
                         label="Card Number"
                         formik={formik}
                     />
@@ -97,7 +94,7 @@ function AddCreditCard () {
                 </div>
 
                 <div className="my-5">
-                    <Switch isTrue={saveCard} handleClick={setSaveCard} label="Save this card for future purchase"/>
+                    <Switch isTrue={saveCard} handleClick={() => setSaveCard(state => !state)} label="Save this card for future purchase"/>
                 </div>
                 
                 <div className="flex w-10/12 mx-auto mt-9 items-center gap-5">

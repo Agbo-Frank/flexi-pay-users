@@ -1,18 +1,17 @@
-import Logo from '../../components/icons/logo';
-import PadLock from '../../components/icons/PadLock';
+import {Logo, PadLock} from '../components/icons';
 
 import { Link } from 'react-router-dom'
 
 import { IResetPassword } from './interface';
 
-import Button from '../../components/Button';
-import FormInput from '../../components/FormInput';
-import AuthenticationForm from '../../components/AuthenticationForm';
+import Button from '../components/Button';
+import FormInput from '../components/FormInput';
+import AuthenticationForm from '../components/AuthenticationForm';
 
 import { useFormik, FormikConfig } from 'formik';
 import * as Yup from 'yup';
 
-function ResetPassword() {
+export function ResetPassword() {
     let initialValues: IResetPassword = {
         password: '',
     }

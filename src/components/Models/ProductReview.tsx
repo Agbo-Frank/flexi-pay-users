@@ -20,10 +20,10 @@ function ProductReview(){
                 <div className="sticky top-0 left-0 bg-white">
                     <div className="flex w-11/12 mx-4">
                         <div 
-                        className={`w-1/2 my-4 ${!isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200'} border-solid  py-3 px-2 hover:bg-gray-100 cursor-pointer`}
+                        className={`w-1/2 my-4 ${!isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200'} border-solid  py-3 px-2 hover:bg-gray-100 cursor-pointer`}
                         onClick={() => setIsReport(false)}>Rate This Prodcuct</div>
                         <div 
-                        className={`w-1/2 text-right my-4 ${isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200'} hover:bg-gray-100 py-3 px-2 cursor-pointer`}
+                        className={`w-1/2 text-right my-4 ${isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200 '} hover:bg-gray-100 py-3 px-2 cursor-pointer`}
                         onClick={() => setIsReport(true)}>Report This Prodcuct</div>
                     </div>
 

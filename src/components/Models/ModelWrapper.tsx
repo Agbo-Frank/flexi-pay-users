@@ -10,8 +10,8 @@ function ModelWrapper({ children, isOpen, closeModal, size = "large" }: IModel):
       <div className={`relative block ${size === 'large' ? 'w-fp-500' : 'w-fp-450'} h-fp-80 bg-white rounded-3xl py-5 px-2 z-50 scrollbar`}>
           {children}
           <div 
-          className="absolute -top-10 -right-10 w-10 h-10 rounded-full bg-white flex justify-center items-center cursor-pointer"
-          onMouseEnter={() => setTimes('#FF5000')}
+          className="absolute -top-10 -right-10 w-10 h-10 rounded-full bg-white hover:bg-crimson flex justify-center items-center cursor-pointer"
+          onMouseEnter={() => setTimes('white')}
           onMouseLeave={() => setTimes("#A0A0A1")}
           onClick={closeModal}>
             <TimesIcons color={times} size="16"/>
