@@ -18,3 +18,21 @@ html{
 .card-shadow {
   box-shadow: 20px 50px rgba(25, 0, 254, 0.05)
 }
+
+.scrollbar::-webkit-scrollbar{
+  appearance: none;
+  width: 6px;
+}
+.scrollbar::-webkit-scrollbar-thumb{
+  background: #EDEEF0;
+  border-radius: 10px;
+}
+.processing{
+  background-color: #E78405;
+}
+.delivered{
+  background-color: #91CD5E;
+}
+.pending{
+  background-color: #FF5000;
+}

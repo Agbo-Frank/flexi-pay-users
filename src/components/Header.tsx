@@ -1,5 +1,5 @@
-import Bag from "./icons/Bag"
 import BellIcon from "./icons/Bell"
+import CartIcon from "./icons/CartIcon"
 import Logo from "./icons/logo"
 import MessageIcon from "./icons/MessageIcon"
 import ProfilBG from "./icons/ProfilBG"
@@ -24,7 +24,7 @@ function Header(){
                         <BellIcon size="20" color="#F9F8FF"/> 
                     </li>
                     <li className="w-11 h-11 bg-primary-dark-blue rounded-full flex justify-center items-center">
-                        <Bag size="20" color="#F9F8FF"/> 
+                        <CartIcon size="20" color="#F9F8FF"/> 
                     </li>
                 </ul>
                 <div className="flex justify-between items-center gap-4">
