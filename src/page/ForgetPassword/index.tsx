@@ -62,10 +62,10 @@ function ForgetPassword() {
 
                 <div className='flex justify-between items-center w-full'>
                     <Button outline={true} color="#FF5000">
-                        <p className='font-semibold text-sm'>Cancel</p>
+                        <p className='font-semibold text-sm mx-5'>Cancel</p>
                     </Button>
                     <Button type='submit' color="#FF5000">
-                        <p className='font-semibold text-sm'>Send Code</p>
+                        <p className='font-semibold text-sm mx-5'>Send Code</p>
                     </Button>
                 </div>
             </div>

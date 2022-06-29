@@ -27,7 +27,7 @@ html{
   background: #EDEEF0;
   border-radius: 10px;
 }
-.processing{
+.proccessing{
   background-color: #E78405;
 }
 .delivered{
@@ -35,4 +35,7 @@ html{
 }
 .pending{
   background-color: #FF5000;
+}
+.placed{
+  background-color: #A0A0A1;
 }
