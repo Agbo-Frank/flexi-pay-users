@@ -1,19 +1,11 @@
 import React, { useState } from "react";
-import Iicon from "./icons/interface";
-
-interface IInputProps {
-    Icon: React.FC<Iicon>;
-    type: string;
-    name: string;
-    label: string;
-    formik: any
-}
+import{ IInputProps } from './interface'
 
 function FormInput({ Icon, type, name, label, formik }: IInputProps): JSX.Element {
   let [focus, setFocus] = useState<boolean>(false)
   let [error, setError] = useState<boolean>(false)
   return (
-    <div className="relative">
+    <div className="relative w-full">
         <div 
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
@@ -23,7 +15,7 @@ function FormInput({ Icon, type, name, label, formik }: IInputProps): JSX.Elemen
             name={name} 
             placeholder={label} 
             className="w-4/6" 
-            {...formik.getFieldProps(name)}/>
+            {...formik.getFieldProps(name)}/> 
             <Icon  size='14' color={formik.errors[name] ? '#FF5000' :focus ? '#1900FE' : '#C4C4C4'}/>
         </div>
         {

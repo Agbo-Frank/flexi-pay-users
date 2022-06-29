@@ -54,16 +54,18 @@ function ResetPassword() {
             </div>
 
             <form className='my-10' onSubmit={formik.handleSubmit}>
-                <div className='flex justify-start items-start gap-5'>
+                <div className='flex justify-start items-start gap-5 w-7/12'>
                     <FormInput 
                     type='password' 
                     Icon={PadLock} 
                     name="password" 
                     label="Password"
                     formik={formik}/>
-                    <Button type='submit' color="#FF5000">
-                        <p className='text-white font-semibold text-sm mx-4'>Submit Code</p>
-                    </Button>
+                    <div className='w-3/12'>
+                        <Button type='submit' color="#FF5000">
+                            <p className='text-white font-semibold text-sm mx-4'>Submit Code</p>
+                        </Button>
+                    </div>
                 </div>
             </form>
         </div>

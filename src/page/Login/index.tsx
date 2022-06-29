@@ -56,7 +56,7 @@ function Login() {
             <small className='block mt-3 text-lg text-grey-300'>Log in to your account</small>
             </div>
 
-            <form className='my-10' onSubmit={formik.handleSubmit}>
+            <form className='my-10 w-10/12' onSubmit={formik.handleSubmit}>
             <div className='flex justify-start gap-3'>
                 <FormInput 
                 type='email' 
@@ -74,9 +74,11 @@ function Login() {
 
             <p className='text-sm mb-3'>Forgotten your password?   <Link to="/forget-password" className='text-crimson'>Reset password</Link></p>
 
-            <Button type='submit' color="#FF5000">
-                <p className='text-white font-semibold text-sm mx-6'>Login</p>
-            </Button>
+            <div className='w-3/12'>
+                <Button type='submit' color="#FF5000">
+                    <p className='text-white font-semibold text-sm'>Login</p>
+                </Button>
+            </div>
             </form>
         </div>
     </AuthenticationForm>
