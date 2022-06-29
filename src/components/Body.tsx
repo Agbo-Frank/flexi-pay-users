@@ -1,9 +1,15 @@
 import React from "react";
 
-function Body({ children }: React.PropsWithChildren): JSX.Element {
+interface IBodyProps extends  React.PropsWithChildren{
+  bgColor: string
+}
+
+function Body({ children, bgColor }: IBodyProps): JSX.Element {
   return (
-    <div className='w-screen xl:w-fp-desk mx-auto'>
-      {children}
+    <div className={`mx-auto ${bgColor}`}>
+      {/* <div className={`w-screen mx-auto xl:w-fp-desk ${bgColor}`}> */}
+        {children}
+      {/* </div> */}
     </div>
   );
 }

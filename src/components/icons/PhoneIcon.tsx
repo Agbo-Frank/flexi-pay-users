@@ -1,4 +1,3 @@
-import React from "react";
 import Iicon from "./interface";
 
 function PhoneIcon({ size, color}: Iicon): JSX.Element {

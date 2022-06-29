@@ -53,7 +53,7 @@ function ResetPassword() {
                 <small className='text-lg text-primary-dark-blue'>Your email: mr..........@gmail.com</small>
             </div>
 
-            <form className='my-10'>
+            <form className='my-10' onSubmit={formik.handleSubmit}>
                 <div className='flex justify-start items-start gap-5'>
                     <FormInput 
                     type='password' 
@@ -61,7 +61,7 @@ function ResetPassword() {
                     name="password" 
                     label="Password"
                     formik={formik}/>
-                    <Button color="#FF5000">
+                    <Button type='submit' color="#FF5000">
                         <p className='text-white font-semibold text-sm'>Submit Code</p>
                     </Button>
                 </div>

@@ -4,7 +4,7 @@ import AuthenticationImage from '../asset/authentication_image.png'
 
 function AuthenticationForm({ children }: React.PropsWithChildren) {
   return (
-    <Body>
+    <Body bgColor='bg-white'>
       <div className='w-full h-full flex justify-between'>
         <div className='w-5/12 h-full'>
           <img src={AuthenticationImage} alt='authentication-image' className='object-cover w-full h-full'/>
