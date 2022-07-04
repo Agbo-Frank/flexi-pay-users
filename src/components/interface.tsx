@@ -2,7 +2,8 @@ import { Dispatch, SetStateAction } from "react"
 
 export default interface Iicon {
     size: string;
-    color: string
+    color: string;
+    line?: boolean
 }
 
 export interface ISwitch {
@@ -20,7 +21,7 @@ export interface IButtonProps extends  React.PropsWithChildren{
 }
 
 export interface IInputProps {
-    Icon: React.FC<Iicon>;
+    Icon?: React.FC<Iicon>;
     type: string;
     name: string;
     label: string;
@@ -47,5 +48,9 @@ export interface ICreditCard {
     cardNumber: string;
     expiryDate: string;
     cvv: string;
+}
+
+export interface ICreditCardComponent {
+    type: 'master' | 'visa'
 }
   

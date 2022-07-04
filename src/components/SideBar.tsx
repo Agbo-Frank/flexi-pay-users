@@ -5,7 +5,7 @@ import CartIcon from "./icons/CartIcon";
 import DashboardIcon from "./icons/DashboardIcon";
 import GearIcon from "./icons/GearIcon";
 import HeadPhoneIcon from "./icons/HeadPhoneIcon";
-import {HeartIcon} from "./icons";
+import {HeartIcon, SubscriptionIcon} from "./icons";
 import LogOutIcon from "./icons/LogOutIcon";
 import ProfilBG from "./icons/ProfilBG";
 import WalletIcon from "./icons/WalletIcon";
@@ -81,6 +81,10 @@ function SideBar(): JSX.Element {
             Icon={BagIcon} name="order" link="order"
             handleClick={setLocation}/>
 
+            <SideBarItem 
+            Icon={SubscriptionIcon} name="subscription" link="subscription"
+            handleClick={setLocation}/>
+
         </div>
         <svg className="my-7 mx-auto" width="171" height="2" viewBox="0 0 171 2" fill="none" xmlns="http://www.w3.org/2000/svg">
             <line x1="1" y1="1" x2="170" y2="1" stroke="#A0A0A1" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 8"/>
@@ -99,7 +103,7 @@ function SideBar(): JSX.Element {
             handleClick={setLocation}/>
 
         </div>
-        <div className="bg-primary-dark-blue py-6 px-3 rounded-3xl flex gap-3 text-white mt-10 justify-center mr-2 ml-5">
+        <div className="bg-primary-dark-blue py-6 px-3 rounded-3xl flex gap-3 text-white mt-24 justify-center mr-2 ml-5">
             <LogOutIcon size="20" color="white"/>
             <p>Logout</p>
         </div>

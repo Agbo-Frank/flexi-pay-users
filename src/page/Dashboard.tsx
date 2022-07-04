@@ -53,13 +53,13 @@ export  function Dashboard (): JSX.Element {
                 <div className="flex items-center justify-between my-7 gap-5">
                     <div className="bg-white rounded-4xl p-5 w-1/2">
                         <h3 className="text-primary-dark-blue text-lg font-semibold">Account Details</h3>
-                        <div className="rounded-4xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-11/12">
+                        <div className="rounded-4xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-full">
                             <div className="text-grey-200 leading-9 capitalize">
                                 <p>mr John dole</p>
                                 <p>09093284414</p>
                                 <p>mrjohndoe@gmail.com</p>
                             </div>
-                            <div className="mt-14 w-8/12">
+                            <div className="mt-14 w-6/12">
                                 <Button type="button" color="#FF5000" outline={true}>
                                     <div className="flex gap-3 items-center">
                                         <EditIcon size="25" color="#FF5000"/>
@@ -71,13 +71,13 @@ export  function Dashboard (): JSX.Element {
                     </div>
                     <div className="bg-white rounded-4xl p-5 w-1/2">
                         <h3 className="text-primary-dark-blue text-lg font-semibold">Account Details</h3>
-                        <div className="rounded-4xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-11/12">
+                        <div className="rounded-4xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-full">
                             <div className="text-grey-200 leading-9 capitalize">
                                 <p>mr John dole</p>
                                 <p>09093284414</p>
                                 <p>mrjohndoe@gmail.com</p>
                             </div>
-                            <div className="mt-14 w-8/12">
+                            <div className="mt-14 w-6/12">
                                 <Button type="button" color="#FF5000" outline={true}>
                                     <div className="flex gap-3 items-center">
                                         <EditIcon size="25" color="#FF5000"/>

@@ -1,7 +1,7 @@
 import { ISelectInput } from "./interface"
 
 
-function SelectInput ({ label }: ISelectInput){
+export function SelectInput ({ label }: ISelectInput){
     return(
         <div className={`flex flex-col justify-between rounded-full border  border-solid focus-within:border-primary-blue border-grey-400 py-3 px-5 mb-4 w-full items-center relative`}>
             <label htmlFor="select" className="w-full">

@@ -27,6 +27,9 @@ html{
   background: #EDEEF0;
   border-radius: 10px;
 }
+.scrollbar-hidden::-webkit-scrollbar{
+  display: none;
+}
 .proccessing{
   background-color: #E78405;
 }

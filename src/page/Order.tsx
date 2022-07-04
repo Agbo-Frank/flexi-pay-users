@@ -5,7 +5,6 @@ import {
     DocIcon, StarIcon
 } from "../components/icons"
 
-import ItemWrapper from "../components/ItemWrapper"
 import Empty from "../components/Empty"
 import Button from "../components/Button"
 
@@ -16,6 +15,7 @@ import { useState, Dispatch, SetStateAction } from "react"
 
 import { useDispatch } from 'react-redux'
 import { seeOrderDetails, trackOrder, toggleProductReview } from "../redux/slice/modalSlice"
+import { ProgressBar } from "../components"
 
 
 
@@ -28,17 +28,6 @@ interface IOrderModel {
 interface IOrderDetails {
     type: 'pending' | 'delivered' | 'processing',
     openModel?: Dispatch<SetStateAction<IOrderModel>>
-}
-
-function Details({ type }: IOrderDetails){
-    return(
-        <div className="flex flex-col w-11/12 h-full items-stretch justify-evenly">
-            <p>43" inches D-LED TV +1 years Warranty - Black</p>
-            <small className="text-grey-200">orderId: 345679</small>
-            <p className={`${ type } text-white p-1 px-2 rounded-sm uppercase text-xs w-fit`}>{ type }</p>
-            {/* <p className="font-bold text-primary-dark-blue">150, 000</p> */}
-        </div>
-    )
 }
 
 function Buttons ({type, openModel}: IOrderDetails): JSX.Element{
@@ -87,11 +76,23 @@ function Buttons ({type, openModel}: IOrderDetails): JSX.Element{
 
 function Order ({type, openModel}: IOrderDetails) {
     return(
-        <ItemWrapper 
-            img={TV} 
-            lower={<Buttons type={type} openModel={openModel}/>}
-            upper={<Details type={type} />}
-        />     
+        <div className="flex justify-between rounded-2xl w-full shadow hover:shadow-lg border hover:border-0 border-solid border-grey-100 items-center px-6 py-6 mb-7">
+            <div className="flex gap-4 items-stretch">
+                <img src={TV} alt="" />
+                <div>
+                    <div className="flex flex-col w-11/12 h-full items-stretch justify-evenly">
+                        <p>43" inches D-LED TV +1 years Warranty - Black</p>
+                        <small className="text-grey-200">orderId: 345679</small>
+                        <p className={`${ type } text-white p-1 px-2 rounded-sm uppercase text-xs w-fit`}>{ type }</p>
+                        <ProgressBar width="90%"/>
+                        {/* <p className="font-bold text-primary-dark-blue">150, 000</p> */}
+                    </div>
+                </div>
+            </div>
+            <div className="flex flex-col gap-3">
+                <Buttons type={type} openModel={openModel}/>
+            </div>
+        </div>   
     )
 }
 

@@ -1,4 +1,5 @@
 export default interface Iicon {
     size: string;
-    color: string
+    color: string;
+    line?: boolean
 }

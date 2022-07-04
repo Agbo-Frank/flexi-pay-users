@@ -5,5 +5,7 @@ export interface IModalReducer {
     trackOrder: boolean,
     productReview: boolean,
     addAddress: boolean,
-    addCreditCard: boolean
+    addCreditCard: boolean,
+    withdrawalForm: boolean,
+    editProfile: boolean
 }

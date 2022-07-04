@@ -4,11 +4,14 @@ import { MailIcon, PhoneIcon, UserIcon } from '../icons'
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useSelector, useDispatch } from "react-redux";
 
 import { Iuser } from "../../interface";
 import FormInput from "../FormInput";
 import SelectInput from "../SelectInput";
 import Button from "../Button";
+import { toggleEditProfile } from '../../redux/slice/modalSlice'
+import { RootState } from "../../redux/store";
 
 
 function EditProfile(){
@@ -72,8 +75,11 @@ function EditProfile(){
         validationSchema: validationSchema2, 
         onSubmit: onSubmit2
     })
+
+    let editProfile = useSelector((state: RootState) => state.modal.editProfile)
+    let dispatch = useDispatch()
     return(
-        <ModelWrapper isOpen={true}>
+        <ModelWrapper isOpen={editProfile} closeModal={() => dispatch(toggleEditProfile())}>
             <div className="h-full overflow-y-auto scrollbar relative">
                 <div className="sticky top-0 left-0 z-20 bg-white flex">
                     <div 

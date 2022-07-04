@@ -1,6 +1,6 @@
 import{ ISwitch } from "./interface"
 
-function Switch({label, handleClick, isTrue}: ISwitch) {
+export function Switch({label, handleClick, isTrue}: ISwitch) {
     return(
         <div className='flex items-center gap-3' onClick={handleClick}>
             <div className={`w-8 rounded-full bg-primary-blue p-0.5 ${isTrue ? 'bg-primary-blue' : 'bg-grey-400'}`}>

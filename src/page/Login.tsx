@@ -24,11 +24,11 @@ export function Login() {
         return Yup.object({
             password: Yup
                         .string()
-                        .required('password field is Required')
+                        .required('password field is required')
                         .min(6, 'Must be 6 characters or more'),
             email: Yup
                     .string()
-                    .required('email field isRequired')
+                    .required('email field is required')
                     .email('Invalid email address'),
         })
     }

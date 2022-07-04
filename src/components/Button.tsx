@@ -1,7 +1,7 @@
 import React from 'react';
 import { IButtonProps } from './interface'
 
-function Button({ children, color, type = 'button', outline = false, onClick, disable = false }: IButtonProps): JSX.Element {
+export function Button({ children, color, type = 'button', outline = false, onClick, disable = false }: IButtonProps): JSX.Element {
     return (
     <button 
     type={type}

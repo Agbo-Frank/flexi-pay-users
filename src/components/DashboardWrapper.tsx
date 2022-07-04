@@ -14,6 +14,7 @@ import Button from "./Button";
 import AddAddressModel from "./Models/AddAddressModel";
 import AddCreditCard from "./Models/AddCreditcard";
 import EditProfile from "./Models/EditProfile";
+import Toast from "./Toast";
 
 
 function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
@@ -23,7 +24,7 @@ function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
                 <OrderDetails />
                 <ProductReview />
                 <Tracker />
-                {/* <EditProfile /> */}
+                <EditProfile />
 
                 {/* <Alert message="You’re About to Remove 43 Inches D-LED TV +1 Years Warranty - Black From Your Saved Items" isError>
                     <div className="flex gap-6">
@@ -38,10 +39,14 @@ function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
                 
                 <Header />
                 <Categories />
-                <ul className="flex xl:px-fp-5 2xl:px-fp-10 my-6 text-sm">
-                    <li className="text-grey-700">Home /</li> 
-                    <li> Overview</li>
-                </ul>
+                <div className="w-full px-6 xl:px-fp-5 2xl:px-fp-10 flex justify-between items-center">
+                    <ul className="flex my-6 text-sm">
+                        <li className="text-grey-700">Home /</li> 
+                        <li> Overview</li>
+                    </ul>
+
+                    <Toast />
+                </div>
                 <div 
                 className="px-6 xl:px-fp-5 2xl:px-fp-10 flex justify-between items-stretch overflow-y-hidden">
                     <SideBar />

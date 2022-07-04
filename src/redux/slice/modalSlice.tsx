@@ -6,7 +6,9 @@ let initialState: IModalReducer = {
   trackOrder: false,
   productReview: false,
   addAddress: false,
-  addCreditCard: false
+  addCreditCard: false,
+  withdrawalForm: false,
+  editProfile: false
 }
 
 export const modalSlice = createSlice({
@@ -27,6 +29,12 @@ export const modalSlice = createSlice({
     },
     toggleAddCreditcard: (state) => {
       state.addCreditCard = !state.addCreditCard
+    },
+    toggleWithdrawalForm: (state) => {
+      state.withdrawalForm = !state.withdrawalForm
+    },
+    toggleEditProfile: (state) => {
+      state.editProfile = !state.editProfile
     }
   },
 })
@@ -36,7 +44,9 @@ export const {
   trackOrder, 
   toggleProductReview, 
   toggleAddAddress,
-  toggleAddCreditcard 
+  toggleAddCreditcard,
+  toggleWithdrawalForm,
+  toggleEditProfile 
 } = modalSlice.actions
 
 export default modalSlice.reducer

@@ -22,13 +22,13 @@ function CheckoutCard(){
 }
 
 
-function CheckoutSummary (){
+export function CheckoutSummary (){
     return(
-        <div className="sticky top-5 bg-white min-h-400 rounded-4xl py-6 px-6 border w-full self-start">
+        <div className="bg-white min-h-400 rounded-4xl py-6 px-6 border w-full self-start">
             <h2 className="text-lg text-primary-dark-blue font-semibold">Order Summary</h2>
 
             <div className="my-4 border-b border-solid border-grey-100">
-                <CheckoutCard />
+                <CheckoutCard /> 
                 <CheckoutCard />
                 <CheckoutCard />
             </div>

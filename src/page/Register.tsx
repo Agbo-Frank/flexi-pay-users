@@ -9,10 +9,12 @@ import { useState } from 'react';
 import { IRegister } from './interface'
 import { useFormik, FormikConfig } from 'formik';
 import * as Yup from 'yup';
+import Slide from 'react-reveal/Slide'
+
 import Switch from '../components/Switch';
 
 export function Register() {
-    let [hasReferral, setHasReferral] = useState<boolean>(true)
+    let [hasReferral, setHasReferral] = useState<boolean>(false)
 
     let initialValues: IRegister = {
         firstName: '',
@@ -110,20 +112,25 @@ export function Register() {
                 formik={formik}/>
             </div>
 
-            <div className={`mt-4 ${hasReferral && 'mb-6'}`}>
-                <Switch 
-                    label='Do you have a referal code?'
-                    isTrue={hasReferral}
-                    handleClick={() => setHasReferral(state => !state)}
-                />
-                <div className={`w-2/6 mt-4 transition-display duration-1000 ${hasReferral ? 'hidden' : ' block'}`}>
-                    <FormInput 
-                    type='text' 
-                    Icon={UserIconPlus} 
-                    name="referral" 
-                    label="Referral Code" 
-                    formik={formik}/>
+            <div className={`relative my-4 ${hasReferral ? 'my-4' : 'mt-4'}`}>
+                <div className=' z-10 bg-white'>
+                    <Switch 
+                        label='Do you have a referal code?'
+                        isTrue={hasReferral}
+                        handleClick={() => setHasReferral(state => !state)}
+                    />
                 </div>
+                
+                <Slide top duration={300}>
+                    <div className={`w-2/6 mt-4 transition-all duration-75 ${hasReferral ? 'block' : 'hidden'} z-0`}>
+                        <FormInput 
+                        type='text' 
+                        Icon={UserIconPlus} 
+                        name="referral" 
+                        label="Referral Code" 
+                        formik={formik}/>
+                    </div>
+                </Slide>
             </div> 
 
             <div className='w-3/12'>

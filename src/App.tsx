@@ -4,8 +4,10 @@ import {
   Carts, CheckOut, 
   Login, Orders, Dashboard,
   ForgetPassword, Register,
-  ResetPassword, SavedItems 
+  ResetPassword, SavedItems, Wallet 
 } from './page';
+import Contact from './page/Contact';
+import Profile from './page/Profile';
 
 function App() {
   return (
@@ -19,7 +21,9 @@ function App() {
       <Route path='/order' element={<Orders />} />
       <Route path='/saved-items' element={<SavedItems />} />
       <Route path='/checkout' element={<CheckOut />} />
-      <Route path='/wallet' element={<CheckOut />} />
+      <Route path='/wallet' element={<Wallet/>} />
+      <Route path='/support' element={<Contact />} />
+      <Route path='/profile' element={<Profile />} />
     </Routes>
   );
 }

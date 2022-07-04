@@ -14,6 +14,11 @@ module.exports = {
           'orange-100': '#E78405',
           'black': 'rgba(0, 0, 0, 0.6)',
           'orange-300': '#FFF9F7',
+          'orange-400': 'rgba(255, 214, 0, 0.2)'
+        },
+        green: {
+          100: '#91CD5E',
+          200: 'rgba(145, 205, 94, 0.5)'
         },
         grey: {
           100: '#E8E5FF',
@@ -24,7 +29,9 @@ module.exports = {
           600: '#C9C9D0',
           700: '#A0A0A1',
           800: '#999aa8',
-          900: '#F9F8FF'
+          900: '#F9F8FF',
+          1000: '#C4C4C4',
+          1100: '#EDEEF0'
         },
         crimson: '#FF5000'
       },
@@ -42,7 +49,7 @@ module.exports = {
         '500': '500px',
         'fp-450': '440px',
         'fp-500': '550px',
-        'fp-700': '680px'
+        'fp-700': '680px',
       },
       height: {
         'fp-desk': '1280px',
