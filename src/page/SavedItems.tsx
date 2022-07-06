@@ -2,13 +2,12 @@ import Button from "../components/Button"
 import ItemWrapper from "../components/ItemWrapper"
 import Empty from "../components/Empty"
 
-import CartIcon from "../components/icons/CartIcon"
-import TrashIcon from "../components/icons/TrashIcon"
+import {CartIcon, TrashIcon} from "../components/icons"
 
 import TV from '../asset/monitor.png'
 import DashboardWrapper from "../components/DashboardWrapper"
 
-function SavedItem () {
+export function SavedItem () {
     return(
         <ItemWrapper 
         img={TV} 
@@ -29,9 +28,9 @@ function SavedItem () {
             </>
         }
         upper={
-            <div className="flex flex-col w-9/12 h-full items-stretch">
+            <div className="flex flex-col w-10/12 h-full items-stretch justify-evenly">
                 <p className="w-9/12 text-grey-200">43" inches D-LED TV +1 years Warranty - Black</p>
-                <p className="font-bold text-primary-dark-blue text-sm">150, 000</p>
+                <p className="font-semibold text-primary-dark-blue ">₦ 150, 000</p>
             </div>
         }
         />
@@ -41,7 +40,7 @@ function SavedItem () {
 }
 
 
-function SavedItems (){
+export function SavedItems (){
     return(
         <DashboardWrapper>
             <div className="bg-white w-full min-h-400 border rounded-4xl py-5 px-4">

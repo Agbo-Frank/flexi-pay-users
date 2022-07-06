@@ -8,7 +8,7 @@ export default interface Iicon {
 export interface ISwitch {
     label: string,
     isTrue: boolean,
-    handleClick: Dispatch<SetStateAction<boolean>>
+    handleClick: () => any
 }
 
 export interface IButtonProps extends  React.PropsWithChildren{

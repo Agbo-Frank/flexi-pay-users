@@ -13,6 +13,7 @@ import Alert from "./Models/Alert";
 import Button from "./Button";
 import AddAddressModel from "./Models/AddAddressModel";
 import AddCreditCard from "./Models/AddCreditcard";
+import EditProfile from "./Models/EditProfile";
 
 
 function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
@@ -22,6 +23,7 @@ function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
                 <OrderDetails />
                 <ProductReview />
                 <Tracker />
+                {/* <EditProfile /> */}
 
                 {/* <Alert message="You’re About to Remove 43 Inches D-LED TV +1 Years Warranty - Black From Your Saved Items" isError>
                     <div className="flex gap-6">
@@ -40,9 +42,10 @@ function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
                     <li className="text-grey-700">Home /</li> 
                     <li> Overview</li>
                 </ul>
-                <div className="flex px-6 justify-between xl:px-fp-5 2xl:px-fp-10">
+                <div 
+                className="px-6 xl:px-fp-5 2xl:px-fp-10 flex justify-between items-stretch overflow-y-hidden">
                     <SideBar />
-                    <div className="h-full w-9/12 overflow-y-hidden ">
+                    <div className="w-9/12 h-full">
                         {children}
                     </div>
                 </div>

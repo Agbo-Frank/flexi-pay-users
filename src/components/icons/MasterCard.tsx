@@ -1,6 +1,6 @@
 
 
-function MasterCardIcon({size}: {size: string}){
+export function MasterCardIcon({size}: {size: string}){
     return(
         <svg width={size} height="13" viewBox="0 0 21 13" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7.38867 1.33862H12.8651V11.1789H7.38867V1.33862Z" fill="#FF5F00"/>

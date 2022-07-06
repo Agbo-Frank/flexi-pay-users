@@ -1,6 +1,6 @@
 import React from "react";
 
-function Logo(): JSX.Element {
+export function Logo(): JSX.Element {
   return (
     <svg width="138" height="40" viewBox="0 0 138 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M34.3545 6.55962L32.5968 0C28.3267 2.04687 24.8998 4.94728 22.7765 8.36702C21.2427 10.8376 20.3889 13.5789 20.3889 16.4651C20.3889 19.1353 21.1198 21.6816 22.4439 24.004C25.8608 29.9974 33.2292 34.4999 42.1883 35.7954L39.6096 26.1714C33.4109 25.927 28.0614 23.9894 25.0725 21.1927C17.6351 15.0531 26.6156 7.07367 34.3545 6.55931V6.55962Z" fill="#FF5000"/>

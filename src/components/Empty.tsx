@@ -1,6 +1,6 @@
 import Button from "./Button";
 import CartIcon from "./icons/CartIcon";
-import HeartIcon from "./icons/HeartIcon"
+import {HeartIcon} from "./icons"
 import Iicon from "./icons/interface";
 
 interface IEmptyProps {

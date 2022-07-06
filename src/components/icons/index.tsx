@@ -1,11 +1,37 @@
-import BagIcon from "./Bag";
-import BellIcon from "./Bell";
-import CalenderIcon from "./CalenderIcon";
-import CartIcon from "./CartIcon";
-
-export default {
-    BagIcon: BagIcon,
-    BellIcon: BellIcon,
-    CalenderIcon: CalenderIcon,
-    CartIcon: CartIcon
-}
+export * from "./Bag";
+export * from "./Bell";
+export * from "./CalenderIcon";
+export * from "./CartIcon";
+export * from "./CloseEyesIcon"
+export * from "./CreditCardicon";
+export * from "./CvvIcon";
+export * from "./DashboardIcon";
+export * from "./DocIcon";
+export * from "./EditIcon";
+export * from "./ExclamationIcon";
+export * from "./EyesIcon"
+export * from "./GearIcon";
+export * from "./HeadPhoneIcon";
+export * from "./HeartIcon";
+export * from "./logo";
+export * from "./LogOutIcon";
+export * from "./MailIcon";
+export * from "./MarkCircleIcon";
+export * from "./MasterCard";
+export * from "./MenuIcon";
+export * from "./MessageIcon";
+export * from "./MinusIcon";
+export * from "./NoLocationIcon";
+export * from "./NoWallet";
+export * from "./PadLock";
+export * from "./PhoneIcon";
+export * from "./PlusIcon";
+export * from "./ProfilBG";
+export * from "./SearchIcon";
+export * from "./StarIcon";
+export * from "./TimesIcon";
+export * from "./TrackIcon";
+export * from './TrashIcon'
+export * from "./UserIconPlus";
+export * from "./UserIcon";
+export * from "./WalletIcon";

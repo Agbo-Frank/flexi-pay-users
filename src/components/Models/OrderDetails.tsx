@@ -27,12 +27,14 @@ function OrderDetails(){
                                 <p className="font-bold text-primary-dark-blue text-xs">150, 000</p>
                             </div>
                         </div>
-                        <Button color="#FF5000">
-                            <div className="flex items-center gap-2">
-                                <BagIcon color="white" size="15"/>
-                                <p className="text-sm">Re-Order</p>
-                            </div>
-                        </Button>
+                        <div className="w-4/12">
+                            <Button color="#FF5000">
+                                <div className="flex items-center gap-2">
+                                    <BagIcon color="white" size="15"/>
+                                    <p className="text-sm">Re-Order</p>
+                                </div>
+                            </Button>
+                        </div>
                     </div>
                 </div>
                 
@@ -50,6 +52,7 @@ function OrderDetails(){
                         <p>Total: 150,000</p>
                         <p>Order Placed: 14-06-2022</p>
                     </div>
+                    
                     <div className="flex justify-between gap-5 mb-4">
                         <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-2xl w-1/2 leading-7">
                             <div className="leading-7">
