@@ -1,10 +1,10 @@
 export interface IRegister {
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     email: string;
     password: string;
-    cPassword: string;
-    phoneNumber: string
+    password_confirmation: string;
+    phone_number: string
 }
 
 export interface ILogin {

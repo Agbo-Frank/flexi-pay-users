@@ -1,13 +1,12 @@
-import { Logo, UserIcon, MailIcon, PadLock, PhoneIcon, UserIconPlus } from '../components/icons';
+import { Logo, UserIcon, MailIcon, PadLock, PhoneIcon, UserIconPlus, Spinner } from '../components/icons';
 
-import Button from '../components/Button';
-import FormInput from '../components/FormInput';
-import AuthenticationForm from '../components/AuthenticationForm'
+import {Button, FormInput, AuthenticationForm} from '../components';
+import { useRegisterMutation } from '../redux/slice/Auth'
 
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
 import { IRegister } from './interface'
-import { useFormik, FormikConfig } from 'formik';
+import { useFormik, FormikConfig, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import Slide from 'react-reveal/Slide'
 
@@ -15,42 +14,50 @@ import Switch from '../components/Switch';
 
 export function Register() {
     let [hasReferral, setHasReferral] = useState<boolean>(false)
+    let [register, { isLoading: loading, data }] =  useRegisterMutation()
 
     let initialValues: IRegister = {
-        firstName: '',
-        lastName: '',
+        first_name: '',
+        last_name: '',
         email: '',
         password: '',
-        cPassword: '',
-        phoneNumber: ''
+        password_confirmation: '',
+        phone_number: ''
     }
 
-    function onSubmit (value: IRegister){
-        console.log(value)
+    async function onSubmit (value: IRegister, formikHelpers: FormikHelpers<IRegister | any>){
+        try{
+            let data = await register(value).unwrap()
+            console.log(data)
+        }
+        catch(err){
+            if(err){
+                let error: any = err
+                formikHelpers.setErrors(error.data.errors)
+            }
+        }
     }
     let validationSchema = () => {
         return Yup.object({
-            firstName: Yup.string().required('first name field is Required'),
-            lastName: Yup.string().required('last name field is Required'),
+            first_name: Yup.string().required('first name field is Required'),
+            last_name: Yup.string().required('last name field is Required'),
             password: Yup
                         .string()
                         .required('password field is Required')
                         .min(6, 'Must be 6 characters or more'),
-            cPassword: Yup.string().required('Please confirm password'),
+            password_confirmation: Yup.string().required('Please confirm password'),
             email: Yup
                     .string()
                     .required('email field isRequired')
                     .email('Invalid email address'),
-            phoneNumber: Yup.string().required('phone number field is Required'),
+            phone_number: Yup.string().required('phone number field is Required'),
         })
     }
 
     const formik: FormikConfig<IRegister>  | any= useFormik({ 
         initialValues, 
         validationSchema, 
-        onSubmit: (value) => {
-            console.log(value)
-        }
+        onSubmit
     })
   return (
     <AuthenticationForm>
@@ -67,19 +74,19 @@ export function Register() {
             <h2 className='text-primary-dark-blue font-bold text-4xl'>Welcome to FlexiPay</h2>
             <small className='block mt-3 text-lg text-grey-300'>Register your account</small>
             </div>
-
+            
             <form className='my-12 w-10/12' onSubmit={formik.handleSubmit}>
             <div className='flex justify-start gap-3'>
                 <FormInput 
                 type='text' 
                 Icon={UserIcon} 
-                name="firstName" 
+                name="first_name" 
                 label="First name"
                 formik={formik}/>
                 <FormInput 
                 type='text' 
                 Icon={UserIcon} 
-                name="lastName" 
+                name="last_name" 
                 label="Last name"
                 formik={formik}/>
             </div>
@@ -93,7 +100,7 @@ export function Register() {
                 <FormInput 
                 type='text' 
                 Icon={PhoneIcon} 
-                name="phoneNumber" 
+                name="phone_number" 
                 label="Phone Number"
                 formik={formik}/>
             </div>
@@ -107,7 +114,7 @@ export function Register() {
                 <FormInput 
                 type='password' 
                 Icon={PadLock} 
-                name="cPassword" 
+                name="password_confirmation" 
                 label="Confirm Password"
                 formik={formik}/>
             </div>
@@ -135,7 +142,13 @@ export function Register() {
 
             <div className='w-3/12'>
                 <Button type='submit' color="#FF5000">
-                    <p className='text-white font-semibold text-sm'>Register</p>
+                    <div className='flex items-center gap-3'>
+                        {
+                            loading ? 
+                            <div className='w-5 h-5'><Spinner /></div> :
+                            <p className='text-white font-semibold text-sm'>Register</p> 
+                        }
+                    </div>
                 </Button>
             </div>
             </form>

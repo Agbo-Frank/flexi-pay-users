@@ -1,24 +1,36 @@
-import { Logo, MailIcon, PadLock } from '../components/icons';
+import { Logo, MailIcon, PadLock, Spinner } from '../components/icons';
 
-import Button from '../components/Button';
-import FormInput from '../components/FormInput';
-import AuthenticationForm from '../components/AuthenticationForm';
+import {Button, FormInput, AuthenticationForm} from '../components';
 
 import { ILogin } from './interface'
+import { useLoginMutation } from '../redux/slice/Auth'
 
-import { useFormik } from 'formik';
+import { useFormik, FormikHelpers } from 'formik';
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup';
 
 export function Login() {
+    let [login, { isLoading: loading, data, error }] =  useLoginMutation()
+    console.log(data, error)
 
     let initialValues: ILogin = {
         email: '',
         password: ''
     }
 
-    function onSubmit (value: ILogin){
-        console.log(value)
+    async function onSubmit (value: any, formikHelpers: FormikHelpers<ILogin| any>){
+        try{
+            console.log(value)
+            let data = await login(value).unwrap()
+            console.log(data)
+        }
+        catch(err){
+            console.log(err)
+            if(err){
+                let error: any = err
+                formikHelpers.setErrors(error.data.errors)
+            }
+        }
     }
     let validationSchema = () => {
         return Yup.object({
@@ -53,7 +65,8 @@ export function Login() {
             <h2 className='text-primary-dark-blue font-bold text-4xl'>Hi, You’ve Been Missed</h2>
             <small className='block mt-3 text-lg text-grey-300'>Log in to your account</small>
             </div>
-
+            {/* {data && <p>{data}</p>} */}
+            {/* {error && <p>{error}</p>} */}
             <form className='my-10 w-10/12' onSubmit={formik.handleSubmit}>
             <div className='flex justify-start gap-3'>
                 <FormInput 
@@ -74,7 +87,13 @@ export function Login() {
 
             <div className='w-3/12'>
                 <Button type='submit' color="#FF5000">
-                    <p className='text-white font-semibold text-sm'>Login</p>
+                    <div className='flex items-center gap-3'>
+                        {
+                            loading ? 
+                            <div className='w-5 h-5'><Spinner /></div>: 
+                            <p className='text-white font-semibold text-sm'>Login</p>
+                        }
+                    </div>
                 </Button>
             </div>
             </form>

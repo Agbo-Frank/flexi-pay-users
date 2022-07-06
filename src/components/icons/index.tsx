@@ -34,6 +34,7 @@ export * from  "./PlaneIcon"
 export * from "./PlusIcon";
 export * from "./ProfilBG";
 export * from "./SearchIcon";
+export * from './Spinner'
 export * from "./StarIcon";
 export * from "./SubscriptionIcon"
 export * from "./TimesIcon";

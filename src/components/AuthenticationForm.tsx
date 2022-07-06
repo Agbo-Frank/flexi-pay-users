@@ -2,7 +2,7 @@ import React from 'react';
 import Body from '../components/Body';
 import AuthenticationImage from '../asset/authentication_image.png'
 
-function AuthenticationForm({ children }: React.PropsWithChildren) {
+export function AuthenticationForm({ children }: React.PropsWithChildren) {
   return (
     <Body bgColor='bg-white'>
       <div className='w-full h-full flex justify-between'>

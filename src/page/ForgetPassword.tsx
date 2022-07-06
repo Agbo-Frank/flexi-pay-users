@@ -1,22 +1,36 @@
-import { Logo, MailIcon } from '../components/icons';
+import { Logo, MailIcon, Spinner } from '../components/icons';
 import AuthenticationForm from '../components/AuthenticationForm';
 
 import FormInput from '../components/FormInput';
 import Button from '../components/Button';
+import { useForgotPasswordMutation } from '../redux/slice/Auth'
 
 import { IForgetPassword } from './interface'
 
 import { Link } from 'react-router-dom'
-import { useFormik, FormikConfig } from 'formik';
+import { useFormik, FormikConfig, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
 export function ForgetPassword() {
+    let [sendRequest, { isLoading: loading }] =  useForgotPasswordMutation()
+
     let initialValues: IForgetPassword = {
         email: '',
     }
 
-    function onSubmit (value: IForgetPassword){
-        console.log(value)
+    async function onSubmit (value: IForgetPassword, formikHelpers: FormikHelpers<IForgetPassword | any>){
+        try{
+            console.log(value)
+            let data = await sendRequest(value).unwrap()
+            console.log(data)
+        }
+        catch(err){
+            console.log(err)
+            if(err){
+                let error: any = err
+                formikHelpers.setErrors(error.data.errors)
+            }
+        }
     }
     let validationSchema = () => {
         return Yup.object({
@@ -30,9 +44,7 @@ export function ForgetPassword() {
     const formik: FormikConfig<IForgetPassword>  | any= useFormik({ 
         initialValues, 
         validationSchema, 
-        onSubmit: (value) => {
-            console.log(value)
-        }
+        onSubmit
     })
   return (
     <AuthenticationForm>
@@ -64,7 +76,13 @@ export function ForgetPassword() {
                             <p className='font-semibold text-sm mx-5'>Cancel</p>
                         </Button>
                         <Button type='submit' color="#FF5000">
-                            <p className='font-semibold text-sm mx-5'>Send Code</p>
+                            <div className='flex items-center gap-3'>
+                                {
+                                    loading ? 
+                                    <div className='w-5 h-5'><Spinner /></div> :
+                                    <p className='font-semibold text-sm mx-5'>Send Code</p>
+                                }
+                            </div>
                         </Button>
                     </div>
                 </div>

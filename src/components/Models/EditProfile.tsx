@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from "react-redux";
 
-import { Iuser } from "../../interface";
+import { IUser } from "../../interface";
 import FormInput from "../FormInput";
 import SelectInput from "../SelectInput";
 import Button from "../Button";
@@ -17,11 +17,11 @@ import { RootState } from "../../redux/store";
 function EditProfile(){
     let [profile, setProfile] = useState(true)
 
-    let initialValues: Iuser = {
-        firstName: '',
-        lastName: '',
+    let initialValues: IUser = {
+        first_name: '',
+        last_name: '',
         email: '',
-        phoneNumber: '',
+        phone_number: '',
         state: '',
         city: '',
         address: ''
@@ -33,7 +33,7 @@ function EditProfile(){
         cPassword: '',
     }
 
-    function onSubmit1 (value: Iuser){
+    function onSubmit1 (value: IUser){
         console.log(value)
     }
 
