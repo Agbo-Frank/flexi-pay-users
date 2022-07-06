@@ -36,8 +36,8 @@ export function FormInput({ Icon, type, name, label, formik }: IInputProps): JSX
                 }}>
                 {
                   seePassword ?
-                  <EyesIcon size="17" color={focus ? '#1900FE' : formik.errors[name] ? '#FF5000': '#C4C4C4'}/>:
-                  <CloseEyesIcon size="17" color={focus ? '#1900FE' : formik.errors[name] ? '#FF5000': '#C4C4C4'}/>
+                  <EyesIcon size="17" color={focus ? '#1900FE' : formik.touched[name] && formik.errors[name] ? '#FF5000': '#C4C4C4'}/>:
+                  <CloseEyesIcon size="17" color={focus ? '#1900FE' : formik.touched[name] && formik.errors[name] ? '#FF5000': '#C4C4C4'}/>
                 }
               </div>:
               <>
