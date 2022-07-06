@@ -29,7 +29,7 @@ function Card({ Icon, name, count }: ICardProps){
     }
     let color = returnColor(name)
     return(
-        <div className="flex gap-5 items-center px-7 py-6 bg-white rounded-4xl hover:card-shadow shadow-sm cursor-pointer w-1/4">
+        <div className="flex gap-5 items-center px-7 py-6 bg-white rounded-4xl hover:card-shadow hover:shadow-lg cursor-pointer w-1/4">
             <Icon size="35" color={color} />
             <div>
                 <p className="text-2xl font-bold">{ count }</p>
@@ -70,18 +70,18 @@ export  function Dashboard (): JSX.Element {
                         </div>
                     </div>
                     <div className="bg-white rounded-4xl p-5 w-1/2">
-                        <h3 className="text-primary-dark-blue text-lg font-semibold">Account Details</h3>
+                        <h3 className="text-primary-dark-blue text-lg font-semibold">Delivery Address</h3>
                         <div className="rounded-4xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-full">
                             <div className="text-grey-200 leading-9 capitalize">
-                                <p>mr John dole</p>
-                                <p>09093284414</p>
-                                <p>mrjohndoe@gmail.com</p>
+                                <p>Plot 101, Redeemed Road, Eagle Island</p>
+                                <p>Port Harcourt, Rivers State</p>
+                                <p>Nigeria.</p>
                             </div>
                             <div className="mt-14 w-6/12">
                                 <Button type="button" color="#FF5000" outline={true}>
                                     <div className="flex gap-3 items-center">
                                         <EditIcon size="25" color="#FF5000"/>
-                                        <p>Edit Profile</p>
+                                        <p>Edit Address</p>
                                     </div>
                                 </Button>
                             </div>

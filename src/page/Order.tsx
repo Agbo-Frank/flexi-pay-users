@@ -26,7 +26,7 @@ interface IOrderModel {
 
 
 interface IOrderDetails {
-    type: 'pending' | 'delivered' | 'processing',
+    type: 'pending' | 'delivered' | 'processing' | 'subscription',
     openModel?: Dispatch<SetStateAction<IOrderModel>>
 }
 
@@ -83,8 +83,12 @@ function Order ({type, openModel}: IOrderDetails) {
                     <div className="flex flex-col w-11/12 h-full items-stretch justify-evenly">
                         <p>43" inches D-LED TV +1 years Warranty - Black</p>
                         <small className="text-grey-200">orderId: 345679</small>
-                        <p className={`${ type } text-white p-1 px-2 rounded-sm uppercase text-xs w-fit`}>{ type }</p>
-                        <ProgressBar width="90%"/>
+                        {
+                            type === 'subscription' ?
+                            <ProgressBar width="90%"/>:
+                            <p className={`${ type } text-white p-1 px-2 rounded-sm uppercase text-xs w-fit`}>{ type }</p>
+                        }
+                        
                         {/* <p className="font-bold text-primary-dark-blue">150, 000</p> */}
                     </div>
                 </div>
@@ -109,11 +113,11 @@ export function Orders (){
                     {/* <Empty name="order" Icon={BagIcon}/> */}
                     <div className="w-full mt-8 mb-2 overflow-y-auto h-screen scrollbar">
                         <Order type="processing" openModel={setOpenModel}/>
-                        <Order type="delivered" openModel={setOpenModel}/>
+                        <Order type="subscription" openModel={setOpenModel}/>
                         <Order type="pending" openModel={setOpenModel}/>
                         <Order type="processing" openModel={setOpenModel}/>
                         <Order type="delivered" openModel={setOpenModel}/>
-                        <Order type="pending" openModel={setOpenModel}/>
+                        <Order type="subscription" openModel={setOpenModel}/>
                     </div>
                 </div>
             </DashboardWrapper>

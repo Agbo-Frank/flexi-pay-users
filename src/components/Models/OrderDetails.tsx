@@ -24,7 +24,7 @@ function OrderDetails(){
                             </div>
                             <div className="flex flex-col gap-3">
                                 <p className="w-9/12 text-grey-200 text-sm">43" inches D-LED TV +1 years Warranty - Black</p>
-                                <p className="font-bold text-primary-dark-blue text-xs">150, 000</p>
+                                <p className="font-medium text-primary-dark-blue text-sm">150, 000</p>
                             </div>
                         </div>
                         <div className="w-4/12">

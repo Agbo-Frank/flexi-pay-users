@@ -51,6 +51,7 @@ export interface ICreditCard {
 }
 
 export interface ICreditCardComponent {
-    type: 'master' | 'visa'
+    type: 'master' | 'visa',
+    hasBorder?: boolean
 }
   

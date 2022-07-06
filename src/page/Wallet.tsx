@@ -1,5 +1,5 @@
-import { useRef } from "react"
-import Button from "../components/Button"
+import { useRef, useState } from "react"
+import {Button, CreditCard} from "../components"
 import DashboardWrapper from "../components/DashboardWrapper"
 import { EditSqaureIcon, WalletIcon, GroupIcon, CopyIcon, MasterCardIcon, TrashIcon, CreditCardIcon, WithdrawIcon } from "../components/icons"
 import { WithdrawalForm } from "../components/Models"
@@ -8,29 +8,32 @@ import { useDispatch } from 'react-redux'
 import { toggleWithdrawalForm } from "../redux/slice/modalSlice"
 
 
-function Card(){
-    return(
-        <div className="flex border p-5 border-grey-100 rounded-3xl flex-col w-1/2">
-            <div className="bg-grey-900 rounded-3xl p-5 leading-7">
-                <p>23****53***3</p>
-                <p>Mr John Doe</p>
-                <div className="ml-auto w-fit">
-                    <MasterCardIcon size="32"/>
-                </div>
-            </div>
-            <div className="flex items-center gap-2 pl-3 my-3 cursor-pointer">
-                <TrashIcon size="14" color="#A0A0A1" />
-                <p className="text-grey-700 text-sm">Remove</p>
-            </div>
-        </div>
-    )
-}
+// function Card(){
+//     return(
+//         <div className="flex border p-5 border-grey-100 rounded-3xl flex-col w-1/2">
+//             <div className="bg-grey-900 rounded-3xl p-5 leading-7">
+//                 <p>23****53***3</p>
+//                 <p>Mr John Doe</p>
+//                 <div className="ml-auto w-fit">
+//                     <MasterCardIcon size="32"/>
+//                 </div>
+//             </div>
+//             <div className="flex items-center gap-2 pl-3 my-3 cursor-pointer">
+//                 <TrashIcon size="14" color="#A0A0A1" />
+//                 <p className="text-grey-700 text-sm">Remove</p>
+//             </div>
+//         </div>
+//     )
+// }
 
 export function Wallet (){
     let dispatch = useDispatch()
     let code = useRef<HTMLDivElement>(null)
-    function copy(){
+    let [copied, setCopied] = useState(false)
+    async function copy(){
         navigator.clipboard.writeText(`${code.current?.innerHTML}`);
+        setCopied(true)
+        await setTimeout(() => setCopied(false), 5000)
     }
     return(
         <DashboardWrapper>
@@ -83,7 +86,7 @@ export function Wallet (){
                                 <Button color="#FF5000" onClick={() => copy()}>
                                     <div className="flex justify-center items-center gap-1">
                                         <CopyIcon color="white" size="14"/>
-                                        <p className="text-sm">Copy</p>
+                                        <p className="text-sm">{copied ? 'Copied!' : 'Copy'}</p>
                                     </div>
                                 </Button>
                             </div>
@@ -92,18 +95,32 @@ export function Wallet (){
                 </div>
             </div>
 
-            <div className="bg-white rounded-4xl p-6">
-                <h3 className="font-semibold text-primary-dark-blue">My Wallet</h3>
-                <div className="flex justify-between gap-7 mt-6">
-                    <Card />
-                    <Card />
-                    <div className="flex justify-center items-center border-2 rounded-3xl border-dashed border-orange-400 w-1/2">
-                            <div className="flex items-center gap-2 text-sm text-crimson font-medium">
-                                <CreditCardIcon color="#FF5000" size="20" />
-                                <p>Add New Card</p>
-                            </div>
+            <div className="bg-white rounded-4xl p-6 mb-5">
+                <div className="flex justify-between">
+                    <h3 className="font-semibold text-primary-dark-blue">Saved Cards</h3>
+                    <div className="flex items-center gap-2 text-sm text-crimson font-medium">
+                        <CreditCardIcon color="#FF5000" size="20" />
+                        <p>Add New Card</p>
                     </div>
                 </div>
+                <div className="flex justify-between gap-4 mt-6 flex-nowrap w-full overflow-x-auto overflow-y-hidden scrollbar-hidden">
+                    <div className="p-3 border border-grey-100 rounded-2xl ">
+                        <CreditCard type="master" />
+                    </div>
+                    <div className="p-3 border border-grey-100 rounded-2xl">
+                        <CreditCard type="visa" />
+                    </div>
+                    <div className="p-3 border border-grey-100 rounded-2xl ">
+                        <CreditCard type="master" />
+                    </div>
+                    <div className="p-3 border border-grey-100 rounded-2xl">
+                        <CreditCard type="visa" />
+                    </div> 
+                </div>
+            </div>
+
+            <div className="bg-white rounded-4xl p-6">
+                <h3 className="font-semibold text-primary-dark-blue">Transaction History</h3>
             </div>
         </DashboardWrapper>
     )

@@ -20,10 +20,10 @@ function ProductReview(){
                 <div className="sticky top-0 left-0 bg-white">
                     <div className="flex w-11/12 mx-4">
                         <div 
-                        className={`w-1/2 my-4 ${!isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200'} border-solid  py-3 px-2 hover:bg-gray-100 cursor-pointer`}
+                        className={`w-1/2 mb-2 ${!isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200'} border-solid  py-3 px-2 hover:bg-gray-100 cursor-pointer`}
                         onClick={() => setIsReport(false)}>Rate This Prodcuct</div>
                         <div 
-                        className={`w-1/2 text-right my-4 ${isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200 '} hover:bg-gray-100 py-3 px-2 cursor-pointer`}
+                        className={`w-1/2 text-right mb-2 ${isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200 '} hover:bg-gray-100 py-3 px-2 cursor-pointer`}
                         onClick={() => setIsReport(true)}>Report This Prodcuct</div>
                     </div>
 
@@ -34,7 +34,7 @@ function ProductReview(){
                             </div>
                             <div className="flex flex-col gap-3">
                                 <p className="w-9/12 text-grey-700 text-sm">43" inches D-LED TV +1 years Warranty - Black</p>
-                                <p className="font-bold text-primary-dark-blue text-xs">150, 000</p>
+                                <p className="font-medium text-primary-dark-blue text-sm">150, 000</p>
                             </div>
                         </div>
                     </div>

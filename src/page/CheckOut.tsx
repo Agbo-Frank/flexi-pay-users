@@ -2,7 +2,7 @@ import { useState } from "react"
 import {
     Button, Categories, 
     CheckoutSummary, Header, 
-    Switch, SelectInput,
+    Switch, SelectInput, Toast,
     CreditCard, Body, FormInput
 } from "../components"
 import AddAddressModel from "../components/Models/AddAddressModel"
@@ -124,10 +124,14 @@ export function CheckOut(){
                 <AddAddressModel />
                 <AddCreditCard />
 
-                <ul className="flex xl:px-fp-5 2xl:px-fp-10 my-6 text-sm">
-                    <li className="text-grey-700">Home /</li> 
-                    <li> Overview</li>
-                </ul>
+                <div className="w-full px-6 xl:px-fp-5 2xl:px-fp-10 flex justify-between items-center">
+                    <ul className="flex my-6 text-sm">
+                        <li className="text-grey-700">Home /</li> 
+                        <li> Overview</li>
+                    </ul>
+
+                    <Toast />
+                </div>
 
                 <div className="flex px-6 gap-5 justify-between xl:px-fp-5 2xl:px-fp-10">
                     <div className="w-8/12 flex flex-col gap-3">
@@ -175,14 +179,23 @@ export function CheckOut(){
                                     <Switch
                                         label="Door Delivery"
                                         isTrue={orderConfig.door}
-                                        handleClick={() =>setOrderConfig(state => {
-                                            return {...state, door: !state.door}
-                                        })} 
+                                        handleClick={() => {
+                                            setOrderConfig(state => {
+                                                return {...state, door: !state.door}
+                                            })
+
+                                            setOrderConfig((state) => ({...state, station: false}))
+                                        }} 
                                     />
                                     <Switch
                                         label="PickUp Station"
                                         isTrue={orderConfig.station}
-                                        handleClick={() => setOrderConfig((state) => ({...state, station: !state.station}))} 
+                                        handleClick={() => {
+                                            setOrderConfig((state) => ({...state, station: !state.station}))
+                                            setOrderConfig(state => {
+                                                return {...state, door: false}
+                                            })
+                                        }} 
                                     />
                                 </div>
                                 {
@@ -219,18 +232,31 @@ export function CheckOut(){
                                     <Switch
                                         label="Cash"
                                         isTrue={orderConfig.instant}
-                                        handleClick={() => setOrderConfig(state => ({
-                                            ...state, 
-                                            instant: !state.instant
-                                        }))} 
+                                        handleClick={() => { 
+                                            setOrderConfig(state => ({
+                                                ...state, 
+                                                instant: !state.instant
+                                            }))
+
+                                            setOrderConfig(state => ({
+                                                ...state, 
+                                                installment: false
+                                            }))
+                                        }} 
                                     />
                                     <Switch
                                         label="Installmental"
                                         isTrue={orderConfig.installment}
-                                        handleClick={() => setOrderConfig(state => ({
-                                            ...state, 
-                                            installment: !state.installment
-                                        }))} 
+                                        handleClick={() => {
+                                            setOrderConfig(state => ({
+                                                ...state, 
+                                                installment: !state.installment
+                                            }))
+                                            setOrderConfig(state => ({
+                                                ...state, 
+                                                instant: false
+                                            }))
+                                        }} 
                                     />
                                 </div>
                                 {/* cash */}
@@ -270,8 +296,10 @@ export function CheckOut(){
                                                                     <span>Add New Card</span>
                                                             </p>
                                                         </div>
-
-                                                        <CreditCard type="master"/>
+                                                        <div className="my-5">
+                                                            <CreditCard type="master" hasBorder/>
+                                                        </div>
+                                                        
                                                         <Switch 
                                                             label="Save this card for future use" 
                                                             isTrue={activePaymentMethod} handleClick={() => setActivePaymentMenthod}
@@ -362,8 +390,12 @@ export function CheckOut(){
                                                         <>
                                                             <div>
                                                                 {/* <EmptyWallet type="card" /> */}
-                                                                <CreditCard type="visa"/>
-                                                                <CreditCard type="master"/>
+                                                                <div className="my-5">
+                                                                    <CreditCard type="visa" hasBorder/>
+                                                                </div>
+                                                                <div className="my-5">
+                                                                    <CreditCard type="master" hasBorder/>
+                                                                </div>
                                                                 <div className="flex rounded-md py-2 bg-primary-orange-400 px-3 pr-5 gap-2 w-fit">
                                                                     <ExclamationIcon color="#E78405" size="15" />
                                                                     <p className="text-primary-orange-100 text-xs">Your card will be debited  ₦ 500 on a daily basis as set</p>
