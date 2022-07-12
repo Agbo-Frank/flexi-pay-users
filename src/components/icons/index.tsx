@@ -1,5 +1,6 @@
 export * from "./Bag";
 export * from "./Bell";
+export * from "./BusIcon"
 export * from "./CalenderIcon";
 export * from "./CartIcon";
 export * from "./CloseEyesIcon"
@@ -26,7 +27,6 @@ export * from "./MenuIcon";
 export * from "./MessageIcon";
 export * from "./MinusIcon";
 export * from "./NairaIcon"
-export * from "./NoDeliveryAddressIcon"
 export * from "./NoLocationIcon";
 export * from "./PadLock";
 export * from "./PhoneIcon";

@@ -29,7 +29,7 @@ function Card({ Icon, name, count }: ICardProps){
     }
     let color = returnColor(name)
     return(
-        <div className="flex gap-5 items-center px-7 py-6 bg-white rounded-4xl hover:card-shadow hover:shadow-lg cursor-pointer w-1/4">
+        <div className="flex space-x-5 items-center px-7 py-6 bg-white rounded-4xl hover:card-shadow hover:shadow-lg cursor-pointer w-1/4">
             <Icon size="35" color={color} />
             <div>
                 <p className="text-2xl font-bold">{ count }</p>
@@ -43,14 +43,14 @@ export  function Dashboard (): JSX.Element {
     return(
         <DashboardWrapper>
             <div>
-                <div className="flex justify-between gap-4">
+                <div className="flex justify-between space-x-5">
                     <Card Icon={HeartIcon} count={13} name="saved items" />
                     <Card Icon={CartIcon} count={0} name="cart items"/>
                     <Card Icon={BagIcon} count={5} name="order items"/>
                     <Card Icon={WalletIcon} count={0} name="balance"/>
                 </div>
 
-                <div className="flex items-center justify-between my-7 gap-5">
+                <div className="flex items-center justify-between my-7 space-x-6">
                     <div className="bg-white rounded-4xl p-5 w-1/2">
                         <h3 className="text-primary-dark-blue text-lg font-semibold">Account Details</h3>
                         <div className="rounded-4xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-full">
@@ -90,7 +90,7 @@ export  function Dashboard (): JSX.Element {
                 </div>
 
                 <div className="bg-primary-dark-blue items-center flex justify-between rounded-5xl pr-5">
-                    <div className="flex gap-6 items-center text-white w-4/6">
+                    <div className="flex space-x-6 items-center text-white w-4/6">
                         <img src={supportImage} alt="support-img"/>
                         <p>
                             <p className="font-semibold text-2xl">Do you have any complains???</p>

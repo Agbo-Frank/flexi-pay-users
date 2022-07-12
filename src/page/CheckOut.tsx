@@ -11,7 +11,7 @@ import {
     CreditCardIcon, WalletIcon, 
     MasterCardIcon, 
     NoLocationIcon, NairaIcon,
-    NoDeliveryAddressIcon,
+    BusIcon,
     ExclamationIcon
 } from "../components/icons"
 import { toggleAddAddress, toggleAddCreditcard } from "../redux/slice/modalSlice"
@@ -163,7 +163,7 @@ export function CheckOut(){
                                 {/* empty address */}
                                 <div className="flex flex-col justify-center w-5/12 mx-auto my-3">
                                     <div className="mx-auto">
-                                        <NoDeliveryAddressIcon size="62" color="#E8E5FF"/>
+                                        <BusIcon line size="62" color="#E8E5FF"/>
                                     </div>
                                     <p className="text-center text-grey-700">
                                         You don’t have an address, kindly add your delivery address

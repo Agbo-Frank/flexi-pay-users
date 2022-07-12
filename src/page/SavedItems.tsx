@@ -14,13 +14,13 @@ export function SavedItem () {
         lower={
             <>
                 <Button color="#ff5000" >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center space-x-2">
                         <CartIcon color='white' size="17" />
                         <p className="text-white text-sm">Add to Cart</p>
                     </div>
                 </Button>
                 <Button color="#ff5000" outline>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center space-x-2">
                         <TrashIcon color="#ff5000" size="17"/>
                         <p className="text-primary-orange-200 text-sm">Remove</p>
                     </div>
