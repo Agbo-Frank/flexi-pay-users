@@ -33,9 +33,12 @@ export * from "./PhoneIcon";
 export * from  "./PlaneIcon"
 export * from "./PlusIcon";
 export * from "./ProfilBG";
+export * from './QuestionIcon'
+export * from './ReturnIcon'
 export * from "./SearchIcon";
 export * from './Spinner'
 export * from "./StarIcon";
+export * from "./StarIcon"
 export * from "./SubscriptionIcon"
 export * from "./TimesIcon";
 export * from "./TrackIcon";
@@ -45,4 +48,5 @@ export * from "./UserIconPlus";
 export * from "./UserIcon";
 export * from "./VisaIcon"
 export * from "./WalletIcon";
+export * from "./WarrantyIcon"
 export * from './WithdrawIcon'

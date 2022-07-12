@@ -5,7 +5,7 @@ import supportImage from '../asset/supportImage.png'
 import { toggleEditProfile } from '../redux/slice/modalSlice'
 import { useDispatch } from "react-redux";
 
-function Profile(){
+export function Profile(){
     let dispatch = useDispatch()
     return(
         <DashboardWrapper>

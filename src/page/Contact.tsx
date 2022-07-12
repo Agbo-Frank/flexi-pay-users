@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import * as Yup from 'yup';
 
 
-function Contact () {
+export function Contact () {
     let initialValues = {
         name: '',
         subject: '',

@@ -34,6 +34,15 @@ html{
   background: #EDEEF0;
   border-radius: 10px;
 }
+.scrollbar::-webkit-scrollbar-track-piece:end {
+  background: transparent;
+  margin-bottom: 10px; 
+}
+
+.scrollbar::-webkit-scrollbar-track-piece:start {
+  background: transparent;
+  margin-top: 10px;
+}
 .scrollbar-hidden::-webkit-scrollbar{
   display: none;
 }

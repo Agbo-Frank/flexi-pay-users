@@ -1,7 +1,26 @@
 import Product1 from '../asset/product1.png'
+import product2 from '../asset/Product2.png'
 
 import Slider from "react-slick";
 import { useRef, useState } from 'react';
+
+export function ProductCard(){
+    return(
+        <div className="w-full bg-white rounded-lg h-fit p-2 space-y-4 hover:shadow-xl hover:-translate-y-1 hover:z-30 my-2">
+            <div className='w-full h-44 overflow-hidden rounded-lg'>
+                <img src={product2} className="w-full h-full object-cover"/>
+            </div>
+            <div className='space-y-1'>
+                <p className='truncate text-grey-1200 text-sm capitalize font-light'>Anti Blue Computer & Phone Glasses....</p>
+                <div className="flex items-center space-x-3">
+                    <p className="text-primary-dark-blue font-medium text-md">₦ 4,600</p>
+                    <s className="text-xs font-light text-grey-200">₦ 10,600</s>
+                </div>
+                <p className='text-xs text-primary-orange-200 font-medium'>Pay ₦ 120 / daily</p>
+            </div>
+        </div>
+    )
+}
 
 export function ProductSlide(){
     let slide: any = useRef()
@@ -65,4 +84,48 @@ export function ProductSlide(){
     )
 }
 
-export default ProductSlide
+export function ProductsSlide(){
+    let slide: any = useRef()
+    const settings = {
+        infinite: false,
+        draggable: true,
+        speed: 1000,
+        slidesToShow: 5,
+        slidesToScroll: 2,
+    };
+    let data = [1, 2, 3, 4, 5, 6, 7, 8]
+    return(
+        <div className="overflow-hidden rounded-2xl">
+            <div className="flex justify-between bg-primary-orange-300 p-4">
+                <p className="capitalize text-lg">similar products</p>
+                <div className="flex space-x-2 items-center cursor-pointer text-primary-orange-200">
+                    <p className="capitalize text-sm">View More</p>
+                    <i className="font-bold text-xs fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+            <div className="bg-white p-4">
+                <div className="relative rounded-md overflow-x-hidden">
+                    <Slider ref={slide} {...settings}>
+                        {
+                            data.map(d => (
+                                <div className="w-64 h-fit px-1" key={d}>
+                                    <ProductCard />
+                                </div>
+                            ))
+                        }
+                    </Slider>
+
+                    <div 
+                        className={`absolute top-2/4 w-8 h-8  bg-black/50 rounded-full grid place-items-center cursor-pointer`}
+                        onClick={() => slide.current.slickPrev()}>
+                        <i className="text-white font-bold text-sm fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div className={`absolute top-2/4 right-0 rounded-full bg-black/50 w-8 h-8 grid place-items-center cursor-pointer`}
+                    onClick={() => slide.current.slickNext()}>
+                        <i className="text-white font-bold text-sm fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
