@@ -7,7 +7,7 @@ import SearchIcon from "./icons/SearchIcon"
 
 export function Header(){
     return(
-        <header className="flex w-full justify-between items-end py-5 px-6 xl:px-fp-5 2xl:px-fp-10">
+        <header className="flex justify-between bg-grey-500 items-end py-5 fp-screen">
             <Logo />
             <div className="flex justify-between bg-white rounded-full items-center w-5/12 p-1 pl-3 shadow-sm">
                 <input type='text' placeholder="Search products, categories and services" className="w-11/12"/>

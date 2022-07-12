@@ -37,14 +37,14 @@ function SideBarItem ({ active = false, Icon, name, link, handleClick}: ISideBar
         <NavLink 
         ref={nav}
         to={`/${link}`} 
-        className="flex gap-2 mb-3 items-center cursor-pointer sidebar" 
+        className="flex space-x-2 mb-3 items-center cursor-pointer sidebar" 
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => {if(!active)setActive(false)}}
         onClick={() => handleClick(link)}
         >
             <div className={`rounded-full ${active_ && 'bg-primary-blue'} w-2 h-9`}></div>
             <div 
-            className={`flex justify-start capitalize gap-6 rounded-l-2xl ${active_ ? 'bg-grey-500 font-semibold text-primary-dark-blue' : 'text-grey-700' } text-primary-dark-blue px-5 py-5 w-full`}>
+            className={`flex justify-start capitalize space-x-4 rounded-l-2xl ${active_ ? 'bg-grey-500 font-semibold text-primary-dark-blue' : 'text-grey-700' } text-primary-dark-blue px-5 py-5 w-full`}>
                 <Icon size="20" color={active_ ? "#1900FE" :"#A0A0A1"}/>
                 <p>{name}</p>
             </div>
@@ -59,7 +59,7 @@ function SideBar(): JSX.Element {
     // let currentLocation = location.pathname.split('/')[2]
     console.log(currentLocation)
   return (
-    <div className="w-56 h-fit 2xl:w-2/12 bg-white pt-9 pb-2 rounded-4xl">
+    <div className="w-2/12 h-fit bg-white pt-9 pb-2 rounded-4xl">
         <div>
             <SideBarItem 
             Icon={DashboardIcon} name="overview" link="dashboard"
@@ -103,7 +103,7 @@ function SideBar(): JSX.Element {
             handleClick={setLocation}/>
 
         </div>
-        <div className="bg-primary-dark-blue py-6 px-3 rounded-3xl flex gap-3 text-white mt-24 justify-center mr-2 ml-5">
+        <div className="bg-primary-dark-blue py-6 px-3 rounded-3xl flex space-x-3 text-white mt-24 justify-center mr-2 ml-5">
             <LogOutIcon size="20" color="white"/>
             <p>Logout</p>
         </div>

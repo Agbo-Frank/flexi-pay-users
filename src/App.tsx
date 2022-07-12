@@ -4,10 +4,13 @@ import {
   Carts, CheckOut, 
   Login, Orders, Dashboard,
   ForgetPassword, Register,
-  ResetPassword, SavedItems, Wallet 
+  ResetPassword, SavedItems, Wallet, Product 
 } from './page';
 import Contact from './page/Contact';
 import Profile from './page/Profile';
+
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 function App() {
   return (
@@ -19,6 +22,7 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />}/>
       <Route path='/cart' element={<Carts />} />
       <Route path='/order' element={<Orders />} />
+      <Route path='/product' element={<Product />} />
       <Route path='/saved-items' element={<SavedItems />} />
       <Route path='/checkout' element={<CheckOut />} />
       <Route path='/wallet' element={<Wallet/>} />

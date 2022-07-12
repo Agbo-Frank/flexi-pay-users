@@ -36,7 +36,7 @@ function Buttons ({type, openModel}: IOrderDetails): JSX.Element{
     if(type === 'processing'){
         return(
             <Button color="#ff5000" outline onClick={() => dispatch(trackOrder())}>
-                <div className="flex gap-2 items-center">
+                <div className="flex space-x-2 items-center">
                     <TrackIcon color="#ff5000" size="17"/>
                     <p className="text-primary-orange-200 text-sm">Track Item</p>
                 </div>
@@ -47,13 +47,13 @@ function Buttons ({type, openModel}: IOrderDetails): JSX.Element{
         return (
         <>
              <Button color="#ff5000" onClick={() => dispatch(seeOrderDetails())}>
-                <div className="flex gap-2 items-center">
+                <div className="flex space-x-2 items-center">
                     <DocIcon color='white' size="17" />
                     <p className="text-white text-sm">See Details</p>
                 </div>
             </Button>
             <Button color="#ff5000" outline onClick={() => dispatch(toggleProductReview())}>
-                <div className="flex gap-2 items-center">
+                <div className="flex space-x-2 items-center">
                     <StarIcon color="#ff5000" size="17"/>
                     <p className="text-primary-orange-200 text-sm">Rate Item</p>
                 </div>
@@ -63,7 +63,7 @@ function Buttons ({type, openModel}: IOrderDetails): JSX.Element{
     }
     return(<>
         <Button color="#ff5000" onClick={() => dispatch(trackOrder())}>
-            <div className="flex gap-2 items-center">
+            <div className="flex space-x-2 items-center">
                 <TrackIcon color='white' size="17" />
                 <p className="text-white text-sm">Track Items</p>
             </div>
@@ -77,7 +77,7 @@ function Buttons ({type, openModel}: IOrderDetails): JSX.Element{
 function Order ({type, openModel}: IOrderDetails) {
     return(
         <div className="flex justify-between rounded-2xl w-full shadow hover:shadow-lg border hover:border-0 border-solid border-grey-100 items-center px-6 py-6 mb-7">
-            <div className="flex gap-4 items-stretch">
+            <div className="flex space-x-4 items-stretch">
                 <img src={TV} alt="" />
                 <div>
                     <div className="flex flex-col w-11/12 h-full items-stretch justify-evenly">
@@ -93,7 +93,7 @@ function Order ({type, openModel}: IOrderDetails) {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col space-y-3">
                 <Buttons type={type} openModel={openModel}/>
             </div>
         </div>   

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react"
 import {Button, CreditCard} from "../components"
 import DashboardWrapper from "../components/DashboardWrapper"
-import { EditSqaureIcon, WalletIcon, GroupIcon, CopyIcon, MasterCardIcon, TrashIcon, CreditCardIcon, WithdrawIcon } from "../components/icons"
+import { EditSqaureIcon, WalletIcon, GroupIcon, CopyIcon, MasterCardIcon, TrashIcon, CreditCardIcon, WithdrawIcon, MarkCircleIcon } from "../components/icons"
 import { WithdrawalForm } from "../components/Models"
 
 import { useDispatch } from 'react-redux'
@@ -18,7 +18,7 @@ import { toggleWithdrawalForm } from "../redux/slice/modalSlice"
 //                     <MasterCardIcon size="32"/>
 //                 </div>
 //             </div>
-//             <div className="flex items-center gap-2 pl-3 my-3 cursor-pointer">
+//             <div className="flex items-center space-x-2 pl-3 my-3 cursor-pointer">
 //                 <TrashIcon size="14" color="#A0A0A1" />
 //                 <p className="text-grey-700 text-sm">Remove</p>
 //             </div>
@@ -40,25 +40,25 @@ export function Wallet (){
             <WithdrawalForm />
             <div className="bg-white rounded-4xl p-6 mb-5">
                 <h3 className="font-semibold text-primary-dark-blue">Saved Card</h3>
-                <div className="flex justify-between items-stretch gap-5 mt-5">
-                    <div className=" w-1/2 border gap-3 rounded-4xl text-center border-grey-100 flex flex-col justify-center p-6">
+                <div className="flex justify-between items-stretch space-x-5 mt-5">
+                    <div className=" w-1/2 border space-x-3 rounded-4xl text-center border-grey-100 flex flex-col justify-center p-6">
                         <p className="text-xs text-left text-grey-700 ">Wallet Id: Flexi12345678</p>
-                        <div className="mx-auto">
+                        <div className="flex justify-center">
                             <WalletIcon line color="#E8E5FF" size="60"/>
                         </div>
                         <p className="text-grey-700 text-xl">Balance</p>
                         <p className="text-primary-dark-blue font-semibold text-xl">₦ 0.00 </p>
                         <p className="text-grey-700 text-sm">Click on the button below  to fund your wallet</p>
-                        <div className="flex gap-4 items-center mx-auto my-4 w-full">
+                        <div className="flex space-x-4 items-center mx-auto my-4 w-full">
                             <Button color="#FF5000" outline onClick={() => dispatch(toggleWithdrawalForm())}>
-                                <div className="flex justify-center items-center gap-3">
+                                <div className="flex justify-center items-center space-x-3">
                                     <WithdrawIcon color="#FF5000" size="16"/>
                                     <p className="text-sm font-medium">Withdraw</p>
                                 </div>
                             </Button>
 
                             <Button color="#FF5000">
-                                <div className="flex justify-center items-center gap-3">
+                                <div className="flex justify-center items-center space-x-3">
                                     <EditSqaureIcon color="white" size="16"/>
                                     <p className="text-sm font-medium">Fund Wallet</p>
                                 </div>
@@ -66,9 +66,9 @@ export function Wallet (){
                         </div>
                     </div>
 
-                    <div className=" w-1/2 gap-3 rounded-4xl text-center bg-grey-900 flex flex-col justify-center p-6">
+                    <div className=" w-1/2 space-x-3 rounded-4xl text-center bg-grey-900 flex flex-col justify-center p-6">
                         <p className="text-xs text-right text-grey-700 ">Referred (0)</p>
-                        <div className="mx-auto">
+                        <div className="flex justify-center">
                             <GroupIcon color="#1900FE" size="60"/>
                         </div>
                         <p className="text-grey-700 text-xl">Referial Balance</p>
@@ -84,8 +84,8 @@ export function Wallet (){
                             </div>
                             <div className="">
                                 <Button color="#FF5000" onClick={() => copy()}>
-                                    <div className="flex justify-center items-center gap-1">
-                                        <CopyIcon color="white" size="14"/>
+                                    <div className="flex justify-center items-center space-x-1">
+                                        {copied ?<MarkCircleIcon color="white" size="16"/> :<CopyIcon color="white" size="14"/>}
                                         <p className="text-sm">{copied ? 'Copied!' : 'Copy'}</p>
                                     </div>
                                 </Button>
@@ -98,12 +98,12 @@ export function Wallet (){
             <div className="bg-white rounded-4xl p-6 mb-5">
                 <div className="flex justify-between">
                     <h3 className="font-semibold text-primary-dark-blue">Saved Cards</h3>
-                    <div className="flex items-center gap-2 text-sm text-crimson font-medium">
+                    <div className="flex items-center space-x-2 text-sm text-crimson font-medium">
                         <CreditCardIcon color="#FF5000" size="20" />
                         <p>Add New Card</p>
                     </div>
                 </div>
-                <div className="flex justify-between gap-4 mt-6 flex-nowrap w-full overflow-x-auto overflow-y-hidden scrollbar-hidden">
+                <div className="flex justify-between space-x-4 mt-6 flex-nowrap w-full overflow-x-auto overflow-y-hidden scrollbar-hidden">
                     <div className="p-3 border border-grey-100 rounded-2xl ">
                         <CreditCard type="master" />
                     </div>

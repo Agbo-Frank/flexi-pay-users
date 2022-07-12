@@ -9,8 +9,8 @@ function Profile(){
     let dispatch = useDispatch()
     return(
         <DashboardWrapper>
-            <div className="flex flex-col gap-9">
-                <div className="flex justify-between items-stretch gap-8">
+            <div className="flex flex-col space-y-9">
+                <div className="flex justify-between items-stretch space-x-8">
                     <div className="bg-white rounded-4xl p-5 w-1/2">
                         <h3 className="text-primary-dark-blue text-lg font-semibold">Account Details</h3>
                         <div className="rounded-4xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-full">
@@ -21,7 +21,7 @@ function Profile(){
                             </div>
                             <div className="mt-14 w-6/12">
                                 <Button type="button" color="#FF5000" onClick={() => dispatch(toggleEditProfile())}>
-                                    <div className="flex gap-3 items-center">
+                                    <div className="flex space-x-3 items-center">
                                         <EditIcon size="20" color="white"/>
                                         <p className="text-sm">Update Profile</p>
                                     </div>
@@ -44,7 +44,7 @@ function Profile(){
                                 <p className="font-light">Plot 101, Redeemed Road, Eagle Island</p>
                                 <p className="font-light">Port Harcourt, Rivers State, Nigeria.</p>
                                 <p className="font-light">09093284414</p>
-                                <div className="flex gap-3 items-center ml-auto justify-end mt-7 cursor-pointer">
+                                <div className="flex space-x-3 items-center ml-auto justify-end mt-7 cursor-pointer">
                                     <EditIcon size="20" color="#FF5000"/>
                                     <p className="text-primary-orange-200 text-sm">Edit Address</p>
                                 </div>
@@ -54,7 +54,7 @@ function Profile(){
                 </div>
 
                 <div className="bg-primary-dark-blue items-center flex justify-between rounded-5xl pr-5">
-                    <div className="flex gap-6 items-center text-white w-4/6">
+                    <div className="flex space-x-6 items-center text-white w-4/6">
                         <img src={supportImage} alt="support-img"/>
                         <p>
                             <p className="font-semibold text-2xl">Do you have any complains???</p>
