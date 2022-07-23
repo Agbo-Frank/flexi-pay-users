@@ -7,6 +7,8 @@ import { WithdrawalForm } from "../components/Models"
 import { useDispatch } from 'react-redux'
 import { toggleWithdrawalForm } from "../redux/slice/modalSlice"
 
+import { useGetUserQuery } from "../redux/slice/User";
+
 
 // function Card(){
 //     return(
@@ -35,13 +37,15 @@ export function Wallet (){
         setCopied(true)
         await setTimeout(() => setCopied(false), 5000)
     }
+
+    let {data, isLoading: loading} = useGetUserQuery()
     return(
         <DashboardWrapper>
             <WithdrawalForm />
-            <div className="bg-white rounded-4xl p-6 mb-5">
+            <div className="bg-white rounded-xl p-6 mb-5">
                 <h3 className="font-semibold text-primary-dark-blue">Saved Card</h3>
                 <div className="flex justify-between items-stretch space-x-5 mt-5">
-                    <div className=" w-1/2 border space-x-3 rounded-4xl text-center border-grey-100 flex flex-col justify-center p-6">
+                    <div className=" w-1/2 border space-x-3 rounded-xl text-center border-grey-100 flex flex-col justify-center p-6">
                         <p className="text-xs text-left text-grey-700 ">Wallet Id: Flexi12345678</p>
                         <div className="flex justify-center">
                             <WalletIcon line color="#E8E5FF" size="60"/>
@@ -66,7 +70,7 @@ export function Wallet (){
                         </div>
                     </div>
 
-                    <div className=" w-1/2 space-x-3 rounded-4xl text-center bg-grey-900 flex flex-col justify-center p-6">
+                    <div className=" w-1/2 space-x-3 rounded-xl text-center bg-grey-900 flex flex-col justify-center p-6">
                         <p className="text-xs text-right text-grey-700 ">Referred (0)</p>
                         <div className="flex justify-center">
                             <GroupIcon color="#1900FE" size="60"/>
@@ -79,8 +83,8 @@ export function Wallet (){
                         </p>
 
                         <div className="flex items-center justify-center bg-white py-2 rounded-full">
-                            <div className="w-10/12 overflow-x-auto scrollbar-hidden">
-                                <p className="ml-5" ref={code}>flexipay.com/referiallink/mrjohn..flexipay.com/referiallink/mrjohn...</p>
+                            <div className="w-10/12 overflow-x-auto whitespace-nowrap scrollbar-hidden">
+                                <p className="ml-5" ref={code}>{data?.referral_link}</p>
                             </div>
                             <div className="">
                                 <Button color="#FF5000" onClick={() => copy()}>
@@ -95,7 +99,7 @@ export function Wallet (){
                 </div>
             </div>
 
-            <div className="bg-white rounded-4xl p-6 mb-5">
+            <div className="bg-white rounded-xl p-6 mb-5">
                 <div className="flex justify-between">
                     <h3 className="font-semibold text-primary-dark-blue">Saved Cards</h3>
                     <div className="flex items-center space-x-2 text-sm text-crimson font-medium">
@@ -119,7 +123,7 @@ export function Wallet (){
                 </div>
             </div>
 
-            <div className="bg-white rounded-4xl p-6">
+            <div className="bg-white rounded-xl p-6">
                 <h3 className="font-semibold text-primary-dark-blue">Transaction History</h3>
             </div>
         </DashboardWrapper>

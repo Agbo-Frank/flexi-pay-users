@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import * as Yup from 'yup';
 
 
-function Contact () {
+export function Contact () {
     let initialValues = {
         name: '',
         subject: '',
@@ -43,9 +43,9 @@ function Contact () {
     return(
         <DashboardWrapper>
             <div className="flex flex-col">
-                <div className="bg-white rounded-4xl p-6 mb-5">
+                <div className="bg-white rounded-xl p-6 mb-5">
                     <h3 className="font-semibold text-primary-dark-blue">Support</h3>
-                    <div className="bg-grey-900 rounded-4xl py-10 mt-7">
+                    <div className="bg-grey-900 rounded-xl py-10 mt-7">
                     {
                         <>
                             
@@ -60,7 +60,7 @@ function Contact () {
                                         </div>
                                         <div className="w-7/12 flex flex-col justify-between"> 
                                             <textarea 
-                                            className="w-full rounded-3xl bg-white p-5 h-4/6 border border-solid border-grey-1000 resize-none"
+                                            className="w-full rounded-xl bg-white p-5 h-4/6 border border-solid border-grey-1000 resize-none"
                                             placeholder="Your Message Here..."></textarea>
                                             <div className="ml-auto mb-4 w-28">
                                                 <Button color="#FF5000">
@@ -91,7 +91,7 @@ function Contact () {
                     </div>
                 </div>
 
-                <div className="bg-white rounded-4xl p-6 mb-5">
+                <div className="bg-white rounded-xl p-6 mb-5">
                     <h3 className="font-semibold text-primary-dark-blue">Follow us</h3>
                     <div className="flex space-x-5 items-center mt-8">
                         <TwitterIcon />

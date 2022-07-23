@@ -1,10 +1,11 @@
+import { useLocation } from "react-router-dom"
 import MenuIcon from "./icons/MenuIcon"
 
 
 export function Categories (): JSX.Element {
     return(
         <div className="w-full bg-primary-dark-blue text-white">
-            <div className="flex py-1 bg-primary-dark-blue font-medium justify-between fp-screen">
+            <div className="flex py-2 bg-primary-dark-blue font-medium justify-between fp-screen">
                 <div className="flex justify-start space-x-5 capitalize items-center text-grey-600 text-sm">
                     <div className="flex space-x-4">
                         <MenuIcon size="20" color="white"/>
@@ -17,10 +18,10 @@ export function Categories (): JSX.Element {
                     <p>home & kitchen</p>
                 </div>
 
-                <div className="w-fit h-fit p-1 overflow-hidden rounded-full">
-                    <div className="relative flex w-fit h-fit">
-                        <div className="absolute inline-flex top-0 left-0 rounded-full animate-ping h-full w-full bg-white opacity-100"></div>
-                        <a className="relative py-3 rounded-full px-5 bg-white text-primary-orange-200">Sell on <span className="text-primary-blue">FlexiPay</span></a>
+                <div className="w-fit h-fit p-1 overflow-hidden rounded-xl">
+                    <div className="relative flex w-fit h-fit overflow-hidden rounded-xl">
+                        <div className="absolute inline-flex top-0 left-0 rounded-xl animate-ping h-full w-full bg-white"></div>
+                        <a className="relative py-2 rounded-xl px-4 text-sm bg-white text-primary-orange-200">Sell on <span className="text-primary-blue">FlexiPay</span></a>
                     </div>
                 </div>
             </div>

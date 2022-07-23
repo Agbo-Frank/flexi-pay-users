@@ -11,7 +11,7 @@ export function Cart(){
     let [rmColor, setRmColor] = useState("#A0A0A1")
     return(
         <div 
-        className="flex justify-between shadow hover:shadow-lg border hover:border-0 border-solid border-grey-100 px-4 py-3 mx-6 rounded-3xl">
+        className="flex justify-between shadow hover:shadow-lg border hover:border-0 border-solid border-grey-100 px-4 py-3 mx-6 rounded-xl">
             <div>
                 <div className="flex space-x-3 items-stretch">
                     <img src={TV} className="w-36 h-36 rounded-xl object-contain"/>
@@ -49,7 +49,7 @@ export function Carts (){
         <DashboardWrapper>
             <div className="flex justify-between space-x-5 w-full h-full">
                 <div 
-                    className="bg-white rounded-4xl py-6 border w-7/12">
+                    className="bg-white rounded-xl py-6 border w-7/12">
 
                     <div className="flex justify-between mx-6">
                         <h3 className="text-lg text-primary-dark-blue font-semibold">Carts(0)</h3>

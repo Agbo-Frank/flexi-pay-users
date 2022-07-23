@@ -43,7 +43,7 @@ export function SavedItem () {
 export function SavedItems (){
     return(
         <DashboardWrapper>
-            <div className="bg-white w-full min-h-400 border rounded-4xl py-5 px-4">
+            <div className="bg-white w-full min-h-400 border rounded-xl py-5 px-4">
                 <h3 className="text-primary-dark-blue text-lg font-semibold">Saved Items(0)</h3>
                 {/* <Empty name="saved items" Icon={HeartIcon}/> */}
                 <div className="w-full mt-8 mb-2 overflow-y-auto h-screen scrollbar">

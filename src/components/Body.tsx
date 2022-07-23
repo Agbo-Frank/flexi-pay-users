@@ -7,9 +7,9 @@ interface IBodyProps extends  React.PropsWithChildren{
 export function Body({ children, bgColor }: IBodyProps): JSX.Element {
   return (
     <div className={`${bgColor} relative`}>
-      {/* <div className={`w-full mx-auto px-6 max-w-fp-desk ${bgColor}`}> */}
+      <div className={`w-full`}>
         {children}
-      {/* </div> */}
+      </div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import supportImage from '../asset/supportImage.png'
 import DashboardWrapper from "../components/DashboardWrapper";
 
 import Iicon from "../components/icons/interface";
+import { useGetUserQuery } from "../redux/slice/User";
 
 
 interface ICardProps {
@@ -29,7 +30,7 @@ function Card({ Icon, name, count }: ICardProps){
     }
     let color = returnColor(name)
     return(
-        <div className="flex space-x-5 items-center px-7 py-6 bg-white rounded-4xl hover:card-shadow hover:shadow-lg cursor-pointer w-1/4">
+        <div className="flex space-x-5 items-center px-7 py-6 bg-white rounded-xl hover:card-shadow hover:shadow-lg cursor-pointer w-1/4">
             <Icon size="35" color={color} />
             <div>
                 <p className="text-2xl font-bold">{ count }</p>
@@ -40,6 +41,8 @@ function Card({ Icon, name, count }: ICardProps){
 }
 
 export  function Dashboard (): JSX.Element {
+    let {data, isLoading: loading} = useGetUserQuery()
+    console.log(data, loading)
     return(
         <DashboardWrapper>
             <div>
@@ -50,28 +53,28 @@ export  function Dashboard (): JSX.Element {
                     <Card Icon={WalletIcon} count={0} name="balance"/>
                 </div>
 
-                <div className="flex items-center justify-between my-7 space-x-6">
-                    <div className="bg-white rounded-4xl p-5 w-1/2">
+                <div className="flex items-stretch justify-between my-7 space-x-6">
+                    <div className="bg-white rounded-xl p-5 w-1/2">
                         <h3 className="text-primary-dark-blue text-lg font-semibold">Account Details</h3>
-                        <div className="rounded-4xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-full">
+                        <div className="rounded-xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-full">
                             <div className="text-grey-200 leading-9 capitalize">
-                                <p>mr John dole</p>
-                                <p>09093284414</p>
-                                <p>mrjohndoe@gmail.com</p>
+                                <p className="capitalize">{data?.gender === 'male'? 'Mr.': 'Mrs'} {data?.first_name} {data?.last_name}</p>
+                                <p>{data?.phone_number}</p>
+                                <p>{ data?.email }</p>
                             </div>
                             <div className="mt-14 w-6/12">
                                 <Button type="button" color="#FF5000" outline={true}>
                                     <div className="flex gap-3 items-center">
-                                        <EditIcon size="25" color="#FF5000"/>
+                                        <EditIcon size="20" color="#FF5000"/>
                                         <p>Edit Profile</p>
                                     </div>
                                 </Button>
                             </div>
                         </div>
                     </div>
-                    <div className="bg-white rounded-4xl p-5 w-1/2">
+                    <div className="bg-white rounded-xl p-5 w-1/2">
                         <h3 className="text-primary-dark-blue text-lg font-semibold">Delivery Address</h3>
-                        <div className="rounded-4xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-full">
+                        <div className="rounded-xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-full">
                             <div className="text-grey-200 leading-9 capitalize">
                                 <p>Plot 101, Redeemed Road, Eagle Island</p>
                                 <p>Port Harcourt, Rivers State</p>
@@ -80,7 +83,7 @@ export  function Dashboard (): JSX.Element {
                             <div className="mt-14 w-6/12">
                                 <Button type="button" color="#FF5000" outline={true}>
                                     <div className="flex gap-3 items-center">
-                                        <EditIcon size="25" color="#FF5000"/>
+                                        <EditIcon size="20" color="#FF5000"/>
                                         <p>Edit Address</p>
                                     </div>
                                 </Button>

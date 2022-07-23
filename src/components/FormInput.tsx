@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CloseEyesIcon, EyesIcon } from "./icons";
+import { CloseEyesIcon, ExclamationIcon, EyesIcon } from "./icons";
 import{ IInputProps } from './interface'
 
 export function FormInput({ Icon, type, name, label, formik }: IInputProps): JSX.Element {
@@ -13,7 +13,7 @@ export function FormInput({ Icon, type, name, label, formik }: IInputProps): JSX
         <div 
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
-        className={`flex justify-between bg-white items-center rounded-full border border-solid ${focus ? 'border-primary-blue' : formik.touched[name] && formik.errors[name] ? 'border-crimson' : 'border-grey-1000'} py-3 px-5 mb-4`}>
+        className={`flex justify-between bg-white items-center rounded-xl border border-solid ${focus ? 'border-primary-blue' : formik.touched[name] && formik.errors[name] ? 'border-crimson' : 'border-grey-1000'} py-3 px-5 mb-4`}>
             <input 
             type={type === 'password' ? password : type} 
             name={name} 
@@ -50,7 +50,10 @@ export function FormInput({ Icon, type, name, label, formik }: IInputProps): JSX
         </div>
         {
           formik.touched[name] && formik.errors[name] ?
-          <p className={`absolute text-crimson text-xs px-2 py-0 bg-white -translate-y-7 translate-x-4`}>{formik.errors[name]}</p>:
+          <div className={`absolute flex space-x-1 items-center text-crimson text-sm px-2 py-0 bg-white -translate-y-7 translate-x-4`}>
+            <ExclamationIcon size="10" color="#FF5000" />
+            <small>{formik.errors[name]}</small>
+          </div>:
           null
         }
     </div>

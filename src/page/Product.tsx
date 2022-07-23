@@ -2,7 +2,8 @@ import { useState } from "react"
 import Slider from "react-slick";
 
 import { Body, Header, Categories, Toast, ProductSlide, Rating, Button, ProductsSlide, Footer,  } from "../components"
-import { BusIcon, CartIcon, ExclamationIcon, HeartIcon } from "../components/icons"
+import { BusIcon, CartIcon, ExclamationIcon, HeartIcon, QuestionIcon, ReturnIcon, StarIcon, WalletIcon, WarrantyIcon } from "../components/icons"
+import StoreIcon from "../components/icons/StoreIcon";
 
 function ProductDetails(){
     let tabNames = ['product details', 'delivery', 'shipping', 'return policy', 'specifications', 'reviews', 'warranty']
@@ -53,7 +54,7 @@ function ProductDetails(){
                         (
                             <div className="w-full py-5">
                                 <div className="flex items-center space-x-2">
-                                    <BusIcon color="#474747" size="50"/>
+                                    <ReturnIcon color="#474747" size="50"/>
                                     <div>
                                         <p>Returen Policy</p>
                                         <p className="text-sm font-light">This Product is Eligeble for Returns or Exchanges within: <span className="text-primary-orange-200">1 - 7 Working Days</span></p>
@@ -67,7 +68,7 @@ function ProductDetails(){
                         (
                             <div className="w-full py-5">
                                 <div className="flex items-center space-x-2">
-                                    <BusIcon color="#474747" size="50"/>
+                                    <WarrantyIcon color="#474747" size="50"/>
                                     <div>
                                         <p>Warranty</p>
                                         <p className="text-sm font-light">This Product Warranty is: <span className="text-primary-orange-200">12 Months</span></p>
@@ -151,6 +152,61 @@ function ProductDetails(){
     )
 }
 
+function ProductVendor(){
+    return(
+        <div className=" gap-3 flex justify-between items-stretch">
+            <div className="w-9/12 rounded-2xl bg-white">
+                <p className="p-4 border-b border-grey-900 font-medium text-md">Seller Information</p>
+                <ul className="text-grey-1200 space-y-4 p-4">
+                    <li className="flex space-x-3 items-center">
+                        <div className="flex space-x-2 items-center">
+                            <StoreIcon color="#222222" size="15"/>
+                            <p>Store Name:</p>
+                        </div>
+                        <p>Duchess Store</p>
+                    </li>
+                    <li className="flex text-sm space-x-3 items-center">
+                        <p>Verified Customer’s Reivews</p>
+                        <p>291</p>
+                    </li>
+                    <li className="flex text-sm space-x-3 items-center">
+                        <p>Seller Score</p>
+                        <p>94%</p>
+                    </li>
+                    <li className="flex text-sm space-x-3 items-center">
+                        <p>Number of Followers</p>
+                        <p>150</p>
+                    </li>
+                </ul>
+                <div className="flex items-center space-x-3 w-6/12 p-4">
+                    <Button color="#FF5000">
+                        <p>Follow</p>
+                    </Button>
+
+                    <Button color="#FF5000" outline>
+                        <p>Vendor Info</p>
+                    </Button>
+                </div>
+            </div>
+            <div className="w-3/12 rounded-2xl bg-white p-4">
+                <div className="rounded-2xl bg-primary-orange-300 w-full py-10 grid place-items-center">
+                    <div className="w-48 space-y-3">
+                        <p className="text-center font-medium">Do you have products to sell?</p>
+                        <Button outline color="#FF5000">Become a Vendor</Button>
+                    </div>
+                </div>
+
+                <div className="rounded-2xl bg-primary-dark-blue text-white p-4 w-full flex space-x-3">
+                    <QuestionIcon color="white" size="30"/>
+                    <div className="w-48 space-y-3">
+                        <p className="font-medium">Do You Have any Questions?</p>
+                        <p className="text-sm font-thin">Feel free to reach us</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
 export function Product(){
     return(
         <Body bgColor="bg-grey-500">
@@ -222,6 +278,7 @@ export function Product(){
                             </div>
                         </div>
                     </div>
+                    <ProductVendor />
                     <ProductDetails />
                     <ProductsSlide />
                     <ProductsSlide />

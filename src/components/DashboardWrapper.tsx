@@ -25,17 +25,6 @@ function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
                 <ProductReview />
                 <Tracker />
                 <EditProfile />
-
-                {/* <Alert message="You’re About to Remove 43 Inches D-LED TV +1 Years Warranty - Black From Your Saved Items" isError>
-                    <div className="flex gap-6">
-                        <Button outline color="#FF5000">
-                            <p>Cancel</p>
-                        </Button>
-                        <Button type="submit" color="#FF5000">
-                            <p>Yes, Remove</p>
-                        </Button>
-                    </div>
-                </Alert> */}
                 
                 <Header />
                 <Categories />
@@ -60,3 +49,15 @@ function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
 }
 
 export default DashboardWrapper
+
+
+{/* <Alert message="You’re About to Remove 43 Inches D-LED TV +1 Years Warranty - Black From Your Saved Items" isError>
+                    <div className="flex gap-6">
+                        <Button outline color="#FF5000">
+                            <p>Cancel</p>
+                        </Button>
+                        <Button type="submit" color="#FF5000">
+                            <p>Yes, Remove</p>
+                        </Button>
+                    </div>
+                </Alert> */}
