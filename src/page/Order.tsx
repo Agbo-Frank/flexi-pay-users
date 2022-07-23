@@ -76,7 +76,7 @@ function Buttons ({type, openModel}: IOrderDetails): JSX.Element{
 
 function Order ({type, openModel}: IOrderDetails) {
     return(
-        <div className="flex justify-between rounded-2xl w-full shadow hover:shadow-lg border hover:border-0 border-solid border-grey-100 items-center px-6 py-6 mb-7">
+        <div className="flex justify-between rounded-xl w-full shadow hover:shadow-lg border hover:border-0 border-solid border-grey-100 items-center px-6 py-6 mb-7">
             <div className="flex space-x-4 items-stretch">
                 <img src={TV} alt="" />
                 <div>
@@ -108,7 +108,7 @@ export function Orders (){
     return(
         <>
             <DashboardWrapper>
-                <div className="bg-white w-full rounded-4xl py-5 px-4">
+                <div className="bg-white w-full rounded-xl py-5 px-4">
                     <h3 className="text-primary-dark-blue text-lg font-semibold">Order (0)</h3>
                     {/* <Empty name="order" Icon={BagIcon}/> */}
                     <div className="w-full mt-8 mb-2 overflow-y-auto h-screen scrollbar">

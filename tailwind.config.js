@@ -34,15 +34,18 @@ module.exports = {
           900: '#F9F8FF',
           1000: '#C4C4C4',
           1100: '#EDEEF0',
-          1200: '#222222'
+          1200: '#222222',
+          1300: '#474747'
         },
-        crimson: '#FF5000'
+        crimson: '#FF5000',
+        success: '#8EC162'
       },
       borderRadius: {
         '4xl': '30px',
         '5xl': '40px'
       },
       padding: {
+        'xs': '1.5px',
         'fp-5': '5%',
         'fp-10': '15%'
       },

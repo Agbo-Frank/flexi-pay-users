@@ -42,10 +42,10 @@ function SideBarItem ({ active = false, Icon, name, link, handleClick}: ISideBar
         onMouseLeave={() => {if(!active)setActive(false)}}
         onClick={() => handleClick(link)}
         >
-            <div className={`rounded-full ${active_ && 'bg-primary-blue'} w-2 h-9`}></div>
+            <div className={`rounded-full ${active_ && 'bg-primary-blue'} w-2 h-8`}></div>
             <div 
-            className={`flex justify-start capitalize space-x-4 rounded-l-2xl ${active_ ? 'bg-grey-500 font-semibold text-primary-dark-blue' : 'text-grey-700' } text-primary-dark-blue px-5 py-5 w-full`}>
-                <Icon size="20" color={active_ ? "#1900FE" :"#A0A0A1"}/>
+            className={`flex justify-start capitalize space-x-4 rounded-l-xl ${active_ ? 'bg-grey-500 text-primary-dark-blue' : 'text-grey-1300' } text-primary-dark-blue px-5 py-4 w-full`}>
+                <Icon size="20" color={active_ ? "#1900FE" :"#474747"}/>
                 <p>{name}</p>
             </div>
         </NavLink>
@@ -56,10 +56,8 @@ function SideBar(): JSX.Element {
     const location = useLocation();
     const [currentLocation, setLocation] = useState('')
 
-    // let currentLocation = location.pathname.split('/')[2]
-    console.log(currentLocation)
   return (
-    <div className="w-2/12 h-fit bg-white pt-9 pb-2 rounded-4xl">
+    <div className="w-2/12 h-fit bg-white pt-9 pb-2 rounded-xl">
         <div>
             <SideBarItem 
             Icon={DashboardIcon} name="overview" link="dashboard"
@@ -86,8 +84,8 @@ function SideBar(): JSX.Element {
             handleClick={setLocation}/>
 
         </div>
-        <svg className="my-7 mx-auto" width="171" height="2" viewBox="0 0 171 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="1" y1="1" x2="170" y2="1" stroke="#A0A0A1" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 8"/>
+        <svg className="my-7 mx-auto" width="80%" height="2" viewBox="0 0 171 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="1" y1="1" x2="170" y2="1" stroke="#474747" strokeWidth="2" strokeLinecap="round" strokeDasharray="6 8"/>
         </svg>
         <div>
             <SideBarItem 

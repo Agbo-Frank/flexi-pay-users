@@ -13,7 +13,7 @@ export function Button({
             <button 
             type={type}
             disabled={disable}
-            className={`border border-solid rounded-full py-3 px-4 min-w-max w-full hover:opacity-50 ${disable && 'opacity-50'} flex justify-center`}
+            className={`border border-solid cursor-pointer rounded-xl py-3 px-4 min-w-max w-full hover:opacity-50 ${disable && 'opacity-50'} flex justify-center`}
             style={{
                 color: outline ? color : 'white',
                 borderColor: color,

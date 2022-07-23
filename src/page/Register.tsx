@@ -5,60 +5,20 @@ import { useRegisterMutation } from '../redux/slice/Auth'
 
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
-import { IRegister } from './interface'
+import { IRegister } from '../interface'
 import { useFormik, FormikConfig, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import Slide from 'react-reveal/Slide'
 
 import Switch from '../components/Switch';
+import { FPFormikRegister } from '../services/auth';
 
 export function Register() {
     let [hasReferral, setHasReferral] = useState<boolean>(false)
     let [register, { isLoading: loading, data }] =  useRegisterMutation()
 
-    let initialValues: IRegister = {
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-        phone_number: ''
-    }
-
-    async function onSubmit (value: IRegister, formikHelpers: FormikHelpers<IRegister | any>){
-        try{
-            let data = await register(value).unwrap()
-            console.log(data)
-        }
-        catch(err){
-            if(err){
-                let error: any = err
-                formikHelpers.setErrors(error.data.errors)
-            }
-        }
-    }
-    let validationSchema = () => {
-        return Yup.object({
-            first_name: Yup.string().required('first name field is Required'),
-            last_name: Yup.string().required('last name field is Required'),
-            password: Yup
-                        .string()
-                        .required('password field is Required')
-                        .min(6, 'Must be 6 characters or more'),
-            password_confirmation: Yup.string().required('Please confirm password'),
-            email: Yup
-                    .string()
-                    .required('email field isRequired')
-                    .email('Invalid email address'),
-            phone_number: Yup.string().required('phone number field is Required'),
-        })
-    }
-
-    const formik: FormikConfig<IRegister>  | any= useFormik({ 
-        initialValues, 
-        validationSchema, 
-        onSubmit
-    })
+    let formik = FPFormikRegister(register)
+    
   return (
     <AuthenticationForm>
         <div className='flex justify-between items-center w-full py-6 border-b border-solid border-grey-100'>

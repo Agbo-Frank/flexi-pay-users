@@ -17,7 +17,7 @@ export interface IButtonProps extends  React.PropsWithChildren{
     outline?: boolean;
     color: string;
     disable?: boolean;
-    onClick?: () => any
+    onClick?: () => any | undefined | void
 }
 
 export interface IInputProps {

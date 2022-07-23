@@ -18,6 +18,7 @@ export * from "./GearIcon";
 export * from './GroupIcon'
 export * from "./HeadPhoneIcon";
 export * from "./HeartIcon";
+export * from "./LoginIcon";
 export * from "./logo";
 export * from "./LogOutIcon";
 export * from "./MailIcon";

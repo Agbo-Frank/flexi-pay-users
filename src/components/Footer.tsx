@@ -58,10 +58,12 @@ export function Footer(){
 
                         <div>
                             <p className="font-semibold mb-4">Get latest updates in your inbox</p>
-                            <div className="bg-white flex justify-between rounded-full overflow-hidden pl-3 py-1">
+                            <div className="bg-white flex justify-between rounded-xl overflow-hidden pl-3 py-1">
                                 <input type='email' placeholder="Email"/>
                                 <div className="scale-90">
-                                    <Button color="#FF5000"><p>Subscribe</p></Button>
+                                    <div className="scale">
+                                        <Button color="#FF5000"><p>Subscribe</p></Button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

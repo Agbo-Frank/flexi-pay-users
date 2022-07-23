@@ -1,23 +1,31 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IAuthResponse } from '../../interface'
-import { ILogin, IRegister, IForgetPassword } from '../../page/interface'
+import { IAuthResponse, IResetPassword, ILogin, IRegister, IForgetPassword, IResponse } from '../../interface'
 import { REACT_APP_BASE_URL } from '../../config'
+import { useSelector } from 'react-redux'
+import { RootState } from '../store'
 
 
 export const AuthApi = createApi({
     baseQuery: fetchBaseQuery({
-        baseUrl: REACT_APP_BASE_URL
+        baseUrl: 'https://flexipay.ng/api',
+        prepareHeaders: (headers, { getState }) => {
+            const token = (getState() as RootState).data.token
+            
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`)
+            }
+          
+            return headers
+        }
     }),
     reducerPath: 'Auth',
+    tagTypes: ['User'],
     endpoints: (build) => ({
-        register: build.mutation<any, IRegister>({
+        register: build.mutation<IAuthResponse, IRegister>({
             query: (body) => ({
                 url: "/auth/register",
                 method: 'POST',
                 body,
-                header: {
-                    'Content-Type': 'application/json'
-                }
             }),
             transformResponse: (response: any, meta, arg) => response,   
         }),
@@ -26,28 +34,43 @@ export const AuthApi = createApi({
                 url: "/auth/login",
                 method: 'POST',
                 body,
-                header: {
-                    'Content-Type': 'application/json'
-                }
             }),
-            transformResponse: (response: IAuthResponse, meta, arg) => response,    
+            invalidatesTags: ['User'],
+            transformResponse: (response: IAuthResponse, meta, arg) => response
         }),
-        forgotPassword: build.mutation<any, IForgetPassword>({
+        forgotPassword: build.mutation<IResponse, IForgetPassword>({
             query: (body) => ({
                 url: "/auth/password/reset/link",
                 method: 'POST',
-                body,
-                header: {
-                    'Content-Type': 'application/json'
-                }
+                body
             }),
             transformResponse: (response:  any, meta, arg) => response,    
-        })
+        }),
+        resetPassword: build.mutation<IResponse, IResetPassword>({
+            query: (body) => ({
+                url: "/auth/password/reset",
+                method: 'POST',
+                body
+            }),
+            transformResponse: (response: any, meta, arg) => response,    
+        }),
+        logout: build.mutation<IResponse, void>({
+            query: () => {
+                return {
+                    url: "/auth/logout",
+                    method: 'POST'
+                }
+            },
+            invalidatesTags: ['User'],
+            transformResponse: (response: any, meta, arg) => response
+        }),
     })
 })
 
 export const { 
     useRegisterMutation,
     useLoginMutation,
-    useForgotPasswordMutation
+    useForgotPasswordMutation,
+    useResetPasswordMutation,
+    useLogoutMutation,
 } = AuthApi

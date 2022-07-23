@@ -6,10 +6,11 @@ export function DropDown(){
     let [toggle, setToggle] = useState(false)
     return(
         <div className={`relative border ${toggle ? 'border-primary-orange-200' : 'border-grey-1000'} rounded-full py-2 px-3 cursor-pointer`}>
-            <div className="flex justify-between w-full items-center"
-            onClick={() => setToggle(state => !state)}>
-                <p className="font-light">Popular</p>
-                <i className={`text-sm ${toggle ? 'text-primary-orange-200 fa-solid fa-chevron-down' : 'fa-solid fa-chevron-up'}`}></i>
+            <div 
+                className="flex justify-between w-full items-center"
+                onClick={() => setToggle(state => !state)}>
+                    <p className="font-light">Popular</p>
+                    <i className={`text-sm ${toggle ? 'text-primary-orange-200 fa-solid fa-chevron-down' : 'fa-solid fa-chevron-up'}`}></i>
             </div>
             <div className="absolute overflow-hidden w-11/12 rounded-xl">
                 <Slide top when={toggle} duration={300}>

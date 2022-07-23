@@ -5,47 +5,13 @@ import FormInput from '../components/FormInput';
 import Button from '../components/Button';
 import { useForgotPasswordMutation } from '../redux/slice/Auth'
 
-import { IForgetPassword } from './interface'
-
 import { Link } from 'react-router-dom'
-import { useFormik, FormikConfig, FormikHelpers } from 'formik';
-import * as Yup from 'yup';
+import { FPFormikForgetPassword } from '../services/auth';
 
 export function ForgetPassword() {
-    let [sendRequest, { isLoading: loading }] =  useForgotPasswordMutation()
+    let [sendRequest, { isLoading: loading, data }] =  useForgotPasswordMutation()
 
-    let initialValues: IForgetPassword = {
-        email: '',
-    }
-
-    async function onSubmit (value: IForgetPassword, formikHelpers: FormikHelpers<IForgetPassword | any>){
-        try{
-            console.log(value)
-            let data = await sendRequest(value).unwrap()
-            console.log(data)
-        }
-        catch(err){
-            console.log(err)
-            if(err){
-                let error: any = err
-                formikHelpers.setErrors(error.data.errors)
-            }
-        }
-    }
-    let validationSchema = () => {
-        return Yup.object({
-            email: Yup
-                    .string()
-                    .required('email field isRequired')
-                    .email('Invalid email address'),
-        })
-    }
-
-    const formik: FormikConfig<IForgetPassword>  | any= useFormik({ 
-        initialValues, 
-        validationSchema, 
-        onSubmit
-    })
+    let formik = FPFormikForgetPassword(sendRequest)
   return (
     <AuthenticationForm>
         <div className='flex justify-between items-center w-full py-6 border-b border-solid border-grey-100'>
@@ -60,6 +26,7 @@ export function ForgetPassword() {
             <div>
             <h2 className='text-primary-dark-blue font-bold text-4xl'>Reset Your Password</h2>
             <small className='block mt-3 text-lg text-grey-300'>A password reset code will be sent to your email</small>
+            {data && <p>{data?.message}</p>}
             </div>
 
             <form className='my-10' onSubmit={formik.handleSubmit}>
