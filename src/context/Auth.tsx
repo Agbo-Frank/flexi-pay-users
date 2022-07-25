@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 import { IUser } from "../interface";
 import { useLogoutMutation } from "../redux/slice/Auth";
 import { setToken, unsetToken } from "../redux/slice/OtherData";
@@ -19,6 +20,7 @@ export function AuthProvider({ children }: React.PropsWithChildren){
         fixedCacheKey: 'logout',
     })
     let dispatch = useDispatch()
+    let navigate = useNavigate()
 
     let token = useSelector((state: RootState) => state.data.token)
 
@@ -32,6 +34,7 @@ export function AuthProvider({ children }: React.PropsWithChildren){
             let data = await logout().unwrap()
             if(data.status === 'success'){
                 dispatch(unsetToken())
+                navigate('/')
             }
         }
         catch(err){

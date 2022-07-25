@@ -3,10 +3,11 @@ import product2 from '../asset/Product2.png'
 
 import Slider from "react-slick";
 import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export function ProductCard(){
     return(
-        <div className="w-full bg-white rounded-lg h-fit p-2 space-y-4 hover:shadow-xl hover:-translate-y-1 hover:z-30 my-2">
+        <Link to='/product' className="w-full bg-white rounded-lg h-fit p-2 space-y-4 hover:shadow-xl hover:-translate-y-1 hover:z-30 my-2">
             <div className='w-full h-44 overflow-hidden rounded-lg'>
                 <img src={product2} className="w-full h-full object-cover"/>
             </div>
@@ -18,7 +19,7 @@ export function ProductCard(){
                 </div>
                 <p className='text-xs text-primary-orange-200 font-medium'>Pay ₦ 120 / daily</p>
             </div>
-        </div>
+        </Link>
     )
 }
 
@@ -98,10 +99,10 @@ export function ProductsSlide(){
         <div className="overflow-hidden rounded-2xl">
             <div className="flex justify-between bg-primary-orange-300 p-4">
                 <p className="capitalize text-lg">similar products</p>
-                <div className="flex space-x-2 items-center cursor-pointer text-primary-orange-200">
+                <Link to='/products' className="flex space-x-2 items-center cursor-pointer text-primary-orange-200">
                     <p className="capitalize text-sm">View More</p>
                     <i className="font-bold text-xs fa-solid fa-chevron-right"></i>
-                </div>
+                </Link>
             </div>
             <div className="bg-white p-4">
                 <div className="relative rounded-md overflow-x-hidden">
