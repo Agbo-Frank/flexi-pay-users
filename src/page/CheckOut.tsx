@@ -210,7 +210,11 @@ export function CheckOut(){
                                     <div>
                                         <p className="my-3 mt-5">Delivery Cost: Free</p>
                                         <div className="w-1/2">
-                                            <SelectInput label="Select Pick Up Station"/>
+                                            <SelectInput 
+                                                label="Select Pick Up Station" 
+                                                name="station" 
+                                                onChange={(e) => console.log(e)}
+                                                formik={formik}/>
                                         </div>
                                     </div>
                                 )

@@ -7,6 +7,7 @@ import DashboardWrapper from "../components/DashboardWrapper";
 
 import Iicon from "../components/icons/interface";
 import { useGetUserQuery } from "../redux/slice/User";
+import { Skeleton } from "@mui/material";
 
 
 interface ICardProps {
@@ -58,9 +59,18 @@ export  function Dashboard (): JSX.Element {
                         <h3 className="text-primary-dark-blue text-lg font-semibold">Account Details</h3>
                         <div className="rounded-xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-full">
                             <div className="text-grey-200 leading-9 capitalize">
-                                <p className="capitalize">{data?.gender === 'male'? 'Mr.': 'Mrs'} {data?.first_name} {data?.last_name}</p>
-                                <p>{data?.phone_number}</p>
-                                <p>{ data?.email }</p>
+                                {
+                                    loading ?
+                                    <>
+                                        <Skeleton variant="text" />
+                                        <Skeleton variant="text" />
+                                    </> :
+                                    <>
+                                        <p className="capitalize">{data?.first_name} {data?.last_name}</p>
+                                        <p>{data?.phone_number}</p>
+                                        <p>{ data?.email }</p>
+                                    </>
+                                }
                             </div>
                             <div className="mt-14 w-6/12">
                                 <Button type="button" color="#FF5000" outline={true}>

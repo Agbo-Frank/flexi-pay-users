@@ -6,6 +6,7 @@ import { toggleEditProfile } from '../redux/slice/modalSlice'
 import { useDispatch } from "react-redux";
 
 import { useGetUserQuery } from "../redux/slice/User";
+import { Skeleton, Button as MuiButton } from "@mui/material";
 
 export function Profile(){
     let dispatch = useDispatch()
@@ -18,17 +19,30 @@ export function Profile(){
                         <h3 className="text-primary-dark-blue text-lg font-semibold">Account Details</h3>
                         <div className="rounded-xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-full">
                             <div className="text-grey-200 leading-9 capitalize">
-                                <p className="capitalize">{data?.gender === 'male'? 'Mr.': 'Mrs'} {data?.first_name} {data?.last_name}</p>
-                                <p>{data?.phone_number}</p>
-                                <p>{ data?.email }</p>
+                                {
+                                    loading ?
+                                    <>
+                                        <Skeleton variant="text" height={20}/>
+                                        <Skeleton variant="text" height={20}/>
+                                        <Skeleton variant="text" height={20}/>
+                                    </> :
+                                    <>
+                                        <p className="capitalize">{data?.first_name} {data?.last_name}</p>
+                                        <p>{data?.phone_number}</p>
+                                        <p>{ data?.email }</p>
+                                    </>
+                                }
                             </div>
                             <div className="mt-14 w-6/12">
-                                <Button type="button" color="#FF5000" onClick={() => dispatch(toggleEditProfile())}>
-                                    <div className="flex space-x-3 items-center">
-                                        <EditIcon size="20" color="white"/>
-                                        <p className="text-sm">Update Profile</p>
-                                    </div>
-                                </Button>
+                                <MuiButton 
+                                    type="button" 
+                                    color="secondary"
+                                    variant='contained'
+                                    size="large"
+                                    onClick={() => dispatch(toggleEditProfile())}
+                                    startIcon={<EditIcon size="20" color="white"/>}>
+                                        Update Profile
+                                </MuiButton>
                             </div>
                         </div>
                     </div>
@@ -36,20 +50,28 @@ export function Profile(){
                     <div className="bg-white rounded-xl p-5 w-1/2">
                         <div className="flex justify-between items-center">
                             <h3 className="text-primary-dark-blue text-lg font-semibold">Delivery Address </h3>
-                            <div className="w-4/12">
-                                <Button type="button" color="#FF5000">
-                                    <p className="text-sm">Add Address</p>
-                                </Button>
-                            </div>
+                            <MuiButton 
+                                type="button" 
+                                color="secondary"
+                                variant='contained'
+                                size="large"
+                                onClick={() => dispatch(toggleEditProfile())}>
+                                    Add Address
+                            </MuiButton>
                         </div>
                         <div className="rounded-xl border border-grey-100 pt-5 pb-5 mt-5 px-3 w-full h-10/12">
                             <div className="text-grey-200 leading-7 capitalize bg-grey-900 py-4 px-4 rounded-xl">
                                 <p className="font-light">Plot 101, Redeemed Road, Eagle Island</p>
                                 <p className="font-light">Port Harcourt, Rivers State, Nigeria.</p>
                                 <p className="font-light">09093284414</p>
-                                <div className="flex space-x-3 items-center ml-auto justify-end mt-7 cursor-pointer">
-                                    <EditIcon size="20" color="#FF5000"/>
-                                    <p className="text-primary-orange-200 text-sm">Edit Address</p>
+                                <div className="ml-auto w-fit">
+                                    <MuiButton 
+                                        type="button" 
+                                        color="secondary"
+                                        size="large"
+                                        startIcon={<EditIcon size="20" color="#FF5000"/>}>
+                                            Edit Address
+                                    </MuiButton>
                                 </div>
                             </div>
                         </div>
@@ -66,9 +88,13 @@ export function Profile(){
                     </div>
 
                     <div className="w-2/12">
-                        <Button type="button" color="#FF5000">
-                            <p className="mx-3">Contact Us</p>
-                        </Button>
+                        <MuiButton 
+                            type="button" 
+                            color="secondary"
+                            variant='contained'
+                            size="large">
+                                Contact Us
+                        </MuiButton>
                     </div>
                 </div>
             </div>

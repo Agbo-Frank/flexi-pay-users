@@ -40,7 +40,17 @@ export interface IAddAddress {
 }
 
 export interface ISelectInput {
-    label: string
+    label: string,
+    data?: {value: string, label: string}[],
+    name: string;
+    // cb?: (a?: string) => any
+    onChange?: (a?: string) => any | void
+    formik: any
+}
+export interface IDateInput {
+    label: string,
+    name: string;
+    formik?: any
 }
 
 export interface ICreditCard {

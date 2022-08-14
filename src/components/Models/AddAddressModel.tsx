@@ -1,4 +1,4 @@
-import FormInput from "../FormInput"
+import {FormInput, SelectInput} from "../FormInput"
 import UserIcon from "../icons/UserIcon"
 import { IAddAddress } from "../interface"
 
@@ -7,7 +7,6 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux'
 
 import PhoneIcon from "../icons/PhoneIcon"
-import SelectInput from "../SelectInput"
 import Button from "../Button"
 import ModelWrapper from "./ModelWrapper"
 import { toggleAddAddress } from "../../redux/slice/modalSlice";
@@ -60,9 +59,21 @@ function AddAddressModel(){
                     formik={formik}
                 />
 
-                <SelectInput label="State of residence" />
-                <SelectInput label="City of Residence" />
-                <SelectInput label="Nearest Pick up Station" />
+                <SelectInput 
+                    onChange={(state)=> console.log(state)}
+                    label="State of residence" 
+                    name="state"
+                    formik={formik}/>
+                <SelectInput 
+                    onChange={(state)=> console.log(state)}
+                    label="City of Residence" 
+                    name="city"
+                    formik={formik}/>
+                <SelectInput 
+                    onChange={(state)=> console.log(state)}
+                    label="Nearest Pick up Station" 
+                    name="guy"
+                    formik={formik}/>
 
                 <FormInput 
                     type="text" 

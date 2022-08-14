@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModelWrapper from "./ModelWrapper";
 import { MailIcon, PhoneIcon, UserIcon } from '../icons'
 
@@ -7,52 +7,154 @@ import * as Yup from 'yup';
 import { useSelector, useDispatch } from "react-redux";
 
 import { IUser } from "../../interface";
-import FormInput from "../FormInput";
-import SelectInput from "../SelectInput";
+import {DateInput, FormInput, SelectInput} from "../FormInput";
 import Button from "../Button";
+import { Button as MuiButton,  } from "@mui/material";
+import {LoadingButton} from '@mui/lab';
+
 import { toggleEditProfile } from '../../redux/slice/modalSlice'
 import { RootState } from "../../redux/store";
+import { Tab, Tabs } from "@mui/material";
+
+import NaijaStates from 'naija-state-local-government';
+import { FPFormikEditUser } from "../../services/user";
+import { useEditUserMutation } from "../../redux/slice/User";
 
 
-function EditProfile(){
-    let [profile, setProfile] = useState(true)
+function Profile(){
+    let [states, setStates] = useState()
+    let [lgas, setLgas] = useState()
+    let [gender, setGender] = useState()
 
-    let initialValues: IUser = {
-        first_name: '',
-        last_name: '',
-        email: '',
-        phone_number: '',
-        state: '',
-        city: '',
-        address: ''
+    const dispatch = useDispatch()
+
+    const [editUser, { isLoading }] = useEditUserMutation()
+
+    useEffect(() => {
+        let states = NaijaStates.states()
+        
+        states = states.map((state: string) => ({label: state, value: state}))
+        setStates(states)
+    }, [])
+
+    function onChangeState(state: string){
+        
+        let lgas = NaijaStates.lgas(state)
+    
+        lgas = lgas.lgas.map((lga: string) => ({label: lga, value: lga}))
+        setLgas(lgas)
     }
 
-    let initialValues2 = {
+    const formik = FPFormikEditUser(editUser)
+
+    return(
+        <form className="px-5 mt-5" onSubmit={formik.handleSubmit}>
+            <div className="flex w-full justify-between items-center gap-4">
+                <FormInput 
+                    type="text"
+                    name="firstName"
+                    Icon={UserIcon}
+                    label="First Name"
+                    formik={formik}
+                />
+                <FormInput 
+                    type="text"
+                    name="lastName"
+                    Icon={UserIcon}
+                    label="Last Number"
+                    formik={formik}
+                />
+            </div>
+
+            <div className="flex w-full justify-between items-center gap-4">
+                <FormInput 
+                    type="email"
+                    name="email"
+                    Icon={MailIcon}
+                    label="Email"
+                    formik={formik}
+                />
+                <FormInput 
+                    type="text"
+                    name="PhoneNumber"
+                    Icon={PhoneIcon}
+                    label="Phone Number"
+                    formik={formik}
+                />
+            </div>
+
+            <div className="flex w-full justify-between items-center gap-4">
+                <SelectInput 
+                    label="Gender" 
+                    name="gender" 
+                    data={gender}
+                    formik={formik}
+                />
+                <DateInput 
+                    label="Date of Birth" 
+                    name="DOB"
+                    formik={formik}
+                />
+            </div>
+
+            <div className="flex w-full justify-between items-center gap-4">
+                <SelectInput 
+                    label="State" 
+                    name="state" 
+                    data={states}
+                    onChange={(state) => onChangeState(`${state}`)}
+                    formik={formik}
+                    />
+
+                <SelectInput 
+                    label="LGA" 
+                    name="lga" 
+                    data={lgas}
+                    formik={formik}/>
+            </div>
+
+            <FormInput 
+                type="text"
+                name="address"
+                Icon={UserIcon}
+                label="Address"
+                formik={formik}
+            />
+            <div className="flex justify-center gap-2 w-9/12 mx-auto my-5">
+                <MuiButton 
+                    variant="outlined" 
+                    color="secondary" 
+                    type="button"
+                    sx={{width: '50%'}}
+                    onClick={() => dispatch(toggleEditProfile())}>
+                        Cancel
+                </MuiButton>
+                <LoadingButton
+                    loading={isLoading}
+                    loadingPosition="start"
+                    variant="contained"
+                    color="secondary"
+                    type="submit"
+                    disableElevation
+                    size="large"
+                    sx={{width: '50%'}}>
+                        Save Changes
+                </LoadingButton>
+            </div>
+        </form>
+    )
+}
+
+function Password(){
+    let initialValues = {
         oldPasssword: '',
         newPassword: '',
         cPassword: '',
     }
-
-    function onSubmit1 (value: IUser){
-        console.log(value)
-    }
-
-    function onSubmit2 (value: any){
+    function onSubmit (value: any){
         console.log(value)
     }
     let validationSchema = () => {
-        return Yup.object({
-            firstName: Yup.string(),
-            lastName: Yup.string(),
-            email: Yup.string(),
-            phoneNumber: Yup.string(),
-            state: Yup.string(),
-            city: Yup.string(),
-            address: Yup.string()
-        })
-    }
-
-    let validationSchema2 = () => {
         return Yup.object({
             oldPassword: Yup.string(),
             lastName: Yup.string(),
@@ -63,122 +165,84 @@ function EditProfile(){
             address: Yup.string()
         })
     }
-
-    const formik1 = useFormik({ 
+    const formik = useFormik({ 
         initialValues, 
         validationSchema, 
-        onSubmit: onSubmit1
+        onSubmit
     })
+    const dispatch = useDispatch()
 
-    const formik2 = useFormik({ 
-        initialValues: initialValues, 
-        validationSchema: validationSchema2, 
-        onSubmit: onSubmit2
-    })
+    const [editUser, { isLoading }] = useEditUserMutation()
+    return(
+        <form className="w-9/12 mx-auto my-5" onSubmit={formik.handleSubmit}>
+            <FormInput 
+                type="password"
+                name="oldPassword"
+                Icon={UserIcon}
+                label="Old password"
+                formik={formik}
+            />
+            <FormInput 
+                type="password"
+                name="newPassword"
+                Icon={UserIcon}
+                label="New Password"
+                formik={formik}
+            />
+            <FormInput 
+                type="password"
+                name="password"
+                Icon={UserIcon}
+                label="Confirm Password"
+                formik={formik}
+            />
+
+            <div className="flex justify-center gap-2 w-10/12 mx-auto my-5">
+                <MuiButton 
+                    variant="outlined" 
+                    color="secondary" 
+                    type="button"
+                    sx={{width: '50%'}}
+                    onClick={() => dispatch(toggleEditProfile())}>
+                        Cancel
+                </MuiButton>
+                <LoadingButton
+                    loading={isLoading}
+                    loadingPosition="start"
+                    variant="contained"
+                    color="secondary"
+                    type="submit"
+                    disableElevation
+                    size="large"
+                    sx={{width: '50%'}}>
+                        Save Changes
+                </LoadingButton>
+            </div>
+        </form>
+    )
+}
+
+
+function EditProfile(){
+    const [value, setValue] = useState(0);
 
     let editProfile = useSelector((state: RootState) => state.modal.editProfile)
     let dispatch = useDispatch()
     return(
         <ModelWrapper isOpen={editProfile} closeModal={() => dispatch(toggleEditProfile())}>
             <div className="h-full overflow-y-auto scrollbar relative">
-                <div className="sticky top-0 left-0 z-20 bg-white flex">
-                    <div 
-                    className={`w-1/2 my-4 border-b ${profile ? 'text-primary-blue border-primary-blue ' : 'text-grey-200 border-grey-100 '} border-solid  py-3 px-2 hover:bg-gray-100 cursor-pointer`}
-                    onClick={() => setProfile(true)}>Profile Details</div>
-                    <div 
-                    className={`w-1/2 text-right my-4 border-b  ${!profile ? 'text-primary-blue border-primary-blue ' : 'text-grey-200 border-grey-100 '} hover:bg-gray-100 py-3 px-2 cursor-pointer`}
-                    onClick={() => setProfile(false)}>Change Password</div>
-                </div>
+                <Tabs value={value} onChange={(e, newValue) => setValue(newValue)}>
+                    <Tab label="Profile Details" sx={{textTransform: 'capitalize', fontSize: 16, width: '50%', alignItems: 'start'}}/>
+                    <Tab label="Change Password" sx={{textTransform: 'capitalize', fontSize: 16, width: '50%', alignItems: 'end'}}/>
+                </Tabs>
 
                 <div>
-                    {
-                        profile ?
-                       <form className="px-5" onSubmit={formik1.handleSubmit}>
-                            <div className="flex w-full justify-between items-center gap-4">
-                                <FormInput 
-                                    type="text"
-                                    name="firstName"
-                                    Icon={UserIcon}
-                                    label="First Name"
-                                    formik={formik1}
-                                />
-                                <FormInput 
-                                    type="text"
-                                    name="lastName"
-                                    Icon={UserIcon}
-                                    label="Last Number"
-                                    formik={formik1}
-                                />
-                            </div>
-
-                            <div className="flex w-full justify-between items-center gap-4">
-                                <FormInput 
-                                    type="email"
-                                    name="email"
-                                    Icon={MailIcon}
-                                    label="Email"
-                                    formik={formik1}
-                                />
-                                <FormInput 
-                                    type="text"
-                                    name="PhoneNumber"
-                                    Icon={PhoneIcon}
-                                    label="Phone Number"
-                                    formik={formik1}
-                                />
-                            </div>
-
-                            <div className="flex w-full justify-between items-center gap-4">
-                                <SelectInput label="Gender" />
-                                <SelectInput label="Date of Birth" />
-                            </div>
-
-                            <div className="flex w-full justify-between items-center gap-4">
-                                <SelectInput label="State" />
-                                <SelectInput label="City" />
-                            </div>
-
-                            <FormInput 
-                                type="text"
-                                name="address"
-                                Icon={UserIcon}
-                                label="Address"
-                                formik={formik1}
-                            />
-                            <div className="flex justify-center gap-2 w-9/12 mx-auto my-5">
-                                <Button outline color="#FF5000">Cancel</Button>
-                                <Button color="#FF5000">Save Changes</Button>
-                            </div>
-                       </form> :
-                        <form className="w-9/12 mx-auto my-5" onSubmit={formik2.handleSubmit}>
-                            <FormInput 
-                                type="password"
-                                name="oldPassword"
-                                Icon={UserIcon}
-                                label="Old password"
-                                formik={formik2}
-                            />
-                            <FormInput 
-                                type="password"
-                                name="newPassword"
-                                Icon={UserIcon}
-                                label="New Password"
-                                formik={formik2}
-                            />
-                            <FormInput 
-                                type="password"
-                                name="password"
-                                Icon={UserIcon}
-                                label="Confirm Password"
-                                formik={formik2}
-                            />
-
-                            <div className="flex justify-center gap-2 w-10/12 mx-auto my-10">
-                                <Button outline color="#FF5000">Cancel</Button>
-                                <Button color="#FF5000">Save Changes</Button>
-                            </div>
-                        </form>
-                    }
+                    <div hidden={value !== 0}>
+                        <Profile />
+                    </div>
+                    <div hidden={value !== 1}>
+                        <Password />
+                    </div>
                 </div>
             </div>
         </ModelWrapper>

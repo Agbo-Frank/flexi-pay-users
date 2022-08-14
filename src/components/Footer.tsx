@@ -84,8 +84,8 @@ export function Footer(){
                         <div className="flex space-x-2 items-center">
                             <p className="text-sm">Payment Methods: </p>
                             <div className="space-x-5 flex items-center my-3">
-                                <VisaIcon size="15" />
-                                <MasterCardIcon size="15" />
+                                <i className="fa-brands fa-cc-visa text-primary-dark-blue"></i>
+                                <i className="fa-brands fa-cc-mastercard text-primary-dark-blue"></i>
                             </div>
                         </div>
 

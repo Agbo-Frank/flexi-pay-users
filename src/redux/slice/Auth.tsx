@@ -1,7 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { IAuthResponse, IResetPassword, ILogin, IRegister, IForgetPassword, IResponse } from '../../interface'
-import { REACT_APP_BASE_URL } from '../../config'
-import { useSelector } from 'react-redux'
 import { RootState } from '../store'
 
 
@@ -27,7 +25,7 @@ export const AuthApi = createApi({
                 method: 'POST',
                 body,
             }),
-            transformResponse: (response: any, meta, arg) => response,   
+            transformResponse: (response: IAuthResponse, meta, arg) => response,   
         }),
         login: build.mutation<IAuthResponse, ILogin>({
             query: (body) => ({
@@ -38,7 +36,7 @@ export const AuthApi = createApi({
             invalidatesTags: ['User'],
             transformResponse: (response: IAuthResponse, meta, arg) => response
         }),
-        forgotPassword: build.mutation<IResponse, IForgetPassword>({
+        forgotPassword: build.mutation<IResponse<any>, IForgetPassword>({
             query: (body) => ({
                 url: "/auth/password/reset/link",
                 method: 'POST',
@@ -46,7 +44,7 @@ export const AuthApi = createApi({
             }),
             transformResponse: (response:  any, meta, arg) => response,    
         }),
-        resetPassword: build.mutation<IResponse, IResetPassword>({
+        resetPassword: build.mutation<IResponse<any>, IResetPassword>({
             query: (body) => ({
                 url: "/auth/password/reset",
                 method: 'POST',
@@ -54,7 +52,7 @@ export const AuthApi = createApi({
             }),
             transformResponse: (response: any, meta, arg) => response,    
         }),
-        logout: build.mutation<IResponse, void>({
+        logout: build.mutation<IResponse<any>, void>({
             query: () => {
                 return {
                     url: "/auth/logout",

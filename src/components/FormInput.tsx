@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { CloseEyesIcon, ExclamationIcon, EyesIcon } from "./icons";
-import{ IInputProps } from './interface'
+import{ IDateInput, IInputProps, ISelectInput } from './interface'
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
 export function FormInput({ Icon, type, name, label, formik }: IInputProps): JSX.Element {
   let [focus, setFocus] = useState<boolean>(false)
@@ -58,6 +61,65 @@ export function FormInput({ Icon, type, name, label, formik }: IInputProps): JSX
         }
     </div>
   );
+}
+
+export function SelectInput ({ label, data, name, onChange, formik }: ISelectInput){
+  return(
+      <div className="mb-4 w-full">
+          <FormControl fullWidth size="medium">
+              <Select
+                  id={label}
+                  displayEmpty
+                  name={name}
+                  sx={{borderRadius: 3}}
+                  {...formik.getFieldProps(name)}
+                  onChange={e => {
+                    formik.handleChange(e)
+                    if(onChange){
+                      onChange(`${e.target.value}`)
+                    }
+                  }}
+              >
+                  <MenuItem 
+                    value="" 
+                    disabled 
+                    key={data?.length} 
+                    sx={{color: '#C3C3C3'}}
+                    className="text-[#C3C3C3]"
+                    >
+                      { label }
+                  </MenuItem>
+                  {
+                    data?.map((d, idx) => <MenuItem value={d.value} key={idx}>{d.label}</MenuItem>)
+                  }
+              </Select>
+          </FormControl>
+      </div>
+  )
+}
+
+export function DateInput({label, name, formik}: IDateInput){
+  const [value, setValue] = React.useState<Date | null>(null);
+  return(
+    <div className="mb-4 w-full">
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DatePicker
+          label={label}
+          value={value}
+          onChange={(newValue) => {
+            setValue(newValue);
+          }}
+          renderInput={(params) => <TextField 
+            {...params} 
+            sx={{borderRadius: 3}}
+            name={name}
+            // value={formik.values[name]}
+            // onChange={formik.handleChange}
+            {...formik.getFieldProps(name)}/>}
+        />
+      </LocalizationProvider>
+    </div>
+  )
 }
 
 export default FormInput;

@@ -1,10 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { IModalReducer} from '../interface'
 
 let initialState = {
-  token: localStorage.getItem('flexi-token') === '' || localStorage.getItem('flexi-token') === null ? null : localStorage.getItem('flexi-token'),
-  isAuth: false
+  token: localStorage.getItem('flexi-token') || null,
+  isAuth: localStorage.getItem('flexi-token') ? true : false
 }
+
 
 export const dataSlice = createSlice({
   name: 'data',

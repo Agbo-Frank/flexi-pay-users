@@ -7,18 +7,23 @@ export interface IUser {
     email: string;
     phone_number: string;
     state?: string;
-    city?: string;
-    address?: string;
     gender?: string;
+    city?: string;
+    lga?: string;
+    address?: string;
+    DOB?: string;
     referral_link?: string
 }
 
-export interface IResponse {
+export interface IResponse<T> {
     message: string;
     status: string;
+    result?: {
+        data: T
+    }
 }
 
-export interface IAuthResponse extends IResponse {
+export interface IAuthResponse extends IResponse<IUser> {
     is_verified?: boolean;
     token?: string
 }

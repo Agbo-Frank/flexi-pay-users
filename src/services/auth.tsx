@@ -2,9 +2,7 @@ import { useFormik, FormikHelpers, FormikConfig } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../context/Auth';
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-
 import { IAuthResponse, ILogin, IRegister, IResetPassword, ITrigger } from '../interface';
-import { useResetPasswordMutation } from '../redux/slice/Auth';
 
 export function FPFormikLogin(login: ITrigger<ILogin, IAuthResponse>){
     let navigate = useNavigate();
@@ -178,7 +176,7 @@ export function FPFormikResetPassword(reset: any, data: {token: string, email: s
         })
     }
 
-    const formik: FormikConfig<typeof initialValues>  | any= useFormik({ 
+    const formik: FormikConfig<typeof initialValues>  | any = useFormik({ 
         initialValues, 
         validationSchema, 
         onSubmit
