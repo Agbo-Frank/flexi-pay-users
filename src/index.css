@@ -75,6 +75,21 @@ html{
   animation: dash 1.5s ease-in-out infinite;
 }
 
+.slide-in-right{
+  animation:slide-in-right .5s cubic-bezier(.25,.46,.45,.94) both
+}
+
+@keyframes slide-in-right{
+  0%{
+    transform:translateX(1000px);
+    opacity:0
+  }
+  100% {
+    transform:translateX(0);
+    opacity:1
+  }
+}
+
 @keyframes rotate {
   100% {
     transform: rotate(360deg);

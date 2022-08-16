@@ -68,7 +68,7 @@ export function SelectInput ({ label, data, name, onChange, formik }: ISelectInp
       <div className="mb-4 w-full">
           <FormControl fullWidth size="medium">
               <Select
-                  id={label}
+                  id={name}
                   displayEmpty
                   name={name}
                   sx={{borderRadius: 3}}

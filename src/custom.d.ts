@@ -8,3 +8,4 @@ declare module 'react-reveal/Fade';
 declare module 'react-reveal/makeCarousel';
 declare module './page/Register.tsx'
 declare module 'naija-state-local-government'
+declare module 'react-transition-group/TransitionGroup'
