@@ -1,11 +1,11 @@
-import DashboardWrapper from "../components/DashboardWrapper";
-import { Button } from '../components'
-import { EditIcon } from '../components/icons'
-import supportImage from '../asset/supportImage.png'
-import { toggleEditProfile } from '../redux/slice/modalSlice'
+import DashboardWrapper from "../../components/DashboardWrapper";
+import { Button } from '../../components'
+import { EditIcon } from '../../components/icons'
+import supportImage from '../../asset/supportImage.png'
+import { toggleEditProfile } from '../../redux/slice/modalSlice'
 import { useDispatch } from "react-redux";
 
-import { useGetUserQuery } from "../redux/slice/User";
+import { useGetUserQuery } from "../../redux/slice/User";
 import { Skeleton, Button as MuiButton } from "@mui/material";
 
 export function Profile(){
@@ -27,9 +27,9 @@ export function Profile(){
                                         <Skeleton variant="text" height={20}/>
                                     </> :
                                     <>
-                                        <p className="capitalize">{data?.first_name} {data?.last_name}</p>
-                                        <p>{data?.phone_number}</p>
-                                        <p>{ data?.email }</p>
+                                        <p className="capitalize">{data?.result?.data.first_name} {data?.result?.data.last_name}</p>
+                                        <p>{data?.result?.data.phone_number}</p>
+                                        <p>{ data?.result?.data.email }</p>
                                     </>
                                 }
                             </div>

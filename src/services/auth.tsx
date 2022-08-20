@@ -18,7 +18,7 @@ export function FPFormikLogin(login: ITrigger<ILogin, IAuthResponse>){
     async function onSubmit (value: ILogin, formikHelpers: FormikHelpers<ILogin| any>){
         try{
             let data = await login(value).unwrap()
-            
+            console.log(data)
             if(data.status === 'success'){
                 signIn(`${data.token}`, () => {
                     navigate(pathname)

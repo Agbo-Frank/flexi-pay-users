@@ -66,9 +66,9 @@ export  function Dashboard (): JSX.Element {
                                         <Skeleton variant="text" />
                                     </> :
                                     <>
-                                        <p className="capitalize">{data?.first_name} {data?.last_name}</p>
-                                        <p>{data?.phone_number}</p>
-                                        <p>{ data?.email }</p>
+                                        <p className="capitalize">{data?.result?.data.first_name} {data?.result?.data.last_name}</p>
+                                        <p>{data?.result?.data.phone_number}</p>
+                                        <p>{ data?.result?.data.email }</p>
                                     </>
                                 }
                             </div>

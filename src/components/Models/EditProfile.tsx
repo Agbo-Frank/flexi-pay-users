@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import ModelWrapper from "./ModelWrapper";
 import { MailIcon, PhoneIcon, UserIcon } from '../icons'
-
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { useSelector, useDispatch } from "react-redux";
 
 import { IUser } from "../../interface";
@@ -17,18 +14,18 @@ import { RootState } from "../../redux/store";
 import { Tab, Tabs } from "@mui/material";
 
 import NaijaStates from 'naija-state-local-government';
-import { FPFormikEditUser } from "../../services/user";
-import { useEditUserMutation } from "../../redux/slice/User";
+import { FPFormikChangePassword, FPFormikEditUser } from "../../services/user";
+import { useChangePasswordMutation, useEditUserMutation, useGetUserQuery } from "../../redux/slice/User";
 
 
 function Profile(){
     let [states, setStates] = useState()
     let [lgas, setLgas] = useState()
-    let [gender, setGender] = useState()
 
     const dispatch = useDispatch()
 
     const [editUser, { isLoading }] = useEditUserMutation()
+    const { data } = useGetUserQuery()
 
     useEffect(() => {
         let states = NaijaStates.states()
@@ -54,14 +51,14 @@ function Profile(){
                     type="text"
                     name="firstName"
                     Icon={UserIcon}
-                    label="First Name"
+                    label={data?.result.data.first_name || "First Name"}
                     formik={formik}
                 />
                 <FormInput 
                     type="text"
                     name="lastName"
                     Icon={UserIcon}
-                    label="Last Number"
+                    label={data?.result.data.last_name || "Last Number"}
                     formik={formik}
                 />
             </div>
@@ -71,14 +68,14 @@ function Profile(){
                     type="email"
                     name="email"
                     Icon={MailIcon}
-                    label="Email"
+                    label={data?.result.data.email || "Email"}
                     formik={formik}
                 />
                 <FormInput 
                     type="text"
-                    name="PhoneNumber"
+                    name="phone_number"
                     Icon={PhoneIcon}
-                    label="Phone Number"
+                    label={data?.result.data.phone_number || "Phone Number"}
                     formik={formik}
                 />
             </div>
@@ -87,12 +84,12 @@ function Profile(){
                 <SelectInput 
                     label="Gender" 
                     name="gender" 
-                    data={gender}
+                    data={[{label: 'Male', value: 'Male'},{label: 'Female', value: 'Female'}]}
                     formik={formik}
                 />
                 <DateInput 
                     label="Date of Birth" 
-                    name="DOB"
+                    name="dob"
                     formik={formik}
                 />
             </div>
@@ -108,18 +105,35 @@ function Profile(){
 
                 <SelectInput 
                     label="LGA" 
-                    name="lga" 
+                    name="city" 
                     data={lgas}
                     formik={formik}/>
             </div>
 
             <FormInput 
                 type="text"
-                name="address"
+                name="house_address"
                 Icon={UserIcon}
-                label="Address"
+                label={data?.result.data.address || "Address"}
                 formik={formik}
             />
+            <div className="flex w-full justify-between items-center gap-4">
+                <FormInput 
+                    type="text"
+                    name="nearest_bus_stop"
+                    Icon={UserIcon}
+                    label={data?.result.data.nearest_bus_stop || "Nearest Bus Stop"}
+                    formik={formik}
+                />
+
+                <FormInput 
+                    type="text"
+                    name="postal_code"
+                    Icon={UserIcon}
+                    label={data?.result.data.postal_code || "Postal Code"}
+                    formik={formik}
+                />
+            </div>
             <div className="flex justify-center gap-2 w-9/12 mx-auto my-5">
                 <MuiButton 
                     variant="outlined" 
@@ -131,7 +145,6 @@ function Profile(){
                 </MuiButton>
                 <LoadingButton
                     loading={isLoading}
-                    loadingPosition="start"
                     variant="contained"
                     color="secondary"
                     type="submit"
@@ -146,54 +159,33 @@ function Profile(){
 }
 
 function Password(){
-    let initialValues = {
-        oldPasssword: '',
-        newPassword: '',
-        cPassword: '',
-    }
-    function onSubmit (value: any){
-        console.log(value)
-    }
-    let validationSchema = () => {
-        return Yup.object({
-            oldPassword: Yup.string(),
-            lastName: Yup.string(),
-            email: Yup.string(),
-            phoneNumber: Yup.string(),
-            state: Yup.string(),
-            city: Yup.string(),
-            address: Yup.string()
-        })
-    }
-    const formik = useFormik({ 
-        initialValues, 
-        validationSchema, 
-        onSubmit
-    })
     const dispatch = useDispatch()
 
-    const [editUser, { isLoading }] = useEditUserMutation()
+    const [changePassword, { isLoading }] = useChangePasswordMutation()
+
+    let formik = FPFormikChangePassword(changePassword)
     return(
         <form className="w-9/12 mx-auto my-5" onSubmit={formik.handleSubmit}>
             <FormInput 
                 type="password"
-                name="oldPassword"
-                Icon={UserIcon}
-                label="Old password"
-                formik={formik}
-            />
-            <FormInput 
-                type="password"
-                name="newPassword"
+                name="password"
                 Icon={UserIcon}
                 label="New Password"
                 formik={formik}
             />
             <FormInput 
                 type="password"
-                name="password"
+                name="password_confirmation"
                 Icon={UserIcon}
                 label="Confirm Password"
+                formik={formik}
+            />
+
+            <FormInput 
+                type="password"
+                name="previous_password"
+                Icon={UserIcon}
+                label="Old Password"
                 formik={formik}
             />
 
@@ -208,14 +200,13 @@ function Password(){
                 </MuiButton>
                 <LoadingButton
                     loading={isLoading}
-                    loadingPosition="start"
                     variant="contained"
                     color="secondary"
                     type="submit"
                     disableElevation
                     size="large"
                     sx={{width: '50%'}}>
-                        Save Changes
+                        Change
                 </LoadingButton>
             </div>
         </form>
@@ -223,7 +214,7 @@ function Password(){
 }
 
 
-function EditProfile(){
+export function EditProfile(){
     const [value, setValue] = useState(0);
 
     let editProfile = useSelector((state: RootState) => state.modal.editProfile)

@@ -1,3 +1,4 @@
+import { AlertColor } from "@mui/material";
 
 
 export interface IModalReducer {
@@ -7,5 +8,10 @@ export interface IModalReducer {
     addAddress: boolean,
     addCreditCard: boolean,
     withdrawalForm: boolean,
-    editProfile: boolean
+    editProfile: boolean;
+    snackBar: {
+        open: boolean;
+        message: string;
+        severity: AlertColor;
+    }
 }

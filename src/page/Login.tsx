@@ -5,6 +5,7 @@ import { useLoginMutation } from '../redux/slice/Auth'
 
 import { Link, useSearchParams } from 'react-router-dom'
 import { FPFormikLogin } from '../services/auth';
+import { Alert, Collapse } from '@mui/material';
 
 export function Login() {
     let [login, { isLoading: loading, data, error }] =  useLoginMutation()
@@ -29,6 +30,9 @@ export function Login() {
 
             <Toast2 message={`${data?.message}`} type={`${data?.status}`} open={data ? true : false}/>
             <Toast2 message={`please login`} type='error'open={searchParams.has('redirect') ? true : false}/>
+            <Collapse in={data?.status === 'failed'}>
+                <Alert severity="error">{data?.message}</Alert>
+            </Collapse>
             
             <form className='my-10 w-10/12' onSubmit={formik.handleSubmit}>
             <div className='flex justify-start gap-3'>

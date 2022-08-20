@@ -3,7 +3,7 @@ import { IModalReducer} from '../interface'
 
 let initialState = {
   token: localStorage.getItem('flexi-token') || null,
-  isAuth: localStorage.getItem('flexi-token') ? true : false
+  isAuth: localStorage.getItem('flexi-token') ? true : false,
 }
 
 
@@ -21,7 +21,7 @@ export const dataSlice = createSlice({
       state.isAuth = false
       state.token = null
     }
-  },
+  }
 })
 
 export const { 

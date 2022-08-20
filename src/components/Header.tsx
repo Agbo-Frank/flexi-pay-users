@@ -120,7 +120,7 @@ export function Header(){
                                         <div className="flex justify-between items-center gap-4">
                                             <div className="flex flex-col justify-items-end">
                                                 <p className="text-xs capitalize">good { time }</p>
-                                                <p className="font-bold capitalize ml-auto">{user?.first_name}</p>
+                                                <p className="font-bold capitalize ml-auto">{user?.result?.data.first_name}</p>
                                             </div>
                                             <div 
                                                 className="w-11 h-11 bg-white rounded-full flex justify-center items-center cursor-pointer"

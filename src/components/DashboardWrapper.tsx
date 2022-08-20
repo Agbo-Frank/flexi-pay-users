@@ -13,8 +13,7 @@ import Alert from "./Models/Alert";
 import Button from "./Button";
 import AddAddressModel from "./Models/AddAddressModel";
 import AddCreditCard from "./Models/AddCreditcard";
-import EditProfile from "./Models/EditProfile";
-import Toast from "./Toast";
+import {EditProfile} from "./Models/EditProfile";
 
 
 function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
@@ -33,8 +32,6 @@ function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
                         <li className="text-grey-700">Home /</li> 
                         <li> Overview</li>
                     </ul>
-
-                    <Toast />
                 </div>
                 <div 
                 className="px-6 fp-screen space-x-9 flex justify-between items-stretch overflow-y-hidden">

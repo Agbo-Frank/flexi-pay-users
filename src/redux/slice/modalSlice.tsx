@@ -8,7 +8,12 @@ let initialState: IModalReducer = {
   addAddress: false,
   addCreditCard: false,
   withdrawalForm: false,
-  editProfile: false
+  editProfile: false,
+  snackBar: {
+    open: false,
+    message: "",
+    severity: 'success'
+  }
 }
 
 export const modalSlice = createSlice({
@@ -35,6 +40,11 @@ export const modalSlice = createSlice({
     },
     toggleEditProfile: (state) => {
       state.editProfile = !state.editProfile
+    },
+    toggleSnackBar: (state, action) => {
+      state.snackBar.message = action.payload.message
+      state.snackBar.open = action.payload.open
+      state.snackBar.severity = action.payload.severity
     }
   },
 })
@@ -46,7 +56,8 @@ export const {
   toggleAddAddress,
   toggleAddCreditcard,
   toggleWithdrawalForm,
-  toggleEditProfile 
+  toggleEditProfile,
+  toggleSnackBar
 } = modalSlice.actions
 
 export default modalSlice.reducer

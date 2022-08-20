@@ -24,7 +24,7 @@ export interface IInputProps {
     Icon?: React.FC<Iicon>;
     type: string;
     name: string;
-    label: string;
+    label: string | undefined;
     formik: any
 }
 
@@ -47,6 +47,18 @@ export interface ISelectInput {
     onChange?: (a?: string) => any | void
     formik: any
 }
+
+export interface IAutoComplete {
+    label: string,
+    data?: any[] | null,
+    name: string;
+    onChange?: (a?: any) => any | void;
+    formik: any;
+    size?: 'small' | 'large';
+    loading?: boolean;
+    getOptions?: (option: any) => any
+}
+
 export interface IDateInput {
     label: string,
     name: string;

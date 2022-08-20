@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CloseEyesIcon, ExclamationIcon, EyesIcon } from "./icons";
-import{ IDateInput, IInputProps, ISelectInput } from './interface'
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
+import{ IAutoComplete, IDateInput, IInputProps, ISelectInput } from './interface'
+import { Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
@@ -55,7 +55,7 @@ export function FormInput({ Icon, type, name, label, formik }: IInputProps): JSX
           formik.touched[name] && formik.errors[name] ?
           <div className={`absolute flex space-x-1 items-center text-crimson text-sm px-2 py-0 bg-white -translate-y-7 translate-x-4`}>
             <ExclamationIcon size="10" color="#FF5000" />
-            <small>{formik.errors[name]}</small>
+            <small className="block w-full whitespace-nowrap">{formik.errors[name]}</small>
           </div>:
           null
         }
@@ -67,20 +67,23 @@ export function SelectInput ({ label, data, name, onChange, formik }: ISelectInp
   return(
       <div className="mb-4 w-full">
           <FormControl fullWidth size="medium">
+          <InputLabel id={name}>{label}</InputLabel>
               <Select
                   id={name}
                   displayEmpty
                   name={name}
                   sx={{borderRadius: 3}}
                   {...formik.getFieldProps(name)}
+                  label={label}
                   onChange={e => {
                     formik.handleChange(e)
                     if(onChange){
                       onChange(`${e.target.value}`)
                     }
                   }}
+                  placeholder={label}
               >
-                  <MenuItem 
+                  {/* <MenuItem 
                     value="" 
                     disabled 
                     key={data?.length} 
@@ -88,7 +91,7 @@ export function SelectInput ({ label, data, name, onChange, formik }: ISelectInp
                     className="text-[#C3C3C3]"
                     >
                       { label }
-                  </MenuItem>
+                  </MenuItem> */}
                   {
                     data?.map((d, idx) => <MenuItem value={d.value} key={idx}>{d.label}</MenuItem>)
                   }
@@ -109,15 +112,59 @@ export function DateInput({label, name, formik}: IDateInput){
           onChange={(newValue) => {
             setValue(newValue);
           }}
+          disableFuture
+          inputFormat="yyyy-MM-dd"
           renderInput={(params) => <TextField 
             {...params} 
             sx={{borderRadius: 3}}
             name={name}
-            // value={formik.values[name]}
-            // onChange={formik.handleChange}
             {...formik.getFieldProps(name)}/>}
         />
       </LocalizationProvider>
+    </div>
+  )
+}
+
+
+export function AutoComplete ({ label, data, name, onChange, formik, size="large", loading = false, getOptions }: IAutoComplete){
+  return(
+    <div className="relative mb-4 w-full">
+        <FormControl fullWidth size="medium">
+          <Autocomplete
+            disablePortal
+            id={name}
+            name={name}
+            options={data}
+            loading={loading}
+            // onClose={onClose}
+            isOptionEqualToValue={(option, value) => option === value}
+            inputValue={formik.values[name]}
+            {...formik.getFieldProps(name)}
+            onChange={(e, v: any) => {
+              formik.handleChange(e)
+              if(onChange){
+                onChange(v)
+              }
+            }}              
+            sx={{
+              '& fieldset': {
+                borderRadius: 2,
+                borderWidth: 1,
+                borderColor: formik.touched[name] && formik.errors[name] ? '#FF5000' : '#C4C4C4'
+              }, 
+            }}
+            size={size}
+            getOptionLabel={getOptions}
+            renderInput={(params) => <TextField {...params} name={name} placeholder={ label }/>}
+          />
+        </FormControl>
+        {
+          formik.touched[name] && formik.errors[name] ?
+          <p className={`absolute text-crimson text-xs px-2 py-0 bg-white -translate-y-2 translate-x-3`}>
+            {formik.errors[name]}
+          </p>:
+          null
+        }
     </div>
   )
 }

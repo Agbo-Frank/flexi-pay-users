@@ -12,6 +12,7 @@ import Slide from 'react-reveal/Slide'
 
 import Switch from '../components/Switch';
 import { FPFormikRegister } from '../services/auth';
+import { Alert, Collapse } from '@mui/material';
 
 export function Register() {
     let [hasReferral, setHasReferral] = useState<boolean>(false)
@@ -34,6 +35,10 @@ export function Register() {
             <h2 className='text-primary-dark-blue font-bold text-4xl'>Welcome to FlexiPay</h2>
             <small className='block mt-3 text-lg text-grey-300'>Register your account</small>
             </div>
+
+            <Collapse in={data?.status === 'success'}>
+                <Alert severity="info">{data?.message}</Alert>
+            </Collapse>
             
             <form className='my-12 w-10/12' onSubmit={formik.handleSubmit}>
             <div className='flex justify-start gap-3'>
