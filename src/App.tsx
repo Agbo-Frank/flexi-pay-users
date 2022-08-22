@@ -6,7 +6,7 @@ import {
   ForgetPassword, Register,
   ResetPassword, SavedItems, 
   Wallet, Product, Products,
-  Contact, 
+  Contact, VerifyEmail,
   Landing
 } from './page';
 
@@ -34,6 +34,7 @@ function App() {
         <Route path='/support' element={<Contact />} />
         <Route path='/products' element={<Products />} />
         <Route path='/profile' element={<RequireAuth><Profile /></RequireAuth>} />
+        <Route path='/verify/email'  element={<VerifyEmail />} />
       </Routes>
     </AuthProvider>
   );

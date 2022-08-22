@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IModalReducer} from '../interface'
+import { IModalReducer} from '../../interface'
 
 let initialState: IModalReducer = {
   orderDetails: false,

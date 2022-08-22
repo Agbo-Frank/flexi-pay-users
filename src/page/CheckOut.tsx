@@ -14,7 +14,7 @@ import {
     BusIcon,
     ExclamationIcon
 } from "../components/icons"
-import { toggleAddAddress, toggleAddCreditcard } from "../redux/slice/modalSlice"
+import { toggleAddAddress, toggleAddCreditcard } from "../redux/slice/modal"
 
 import { useDispatch } from "react-redux"
 import Slide from 'react-reveal/Slide';

@@ -2,19 +2,17 @@ import FormInput, { SelectInput } from "../FormInput";
 import ModelWrapper from "./ModelWrapper";
 import { NairaIcon, UserIcon } from "../icons";
 
-import { useFormik } from 'formik';
-import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
-import * as Yup from 'yup';
 
 import { AppDispatch, RootState } from "../../redux/store";
-import { toggleWithdrawalForm } from "../../redux/slice/modalSlice";
+import { toggleWithdrawalForm } from "../../redux/slice/modal";
 import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
 import { FPFormikWithdraw } from "../../page/Wallet/service";
 import { useEffect, useState } from "react";
-import { useLazyGetAllBanksQuery } from "../../redux/slice/wallet";
+import { useLazyGetAllBanksQuery, useWithdrawFundMutation } from "../../redux/slice/wallet";
 import { IBanks, ISelectOptions } from "../../interface";
+import { useGetUserQuery } from "../../redux/slice/User";
 
 
 export function WithdrawalForm(){
@@ -23,17 +21,22 @@ export function WithdrawalForm(){
     let dispatch = useDispatch<AppDispatch>()
 
     let [getBanks, {isLoading}] = useLazyGetAllBanksQuery()
+    let { data: user } = useGetUserQuery()
+    let [withdraw, { isLoading: withdrawing }] = useWithdrawFundMutation()
 
     useEffect(() => {
-        getBanks()
-            .unwrap()
-            .then(res => {
-                let banks = res.result.data.map(bank => ({label: bank.bank_name, value: bank.cbn_code}))
-                setBanks(banks)
-            })
-    }, [isLoading])
+        if(isOpen){
+            getBanks()
+                .unwrap()
+                .then(res => {
+                    let banks = res.result.data.map(bank => ({label: bank.bank_name, value: bank.cbn_code}))
+                    setBanks(banks)
+                })
+                .catch((err) => console.log(err))
+        }
+    }, [isLoading, isOpen])
 
-    const formik = FPFormikWithdraw()
+    const formik = FPFormikWithdraw(user?.result.data, withdraw, () => dispatch(toggleWithdrawalForm()))
     
     return(
         <ModelWrapper isOpen={isOpen} size="medium" closeModal={() => dispatch(toggleWithdrawalForm())}>
@@ -46,7 +49,7 @@ export function WithdrawalForm(){
                     <FormInput 
                         type="text" 
                         name="full_name" 
-                        label="Full Name"
+                        label={user?.result.data.first_name ? user?.result.data.first_name + " " + user?.result.data.last_name : "Full Name"}
                         Icon={NairaIcon}
                         formik={formik}
                     />
@@ -82,7 +85,7 @@ export function WithdrawalForm(){
                         </Button>
 
                         <LoadingButton
-                            loading={false}
+                            loading={withdrawing}
                             variant="contained"
                             color="secondary"
                             type="submit"

@@ -83,15 +83,6 @@ export function SelectInput ({ label, data, name, onChange, formik }: ISelectInp
                   }}
                   placeholder={label}
               >
-                  {/* <MenuItem 
-                    value="" 
-                    disabled 
-                    key={data?.length} 
-                    sx={{color: '#C3C3C3'}}
-                    className="text-[#C3C3C3]"
-                    >
-                      { label }
-                  </MenuItem> */}
                   {
                     data?.map((d, idx) => <MenuItem value={d.value} key={idx}>{d.label}</MenuItem>)
                   }

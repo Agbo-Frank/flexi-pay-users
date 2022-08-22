@@ -2,7 +2,7 @@ import DashboardWrapper from "../../components/DashboardWrapper";
 import { Button } from '../../components'
 import { EditIcon } from '../../components/icons'
 import supportImage from '../../asset/supportImage.png'
-import { toggleEditProfile } from '../../redux/slice/modalSlice'
+import { toggleEditProfile } from '../../redux/slice/modal'
 import { useDispatch } from "react-redux";
 
 import { useGetUserQuery } from "../../redux/slice/User";

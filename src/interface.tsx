@@ -1,5 +1,6 @@
 import { MutationTrigger } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { MutationDefinition, BaseQueryFn, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from "@reduxjs/toolkit/dist/query";
+import { AlertColor } from "@mui/material";
 
 export interface IUser {
     first_name?: string;
@@ -112,4 +113,62 @@ export type ITrigger<T, Response> = MutationTrigger<MutationDefinition<T, BaseQu
 export interface ISelectOptions {
     value: string;
     label: string
+}
+
+export interface IGetTransactionResponse {
+    current_page: number;
+    data: ITransacation[];
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean
+    }[],
+    next_page_url: string | null;
+    path: string;
+    per_page: number;
+    prev_page_url: null | string;
+    total: number;
+    to: 15
+}
+
+export interface ITransacation {
+    reference?: string;
+    amount: string;
+    charges: string;
+    prev_balance: string;
+    new_balance: string;
+    status: "SUCCESSFUL";
+    type: "DEBIT" | "CREDIT";
+    created_at: string;
+    updated_at: string;
+    info: string
+}
+
+export interface IWalletDetails {
+    uuid: string;
+    account_number: string;
+    account_reference: string;
+    balance: string;
+    status: string;
+    account_name: string;
+    bank_name: string;
+}
+
+export interface IModalReducer {
+    orderDetails: boolean,
+    trackOrder: boolean,
+    productReview: boolean,
+    addAddress: boolean,
+    addCreditCard: boolean,
+    withdrawalForm: boolean,
+    editProfile: boolean;
+    snackBar: {
+        open: boolean;
+        message: string;
+        severity: AlertColor;
+    }
 }

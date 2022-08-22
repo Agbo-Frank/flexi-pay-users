@@ -1,10 +1,10 @@
-import { Logo, MailIcon, PadLock, Spinner } from '../components/icons';
+import { Logo, MailIcon, PadLock, Spinner } from '../../components/icons';
 
-import {Button, FormInput, AuthenticationForm, Toast2} from '../components';
-import { useLoginMutation } from '../redux/slice/Auth'
+import {Button, FormInput, AuthenticationForm, Toast2} from '../../components';
+import { useLoginMutation } from '../../redux/slice/Auth'
 
 import { Link, useSearchParams } from 'react-router-dom'
-import { FPFormikLogin } from '../services/auth';
+import { FPFormikLogin } from './service';
 import { Alert, Collapse } from '@mui/material';
 
 export function Login() {
@@ -27,11 +27,13 @@ export function Login() {
             <h2 className='text-primary-dark-blue font-bold text-4xl'>Hi, You’ve Been Missed</h2>
             <small className='block mt-3 text-lg text-grey-300'>Log in to your account</small>
             </div>
-
-            <Toast2 message={`${data?.message}`} type={`${data?.status}`} open={data ? true : false}/>
-            <Toast2 message={`please login`} type='error'open={searchParams.has('redirect') ? true : false}/>
-            <Collapse in={data?.status === 'failed'}>
-                <Alert severity="error">{data?.message}</Alert>
+            <Collapse in={
+                data?.status === 'failed' || data?.status === 'success'
+            }>
+                <Alert severity={data?.status === 'success' ? "success" : "error"}>{data?.message}</Alert>
+            </Collapse>
+            <Collapse in={searchParams.has('redirect')}>
+                <Alert severity="error">Please login</Alert>
             </Collapse>
             
             <form className='my-10 w-10/12' onSubmit={formik.handleSubmit}>

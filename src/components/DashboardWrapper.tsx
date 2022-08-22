@@ -9,10 +9,6 @@ import React from "react";
 import OrderDetails from "./Models/OrderDetails";
 import ProductReview from "./Models/ProductReview";
 import Tracker from "./Models/Tracker";
-import Alert from "./Models/Alert";
-import Button from "./Button";
-import AddAddressModel from "./Models/AddAddressModel";
-import AddCreditCard from "./Models/AddCreditcard";
 import {EditProfile} from "./Models/EditProfile";
 
 

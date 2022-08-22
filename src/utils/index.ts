@@ -13,3 +13,14 @@ export function validURL(str: string) {
       '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
     return !!pattern.test(str);
 }
+
+export async function verifyLink(url: string){
+  try{
+    let res = await fetch(url)
+    let data = res.json()
+    return data
+  }
+  catch(err){
+    console.log(err)
+  }
+}

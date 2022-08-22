@@ -2,33 +2,41 @@ import { FormikHelpers, useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { ICreateAccountBody, IFundWalletByCard, IFundWalletResponse, IResponse, ITrigger, IUser, IWithdraw } from '../../interface';
-import { toggleSnackBar } from '../../redux/slice/modalSlice';
+import { toggleSnackBar } from '../../redux/slice/modal';
 import { useGetUserQuery } from '../../redux/slice/User';
 import { validURL } from '../../utils';
 
 
 export function FPcreateAccForm(userData: IUser | null | undefined, createAccount: ITrigger<ICreateAccountBody, IResponse<{data: null}>>, done:() => any){
     let initialValues: ICreateAccountBody = {
-        first_name:  userData?.first_name || "",
-        last_name: userData?.last_name || "",
-        email: userData?.email || "",
-        phone_number: userData?.phone_number || "",
+        first_name:  "",
+        last_name: "",
+        email: "",
+        phone_number: "",
         bvn: ""
     }
 
     let dispatch = useDispatch()
 
     async function onSubmit (value: ICreateAccountBody, formikHelpers: FormikHelpers<ICreateAccountBody | any>){
+        value = {
+            first_name: userData?.first_name || value.first_name,
+            last_name: userData?.last_name || value.last_name,
+            email: userData?.email || value.email,
+            phone_number: userData?.phone_number || value.phone_number,
+            bvn: value.bvn
+        }
+
         try{
             let data = await createAccount(value).unwrap();
             if(data.status === 'success'){
-                done()
-
                 dispatch(toggleSnackBar({
                     message: data.message,
                     open: true,
                     severity: 'success'
                 }))
+
+                window.location.reload()
             }
             else{
                 dispatch(toggleSnackBar({
@@ -37,6 +45,7 @@ export function FPcreateAccForm(userData: IUser | null | undefined, createAccoun
                     severity: 'error'
                 }))
             }
+            done()
         }
         catch(err){
             if(err){
@@ -68,7 +77,9 @@ export function FPcreateAccForm(userData: IUser | null | undefined, createAccoun
     return formik
 }
 
-export function FPFormikWithdraw(){
+export function FPFormikWithdraw(user: IUser | undefined, withdraw: ITrigger<IWithdraw, IResponse<{data: any}>>, done: () => void | any){
+    let dispatch = useDispatch()
+
     let initialValues: IWithdraw = {
         full_name: '',
         account_number: '',
@@ -76,15 +87,44 @@ export function FPFormikWithdraw(){
         amount: ''
     }
 
-    function onSubmit (value: IWithdraw){
+    async function onSubmit (value: IWithdraw, formikHelpers: FormikHelpers<IWithdraw | any>){
+        value = {
+            ...value,
+            full_name: user?.first_name ? user?.first_name + " " + user?.last_name : value.full_name,
+        }
+        value['redirect_url'] = 'http://localhost:3000/wallet'
         console.log(value)
+        try{
+            let data = await withdraw(value).unwrap()
+            
+            if(data.status === 'success'){
+                dispatch(toggleSnackBar({
+                    open: true,
+                    message: data.message,
+                    severity: 'success'
+                }))
+            }
+            else{
+                dispatch(toggleSnackBar({
+                    message: data.message,
+                    open: true,
+                    severity: 'error'
+                }))
+            }
+            done()
+        }
+        catch(err){
+            if(err){
+                let error: any = err
+                formikHelpers.setErrors(error.data.errors)
+            }
+        }
     }
 
     let validationSchema = () => {
         return Yup.object({
             full_name: Yup
-                .string()
-                .required('Account Name field is required'),
+                .string(),
             account_number: Yup
                 .string()
                 .required('Account Number field is required')
@@ -125,7 +165,7 @@ export function FundWalletByCard(fundWallet: ITrigger<IFundWalletByCard, IRespon
             email: data?.result.data.email || value.email,
             phone_number: data?.result.data.phone_number || value.phone_number,
             amount: value.amount,
-            redirect_url: 'http://localhost:3000/wallet?message=success'
+            redirect_url: 'http://localhost:3000/wallet'
         }
         console.log(value)
         try{

@@ -2,7 +2,6 @@ import ModelWrapper from "../../components/Models/ModelWrapper";
 import { FormInput } from "../../components";
 import { UserIcon } from "../../components/icons";
 import { Button } from "@mui/material";
-import { useGetUserQuery } from "../../redux/slice/User";
 import { IUser } from "../../interface";
 import { FPcreateAccForm } from "./service";
 import { useCreateAccountMutation } from "../../redux/slice/wallet";
@@ -20,14 +19,14 @@ export function CreateAccForm({userData, open, close}: {userData: IUser | null |
                         type="text"
                         name="first_name"
                         Icon={UserIcon}
-                        label={userData ? userData.first_name : "First Name"}
+                        label={userData ? userData.first_name?.toLocaleUpperCase() : "First Name"}
                         formik={formik}
                     />
                     <FormInput 
                         type="text"
                         name="last_name"
                         Icon={UserIcon}
-                        label={userData ? userData.last_name : "Last Name"}
+                        label={userData ? userData.last_name?.toLocaleUpperCase() : "Last Name"}
                         formik={formik}
                     />
                 </div>

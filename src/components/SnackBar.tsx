@@ -1,7 +1,7 @@
 import { Alert, Button, IconButton, Snackbar } from "@mui/material"
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSnackBar } from "../redux/slice/modalSlice";
+import { toggleSnackBar } from "../redux/slice/modal";
 import { RootState } from "../redux/store";
 import { CloseEyesIcon } from "./icons";
 

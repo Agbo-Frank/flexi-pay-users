@@ -76,4 +76,8 @@ export interface ICreditCardComponent {
     type: 'master' | 'visa',
     hasBorder?: boolean
 }
+
+export interface IWrapperProps extends  React.PropsWithChildren{
+    styles?: string
+}
   

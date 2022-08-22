@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import PhoneIcon from "../icons/PhoneIcon"
 import Button from "../Button"
 import ModelWrapper from "./ModelWrapper"
-import { toggleAddAddress } from "../../redux/slice/modalSlice";
+import { toggleAddAddress } from "../../redux/slice/modal";
 import { RootState } from "../../redux/store";
 
 

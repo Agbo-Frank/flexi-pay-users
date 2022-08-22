@@ -1,7 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
 import { FormInput, SelectInput } from "../../components";
-import { MessageIcon, NairaIcon, PhoneIcon, UserIcon } from "../../components/icons";
+import { MailIcon, MessageIcon, NairaIcon, PhoneIcon, UserIcon } from "../../components/icons";
 import ModelWrapper from "../../components/Models/ModelWrapper";
 import { useGetUserQuery } from "../../redux/slice/User";
 import { useFundWalletByCardMutation } from "../../redux/slice/wallet";
@@ -37,7 +37,7 @@ export function FundWallet({open, close}: {open: boolean; close: () => void | an
                         type="email" 
                         name="email" 
                         label={data?.result.data.email || "Email"}
-                        Icon={MessageIcon}
+                        Icon={MailIcon}
                         formik={formik}
                     />
                     <FormInput 
@@ -73,7 +73,7 @@ export function FundWallet({open, close}: {open: boolean; close: () => void | an
                             disableElevation
                             size="large"
                             sx={{width: '50%'}}>
-                                Withdraw
+                                Fund Wallet
                         </LoadingButton>
                     </div>
                 </form>

@@ -52,6 +52,14 @@ export const AuthApi = createApi({
             }),
             transformResponse: (response: any, meta, arg) => response,    
         }),
+        resendVerification: build.mutation<IResponse<{data: null}>, {email: string}>({
+            query: (body) => ({
+                url: '/auth/resend-verification/link',
+                method: 'POST',
+                body
+            }),
+            transformResponse: (response: IResponse<{data: null}>, meta, arg) => response,
+        }),
         logout: build.mutation<IResponse<any>, void>({
             query: () => {
                 return {
@@ -71,4 +79,5 @@ export const {
     useForgotPasswordMutation,
     useResetPasswordMutation,
     useLogoutMutation,
+    useResendVerificationMutation
 } = AuthApi

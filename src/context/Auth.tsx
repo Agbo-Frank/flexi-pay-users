@@ -33,8 +33,8 @@ export function AuthProvider({ children }: React.PropsWithChildren){
         try{
             let data = await logout().unwrap()
             if(data.status === 'success'){
-                dispatch(unsetToken())
                 navigate('/')
+                dispatch(unsetToken())
             }
         }
         catch(err){

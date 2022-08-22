@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IAuthResponse, IResetPassword, ILogin, IRegister, IForgetPassword, IResponse, ICreateAccountBody, IWithdraw, IFundWalletByCard, IFundWalletResponse, IBanks } from '../../interface'
+import { IResponse, ICreateAccountBody, IWithdraw, IFundWalletByCard, IFundWalletResponse, IBanks, ITransacation, IGetTransactionResponse, IWalletDetails } from '../../interface'
 import { RootState } from '../store'
 
 
@@ -17,7 +17,7 @@ export const WalletApi = createApi({
         }
     }),
     reducerPath: 'Wallet',
-    tagTypes: ['User', 'Banks'],
+    tagTypes: ['User', 'Banks', 'Transaction'],
     endpoints: (build) => ({
         createAccount: build.mutation<IResponse<{data: null}>, ICreateAccountBody>({
             query: (body) => ({
@@ -33,7 +33,8 @@ export const WalletApi = createApi({
                 url: '/fund/my-bank',
                 method: 'POST',
                 body
-            })
+            }),
+            invalidatesTags: ['Transaction']
         }),
         fundWalletByCard: build.mutation<IResponse<IFundWalletResponse>, IFundWalletByCard>({
             query: (body) => ({
@@ -41,6 +42,7 @@ export const WalletApi = createApi({
                 method: 'POST',
                 body
             }),
+            invalidatesTags: ['Transaction'],
             transformResponse: (response: IResponse<IFundWalletResponse>, meta, arg) => response,
         }),
         getAllBanks: build.query<IResponse<{data: IBanks[]}>, void>({
@@ -49,6 +51,19 @@ export const WalletApi = createApi({
                 method: 'GET'
             }),
             providesTags: ['Banks']
+        }),
+        getTransaction: build.query<IResponse<IGetTransactionResponse>, string>({
+            query: (page) => ({
+                url: "/wallet/transactions?page=" + page,
+                method: "GET",
+            }),
+            providesTags: ['Transaction']
+        }),
+        getWalletDetails: build.query<IResponse<{data: IWalletDetails}>, void>({
+            query: () => ({
+                url: '/wallet/details',
+                method: 'GET'
+            })
         })
     }),
 })
@@ -56,5 +71,9 @@ export const WalletApi = createApi({
 export const { 
     useCreateAccountMutation,
     useFundWalletByCardMutation,
-    useLazyGetAllBanksQuery
+    useLazyGetAllBanksQuery,
+    useWithdrawFundMutation,
+    useLazyGetTransactionQuery,
+    useGetWalletDetailsQuery,
+    useLazyGetWalletDetailsQuery
 } = WalletApi

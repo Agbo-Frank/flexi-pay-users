@@ -6,7 +6,7 @@ import BagIcon from "../icons/Bag";
 import CalenderIcon from "../icons/CalenderIcon";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { seeOrderDetails } from "../../redux/slice/modalSlice";
+import { seeOrderDetails } from "../../redux/slice/modal";
 import { RootState } from "../../redux/store";
 
 function OrderDetails(){

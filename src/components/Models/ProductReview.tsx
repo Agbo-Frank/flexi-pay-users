@@ -5,7 +5,7 @@ import StarIcon from "../icons/StarIcon"
 import { useState } from "react"
 
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleProductReview } from "../../redux/slice/modalSlice";
+import { toggleProductReview } from "../../redux/slice/modal";
 import { RootState } from "../../redux/store";
 
 

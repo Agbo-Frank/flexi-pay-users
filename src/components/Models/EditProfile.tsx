@@ -9,7 +9,7 @@ import Button from "../Button";
 import { Button as MuiButton,  } from "@mui/material";
 import {LoadingButton} from '@mui/lab';
 
-import { toggleEditProfile } from '../../redux/slice/modalSlice'
+import { toggleEditProfile } from '../../redux/slice/modal'
 import { RootState } from "../../redux/store";
 import { Tab, Tabs } from "@mui/material";
 

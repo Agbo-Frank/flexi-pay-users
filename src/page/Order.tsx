@@ -14,7 +14,7 @@ import OrderDetails from "../components/Models/OrderDetails"
 import { useState, Dispatch, SetStateAction } from "react"
 
 import { useDispatch } from 'react-redux'
-import { seeOrderDetails, trackOrder, toggleProductReview } from "../redux/slice/modalSlice"
+import { seeOrderDetails, trackOrder, toggleProductReview } from "../redux/slice/modal"
 import { ProgressBar } from "../components"
 
 

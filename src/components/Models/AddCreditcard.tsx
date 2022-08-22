@@ -11,7 +11,7 @@ import Switch from "../Switch";
 import { useState } from "react";
 import Button from "../Button";
 
-import { toggleAddCreditcard } from '../../redux/slice/modalSlice'
+import { toggleAddCreditcard } from '../../redux/slice/modal'
 import { RootState } from '../../redux/store'
 
 

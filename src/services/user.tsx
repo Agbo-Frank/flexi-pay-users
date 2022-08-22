@@ -2,7 +2,7 @@ import { IChangePassword, IResponse, ITrigger, IUser } from "../interface";
 import * as Yup from 'yup';
 import { FormikConfig, FormikHelpers, useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { toggleEditProfile, toggleSnackBar } from "../redux/slice/modalSlice";
+import { toggleEditProfile, toggleSnackBar } from "../redux/slice/modal";
 import { useGetUserQuery } from "../redux/slice/User";
 
 

@@ -5,7 +5,7 @@ import MarkCircleIcon from "../icons/MarkCircleIcon";
 import { useSelector, useDispatch } from "react-redux";
 
 import { RootState } from '../../redux/store'
-import { trackOrder  } from '../../redux/slice/modalSlice'
+import { trackOrder  } from '../../redux/slice/modal'
 
 interface ITrackRec {
     name: string;
