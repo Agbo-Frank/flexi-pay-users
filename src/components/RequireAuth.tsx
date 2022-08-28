@@ -8,7 +8,7 @@ function RequireAuth({ children }: React.PropsWithChildren) {
     let location = useLocation();
   
     if (!isAuth) {
-        return <Navigate to={`/login?redirect=${location.pathname.replace('/', '')}` } replace />;
+        return <Navigate to={`/auth/login?redirect=${location.pathname.replace('/', '')}` } replace />;
     }
   
     return (

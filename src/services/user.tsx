@@ -31,11 +31,12 @@ export function FPFormikEditUser(edit: ITrigger<Partial<IUser>, IResponse<null |
             state: value.state || user?.result.data.state,
             city: value.city || user?.result.data.city,
             gender: value.gender || user?.result.data.gender,
-            house_address: value.address || user?.result.data.address,
+            house_address: value.house_address || user?.result.data.house_address,
             dob: value.dob || user?.result.data.dob,
-            nearest_bus_stop: value.address || user?.result.data.address,
+            nearest_bus_stop: value.nearest_bus_stop || user?.result.data.nearest_bus_stop,
             postal_code: value.postal_code || user?.result.data.postal_code
         }
+        console.log(value)
         try{
             let data = await edit(value).unwrap()
             if(data.status === 'success'){

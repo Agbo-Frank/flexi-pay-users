@@ -172,3 +172,94 @@ export interface IModalReducer {
         severity: AlertColor;
     }
 }
+
+export interface IProductImage {
+    id: number;
+    product_id: number;
+    image: string;
+    created_at: string;
+    updated_at: string;
+    image_link: string;
+}
+
+export interface IProduct {
+    uuid: string;
+    name: string;
+    description: string;
+    price: string;
+    slug: string;
+    product_images: IProductImage[]
+}
+
+export interface IPagination<T> {
+    current_page: number;
+    data: T;
+    first_page_url: string;
+    from: number;
+    last_page: 1;
+    last_page_url: string;
+    links: {
+        url: null | string;
+        label: string;
+        active: boolean
+    }[];
+    next_page_url: null | string;
+    path: string;
+    prev_page_url: string;
+    to: string;
+    total: number
+}
+
+export interface IAddToCartReq{
+    product_uuid: string;
+    quantity: string;
+    guest_id: string;
+}
+
+export interface ICart{
+    uuid: string;
+    quantity: string;
+    price: string;
+    created_at: string;
+    updated_at: string;
+    user: IUser;
+    product: IProduct
+}
+
+export interface IFilter {
+    parent_category?: string;
+    sub_category?: string;
+    price?: string;
+    product_name?: string;
+    latest?: string;
+}
+
+export interface ICategory {
+    uuid: string;
+    name: string;
+    slug: null | string;
+    sub_categories: ISubCategory[]
+    attributes: IAttributes[]
+}
+
+export interface ISubCategory extends ICategory {
+    code: string;
+    description: string;
+    parent_code: string;
+    created_at: string | Date;
+    updated_at: string | Date;
+    parent_id: number | string;
+    is_active: boolean;
+    attributes: IAttributes[]
+}
+
+export interface IAttributes {
+    uuid: number | string;
+    code: string;
+    name: string;
+    frontend_type: 'select' | 'radio' | 'text';
+    is_filterable: boolean;
+    is_required: boolean;
+    created_at: string | Date;
+    updated_at: string | Date;
+}

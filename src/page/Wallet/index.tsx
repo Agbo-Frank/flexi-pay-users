@@ -84,7 +84,7 @@ export function Wallet (){
                                 <p className="ml-5" ref={code}>{data?.result?.data.referral_link}</p>
                             </div>
                             <div className="">
-                                <Button color="#FF5000" onClick={() => copy()}>
+                                <Button color="#FF5000" onClick={copy}>
                                     <div className="flex justify-center items-center space-x-1">
                                         {copied ?<MarkCircleIcon color="white" size="16"/> :<CopyIcon color="white" size="14"/>}
                                         <p className="text-sm">{copied ? 'Copied!' : 'Copy'}</p>

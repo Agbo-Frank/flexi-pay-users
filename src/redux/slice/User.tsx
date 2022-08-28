@@ -3,11 +3,12 @@ import { IUser, IResponse, IChangePassword } from '../../interface'
 import { ILogin, IRegister, IForgetPassword } from '../../interface'
 import { REACT_APP_BASE_URL } from '../../config'
 import { RootState } from '../store'
+import { FLEXIPAY_URL } from '../../utils/constants'
 
 
 export const UserApi = createApi({
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://flexipay.ng/api',
+        baseUrl: FLEXIPAY_URL,
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).data.token
             
@@ -53,5 +54,6 @@ export const UserApi = createApi({
 export const { 
     useGetUserQuery,
     useEditUserMutation,
-    useChangePasswordMutation
+    useChangePasswordMutation,
+    useLazyGetUserQuery
 } = UserApi

@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { IResponse, ICreateAccountBody, IWithdraw, IFundWalletByCard, IFundWalletResponse, IBanks, ITransacation, IGetTransactionResponse, IWalletDetails } from '../../interface'
+import { FLEXIPAY_URL } from '../../utils/constants'
 import { RootState } from '../store'
 
 
 export const WalletApi = createApi({
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://flexipay.ng/api',
+        baseUrl: FLEXIPAY_URL,
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).data.token
             

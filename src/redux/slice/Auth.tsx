@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { IAuthResponse, IResetPassword, ILogin, IRegister, IForgetPassword, IResponse } from '../../interface'
+import { FLEXIPAY_URL } from '../../utils/constants'
 import { RootState } from '../store'
 
 
 export const AuthApi = createApi({
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://flexipay.ng/api',
+        baseUrl: FLEXIPAY_URL,
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).data.token
             

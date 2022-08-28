@@ -9,9 +9,7 @@ import AddAddressModel from "../components/Models/AddAddressModel"
 
 import { 
     CreditCardIcon, WalletIcon, 
-    MasterCardIcon, 
-    NoLocationIcon, NairaIcon,
-    BusIcon,
+    NairaIcon, BusIcon,
     ExclamationIcon
 } from "../components/icons"
 import { toggleAddAddress, toggleAddCreditcard } from "../redux/slice/modal"

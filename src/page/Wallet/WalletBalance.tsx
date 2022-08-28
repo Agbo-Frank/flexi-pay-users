@@ -21,20 +21,25 @@ interface IWalletBalanceProps {
 export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
     let dispatch = useDispatch()
 
-    let {data: user, isLoading: loadingUser} = useGetUserQuery(undefined,{
+    let { user, loadingUser} = useGetUserQuery(undefined,{
         refetchOnFocus: true,
         refetchOnReconnect: true,
+        selectFromResult: ({ data, isLoading}) => ({
+            user: data?.result.data,
+            loadingUser: isLoading
+        })
     })
+
     let [getUserBalance, { data: wallet }] = useLazyGetWalletDetailsQuery()
 
     useEffect(() => {
-        if(user?.result?.data.reserved_account?.account_number){
+        if(user?.reserved_account?.account_number){
             getUserBalance()
         }
     }, [user, loadingUser])
     
     return(
-        <div className="w-1/2 border rounded-xl text-center border-grey-100 flex flex-col justify-center px-4">
+        <div className="w-1/2 border rounded-xl text-center border-grey-100 flex flex-col justify-between px-4">
             {
                 loadingUser ? 
                 <>
@@ -50,16 +55,19 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                         <Skeleton height={40} variant="rounded" width="50%"/>
                     </div>
                 </>:
-                !user?.result?.data.reserved_account?.account_number? 
-                    <>
-                        <Button
-                            color="secondary"
-                            variant="contained"
-                            onClick={() => setOpen(state => ({...state, createAccForm: true}))}
-                        >
-                            Get your account now
-                        </Button>
-                    </>:
+                !user?.reserved_account?.account_number? 
+                <div className="flex flex-col justify-around items-center h-full">
+                    <WalletIcon color="#1900FE" size="40"/>
+                    <span className="text-center text-[#545362] text-lg font-medium">Create Account</span>
+                    <span className="text-center text-[#545362] text-sm font-light">Create an account on FlexiPay to be able to buy and pay for your orders seamlessly. </span>
+                    <Button
+                        color="secondary"
+                        variant="contained"
+                        onClick={() => setOpen(state => ({...state, createAccForm: true}))}
+                    >
+                        Create Account
+                    </Button> 
+                </div>:
                     <>
                         <p className="text-xs text-left text-grey-700 ">Wallet Id: {wallet?.result.data.account_number}</p>
                         <div className="flex justify-center">

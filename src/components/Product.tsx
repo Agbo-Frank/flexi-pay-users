@@ -3,23 +3,50 @@ import product2 from '../asset/Product2.png'
 
 import Slider from "react-slick";
 import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, Skeleton } from '@mui/material';
+import { IProduct } from '../interface';
+import { formatNumber } from '../utils';
+import { GreyLogo } from './icons';
 
-export function ProductCard(){
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+export function ProductCard({product}: {product: IProduct}){
     return(
-        <Link to='/product' className="w-full bg-white rounded-lg h-fit p-2 space-y-4 hover:shadow-xl hover:-translate-y-1 hover:z-30 my-2">
+        <Link to={'/product/' + product.slug} className="w-full bg-white rounded-lg h-fit p-2 space-y-4 hover:shadow-xl hover:-translate-y-1 hover:z-30 my-2">
             <div className='w-full h-44 overflow-hidden rounded-lg'>
-                <img src={product2} className="w-full h-full object-cover"/>
+                <img src={product.product_images[0].image_link} className="w-full h-full object-cover" alt={product.name}/>
             </div>
             <div className='space-y-1'>
-                <p className='truncate text-grey-1200 text-sm capitalize font-light'>Anti Blue Computer & Phone Glasses....</p>
+                <p className='truncate text-grey-1200 text-sm capitalize font-light'>{product.description}</p>
                 <div className="flex items-center space-x-3">
-                    <p className="text-primary-dark-blue font-medium text-md">₦ 4,600</p>
+                    <p className="text-primary-dark-blue font-medium text-md">₦ {formatNumber(product.price)}</p>
                     <s className="text-xs font-light text-grey-200">₦ 10,600</s>
                 </div>
                 <p className='text-xs text-primary-orange-200 font-medium'>Pay ₦ 120 / daily</p>
             </div>
         </Link>
+    )
+}
+
+export function ProductCardSkeleton(){
+    return(
+        <div className="w-[220px] rounded-lg h-fit p-2 space-y-4 my-2">
+            <div className='relative'>
+                <Skeleton variant='rounded' width={'100%'} height={150} />
+                <div className='absolute top-0 right-1/2 translate-x-1/2 translate-y-1/2'>
+                    <GreyLogo />
+                </div>
+            </div>
+            <div className='space-y-1'>
+                <Skeleton width={'100%'} sx={{fontSize: 14}} />
+                <div className="flex items-center space-x-3 w-full">
+                    <Skeleton width={'50%'} sx={{fontSize: 18}} />
+                    <Skeleton width={100} sx={{fontSize: 10}} />
+                </div>
+                <Skeleton width={'70%'} sx={{fontSize: 12}} />
+            </div>
+        </div>
     )
 }
 
@@ -85,7 +112,7 @@ export function ProductSlide(){
     )
 }
 
-export function ProductsSlide(){
+export function ProductsSlide({products, loading}: {products: IProduct[] | undefined, loading: boolean}){
     let slide: any = useRef()
     const settings = {
         infinite: false,
@@ -94,39 +121,53 @@ export function ProductsSlide(){
         slidesToShow: 5,
         slidesToScroll: 2,
     };
-    let data = [1, 2, 3, 4, 5, 6, 7, 8]
+    let data = [1, 2, 3, 4, 5]
+
+    const navigate = useNavigate()
     return(
         <div className="overflow-hidden rounded-2xl">
             <div className="flex justify-between bg-primary-orange-300 p-4">
                 <p className="capitalize text-lg">similar products</p>
-                <Link to='/products' className="flex space-x-2 items-center cursor-pointer text-primary-orange-200">
-                    <p className="capitalize text-sm">View More</p>
-                    <i className="font-bold text-xs fa-solid fa-chevron-right"></i>
-                </Link>
+                <Button 
+                    onClick={() => navigate('/products')} 
+                    color="secondary"
+                    endIcon={<ArrowForwardIosIcon sx={{fontSize: 10}}/>}>
+                        View More
+                </Button>
             </div>
-            <div className="bg-white p-4">
-                <div className="relative rounded-md overflow-x-hidden">
-                    <Slider ref={slide} {...settings}>
-                        {
-                            data.map(d => (
-                                <div className="w-64 h-fit px-1" key={d}>
-                                    <ProductCard />
-                                </div>
-                            ))
-                        }
-                    </Slider>
+            {
+                loading ?
+                <div className='grid grid-cols-5'> 
+                    {
+                        data.map(d => (
+                            <ProductCardSkeleton />
+                        ))
+                    }
+                </div>:
+                <div className="bg-white p-4">
+                    <div className="relative rounded-md overflow-x-hidden">
+                        <Slider ref={slide} {...settings}>
+                            {
+                                products?.map(product => (
+                                    <div className="w-64 h-fit px-1">
+                                        <ProductCard product={product}/>
+                                    </div>
+                                ))
+                            }
+                        </Slider>
 
-                    <div 
-                        className={`absolute top-2/4 w-8 h-8  bg-black/50 rounded-full grid place-items-center cursor-pointer`}
-                        onClick={() => slide.current.slickPrev()}>
-                        <i className="text-white font-bold text-sm fa-solid fa-chevron-left"></i>
-                    </div>
-                    <div className={`absolute top-2/4 right-0 rounded-full bg-black/50 w-8 h-8 grid place-items-center cursor-pointer`}
-                    onClick={() => slide.current.slickNext()}>
-                        <i className="text-white font-bold text-sm fa-solid fa-chevron-right"></i>
+                        <div 
+                            className={`absolute top-2/4 w-8 h-8  bg-black/50 rounded-full grid place-items-center cursor-pointer`}
+                            onClick={() => slide.current.slickPrev()}>
+                            <i className="text-white font-bold text-sm fa-solid fa-chevron-left"></i>
+                        </div>
+                        <div className={`absolute top-2/4 right-0 rounded-full bg-black/50 w-8 h-8 grid place-items-center cursor-pointer`}
+                        onClick={() => slide.current.slickNext()}>
+                            <i className="text-white font-bold text-sm fa-solid fa-chevron-right"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     )
 }

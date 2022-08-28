@@ -10,9 +10,12 @@ import OrderDetails from "./Models/OrderDetails";
 import ProductReview from "./Models/ProductReview";
 import Tracker from "./Models/Tracker";
 import {EditProfile} from "./Models/EditProfile";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 
 function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
+    let isAuth = useSelector((state: RootState) => state.data.isAuth)
     return(
         <Body bgColor="bg-grey-500">
             <div className="w-full h-fit">
@@ -31,8 +34,8 @@ function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
                 </div>
                 <div 
                 className="px-6 fp-screen space-x-9 flex justify-between items-stretch overflow-y-hidden">
-                    <SideBar />
-                    <div className="w-10/12 h-full">
+                    {isAuth && <SideBar />}
+                    <div className={`${isAuth ? 'w-10/12': 'w-full'} h-full`}>
                         {children}
                     </div>
                 </div>

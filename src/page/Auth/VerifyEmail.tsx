@@ -1,17 +1,17 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
-import { Body, FormInput } from "../components"
-import { useResendVerificationMutation } from "../redux/slice/Auth"
+import { Body, FormInput } from "../../components"
+import { useResendVerificationMutation } from "../../redux/slice/Auth"
 
 import {  useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { MailIcon } from "../components/icons"
+import { MailIcon } from "../../components/icons"
 import { useDispatch } from "react-redux"
-import { toggleSnackBar } from "../redux/slice/modal"
+import { toggleSnackBar } from "../../redux/slice/modal"
 import { LoadingButton } from "@mui/lab"
-import { verifyLink } from "../utils"
+import { verifyLink } from "../../utils"
 
 
 
@@ -20,20 +20,22 @@ export function VerifyEmail(){
 
     let [openDialog, setOpenDialog] = useState(false)
     let [message, setMessage] = useState('Resend Verification link')
+    let [isSent, setIsSent] = useState(false)
 
     let [resendVerificationLink, {isLoading, data}] = useResendVerificationMutation()
      
     let dispatch = useDispatch()
 
     async function handleClick(){
-        if(!/sent/i.test(message)){
+        if(!isSent){
             if(searchParams.has('email')){
                 let data = await resendVerificationLink({email: `${searchParams.get('email')}`}).unwrap()
+                console.log(data)
                 setMessage("Sending...")
                 if(data.status === 'success'){
-                    setMessage("Verification link sent")
+                    setIsSent(true)
     
-                    await setTimeout(() => setMessage('Resend Verification link'), (1000 * 60 * 5));
+                    await setTimeout(() => setIsSent(false), (1000 * 60 * 5));
                 }
             }
             else{
@@ -64,14 +66,15 @@ export function VerifyEmail(){
                         dispatch(toggleSnackBar({
                             open: true,
                             message: data.message,
-                            severity: 'success'
+                            severity: 'error'
                         }))
                     }
                 })
         }
+        if(searchParams.has('from')){
+            setIsSent(true)
+        }
     }, [searchParams])
-
-    console.log(searchParams.get('verify_url'))
 
     const formik = useFormik({ 
         initialValues: {email: ''}, 
@@ -100,10 +103,13 @@ export function VerifyEmail(){
         }
     })
     return(
-        <Body bgColor="bg-grey-500">
-            <p>Verify email</p>
+        <>
+            <div>
+                <h2 className='text-primary-dark-blue font-bold text-4xl'>Verify email</h2>
+                <small className='block mt-3 text-lg text-grey-300'>{isSent ? "Verificationlink has been sent please check your mail" : "Please verify your email"}</small>
+            </div>
 
-            <small>Didn't receive any email? <span onClick={handleClick}>{message}</span></small>
+            <small>Didn't receive any mail? <span className="text-primary-orange-200 font-medium cursor-pointer" onClick={handleClick}>{isSent ? "Verification Link Sent" : "Click to Send verification link"}</span></small>
             
                 <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
                     <DialogTitle>Resend verification Link</DialogTitle>
@@ -137,7 +143,7 @@ export function VerifyEmail(){
                         </form>
                     </DialogContent>
                 </Dialog>
-        </Body>
+        </>
     )
 }
 

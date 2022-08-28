@@ -7,16 +7,19 @@ import SearchIcon from "./icons/SearchIcon"
 import { useAuth } from "../context/Auth"
 import Button from "./Button"
 import { BagIcon, HeartIcon, LoginIcon, LogOutIcon, Spinner, UserIcon } from "./icons"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Slide from "react-reveal/Slide"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Iicon from "./interface"
 import { useLogoutMutation } from "../redux/slice/Auth"
-import { useGetUserQuery } from "../redux/slice/User"
+import { useLazyGetUserQuery } from "../redux/slice/User"
 import { useSelector } from "react-redux"
 import { RootState } from "../redux/store"
-import { Avatar, Badge, ClickAwayListener, Skeleton, Stack } from "@mui/material"
+import { Avatar, Badge, Skeleton } from "@mui/material"
 import { Drawer } from "."
+import { useLazyGetUserCartQuery } from "../redux/slice/Cart"
+import { useCookies } from "react-cookie"
+import { FLEXIPAY_COOKIE } from "../utils/constants"
 
 interface Item {
     Icon: React.FC<Iicon>;
@@ -48,8 +51,24 @@ function Item ({ Icon, name, link, handleClick}: Item): JSX.Element {
 
 export function Header(){
     let {signout} = useAuth()
-    let {data: user, isLoading: loading} = useGetUserQuery()
+    const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
+
+    let [getUser, {data: user, isLoading: loading}] = useLazyGetUserQuery()
+    let [getCart, { carts }] = useLazyGetUserCartQuery({
+        selectFromResult: ({data}) => ({
+            carts: data?.result.data,
+        })
+    })
     let isAuth = useSelector((state: RootState) => state.data.isAuth)
+
+    useEffect(() => {
+        if(isAuth){
+            getUser()
+        }
+        if(isAuth || cookies["flex-pay-cookie"]){
+            getCart({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""})
+        }
+    }, [isAuth])
 
     let [logout, {isLoading: loggingOut}] = useLogoutMutation({
         fixedCacheKey: 'logout',
@@ -76,13 +95,13 @@ export function Header(){
                         {
                             !isAuth ? 
                             <div className="flex space-x-5 justify-end ml-auto w-8/12">
-                                <Button outline color="#FF5000" onClick={() => navigate('/login')}>
+                                <Button outline color="#FF5000" onClick={() => navigate('/auth/login')}>
                                     <div className="flex items-center space-x-2">
                                         <LoginIcon size="14" color="#FF5000"/>
                                         <p className="text-sm font-medium">Log in</p>
                                     </div>
                                 </Button>
-                                <Button color="#FF5000" onClick={() => navigate('/register')}><p className="text-sm font-medium">Register</p></Button>
+                                <Button color="#FF5000" onClick={() => navigate('/auth/register')}><p className="text-sm font-medium">Register</p></Button>
                             </div>:
                             <>
                                 <ul className="flex justify-evenly items-center w-3/6">
@@ -100,7 +119,11 @@ export function Header(){
                                             <BellIcon size="20" color="#F9F8FF"/> 
                                         </Avatar>
                                     </Badge>
-                                    <Badge color="secondary" overlap="circular" badgeContent={2}>
+                                    <Badge  
+                                        color="secondary" 
+                                        overlap="circular" 
+                                        badgeContent={carts?.length}
+                                        onClick={() => navigate("cart", { replace: true })}>
                                         <Avatar sx={{bgcolor: '#000326', width: 44, height: 44}}>
                                             <CartIcon size="20" color="#F9F8FF"/> 
                                         </Avatar>

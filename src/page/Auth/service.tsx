@@ -1,10 +1,66 @@
-import { useFormik, FormikHelpers, FormikConfig } from 'formik';
 import * as Yup from 'yup';
-import { useAuth } from '../context/Auth';
+import { useAuth } from '../../context/Auth';
+import { useFormik, FormikHelpers, FormikConfig } from 'formik';
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { IAuthResponse, ILogin, IRegister, IResetPassword, ITrigger } from '../interface';
+import { IAuthResponse, ILogin, IRegister, IResetPassword, ITrigger } from '../../interface';
+
+export function FPFormikLogin(login: ITrigger<ILogin, IAuthResponse>){
+    let navigate = useNavigate();
+    let searchParams = useSearchParams()[0]
+    let pathname = searchParams.has('r_url') ? `/${searchParams.get('r_url')}` : '/'
+    let { signIn } = useAuth()
+
+    let initialValues: ILogin = {
+        email: '',
+        password: ''
+    }
+
+    async function onSubmit (value: ILogin, formikHelpers: FormikHelpers<ILogin| any>){
+        try{
+            let data = await login(value).unwrap()
+            console.log(data)
+            if(data.status === 'success'){
+                if(!data.is_verified){
+                    navigate('/auth/verify/email?email=' + value.email, { replace: true })
+                }
+                else{
+                    signIn(`${data.token}`, () => {
+                        navigate(pathname)
+                    })
+                }
+            }
+        }
+        catch(err){
+            if(err){
+                let error: any = err
+                formikHelpers.setErrors(error.data.errors)
+            }
+        }
+    }
+
+    let validationSchema = () => {
+        return Yup.object({
+            password: Yup
+                .string()
+                .required('password field is required')
+                .min(6, 'Must be 6 characters or more'),
+            email: Yup
+                .string()
+                .required('email field is required')
+                .email('Invalid email address'),
+        })
+    }
+
+    return useFormik({ 
+        initialValues, 
+        validationSchema, 
+        onSubmit
+    })
+}
 
 export function FPFormikRegister(register: ITrigger<IRegister, IAuthResponse>){
+    let navigate = useNavigate()
+
     let initialValues: IRegister = {
         first_name: '',
         last_name: '',
@@ -18,6 +74,9 @@ export function FPFormikRegister(register: ITrigger<IRegister, IAuthResponse>){
         try{
             let data = await register(value).unwrap()
             console.log(data)
+            if(data.status == 'success'){
+                navigate("/auth/verify/email?from=register", { replace: true })
+            }
         }
         catch(err){
             if(err){
@@ -91,7 +150,6 @@ export function FPFormikForgetPassword(sendRequest: any){
     return formik
 }
 
-
 export function FPFormikResetPassword(reset: any, data: {token: string, email: string}){
     let initialValues = {
         password: '',
@@ -122,7 +180,7 @@ export function FPFormikResetPassword(reset: any, data: {token: string, email: s
                     .min(8, 'Must be 8 characters or more'),
             password_confirmation: Yup
                     .string()
-                    .required('password field is Required')
+                    .required('confirm password field is Required')
                     .min(8, 'Must be 8 characters or more'),
         })
     }

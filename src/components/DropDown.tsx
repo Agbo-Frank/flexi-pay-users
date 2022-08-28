@@ -1,29 +1,43 @@
-import { useState } from "react"
-import Slide from "react-reveal/Slide"
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { useState } from "react";
 
-
-export function DropDown(){
-    let [toggle, setToggle] = useState(false)
+export function DropDown({id,component, arrow, children }: any){
+    let [toggle,  setToggle] = useState<null | HTMLElement>(null)
+    const open = Boolean(toggle);
+    const handleClose = () => {
+        setToggle(null);
+    };
     return(
-        <div className={`relative border ${toggle ? 'border-primary-orange-200' : 'border-grey-1000'} rounded-full py-2 px-3 cursor-pointer`}>
-            <div 
-                className="flex justify-between w-full items-center"
-                onClick={() => setToggle(state => !state)}>
-                    <p className="font-light">Popular</p>
-                    <i className={`text-sm ${toggle ? 'text-primary-orange-200 fa-solid fa-chevron-down' : 'fa-solid fa-chevron-up'}`}></i>
-            </div>
-            <div className="absolute overflow-hidden w-11/12 rounded-xl">
-                <Slide top when={toggle} duration={300}>
-                    <ul className={`${toggle ? 'block' : 'hidden'} translate-y-2 font-light top-full bg-white h-fit shadow-lg max-h-40 scrollbar overflow-y-auto`}>
-                        <li className="w-full py-1 p-2 hover:bg-grey-900">Popular</li>
-                        <li className="w-full py-1 p-2 hover:bg-grey-900 ">Popular</li>
-                        <li className="w-full py-1 p-2 hover:bg-grey-900 ">Popular</li>
-                        <li className="w-full py-1 p-2 hover:bg-grey-900 ">Popular</li>
-                        <li className="w-full py-1 p-2 hover:bg-grey-900 ">Popular</li>
-                    </ul>
-                </Slide>
-            </div>
-        </div>
+        <>
+            <button
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => setToggle(e.currentTarget)}
+                id="basic-button"
+                className="font-light">
+                {component} 
+                {arrow && 
+                    <span className='ml-3 font-light'>
+                        {
+                            toggle ? 
+                            <i className="fa-solid fa-chevron-up"></i>:
+                            <i className="fa-solid fa-chevron-down"></i>
+                        }
+                    </span>
+                }
+                
+            </button>
+            <Menu
+                id={id}
+                anchorEl={toggle}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                'aria-labelledby': 'basic-button',
+                }}
+            >
+                {children}
+            </Menu>
+        </>
     )
 }
 

@@ -3,9 +3,7 @@ import ModelWrapper from "./ModelWrapper";
 import { MailIcon, PhoneIcon, UserIcon } from '../icons'
 import { useSelector, useDispatch } from "react-redux";
 
-import { IUser } from "../../interface";
 import {DateInput, FormInput, SelectInput} from "../FormInput";
-import Button from "../Button";
 import { Button as MuiButton,  } from "@mui/material";
 import {LoadingButton} from '@mui/lab';
 
@@ -58,7 +56,7 @@ function Profile(){
                     type="text"
                     name="lastName"
                     Icon={UserIcon}
-                    label={data?.result.data.last_name || "Last Number"}
+                    label={data?.result.data.last_name || "Last Name"}
                     formik={formik}
                 />
             </div>
@@ -101,13 +99,14 @@ function Profile(){
                     data={states}
                     onChange={(state) => onChangeState(`${state}`)}
                     formik={formik}
-                    />
+                />
 
                 <SelectInput 
                     label="LGA" 
                     name="city" 
                     data={lgas}
-                    formik={formik}/>
+                    formik={formik}
+                />
             </div>
 
             <FormInput 

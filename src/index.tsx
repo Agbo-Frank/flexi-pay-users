@@ -7,6 +7,7 @@ import { store } from './redux/store';
 import { Provider } from 'react-redux';
 import theme from './config/theme';
 import { ThemeProvider } from '@mui/material';
+import { CookiesProvider } from 'react-cookie';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,7 +17,9 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          < App />
+          <CookiesProvider>
+            < App />
+          </CookiesProvider>
         </ThemeProvider>
       </Provider>
     </BrowserRouter>

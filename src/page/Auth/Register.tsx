@@ -1,18 +1,15 @@
-import { Logo, UserIcon, MailIcon, PadLock, PhoneIcon, UserIconPlus, Spinner } from '../components/icons';
+import { Logo, UserIcon, MailIcon, PadLock, PhoneIcon, UserIconPlus, Spinner } from '../../components/icons';
 
-import {Button, FormInput, AuthenticationForm} from '../components';
-import { useRegisterMutation } from '../redux/slice/Auth'
+import {Button, FormInput } from '../../components';
+import { useRegisterMutation } from '../../redux/slice/Auth'
 
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
-import { IRegister } from '../interface'
-import { useFormik, FormikConfig, FormikHelpers } from 'formik';
-import * as Yup from 'yup';
 import Slide from 'react-reveal/Slide'
 
-import Switch from '../components/Switch';
-import { FPFormikRegister } from '../services/auth';
+import Switch from '../../components/Switch';
 import { Alert, Collapse } from '@mui/material';
+import { FPFormikRegister } from './service';
 
 export function Register() {
     let [hasReferral, setHasReferral] = useState<boolean>(false)
@@ -21,15 +18,7 @@ export function Register() {
     let formik = FPFormikRegister(register)
     
   return (
-    <AuthenticationForm>
-        <div className='flex justify-between items-center w-full py-6 border-b border-solid border-grey-100'>
-            <Logo />
-            <div className='flex gap-5 items-center text-grey-200'>
-            <span>Already have an account?</span>
-            <Link to="/login" className='py-2  px-8 border border-solid border-grey-100 rounded-full'>Login</Link>
-            </div>
-        </div>
-
+    <>
         <div className='my-20'>
             <div>
             <h2 className='text-primary-dark-blue font-bold text-4xl'>Welcome to FlexiPay</h2>
@@ -118,7 +107,7 @@ export function Register() {
             </div>
             </form>
         </div>
-    </AuthenticationForm>
+    </>
   );
 }
 

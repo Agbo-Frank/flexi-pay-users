@@ -29,28 +29,29 @@ export function FPcreateAccForm(userData: IUser | null | undefined, createAccoun
 
         try{
             let data = await createAccount(value).unwrap();
-            if(data.status === 'success'){
-                dispatch(toggleSnackBar({
-                    message: data.message,
-                    open: true,
-                    severity: 'success'
-                }))
 
-                window.location.reload()
-            }
-            else{
+            if(data){
                 dispatch(toggleSnackBar({
-                    message: data.message,
                     open: true,
-                    severity: 'error'
+                    severity: data.status === 'success' ? 'success' : 'error',
+                    message: data.message
                 }))
             }
+
+            window.location.reload()
+
             done()
         }
         catch(err){
             if(err){
                 let error: any = err
                 formikHelpers.setErrors(error.data.errors)
+
+                dispatch(toggleSnackBar({
+                    open: true,
+                    severity: 'error',
+                    message: error.data.message
+                }))
             }
         }
     }
@@ -97,18 +98,11 @@ export function FPFormikWithdraw(user: IUser | undefined, withdraw: ITrigger<IWi
         try{
             let data = await withdraw(value).unwrap()
             
-            if(data.status === 'success'){
+            if(data){
                 dispatch(toggleSnackBar({
                     open: true,
-                    message: data.message,
-                    severity: 'success'
-                }))
-            }
-            else{
-                dispatch(toggleSnackBar({
-                    message: data.message,
-                    open: true,
-                    severity: 'error'
+                    severity: data.status === 'success' ? 'success' : 'error',
+                    message: data.message
                 }))
             }
             done()
@@ -117,6 +111,12 @@ export function FPFormikWithdraw(user: IUser | undefined, withdraw: ITrigger<IWi
             if(err){
                 let error: any = err
                 formikHelpers.setErrors(error.data.errors)
+
+                dispatch(toggleSnackBar({
+                    open: true,
+                    severity: 'error',
+                    message: error.data.message
+                }))
             }
         }
     }
@@ -184,13 +184,23 @@ export function FundWalletByCard(fundWallet: ITrigger<IFundWalletByCard, IRespon
                 done()
             }
             else{
-                console.log(data)
+                dispatch(toggleSnackBar({
+                    open: true,
+                    severity: 'error',
+                    message: data.message
+                }))
             }
         }
         catch(err){
             if(err){
                 let error: any = err
                 formikHelpers.setErrors(error.data.errors)
+
+                dispatch(toggleSnackBar({
+                    open: true,
+                    severity: 'error',
+                    message: error.data.message
+                }))
             }
         }
     }

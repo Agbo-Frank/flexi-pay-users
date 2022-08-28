@@ -1,27 +1,16 @@
-import { Logo, MailIcon, Spinner } from '../components/icons';
-import AuthenticationForm from '../components/AuthenticationForm';
+import {  MailIcon, Spinner } from '../../components/icons';
 
-import FormInput from '../components/FormInput';
-import Button from '../components/Button';
-import { useForgotPasswordMutation } from '../redux/slice/Auth'
-
-import { Link } from 'react-router-dom'
-import { FPFormikForgetPassword } from '../services/auth';
+import FormInput from '../../components/FormInput';
+import Button from '../../components/Button';
+import { useForgotPasswordMutation } from '../../redux/slice/Auth'
+import { FPFormikForgetPassword } from './service';
 
 export function ForgetPassword() {
     let [sendRequest, { isLoading: loading, data }] =  useForgotPasswordMutation()
 
     let formik = FPFormikForgetPassword(sendRequest)
   return (
-    <AuthenticationForm>
-        <div className='flex justify-between items-center w-full py-6 border-b border-solid border-grey-100'>
-            <Logo />
-            <div className='flex gap-5 items-center text-grey-200'>
-            <span>Don’t have an account?</span>
-            <Link to="/register" className='py-2  px-8 border border-solid border-grey-100 rounded-full'>Register</Link>
-            </div>
-        </div>
-
+    <>
         <div className='my-20'>
             <div>
             <h2 className='text-primary-dark-blue font-bold text-4xl'>Reset Your Password</h2>
@@ -55,7 +44,7 @@ export function ForgetPassword() {
                 </div>
             </form>
         </div>
-    </AuthenticationForm>
+    </>
   );
 }
 

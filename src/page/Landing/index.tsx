@@ -1,11 +1,21 @@
-import { CategorySlide, Body, Categories, Header, LandingSlide, ProductsSlide, Footer } from "../components"
-import banner from '../asset/banner.png'
-import banner1 from '../asset/banner1.png'
-import banner2 from '../asset/banner2.png'
-import banner3 from '../asset/banner3.png'
+import { CategorySlide, Body, Categories, Header, LandingSlide, ProductsSlide, Footer } from "../../components"
+import banner from '../../asset/banner.png'
+import banner1 from '../../asset/banner1.png'
+import banner2 from '../../asset/banner2.png'
+import banner3 from '../../asset/banner3.png'
+import { useGetProductsQuery } from "../../redux/slice/Product"
 
 
 export function Landing(){
+    let { products, loadingProduct } = useGetProductsQuery(1, {
+        refetchOnFocus: true,
+        refetchOnReconnect: true,
+        selectFromResult: ({ data, isLoading }) => ({
+            products: data?.result.data,
+            loadingProduct: isLoading
+        }) 
+    })
+    console.log(products)
     return(
         <Body bgColor="bg-grey-500">
             <div className="h-fit bg-grey-500">
@@ -26,7 +36,7 @@ export function Landing(){
                         <CategorySlide />
                     </div>
 
-                    <ProductsSlide />
+                    <ProductsSlide products={products} loading={loadingProduct}/>
 
                     <div className="grid grid-cols-3 h-80 w-fit bg-white rounded-xl p-4 gap-3">
                         <div className="w-full h-full rounded-lg overflow-hidden">
@@ -40,7 +50,7 @@ export function Landing(){
                         </div>
                     </div>
 
-                    <ProductsSlide />
+                    <ProductsSlide products={products} loading={loadingProduct}/>
                 </div>
 
                 <Footer />
