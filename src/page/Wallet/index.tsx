@@ -61,13 +61,14 @@ export function Wallet (){
             <WithdrawalForm />
             {open.fundWallet && <FundWallet open={open.fundWallet} close={() => setOpen(state => ({...state, fundWallet: false}))}/>}
             {open.createAccForm && <CreateAccForm userData={data?.result?.data} open={open.createAccForm} close={() => setOpen(state => ({...state, createAccForm: false}))}/>}
+            <div>
             <div className="bg-white rounded-xl p-6 mb-5">
-                <h3 className="font-semibold text-primary-dark-blue">Saved Card</h3>
-                <div className="flex justify-between items-stretch space-x-5 mt-5">
+                <h3 className="font-semibold text-primary-dark-blue">Wallet</h3>
+                <div className="flex items-stretch space-x-3 mt-5">
                     
                     <WalletBalance open={open} setOpen={setOpen}/>
 
-                    <div className=" w-1/2 space-x-3 rounded-xl text-center bg-grey-900 flex flex-col justify-center p-6">
+                    <div className=" w-1/2 rounded-xl text-center bg-grey-900 flex flex-col justify-center p-6">
                         <p className="text-xs text-right text-grey-700 ">Referred (0)</p>
                         <div className="flex justify-center">
                             <GroupIcon color="#1900FE" size="60"/>
@@ -79,21 +80,23 @@ export function Wallet (){
                             refer your friend and start making money
                         </p>
 
-                        <div className="flex items-center justify-center bg-white py-2 rounded-full">
+                        <div className="flex items-center w-9/12 mx-auto my-1 justify-center bg-white py-1 rounded-lg">
                             <div className="w-10/12 overflow-x-auto whitespace-nowrap scrollbar-hidden">
-                                <p className="ml-5" ref={code}>{data?.result?.data.referral_link}</p>
+                                <p className="ml-5 text-sm" ref={code}>{data?.result?.data.referral_link}</p>
                             </div>
                             <div className="">
-                                <Button color="#FF5000" onClick={copy}>
-                                    <div className="flex justify-center items-center space-x-1">
-                                        {copied ?<MarkCircleIcon color="white" size="16"/> :<CopyIcon color="white" size="14"/>}
-                                        <p className="text-sm">{copied ? 'Copied!' : 'Copy'}</p>
-                                    </div>
-                                </Button>
+                                <MuiButton 
+                                    color="secondary" 
+                                    onClick={copy}
+                                    variant="contained"
+                                    startIcon={copied ?<MarkCircleIcon color="white" size="16"/> :<CopyIcon color="white" size="14"/>}>
+                                        {copied ? 'Copied!' : 'Copy'}
+                                </MuiButton>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
 
             <div>

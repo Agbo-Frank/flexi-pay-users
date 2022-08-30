@@ -2,20 +2,22 @@ import { ICategory, IFilter, IPagination, IProduct, IResponse } from '../../inte
 import { RootState } from '../store'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { FLEXIPAY_URL } from '../../utils/constants'
+import { string } from 'yup'
 
 
 export const ProductApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: FLEXIPAY_URL,
-        // prepareHeaders: (headers, { getState }) => {
-        //     const token = (getState() as RootState).data.token
+        prepareHeaders: (headers, { getState }) => {
+            const token = (getState() as RootState).data.token
             
-        //     if (token) {
-        //         headers.set('Authorization', `Bearer ${token}`)
-        //     }
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+                headers.set('Content-Type', `application/json`);
+            }
           
-        //     return headers
-        // }
+            return headers
+        }
     }),
     reducerPath: 'Product',
     tagTypes: ['Product', 'Category'],
@@ -32,11 +34,11 @@ export const ProductApi = createApi({
             }),
             providesTags:['Product']
         }),
-        filterProduct: build.query<IResponse<IPagination<IProduct[]>>, Partial<IFilter> | any>({
+        filterProduct: build.query<IResponse<{data: IPagination<IProduct[]>}>, Partial<IFilter> | any>({
             query: (body) => ({
                 url: '/guest/product/filter',
                 method: 'GET',
-                body
+                params: body
             })
         }),
         getCategories: build.query<IResponse<ICategory[]>, void>({
@@ -44,7 +46,13 @@ export const ProductApi = createApi({
                 url: "/category/fetch/parent"
             }),
             providesTags: ['Category']
-        })
+        }),
+        searchProduct: build.query<IResponse<{data: IPagination<IProduct[]>}>, {page?: string; search_params: string;}>({
+            query: (body) => ({
+                url: "/guest/product/search?search_param=" + body.search_params
+            }),
+            providesTags: ['Category']
+        }),
     })
 })
 
@@ -53,5 +61,7 @@ export const {
     useGetProductQuery,
     useLazyFilterProductQuery,
     useGetCategoriesQuery,
-    useLazyGetProductsQuery
+    useLazyGetProductsQuery,
+    useSearchProductQuery,
+    useLazySearchProductQuery
 } = ProductApi

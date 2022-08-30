@@ -3,7 +3,7 @@ import {
     Button, Categories, 
     CheckoutSummary, Header, 
     Switch, SelectInput, Toast,
-    CreditCard, Body, FormInput
+    CreditCard, Body, FormInput, Breadcrumb
 } from "../components"
 import AddAddressModel from "../components/Models/AddAddressModel"
 
@@ -116,24 +116,18 @@ export function CheckOut(){
 
     return(
         <>
+            <Header />
+            <Categories />
+            <Breadcrumb />
             <AddAddressModel />
             <AddCreditCard />
 
-            <div className="w-full px-6 xl:px-fp-5 2xl:px-fp-10 flex justify-between items-center">
-                <ul className="flex my-6 text-sm">
-                    <li className="text-grey-700">Home /</li> 
-                    <li> Overview</li>
-                </ul>
-
-                <Toast />
-            </div>
-
             <div className="flex px-6 gap-5 justify-between xl:px-fp-5 2xl:px-fp-10">
                 <div className="w-8/12 flex flex-col gap-3">
-                    <div className="bg-white rounded-4xl py-6 px-8 border w-full">
+                    <div className="bg-white rounded-xl py-6 px-8 border w-full">
                         <h3 className="text-lg text-primary-dark-blue font-semibold">Check Out</h3>
 
-                        <div className="border rounded-4xl p-5 mt-4">
+                        <div className="border rounded-xl p-5 mt-4">
                             <div className="flex  justify-between items-start">
                                 <h3 className="text-primary-dark-blue font-medium mb-3">Delivery Address:</h3>
                                 <div>
@@ -167,7 +161,7 @@ export function CheckOut(){
                         </div>
 
 
-                        <div className="border rounded-4xl p-5 mt-4">
+                        <div className="border rounded-xl p-5 mt-4">
                             <h3 className="text-primary-dark-blue font-medium mb-2">Delivery Method</h3>
 
                             <div className="flex gap-4 items-center my-3">
@@ -220,8 +214,8 @@ export function CheckOut(){
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-4xl p-6 border w-full">
-                        <div className="border rounded-4xl px-6 py-4">
+                    <div className="bg-white rounded-xl p-6 border w-full">
+                        <div className="border rounded-xl px-6 py-4">
                             <div className="flex justify-between items-center">
                                 <h3 className="text-primary-dark-blue font-medium mb-2">Payment Method</h3>
                                 <CreditCardIcon size="30" color="#555555" />
@@ -286,7 +280,7 @@ export function CheckOut(){
                                         {
                                             orderConfig.card &&
                                             <Slide right duration={1000} opposite when={orderConfig.card}>
-                                                <div className="flex flex-col bg-grey-900 rounded-4xl mb-4 mt-9 p-5">
+                                                <div className="flex flex-col bg-grey-900 rounded-xl mb-4 mt-9 p-5">
                                                     <div className="flex justify-between items-center">
                                                         <p>Your Cards</p>
                                                         <p className="text-primary-orange-200 flex items-center gap-3 text-sm cursor-pointer" 
@@ -313,7 +307,7 @@ export function CheckOut(){
                                     {
                                         !orderConfig.card &&
                                         <Slide right opposite duration={1000} when={!orderConfig.card}>
-                                            <div className="bg-grey-900 rounded-4xl mb-4 mt-9 p-5">
+                                            <div className="bg-grey-900 rounded-xl mb-4 mt-9 p-5">
                                                 <div className="flex justify-between items-center">
                                                     <p>Your Wallet</p>
                                                     <p className="text-primary-orange-200 flex items-center gap-3 text-sm cursor-pointer" 
@@ -323,7 +317,7 @@ export function CheckOut(){
                                                     </p>
                                                 </div>
 
-                                                <div className="border border-grey-100 rounded-4xl p-4 mt-7">
+                                                <div className="border border-grey-100 rounded-xl p-4 mt-7">
                                                     <p className="self-start text-grey-700 text-sm">Wallet ID: Flexi237</p>
                                                     <div className="my-5"><Wallet /></div>
                                                 </div>
@@ -340,11 +334,11 @@ export function CheckOut(){
                                 <div className="mt-10">
                                     <p>Create your installment plan:</p>
 
-                                    <div className="flex flex-col bg-grey-900 rounded-4xl mb-4 mt-9 p-5">
+                                    <div className="flex flex-col bg-grey-900 rounded-xl mb-4 mt-9 p-5">
                                         <div>
                                             <p className="mb-3">Enter amount to be deducted and the interval</p>
 
-                                            <form onSubmit={formik.handleSubmit} className="border rounded-lg border-grey-100 px-7 pt-7 pb-3 flex justify-between gap-4">
+                                            <form onSubmit={formik.handleSubmit} className="border rounded-xl border-grey-100 px-7 pt-7 pb-3 flex justify-between gap-4">
                                                 <FormInput 
                                                     type="text" 
                                                     name="amount" 
@@ -365,7 +359,7 @@ export function CheckOut(){
                                         <div className="mt-10">
                                             <p className="mb-3">Select Payment Method</p>
 
-                                            <div className="border rounded-lg border-grey-100 py-4 px-3">
+                                            <div className="border rounded-xl border-grey-100 py-4 px-3">
                                                 <div className="flex items-center w-96">
                                                     <div 
                                                     className="flex gap-2 items-center w-1/2 text-sm cursor-pointer hover:bg-grey-500 p-2"

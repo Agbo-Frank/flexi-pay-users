@@ -1,20 +1,18 @@
 import { useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import { IFilter } from "../../interface";
 import { useGetCategoriesQuery } from "../../redux/slice/Product"
 
 
 interface IFiltersProps {
-    searchParams: URLSearchParams,
-    setSearchParams: (nextInit: IFilter | any, navigateOptions?: {
-        replace?: boolean | undefined;
-        state?: any;
-    } | undefined) => void
+    filters: IFilter,
+    setFilters: React.Dispatch<React.SetStateAction<IFilter>>
 }
 
 
-export function Filters({searchParams, setSearchParams}: IFiltersProps){
-    let [searchParam, setSearchParam] = useSearchParams()
+export function Filters({filters, setFilters}: IFiltersProps){
+    let navigate = useNavigate()
+
     let { categories, loading } = useGetCategoriesQuery(undefined, {
         selectFromResult: ({ data, isLoading }) => ({
             categories: data?.result,
@@ -29,7 +27,12 @@ export function Filters({searchParams, setSearchParams}: IFiltersProps){
                     categories?.map((category, idx) => <li 
                         className="py-1 pl-9 w-full cursor-pointer hover:bg-grey-500 text-[#222222]"
                         key={idx}
-                        onClick={() => searchParam.set('parent_category', category.name)}
+                        onClick={() => {
+                            navigate({
+                                search: '?filters=true'
+                            })
+                            setFilters(state => ({...state, parent_category: category.name}))
+                        }}
                         >
                             {category.name}
                         </li>)

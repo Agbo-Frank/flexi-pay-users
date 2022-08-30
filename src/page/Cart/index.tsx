@@ -32,7 +32,7 @@ export function Carts (){
         <DashboardWrapper>
             {
                 loadingCart ?
-                <div className="flex justify-between space-x-5 w-full h-full">
+                <div className="flex justify-between space-x-5 w-full h-full shadow-sm">
                     <div className="bg-white rounded-xl py-6 border w-7/12">
 
                         <div className="flex justify-between mx-6">
@@ -44,7 +44,7 @@ export function Carts (){
                             </div>
                         </div>
 
-                        <div className="flex flex-col space-y-5 w-full mt-8 mb-2 overflow-y-auto scrollbar h-screen">
+                        <div className="flex flex-col space-y-5 w-full mt-8 mb-2 overflow-y-auto scrollbar h-fit">
                             {
                                 [1, 2, 3].map((cart, idx) =>  <CartSkeleton/>)
                             }
@@ -53,12 +53,11 @@ export function Carts (){
                 </div> :
 
                 carts && carts?.length > 0 ?
-                <div className="flex justify-between items-start space-x-5 w-full h-fit">
-                    <div 
-                        className="bg-white h-fit rounded-xl py-6 border w-7/12">
+                <div className="flex justify-between items-stretch space-x-5 w-full h-fit">
+                    <div className="bg-white rounded-xl py-6 border w-7/12 h-full">
 
                         <div className="flex justify-between mx-6">
-                            <h3 className="text-lg text-primary-dark-blue font-semibold">Carts(0)</h3>
+                            <h3 className="text-lg text-primary-dark-blue font-semibold">Carts({carts.length})</h3>
 
                             <div className="flex justify-between space-x-2 items-center cursor-pointer">
                                 <TrashIcon color="#FF5000" size="16" />
@@ -66,7 +65,7 @@ export function Carts (){
                             </div>
                         </div>
 
-                        <div className="flex flex-col space-y-5 w-full mt-8 mb-2 overflow-y-auto scrollbar h-screen">
+                        <div className="flex flex-col space-y-5 w-full mt-8 mb-2 overflow-y-auto scrollbar h-full">
                             {
                                 carts?.map((cart, idx) => <Cart cart={cart} key={idx}/>)
                             }

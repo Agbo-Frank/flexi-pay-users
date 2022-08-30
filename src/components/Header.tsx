@@ -7,7 +7,7 @@ import SearchIcon from "./icons/SearchIcon"
 import { useAuth } from "../context/Auth"
 import Button from "./Button"
 import { BagIcon, HeartIcon, LoginIcon, LogOutIcon, Spinner, UserIcon } from "./icons"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Slide from "react-reveal/Slide"
 import { useNavigate } from "react-router-dom"
 import Iicon from "./interface"
@@ -51,6 +51,7 @@ function Item ({ Icon, name, link, handleClick}: Item): JSX.Element {
 
 export function Header(){
     let {signout} = useAuth()
+    let [searchInput, setSearchInput] = useState('')
     const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
 
     let [getUser, {data: user, isLoading: loading}] = useLazyGetUserQuery()
@@ -79,18 +80,31 @@ export function Header(){
     let navigate = useNavigate()
     let date = new Date()
     let time = date.getHours() > 11 ?  date.getHours() >  17 ? 'evening' : 'afternoon' : 'morning'
+
+    function search(e: React.FormEvent<HTMLFormElement>){
+        e.preventDefault()
+        navigate("/products?search=" + searchInput)
+        setSearchInput('')
+    }
     return(
         <>
             <header className="bg-white w-full">
                 <div className="fp-screen flex justify-between py-5 bg-white items-end">
                     <Logo />
-                    <div className="flex justify-between bg-white rounded-xl items-center w-5/12 p-1 pl-3 shadow-sm">
-                        <input type='text' placeholder="Search products, categories and services" className="w-11/12"/>
+                    <form 
+                        className="flex justify-between bg-white rounded-xl items-center w-5/12 p-1 pl-3 shadow-sm"
+                        onSubmit={search}>
+                        <input 
+                            type='text'
+                            placeholder="Search products, categories and services" 
+                            className="w-11/12"
+                            value={searchInput}
+                            onChange={e => setSearchInput(e.target.value)}/>
 
                         <div className="bg-primary-orange-200 rounded-xl border py-2 p-2">
                             <SearchIcon size='18' color='#FFFFFF'/>
                         </div>
-                    </div>
+                    </form>
                     <div className="flex items-center justify-between w-4/12">
                         {
                             !isAuth ? 
@@ -123,7 +137,7 @@ export function Header(){
                                         color="secondary" 
                                         overlap="circular" 
                                         badgeContent={carts?.length}
-                                        onClick={() => navigate("cart", { replace: true })}>
+                                        onClick={() => navigate("/cart", { replace: true })}>
                                         <Avatar sx={{bgcolor: '#000326', width: 44, height: 44}}>
                                             <CartIcon size="20" color="#F9F8FF"/> 
                                         </Avatar>

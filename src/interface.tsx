@@ -263,3 +263,12 @@ export interface IAttributes {
     created_at: string | Date;
     updated_at: string | Date;
 }
+
+export interface IInstallment {
+    amount: string;
+    frequency: string;
+    product_uuid: string;
+    name: string;
+    uuid: string;
+    installment_uuid: string;
+}

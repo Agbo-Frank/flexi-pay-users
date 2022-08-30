@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { toggleSnackBar } from '../../redux/slice/modal'
 import { Skeleton } from '@mui/material'
 import { formatNumber } from '../../utils'
+import { Link } from "react-router-dom"
 
 export function Cart({cart}: {cart: ICart}){
     let dispatch = useDispatch()
@@ -39,11 +40,11 @@ export function Cart({cart}: {cart: ICart}){
     return(
         <div 
         className="flex justify-between shadow hover:shadow-lg border hover:border-0 border-solid border-grey-100 px-4 py-3 mx-6 rounded-xl">
-            <div>
+            <Link to={"/product/" + cart.product.slug}>
                 <div className="flex space-x-3 items-stretch">
                     <img src={cart.product.product_images[0].image_link} className="w-36 h-36 rounded-xl object-cover"/>
                     <div className="w-7/12 flex flex-col justify-around">
-                        <p className="text-grey-200">{cart.product.name}</p>
+                        <p className="text-grey-200 truncate">{cart.product.name}</p>
                         <small className="text-grey-200 text-sm font-medium">Qty: {cart.quantity}</small>
                         <p 
                             className="flex space-x-1 items-center text-grey-700 cursor-pointer hover:text-crimson" 
@@ -55,7 +56,7 @@ export function Cart({cart}: {cart: ICart}){
                         </p>
                     </div>
                 </div>
-            </div>
+            </Link>
             <div className="flex flex-col justify-end">
                 <p className="font-semibold ml-auto text-primary-dark-blue text-lg mb-4">₦ {formatNumber(cart.price)}</p>
                 <div className="flex justify-between items-center space-x-3">

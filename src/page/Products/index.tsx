@@ -1,85 +1,89 @@
-import { MenuItem, Pagination, Skeleton } from "@mui/material"
+import { Button, MenuItem, Pagination, Skeleton } from "@mui/material"
 import { useEffect, useState } from "react"
-import { useSearchParams } from "react-router-dom"
-import { Body, Categories, DropDown, Header, ProductCard, ProductCardSkeleton } from "../../components"
-import { IFilter } from "../../interface"
-import { useLazyGetProductsQuery, useLazyFilterProductQuery } from "../../redux/slice/Product"
+import { useSearchParams, useNavigate } from "react-router-dom"
+import { 
+    Body, Categories, 
+    DropDown, Header, 
+    ProductCard, Empty,
+    ProductCardSkeleton, 
+    Breadcrumb} from "../../components"
+import { SearchIcon } from "../../components/icons"
+import { IFilter, IPagination, IProduct } from "../../interface"
+import { useLazyGetProductsQuery, useLazyFilterProductQuery, useLazySearchProductQuery } from "../../redux/slice/Product"
 import Filters from "./filters"
 
 
 export function Products(){
     let [page, setPage] = useState(1)
-
-    let [searchParams, setSearchParams] = useSearchParams()
-
-    let [getProducts, { products, loading, pagination }] = useLazyGetProductsQuery({
-        selectFromResult: ({ data, isLoading }) => ({
-            products: data?.result.data,
-            loading: isLoading,
-            pagination: data?.result
-        }),
-        refetchOnFocus: true,
-        refetchOnReconnect: true
+    let [products, setProducts] = useState<IProduct[]>([])
+    let [loading, setLoading] = useState(false)
+    let [pagination, setPagination] = useState<IPagination<IProduct[]>>()
+    let [filters, setFilters] = useState<IFilter>({
+        parent_category: "",
+        sub_category: "",
+        price: "",
+        product_name: "",
+        latest: ""
     })
 
-    let [filter, { filteredProducts, loadingFilters }]= useLazyFilterProductQuery({
-        selectFromResult: ({data, isLoading}) => ({
-            filteredProducts: data?.result.data,
-            loadingFilters: isLoading,
-            filterPagination: data?.result
-        })
-    })
+    let [searchParams] = useSearchParams()
+    let navigate = useNavigate()
 
-    let [data, setData] = useState({
-        products: loading ? [] : products,
-        loading: loadingFilters || loading,
-        pagination: pagination
-    })
+    let [searchProduct, { isLoading }] = useLazySearchProductQuery()
+    let [filterProduct] = useLazyFilterProductQuery()
+    let [getProducts] = useLazyGetProductsQuery()
 
     useEffect(() => {
-        if(searchParams.values.length > 0){
-            filter(searchParams)
+        if(searchParams.has('search')){
+            setLoading(true)
+            searchProduct({search_params: searchParams.has('search') ? `${searchParams.get('search')}` : ""})
                 .unwrap()
-                .then(data => {
-                    setData(state => ({
-                        ...state,
-                        products: data.result.data,
-                        pagination: data.result
-                    }))
+                .then(result => {
+                    setProducts(result.result.data.data)
+
+                    setPagination(result.result.data)
+                    setLoading(false)
                 })
                 .catch(err => console.log(err))
         }
-        else{
+        else {
+            setLoading(true)
             getProducts(page)
                 .unwrap()
-                .then(data => {
-                    setData(state => ({
-                        ...state,
-                        products: data.result.data,
-                        pagination: data.result
-                    }))
+                .then(result => {
+                    setProducts(result.result.data)
+                    setPagination(result.result)
+                    setLoading(false)
                 })
                 .catch(err => console.log(err))
         }
-    }, [searchParams, page])
+    }, [page, searchParams])
+
+    useEffect(() => {
+        // if(searchParams.has('filters')){
+            filterProduct(filters)
+                .unwrap()
+                .then(result => {
+                    console.log(result)
+                    setProducts(result.result.data.data)
+                    setPagination(result.result.data)
+                    setLoading(false)
+                })
+                .catch(err => console.log(err))
+
+        // }
+    }, [filters])
 
     return(
         <Body bgColor="bg-grey-500">
             <div className="w-full h-fit bg-grey-500">
                 <Header />
                 <Categories />
-                <div className="fp-screen flex justify-between items-center bg-grey-500">
-                    <ul className="flex my-3 text-sm">
-                        <li className="text-grey-700">Home /</li> 
-                        <li> Overview</li>
-                    </ul>
-
-                    {/* <Toast /> */}
-                </div>
+                <Breadcrumb />
                 <div className="fp-screen flex space-x-6 bg-grey-500 justify- items-stretch">
                     <Filters 
-                        setSearchParams={setSearchParams} 
-                        searchParams={searchParams}/>
+                        filters={filters} 
+                        setFilters={setFilters} />
                     <div className="w-9/12">
                         <div className="rounded-lg bg-white">
                             <div className="flex justify-between items-center py-3 px-6 border-b border-grey-100">
@@ -99,11 +103,29 @@ export function Products(){
                                     </div>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-4 gap-2 px-6 py-1">
+                            <div className={`${products.length > 0 && 'grid grid-cols-4'} gap-2 px-6 py-1`}>
                                 {
-                                    data.loading ?
+                                    loading ?
                                     [1, 2, 3, 4, 5].map((product, idx) => <ProductCardSkeleton key={idx}/>) :
-                                    data.products?.map((product, idx) => <ProductCard product={product} key={idx}/>)
+                                    products.length === 0 ? 
+                                    <div className="grid place-items-center w-full">
+                                        <Empty 
+                                            title="No Search Results"
+                                            Icon={SearchIcon}
+                                            message="There are no results for your search yet. Kindly search for another key word(s) or you can return to your shopping."
+                                            button={
+                                                <Button
+                                                    startIcon={<i className="fa-solid fa-bag-shopping"></i>}
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={() => navigate('/')}
+                                                >
+                                                    Go to Shopping
+                                                </Button>
+                                            }/>
+                                    </div>
+                                    :
+                                    products?.map((product, idx) => <ProductCard product={product} key={idx}/>)
                                 }
                             </div>
                         </div>

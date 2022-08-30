@@ -7,6 +7,8 @@ import { FLEXIPAY_COOKIE } from "../utils/constants"
 import { useGetUserCartQuery } from '../redux/slice/Cart'
 import { Button, Skeleton } from '@mui/material'
 import { formatNumber } from '../utils'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { CartIcon } from './icons'
 
 
 function CheckoutCard({cart}: {cart: ICart}){
@@ -54,6 +56,9 @@ export function CheckoutSummary (){
         refetchOnReconnect: true
     })
 
+    let navigate = useNavigate()
+    let location = useLocation()
+
     let subTotal = carts?.reduce((total, cart) => {
         return total + (parseFloat(cart?.quantity) * parseFloat(cart?.price))
     }, 0) || 0
@@ -84,9 +89,18 @@ export function CheckoutSummary (){
                     <Button 
                         color="secondary"
                         fullWidth
-                        startIcon={<BagIcon  size="20" color="white"/>}
-                        variant="contained">
-                        CheckOut Now
+                        startIcon={<CartIcon  size="20" color="white"/>}
+                        variant="contained"
+                        onClick={() => {
+                            if(location.pathname === '/checkout'){
+                                navigate("/cart")
+                            }
+                            else{
+                                navigate("/checkout")
+                            }
+                            
+                        }}>
+                        {location.pathname === '/checkout' ? 'Modify Cart' : 'CheckOut Now'}
                     </Button>
                 </div>
             </div>

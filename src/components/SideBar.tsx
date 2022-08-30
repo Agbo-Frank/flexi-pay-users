@@ -5,7 +5,7 @@ import CartIcon from "./icons/CartIcon";
 import DashboardIcon from "./icons/DashboardIcon";
 import GearIcon from "./icons/GearIcon";
 import HeadPhoneIcon from "./icons/HeadPhoneIcon";
-import {HeartIcon, SubscriptionIcon} from "./icons";
+import {HeartIcon, Spinner, SubscriptionIcon} from "./icons";
 import LogOutIcon from "./icons/LogOutIcon";
 import ProfilBG from "./icons/ProfilBG";
 import WalletIcon from "./icons/WalletIcon";
@@ -13,6 +13,8 @@ import WalletIcon from "./icons/WalletIcon";
 import Iicon from "./icons/interface";
 
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import { useLogoutMutation } from "../redux/slice/Auth";
+import { useAuth } from "../context/Auth";
 
 interface ISideBarItem {
     active?: boolean,
@@ -56,6 +58,12 @@ function SideBar(): JSX.Element {
     const location = useLocation();
     const [currentLocation, setLocation] = useState('')
 
+    let [logout, {isLoading: loggingOut}] = useLogoutMutation({
+        fixedCacheKey: 'logout',
+    })
+
+    let {signout} = useAuth()
+
   return (
     <div className="w-2/12 h-fit bg-white pt-9 pb-2 rounded-xl">
         <div>
@@ -79,9 +87,9 @@ function SideBar(): JSX.Element {
             Icon={BagIcon} name="order" link="order"
             handleClick={setLocation}/>
 
-            <SideBarItem 
+            {/* <SideBarItem 
             Icon={SubscriptionIcon} name="subscription" link="subscription"
-            handleClick={setLocation}/>
+            handleClick={setLocation}/> */}
 
         </div>
         <svg className="my-7 mx-auto" width="80%" height="2" viewBox="0 0 171 2" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -92,18 +100,26 @@ function SideBar(): JSX.Element {
             Icon={ProfilBG} name="profile" link="profile"
             handleClick={setLocation}/>
 
-            <SideBarItem 
+            {/* <SideBarItem 
             Icon={GearIcon} name="setting" link="setting"
-            handleClick={setLocation}/>
+            handleClick={setLocation}/> */}
 
             <SideBarItem 
             Icon={HeadPhoneIcon} name="support" link="support"
             handleClick={setLocation}/>
 
         </div>
-        <div className="bg-primary-dark-blue py-6 px-3 rounded-3xl flex space-x-3 text-white mt-24 justify-center mr-2 ml-5">
-            <LogOutIcon size="20" color="white"/>
-            <p>Logout</p>
+        <div 
+            onClick={signout}
+            className="bg-primary-dark-blue py-6 px-3 rounded-3xl flex space-x-3 text-white mt-24 justify-center mr-2 ml-5">
+            {
+                    loggingOut ? 
+                    <div className='w-5 h-5'><Spinner /></div>:
+                    <>
+                        <LogOutIcon color="white" size="15"/> 
+                        <p className='text-white font-semibold text-sm'>Logout</p>
+                    </>
+                }
         </div>
     </div>
   );

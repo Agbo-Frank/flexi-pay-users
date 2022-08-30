@@ -12,6 +12,7 @@ import Tracker from "./Models/Tracker";
 import {EditProfile} from "./Models/EditProfile";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import Breadcrumb from "./Breadcrum";
 
 
 function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
@@ -26,14 +27,9 @@ function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
                 
                 <Header />
                 <Categories />
-                <div className="fp-screen flex justify-between items-center">
-                    <ul className="flex my-5 text-sm">
-                        <li className="text-grey-700">Home /</li> 
-                        <li> Overview</li>
-                    </ul>
-                </div>
+                <Breadcrumb />
                 <div 
-                className="px-6 fp-screen space-x-9 flex justify-between items-stretch overflow-y-hidden">
+                className="px-6 fp-screen space-x-5 flex justify-between overflow-y-hidden">
                     {isAuth && <SideBar />}
                     <div className={`${isAuth ? 'w-10/12': 'w-full'} h-full`}>
                         {children}

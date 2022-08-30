@@ -1,6 +1,4 @@
-import { useState } from "react"
 import { useParams } from "react-router-dom";
-import { v4 as uuidv4 } from 'uuid';
 
 import { Body, Header, Categories, ProductSlide, Rating, Footer,  } from "../../components"
 import { CartIcon, ExclamationIcon, HeartIcon,  } from "../../components/icons"
@@ -10,13 +8,11 @@ import { useAddToCartMutation } from "../../redux/slice/Cart";
 
 import { useCookies } from 'react-cookie';
 import { FLEXIPAY_COOKIE } from "../../utils/constants";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { toggleSnackBar } from "../../redux/slice/modal";
+import { HandleAddToCartClick } from "../../services";
 
 export function Product(){
     let { slug } = useParams()
-    let dispatch = useDispatch()
+    
     const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
 
     let { product, loading } = useGetProductQuery(`${slug}`, {
@@ -28,43 +24,6 @@ export function Product(){
 
     let [addToCart, {data, isLoading, error}] = useAddToCartMutation()
 
-    async function handleAddToCartClick(){
-        let uuid = cookies[FLEXIPAY_COOKIE]
-        
-        if (!uuid || uuid == ""){
-            setCookie(FLEXIPAY_COOKIE, uuidv4(), {path: '/'})
-            uuid = cookies[FLEXIPAY_COOKIE]
-        }
-
-        if(uuid){
-            try{
-                console.log(product?.uuid, uuid)
-                let data = await addToCart({
-                    product_uuid: `${product?.uuid}`,
-                    quantity: "1",
-                    guest_id:  uuid
-                }).unwrap()
-                if(data){
-                    dispatch(toggleSnackBar({
-                        open: true,
-                        severity: data.status === 'success'? 'success' : 'error',
-                        message: data.message
-                    }))
-                }
-            }
-            catch(err){
-                let error: any = err
-                if(error?.data){
-                    dispatch(toggleSnackBar({
-                        open: true,
-                        severity: 'error',
-                        message: error?.data.message
-                    }))
-                }
-            }
-            
-        }
-    }
     return(
         <Body bgColor="bg-grey-500">
             <div className="w-full h-fit bg-grey-500">
@@ -116,7 +75,7 @@ export function Product(){
                                         size="large"
                                         loading={isLoading}
                                         color="secondary"
-                                        onClick={handleAddToCartClick}>
+                                        onClick={() => HandleAddToCartClick(product?.uuid, addToCart)}>
                                         Add to Cart
                                     </LoadingButton>
                                 </div>

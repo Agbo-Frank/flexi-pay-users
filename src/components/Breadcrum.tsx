@@ -1,16 +1,25 @@
+import { Breadcrumbs as MuiBreadcrumbs } from "@mui/material"
+import { Link, useLocation } from "react-router-dom"
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
-
-export function Breadcrum(){
+export function Breadcrumb(){
+    let location = useLocation()
     return(
-        <div className="fp-screen flex justify-between items-center bg-grey-500">
-            <ul className="flex my-3 text-sm">
-                <li className="text-grey-700">Home /</li> 
-                <li> Overview</li>
-            </ul>
-
-            {/* <Toast /> */}
-        </div>
+        <header className="w-full">
+            <div className="my-2 fp-screen">
+                <MuiBreadcrumbs
+                    separator={<NavigateNextIcon fontSize="small" />}>
+                    {
+                        location.pathname.split('/').map(location => (
+                            <Link 
+                                to={location === '' ? "/" : `/${location}`}
+                                className="text-sm">{location === '' ? "Home" : location}</Link>
+                        ))
+                    }
+                </MuiBreadcrumbs>
+            </div>
+        </header>
     )
 }
 
-export default Breadcrum
+export default Breadcrumb

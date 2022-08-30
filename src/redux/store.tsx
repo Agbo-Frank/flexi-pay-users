@@ -5,6 +5,7 @@ import { CartApi } from './slice/Cart'
 import modalSlice from './slice/modal'
 import dataSlice from './slice/OtherData'
 import { ProductApi } from './slice/Product'
+import { SavedItemsApi } from './slice/SavedItems'
 import { UserApi } from './slice/User'
 import { WalletApi } from './slice/wallet'
 
@@ -16,13 +17,15 @@ export const store = configureStore({
     [UserApi.reducerPath]: UserApi.reducer,
     [WalletApi.reducerPath]: WalletApi.reducer,
     [ProductApi.reducerPath]: ProductApi.reducer,
-    [CartApi.reducerPath]: CartApi.reducer
+    [CartApi.reducerPath]: CartApi.reducer,
+    [SavedItemsApi.reducerPath]: SavedItemsApi.reducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
     AuthApi.middleware, 
     UserApi.middleware, 
     WalletApi.middleware,
     CartApi.middleware,
+    SavedItemsApi.middleware,
     ProductApi.middleware
   ),
 })

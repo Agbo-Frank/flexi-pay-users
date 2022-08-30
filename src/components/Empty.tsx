@@ -10,7 +10,7 @@ interface IEmptyProps {
     button: any
 }
 
-function Empty({title, Icon, message, button}: IEmptyProps){
+export function Empty({title, Icon, message, button}: IEmptyProps){
     return(
         <div className="w-fp-500 text-center rounded-xl py-6 flex justify-center flex-col border border-solid border-grey-100 mx-auto my-10 px-10 pb-20">
             <div className="mx-auto my-3">

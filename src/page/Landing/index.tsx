@@ -21,7 +21,6 @@ export function Landing(){
             <div className="h-fit bg-grey-500">
                 <Header />
                 <Categories />
-                
                 <div className="fp-screen bg-grey-500 space-y-3 my-3">
                     <div className="w-full h-96 flex justify-between items-stretch space-x-5">
                         <div className="h-full w-9/12 overflow-hidden rounded-xl">
