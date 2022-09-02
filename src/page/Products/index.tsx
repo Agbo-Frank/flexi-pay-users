@@ -34,8 +34,8 @@ export function Products(){
     let [getProducts] = useLazyGetProductsQuery()
 
     useEffect(() => {
+        setLoading(true)
         if(searchParams.has('search')){
-            setLoading(true)
             searchProduct({search_params: searchParams.has('search') ? `${searchParams.get('search')}` : ""})
                 .unwrap()
                 .then(result => {
@@ -47,7 +47,7 @@ export function Products(){
                 .catch(err => console.log(err))
         }
         else {
-            setLoading(true)
+            
             getProducts(page)
                 .unwrap()
                 .then(result => {
@@ -103,7 +103,7 @@ export function Products(){
                                     </div>
                                 </div>
                             </div>
-                            <div className={`${products.length > 0 && 'grid grid-cols-4'} gap-2 px-6 py-1`}>
+                            <div className={`${products!.length > 0 && 'grid grid-cols-4'} gap-2 px-6 py-1`}>
                                 {
                                     loading ?
                                     [1, 2, 3, 4, 5].map((product, idx) => <ProductCardSkeleton key={idx}/>) :

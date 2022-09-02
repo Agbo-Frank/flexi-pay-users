@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import {Button, CreditCard, Wrapper, WrapperHeader} from "../../components"
 import DashboardWrapper from "../../components/DashboardWrapper"
-import { EditSqaureIcon, WalletIcon, GroupIcon, CopyIcon, MasterCardIcon, TrashIcon, CreditCardIcon, WithdrawIcon, MarkCircleIcon } from "../../components/icons"
+import {  GroupIcon, CopyIcon, MasterCardIcon, TrashIcon, CreditCardIcon, WithdrawIcon, MarkCircleIcon } from "../../components/icons"
 import { WithdrawalForm } from "../../components/Models"
 
 import { Button as MuiButton, Skeleton } from "@mui/material"
@@ -71,7 +71,7 @@ export function Wallet (){
                     <div className=" w-1/2 rounded-xl text-center bg-grey-900 flex flex-col justify-center p-6">
                         <p className="text-xs text-right text-grey-700 ">Referred (0)</p>
                         <div className="flex justify-center">
-                            <GroupIcon color="#1900FE" size="60"/>
+                            <GroupIcon color="#000541" size="60"/>
                         </div>
                         <p className="text-grey-700 text-xl">Referial Balance</p>
                         <p className="text-primary-dark-blue font-semibold text-xl">₦ 0.00 </p>

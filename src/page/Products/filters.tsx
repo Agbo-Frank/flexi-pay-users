@@ -19,11 +19,13 @@ export function Filters({filters, setFilters}: IFiltersProps){
             loading: isLoading
         })
     })
+    console.log(categories)
     return(
         <div className="w-3/12 h-full border bg-white py-2 rounded-lg">
             <h3 className="text-[#222222] font-medium ml-4 text-lg">Category</h3>
             <ul className="">
                 {
+                    !loading && categories && 
                     categories?.map((category, idx) => <li 
                         className="py-1 pl-9 w-full cursor-pointer hover:bg-grey-500 text-[#222222]"
                         key={idx}

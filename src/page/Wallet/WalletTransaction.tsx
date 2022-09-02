@@ -31,11 +31,19 @@ function Row({txn}: {txn: ITransacation}){
 }
 
 export function WalletTransaction(){
-    let [getTransaction, {data, isLoading}] = useLazyGetTransactionQuery()
+    let [getTransaction, {transaction, pagination, isLoading}] = useLazyGetTransactionQuery({
+        selectFromResult: ({ data, isLoading }) => ({
+            transaction: data?.result.data,
+            pagination: data?.result,
+            isLoading
+        }),
+        refetchOnFocus: true,
+        refetchOnReconnect: true
+    })
 
     useEffect(() => {
         getTransaction("1")
-    }, [data])
+    }, [transaction, pagination])
     function onChangePage(e: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, page: number){
         getTransaction(page.toString())
     }
@@ -55,7 +63,8 @@ export function WalletTransaction(){
                     <TableBody>
                         {
                             !isLoading &&  
-                            data?.result.data?.map((txn) => (
+                            transaction?.length === 0 ?<div>No Transaction</div>:
+                            transaction?.map((txn) => (
                                 <Row txn={txn}/>
                             ))
                         }
@@ -72,13 +81,13 @@ export function WalletTransaction(){
                 </div>
             </TableContainer>
             {
-                data?.result &&
+                pagination &&
                 <TablePagination
-                    rowsPerPageOptions={[data?.result.per_page]}
+                    rowsPerPageOptions={[pagination.per_page]}
                     component="div"
-                    count={data?.result.total}
-                    rowsPerPage={data?.result.per_page}
-                    page={data?.result.current_page}
+                    count={pagination.total}
+                    rowsPerPage={pagination.per_page}
+                    page={pagination.current_page}
                     onPageChange={onChangePage}
                     // onRowsPerPageChange={handleChangeRowsPerPage}
                     className="bg-white"

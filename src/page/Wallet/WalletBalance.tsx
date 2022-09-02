@@ -57,7 +57,7 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                 </>:
                 !user?.reserved_account?.account_number? 
                 <div className="flex flex-col justify-around items-center h-full">
-                    <WalletIcon color="#1900FE" size="40"/>
+                    <WalletIcon color="#000541" size="40"/>
                     <span className="text-center text-[#545362] text-lg font-medium">Create Account</span>
                     <span className="text-center text-[#545362] text-sm font-light">Create an account on FlexiPay to be able to buy and pay for your orders seamlessly. </span>
                     <Button
@@ -71,7 +71,7 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                     <>
                         <p className="text-xs text-left text-grey-700 ">Wallet Id: {wallet?.result.data.account_number}</p>
                         <div className="flex justify-center">
-                            <WalletIcon line color="#E8E5FF" size="60"/>
+                            <WalletIcon line color="#000541" size="60"/>
                         </div>
                         <p className="text-grey-700 text-lg">Balance</p>
                         <p className="text-primary-dark-blue font-semibold text-xl">₦ {wallet?.result.data.balance} </p>
