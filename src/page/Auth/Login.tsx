@@ -14,9 +14,9 @@ export function Login() {
     let formik = FPFormikLogin(login)
   return (
     <>
-        <div className='my-20'>
+        <div className='mx-auto my-20 flex flex-col items-center text-center md:text-left md:items-start'>
             <div>
-                <h2 className='text-primary-dark-blue font-bold text-4xl'>Hi, You’ve Been Missed</h2>
+                <h2 className='text-primary-dark-blue font-bold [320px]:text-xl text-3xl xs:text-4xl'>Hi, You’ve Been Missed</h2>
                 <small className='block mt-3 text-lg text-grey-300'>Log in to your account</small>
             </div>
             <Collapse in={
@@ -28,8 +28,8 @@ export function Login() {
                 <Alert severity="error">Please login</Alert>
             </Collapse>
             
-            <form className='my-10 w-10/12' onSubmit={formik.handleSubmit}>
-            <div className='flex justify-start gap-3'>
+            <form className='my-10 w-11/12' onSubmit={formik.handleSubmit}>
+            <div className='flex flex-col md:flex-row md:justify-start md:space-x-3'>
                 <FormInput 
                 type='email' 
                 Icon={MailIcon} 
@@ -43,9 +43,10 @@ export function Login() {
                 label="Password"
                 formik={formik}/>
             </div>
-
-            <p className='text-sm mb-3'>Forgotten your password?   <Link to="/auth/forget-password" className='text-primary-blue'>Reset password</Link></p>
-
+            {/* <div className='flex justify-between'> */}
+            {/* <Link to="/auth/register" className='text-primary-blue text-sm float-right'>Don’t have an account? Register</Link> */}
+                <Link to="/auth/forget-password" className='text-primary-blue text-sm float-right'>Forget password?</Link>
+            {/* </div> */}
             <div className='w-3/12'>
                 <Button type='submit' color="#FF5000">
                     <div className='flex items-center gap-3'>

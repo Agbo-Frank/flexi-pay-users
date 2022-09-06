@@ -6,7 +6,7 @@
 
 @layer utilities {
   .fp-screen{
-    @apply mx-auto px-6 w-fp-desk
+    @apply mx-auto px-1 sm:px-6 w-full sm:w-fp-desk
   }
 }
 

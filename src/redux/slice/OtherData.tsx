@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import { IModalReducer} from '../../interface'
 
 let initialState = {
   token: localStorage.getItem('flexi-token') || null,

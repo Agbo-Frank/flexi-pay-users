@@ -46,13 +46,13 @@ function MenuItem({id, parent, chidren}: IMenuItemProps){
 
 export function Categories (): JSX.Element {
     return(
-        <div className="relative w-full bg-primary-dark-blue">
+        <div className="hidden sm:block relative w-full bg-primary-dark-blue">
             <div className="flex py-2 bg-primary-dark-blue font-medium justify-between fp-screen">
                 <div className="flex justify-start space-x-5 capitalize items-center  text-sm">
-                    {/* <div className="flex space-x-4">
+                    <div className="flex space-x-4">
                         <MenuIcon size="20" color="white"/>
-                        <span>All categories</span>
-                    </div> */}
+                        <span className="text-grey-600">All categories</span>
+                    </div>
                     {
                         [
                             'services', 'real estate',

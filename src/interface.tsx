@@ -226,6 +226,13 @@ export interface ICart{
     product: IProduct
 }
 
+export interface ISavedItems{
+    uuid: string;
+    created_at: string;
+    updated_at: string;
+    product: IProduct
+}
+
 export interface IFilter {
     parent_category?: string;
     sub_category?: string;

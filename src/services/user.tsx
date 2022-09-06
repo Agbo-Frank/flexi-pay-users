@@ -6,7 +6,7 @@ import { toggleEditProfile, toggleSnackBar } from "../redux/slice/modal";
 import { useGetUserQuery } from "../redux/slice/User";
 
 
-export function FPFormikEditUser(edit: ITrigger<Partial<IUser>, IResponse<null | any>>){
+export function FPFormikEditUser(edit: ITrigger<Partial<IUser>, IResponse<null | any>>, done: () => void | any){
     let dispatch = useDispatch()
     let { data: user } = useGetUserQuery()
 
@@ -39,21 +39,14 @@ export function FPFormikEditUser(edit: ITrigger<Partial<IUser>, IResponse<null |
         console.log(value)
         try{
             let data = await edit(value).unwrap()
-            if(data.status === 'success'){
+            if(data){
                 dispatch(toggleSnackBar({
                     message: data.message,
                     open: true,
-                    severity: 'success'
+                    severity: data.status === 'success' ? 'success' : 'error'
                 }))
 
-                dispatch(toggleEditProfile())
-            }
-            else{
-                dispatch(toggleSnackBar({
-                    message: data.message,
-                    open: true,
-                    severity: 'error'
-                }))
+                done() 
             }
         }
         catch(err){
@@ -61,6 +54,14 @@ export function FPFormikEditUser(edit: ITrigger<Partial<IUser>, IResponse<null |
             if(err){
                 let error: any = err
                 formikHelpers.setErrors(error.data.errors)
+
+                if(error.data.errors){
+                    dispatch(toggleSnackBar({
+                        message: error.data.message,
+                        open: true,
+                        severity: 'error'
+                    }))
+                }
             }
         }
         

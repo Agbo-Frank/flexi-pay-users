@@ -46,3 +46,29 @@ export async function HandleAddToCartClick(id: string | undefined, addToCart: IT
         
     }
 }
+
+export async function HandleSaveItemClick(id: string | undefined, saveItem: ITrigger<Pick<IAddToCartReq, 'product_uuid'>, IResponse<{data:null}>>){
+    let dispatch = useDispatch()
+    try{
+        console.log(id)
+        let data = await saveItem({product_uuid: `${id}`}).unwrap()
+
+        if(data){
+            dispatch(toggleSnackBar({
+                open: true,
+                severity: data.status === 'success'? 'success' : 'error',
+                message: data.message
+            }))
+        }
+    }
+    catch(err){
+        let error: any = err
+        if(error?.data){
+            dispatch(toggleSnackBar({
+                open: true,
+                severity: 'error',
+                message: error?.data.message
+            }))
+        }
+    }
+}

@@ -3,7 +3,7 @@ import { Skeleton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { CartIcon, TrashIcon } from "../../components/icons";
-import { ICart } from "../../interface";
+import { ISavedItems } from "../../interface";
 import { useAddToCartMutation } from "../../redux/slice/Cart";
 import { toggleSnackBar } from "../../redux/slice/modal";
 import { useRemoveItemMutation } from "../../redux/slice/SavedItems";
@@ -11,7 +11,7 @@ import { HandleAddToCartClick } from "../../services";
 import { formatNumber } from "../../utils";
 
 
-export function SavedItem ({savedItem}: {savedItem: ICart}) {
+export function SavedItem ({savedItem}: {savedItem: ISavedItems}) {
     let [addToCart, {isLoading}] = useAddToCartMutation()
     let [rmItem, { isLoading: removing }] = useRemoveItemMutation()
 
@@ -19,7 +19,7 @@ export function SavedItem ({savedItem}: {savedItem: ICart}) {
 
     async function removeItem(){
         try{
-            let data = await rmItem({ uuid: savedItem.uuid}).unwrap()
+            let data = await rmItem({ wishlist_uuid: savedItem.uuid}).unwrap()
             if(data){
                 dispatch(toggleSnackBar({
                     open: true,
@@ -47,7 +47,7 @@ export function SavedItem ({savedItem}: {savedItem: ICart}) {
                 <img src={savedItem.product.product_images[0].image_link} alt="" className="w-[148px] h-[148px] object-cover rounded-xl"/>
                 <div className="flex flex-col w-6/12 h-full items-stretch justify-evenly ">
                     <p className="w-9/12 text-grey-200 mb-5">{ savedItem.product.name }</p>
-                    <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(savedItem.price)}</p>
+                    <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(savedItem.product.price)}</p>
                 </div>
             </Link>
             <div className="flex flex-col space-y-3">

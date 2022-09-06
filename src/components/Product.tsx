@@ -29,6 +29,24 @@ export function ProductCard({product}: {product: IProduct}){
     )
 }
 
+export function ProductCardDummy(){
+    return(
+        <Link to={'/product/1'} className="w-full bg-white rounded-lg h-fit p-2 space-y-4 hover:shadow-xl hover:-translate-y-1 hover:z-30 my-2">
+            <div className='w-full h-44 overflow-hidden rounded-lg'>
+                <img src={product2} className="w-full h-full object-cover" alt="dummy product image"/>
+            </div>
+            <div className='space-y-1'>
+                <p className='truncate text-grey-1200 text-sm capitalize font-light'>Anti Blue Computer & Phone Glasses....</p>
+                <div className="flex items-center space-x-3">
+                    <p className="text-primary-dark-blue font-medium text-md">₦ 4,600</p>
+                    <s className="text-xs font-light text-grey-200">₦ 10,600</s>
+                </div>
+                <p className='text-xs text-primary-orange-200 font-medium'>Pay ₦ 120 / daily</p>
+            </div>
+        </Link>
+    )
+}
+
 export function ProductCardSkeleton(){
     return(
         <div className="w-[220px] rounded-lg h-fit p-2 space-y-4 my-2">
@@ -126,12 +144,13 @@ export function ProductsSlide({products, loading}: {products: IProduct[] | undef
     const navigate = useNavigate()
     return(
         <div className="overflow-hidden rounded-2xl">
-            <div className="flex justify-between bg-primary-orange-300 p-4">
-                <p className="capitalize text-lg">similar products</p>
+            <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:p-4">
+                <p className="uppercase font-medium text-sm  sm:text-lg">similar products</p>
                 <Button 
                     onClick={() => navigate('/products')} 
                     color="secondary"
-                    endIcon={<ArrowForwardIosIcon sx={{fontSize: 10}}/>}>
+                    endIcon={<i className="fa-solid fa-chevron-right text-[8px] sm:text-[10px]"></i>}
+                    className="text-xs">
                         View More
                 </Button>
             </div>
@@ -168,6 +187,82 @@ export function ProductsSlide({products, loading}: {products: IProduct[] | undef
                     </div>
                 </div>
             }
+        </div>
+    )
+}
+
+export function ProductsSlideDummy(){
+    let slide: any = useRef()
+    const settings = {
+        infinite: false,
+        draggable: true,
+        speed: 1000,
+        slidesToShow: 5,
+        slidesToScroll: 2,
+    };
+    let data = [1, 2, 3, 4, 5]
+
+    const navigate = useNavigate()
+    return(
+        <div className="overflow-hidden rounded-2xl">
+            <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:p-4">
+                <p className="uppercase font-medium text-sm  sm:text-lg">similar products</p>
+                <Button 
+                    onClick={() => navigate('/products')} 
+                    color="secondary"
+                    endIcon={<i className="fa-solid fa-chevron-right text-[8px] sm:text-[10px]"></i>}
+                    className="text-xs">
+                        View More
+                </Button>
+            </div>
+            <div className="bg-white p-4">
+                <div className="relative rounded-md overflow-x-hidden hidden sm:block">
+                    <Slider ref={slide} {...settings}>
+                        <div className="w-64 h-fit px-1">
+                            <ProductCardDummy />
+                        </div>
+                        <div className="w-64 h-fit px-1">
+                            <ProductCardDummy />
+                        </div>
+                        <div className="w-64 h-fit px-1">
+                            <ProductCardDummy />
+                        </div>
+                        <div className="w-64 h-fit px-1">
+                            <ProductCardDummy />
+                        </div>
+                        <div className="w-64 h-fit px-1">
+                            <ProductCardDummy />
+                        </div>
+                    </Slider>
+
+                    <div 
+                        className={`absolute top-2/4 w-8 h-8  bg-black/50 rounded-full grid place-items-center cursor-pointer`}
+                        onClick={() => slide.current.slickPrev()}>
+                        <i className="text-white font-bold text-sm fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div className={`absolute top-2/4 right-0 rounded-full bg-black/50 w-8 h-8 grid place-items-center cursor-pointer`}
+                    onClick={() => slide.current.slickNext()}>
+                        <i className="text-white font-bold text-sm fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div className='flex whitespace-nowrap overflow-x-auto'>
+                    <div className="w-[180px] h-fit pr-3">
+                        <ProductCardDummy />
+                    </div>
+                    <div className="w-[180px] h-fit pr-3">
+                        <ProductCardDummy />
+                    </div>
+                    <div className="w-[180px] h-fit pr-3">
+                        <ProductCardDummy />
+                    </div>
+                    <div className="w-[180px] h-fit pr-3">
+                        <ProductCardDummy />
+                    </div>
+                    <div className="w-[180px] h-fit pr-3">
+                        <ProductCardDummy />
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

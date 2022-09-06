@@ -5,7 +5,6 @@ import {
     Switch, SelectInput, Toast,
     CreditCard, Body, FormInput, Breadcrumb
 } from "../components"
-import AddAddressModel from "../components/Models/AddAddressModel"
 
 import { 
     CreditCardIcon, WalletIcon, 
@@ -119,7 +118,6 @@ export function CheckOut(){
             <Header />
             <Categories />
             <Breadcrumb />
-            <AddAddressModel />
             <AddCreditCard />
 
             <div className="flex px-6 gap-5 justify-between xl:px-fp-5 2xl:px-fp-10">

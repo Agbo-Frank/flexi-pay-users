@@ -13,6 +13,7 @@ import {EditProfile} from "./Models/EditProfile";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Breadcrumb from "./Breadcrum";
+import AddAddressModel from "./Models/AddAddressModel";
 
 
 function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
@@ -24,6 +25,7 @@ function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
                 <ProductReview />
                 <Tracker />
                 <EditProfile />
+                <AddAddressModel />
                 
                 <Header />
                 <Categories />

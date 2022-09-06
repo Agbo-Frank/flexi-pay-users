@@ -1,4 +1,4 @@
-import { IAddToCartReq, ICart, IResponse } from '../../interface'
+import { IAddToCartReq, ICart, IResponse, ISavedItems } from '../../interface'
 import { RootState } from '../store'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { FLEXIPAY_URL } from '../../utils/constants'
@@ -20,23 +20,23 @@ export const SavedItemsApi = createApi({
     reducerPath: 'SaveItem',
     tagTypes: ['Product', 'SaveItem'],
     endpoints: (build) => ({
-        savedItem: build.mutation<IResponse<{data: ICart}>, IAddToCartReq>({
+        savedItem: build.mutation<IResponse<{data: null}>, Pick<IAddToCartReq, 'product_uuid'>>({
             query: (body) => ({
-                url: "/guest/add/to-cart",
+                url: "/wishlist/store",
                 method: 'POST',
                 body
             }),
             invalidatesTags: ['SaveItem']
         }),
-        getUserSavedItems: build.query<IResponse<{data: ICart[]}>, Pick<IAddToCartReq, 'guest_id'>>({
+        getUserSavedItems: build.query<IResponse<{data: ISavedItems[]}>, void>({
             query: (body) => ({
-                url: "/guest/fetch/all-cart?guest_id=" + body.guest_id,
+                url: "/fetch-all",
             }),
             providesTags: ['SaveItem']
         }),
-        removeItem: build.mutation<IResponse<{data: null}>, Pick<ICart, 'uuid'>>({
+        removeItem: build.mutation<IResponse<{data: null}>, {wishlist_uuid: string}>({
             query: (body) => ({
-                url: "/guest/remove/from-cart",
+                url: "/wishlist/destroy",
                 method: 'DELETE',
                 body
             }),

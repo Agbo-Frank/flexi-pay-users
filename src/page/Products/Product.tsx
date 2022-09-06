@@ -8,7 +8,8 @@ import { useAddToCartMutation } from "../../redux/slice/Cart";
 
 import { useCookies } from 'react-cookie';
 import { FLEXIPAY_COOKIE } from "../../utils/constants";
-import { HandleAddToCartClick } from "../../services";
+import { HandleAddToCartClick, HandleSaveItemClick } from "../../services";
+import { useSavedItemMutation } from "../../redux/slice/SavedItems";
 
 export function Product(){
     let { slug } = useParams()
@@ -23,6 +24,7 @@ export function Product(){
     })
 
     let [addToCart, {data, isLoading, error}] = useAddToCartMutation()
+    let [savedItem, { isLoading: savingItem,}] = useSavedItemMutation()
 
     return(
         <Body bgColor="bg-grey-500">
@@ -66,7 +68,9 @@ export function Product(){
                                         startIcon={<HeartIcon color="#FF5000" size="18" />}
                                         variant="outlined"
                                         size="large"
-                                        color="secondary">
+                                        loading={savingItem}
+                                        color="secondary"
+                                        onClick={() => HandleSaveItemClick(product?.uuid, savedItem)}>
                                         Save item
                                     </LoadingButton>
                                     <LoadingButton

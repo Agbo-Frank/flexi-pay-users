@@ -10,10 +10,11 @@ export function Breadcrumb(){
                 <MuiBreadcrumbs
                     separator={<NavigateNextIcon fontSize="small" />}>
                     {
-                        location.pathname.split('/').map(location => (
+                        location.pathname.split('/').map((location, idx) => (
                             <Link 
                                 to={location === '' ? "/" : `/${location}`}
-                                className="text-sm">{location === '' ? "Home" : location}</Link>
+                                className="text-sm"
+                                key={idx}>{location === '' ? "Home" : location}</Link>
                         ))
                     }
                 </MuiBreadcrumbs>

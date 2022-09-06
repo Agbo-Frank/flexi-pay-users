@@ -19,10 +19,10 @@ export function Register() {
     
   return (
     <>
-        <div className='my-20'>
+        <div className='mx-auto my-20 flex flex-col items-center text-center md:text-left md:items-start'>
             <div>
-            <h2 className='text-primary-dark-blue font-bold text-4xl'>Welcome to FlexiPay</h2>
-            <small className='block mt-3 text-lg text-grey-300'>Register your account</small>
+                <h2 className='text-primary-dark-blue font-bold [320px]:text-xl text-3xl xs:text-4xl'>Welcome to FlexiPay</h2>
+                <small className='block mt-3 text-lg text-grey-300'>Register your account</small>
             </div>
 
             <Collapse in={data?.status === 'success'}>
@@ -30,7 +30,7 @@ export function Register() {
             </Collapse>
             
             <form className='my-12 w-10/12' onSubmit={formik.handleSubmit}>
-            <div className='flex justify-start gap-3'>
+            <div className='flex flex-col md:flex-row md:justify-start md:space-x-3'>
                 <FormInput 
                 type='text' 
                 Icon={UserIcon} 

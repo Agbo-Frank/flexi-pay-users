@@ -1,15 +1,16 @@
 import Button from "./Button";
 import { Logo, MailIcon, MasterCardIcon, PhoneIcon, VisaIcon } from "./icons";
+import WhatappIcon from "./icons/Whatapp";
 
 
 
 export function Footer(){
     return(
         <footer className="mt-5">
-            <div className="bg-primary-blue-100">
-                <div className="fp-screen py-5 flex justify-between items-center bg-primary-blue-100">
+            <div className="bg-[#545362]">
+                <div className="fp-screen px-2 sm:px-0 py-5 flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0 sm:items-center bg-[#545362]">
                     <Logo color="white"/>
-                    <div className="flex space-x-5">
+                    <div className="flex flex-col sm:flex-row sm:space-x-5 space-y-3 sm:space-y-0">
                         <div className="flex text-white space-x-2">
                             <div className="bg-white  grid place-items-center rounded-full w-12 h-12">
                                 <MailIcon color="#000541" size="20"/>
@@ -22,10 +23,10 @@ export function Footer(){
 
                         <div className="flex text-white space-x-2">
                             <div className="bg-white grid place-items-center rounded-full w-12 h-12">
-                                <PhoneIcon color="#000541" size="20"/>
+                                <WhatappIcon color="#000541" size="20"/>
                             </div>
                             <div>
-                                <h1 className="font-semibold">Email Support</h1>
+                                <h1 className="font-semibold">WhatsApp Support</h1>
                                 <p className="text-sm font-light">Support@flexipay.com</p>
                             </div>
                         </div>
@@ -33,8 +34,8 @@ export function Footer(){
                 </div>
             </div>
 
-            <div className="bg-primary-dark-blue text-white">
-                <div className="bg-primary-dark-blue fp-screen">
+            <div className="bg-[#161721] text-white">
+                <div className="bg-[#161721] fp-screen">
                     <div className="flex justify-between py-10 border-b border-white">
                         <ul>
                             <li className="font-semibold mb-4">About FlexiPay</li>

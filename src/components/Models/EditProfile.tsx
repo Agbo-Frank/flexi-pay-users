@@ -40,7 +40,7 @@ function Profile(){
         setLgas(lgas)
     }
 
-    const formik = FPFormikEditUser(editUser)
+    const formik = FPFormikEditUser(editUser, () => dispatch(toggleEditProfile()))
 
     return(
         <form className="px-5 mt-5" onSubmit={formik.handleSubmit}>

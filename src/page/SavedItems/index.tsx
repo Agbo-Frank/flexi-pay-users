@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom"
 export function SavedItems (){
     const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
 
-    let { savedItems, loading } = useGetUserSavedItemsQuery({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""}, {
+    let { savedItems, loading } = useGetUserSavedItemsQuery(undefined, {
         selectFromResult: ({data, isLoading}) => ({
             savedItems: data?.result.data,
             loading: isLoading

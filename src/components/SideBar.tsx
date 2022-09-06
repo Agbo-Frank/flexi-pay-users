@@ -111,7 +111,7 @@ function SideBar(): JSX.Element {
         </div>
         <div 
             onClick={signout}
-            className="bg-primary-dark-blue py-6 px-3 rounded-3xl flex space-x-3 text-white mt-24 justify-center mr-2 ml-5">
+            className="bg-primary-dark-blue py-6 px-3 rounded-xl flex space-x-3 text-white mt-24 justify-center items-center mr-2 ml-5">
             {
                     loggingOut ? 
                     <div className='w-5 h-5'><Spinner /></div>:

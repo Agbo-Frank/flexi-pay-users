@@ -1,12 +1,12 @@
-import BellIcon from "./icons/Bell"
-import CartIcon from "./icons/CartIcon"
-import Logo from "./icons/logo"
-import MessageIcon from "./icons/MessageIcon"
-import ProfilBG from "./icons/ProfilBG"
-import SearchIcon from "./icons/SearchIcon"
 import { useAuth } from "../context/Auth"
 import Button from "./Button"
-import { BagIcon, HeartIcon, LoginIcon, LogOutIcon, Spinner, UserIcon } from "./icons"
+import { 
+    MessageIcon, ProfilBG, 
+    CartIcon, BellIcon, 
+    BagIcon, HeartIcon, 
+    LoginIcon, LogOutIcon, 
+    Spinner, UserIcon, Logo 
+} from "./icons"
 import React, { useEffect, useState } from "react"
 import Slide from "react-reveal/Slide"
 import { useNavigate } from "react-router-dom"
@@ -15,11 +15,13 @@ import { useLogoutMutation } from "../redux/slice/Auth"
 import { useLazyGetUserQuery } from "../redux/slice/User"
 import { useSelector } from "react-redux"
 import { RootState } from "../redux/store"
-import { Avatar, Badge, Skeleton } from "@mui/material"
-import { Drawer } from "."
+import { Avatar, Badge, IconButton, Skeleton } from "@mui/material"
+import { Drawer, SearchBar } from "."
 import { useLazyGetUserCartQuery } from "../redux/slice/Cart"
 import { useCookies } from "react-cookie"
 import { FLEXIPAY_COOKIE } from "../utils/constants"
+import MenuIcon from '@mui/icons-material/Menu';
+import { MenuDrawer } from './'
 
 interface Item {
     Icon: React.FC<Iicon>;
@@ -51,7 +53,6 @@ function Item ({ Icon, name, link, handleClick}: Item): JSX.Element {
 
 export function Header(){
     let {signout} = useAuth()
-    let [searchInput, setSearchInput] = useState('')
     const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
 
     let [getUser, {data: user, isLoading: loading}] = useLazyGetUserQuery()
@@ -75,40 +76,36 @@ export function Header(){
         fixedCacheKey: 'logout',
     })
     let [toggle, setToggle] = useState(false)
-    let [openDrawer, setOpenDrawer] = useState(false)
+    let [openDrawer, setOpenDrawer] = useState({
+        notification: false,
+        menu: false
+    })
 
     let navigate = useNavigate()
     let date = new Date()
     let time = date.getHours() > 11 ?  date.getHours() >  17 ? 'evening' : 'afternoon' : 'morning'
 
-    function search(e: React.FormEvent<HTMLFormElement>){
-        e.preventDefault()
-        navigate("/products?search=" + searchInput)
-        setSearchInput('')
-    }
     return(
         <>
+            <MenuDrawer open={openDrawer.menu} close={() => setOpenDrawer(state => ({...state, menu: false}))}/>
             <header className="bg-white w-full">
-                <div className="fp-screen flex justify-between py-5 bg-white items-end">
+                <div className="fp-screen flex justify-between py-2 sm:py-5 bg-white items-center sm:items-end">
+                    <div className="sm:hidden">
+                        <IconButton 
+                            className="sm:hidden"
+                            onClick={() => setOpenDrawer(state => ({...state, menu: true}))}>
+                            <MenuIcon />
+                        </IconButton>
+                    </div>
+                    
                     <Logo />
-                    <form 
-                        className="flex justify-between bg-white rounded-xl items-center w-5/12 p-1 pl-3 shadow-sm"
-                        onSubmit={search}>
-                        <input 
-                            type='text'
-                            placeholder="Search products, categories and services" 
-                            className="w-11/12"
-                            value={searchInput}
-                            onChange={e => setSearchInput(e.target.value)}/>
-
-                        <div className="bg-primary-orange-200 rounded-xl border py-2 p-2">
-                            <SearchIcon size='18' color='#FFFFFF'/>
-                        </div>
-                    </form>
-                    <div className="flex items-center justify-between w-4/12">
+                    <div className="hidden sm:block w-5/12">
+                        <SearchBar />
+                    </div>
+                    <div className="flex items-center justify-between sm:w-4/12">
                         {
                             !isAuth ? 
-                            <div className="flex space-x-5 justify-end ml-auto w-8/12">
+                            <div className="hidden sm:flex space-x-5 justify-end ml-auto w-8/12">
                                 <Button outline color="#FF5000" onClick={() => navigate('/auth/login')}>
                                     <div className="flex items-center space-x-2">
                                         <LoginIcon size="14" color="#FF5000"/>
@@ -118,7 +115,7 @@ export function Header(){
                                 <Button color="#FF5000" onClick={() => navigate('/auth/register')}><p className="text-sm font-medium">Register</p></Button>
                             </div>:
                             <>
-                                <ul className="flex justify-evenly items-center w-3/6">
+                                <ul className="hidden sm:flex justify-evenly items-center w-3/6">
                                     <Badge color="secondary" overlap="circular" badgeContent={1}>
                                         <Avatar sx={{bgcolor: '#000326', width: 44, height: 44}}>
                                             <MessageIcon size="20" color="#F9F8FF"/> 
@@ -128,7 +125,7 @@ export function Header(){
                                         color="secondary" 
                                         overlap="circular" 
                                         badgeContent={9}
-                                        onClick={() => setOpenDrawer(state => !state)}>
+                                        onClick={() => setOpenDrawer(state => ({...state, notification: !state.notification}))}>
                                         <Avatar sx={{bgcolor: '#000326', width: 44, height: 44}}>
                                             <BellIcon size="20" color="#F9F8FF"/> 
                                         </Avatar>
@@ -148,25 +145,27 @@ export function Header(){
                                     {
                                         loading ? 
                                         <div className="flex items-center space-x-2 w-full">
-                                            <div className="flex flex-col items-end">
+                                            <div className="hidden sm:flex flex-col items-end">
                                                 <Skeleton variant="text" width={120} height={20}/>
                                                 <Skeleton variant="text" width={70} height={20}/>
                                             </div>
                                             <Skeleton variant="circular" width={40} height={40}/>
                                         </div> :
                                         <div className="flex justify-between items-center gap-4">
-                                            <div className="flex flex-col justify-items-end">
+                                            <div className="hidden sm:flex flex-col justify-items-end">
                                                 <p className="text-xs capitalize">good { time }</p>
                                                 <p className="font-bold capitalize ml-auto">{user?.result?.data.first_name}</p>
                                             </div>
                                             <div 
-                                                className="w-11 h-11 bg-white rounded-full flex justify-center items-center cursor-pointer"
+                                                className="w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF] mr-3"
                                                 onClick={() => setToggle(state => !state)}>
-                                                <ProfilBG size="20" color="#000541"/>
+                                                <div className="hidden sm:block"><ProfilBG size="20" color="#000541"/></div>
+                                                <div className="block sm:hidden"><ProfilBG size="15" color="#000541"/></div>
                                             </div>
+                                            {/* <Avatar /> */}
                                         </div>
                                     }
-                                    <div className="absolute overflow-hidden w-48 rounded-xl z-50">
+                                    <div className="hidden sm:block absolute overflow-hidden w-48 rounded-xl z-50">
                                         <Slide top when={toggle} duration={300}>
                                             <ul className={`${toggle ? 'block' : 'hidden'} translate-y-2 text-sm top-full rounded-xl z-50 bg-white shadow-lg pb-1`}>
                                                 <Item Icon={UserIcon} name="Profile" link="profile" handleClick={() => setToggle(false)} />
@@ -193,13 +192,16 @@ export function Header(){
                                 </div>
                             </>
                         }
+                        <div 
+                            className="sm:hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF] mr-3"
+                            onClick={() => setToggle(state => !state)}>
+                            <div className="hidden sm:block"><ProfilBG size="20" color="#000541"/></div>
+                            <div className="block sm:hidden"><ProfilBG size="15" color="#000541"/></div>
+                        </div>
                     </div>
                 </div>
             </header>
-
-            {/* <ClickAwayListener > */}
-                <Drawer open={openDrawer} setOpenDrawer={setOpenDrawer}/>
-            {/* </ClickAwayListener> */}
+            <Drawer open={openDrawer.notification} close={() => setOpenDrawer(state => ({...state, notification: false}))}/>
         </>
     )
 }

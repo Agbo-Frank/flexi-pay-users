@@ -83,6 +83,10 @@ module.exports = {
       maxWidth: {
         'fp-desk': '1200px',
         'fp-300': '300px'
+      },
+      screens: {
+        xs: '490px',
+        '2xs': '375px'
       }
     },
   },
