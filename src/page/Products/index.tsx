@@ -9,7 +9,7 @@ import {
     Breadcrumb} from "../../components"
 import { SearchIcon } from "../../components/icons"
 import { IFilter, IPagination, IProduct } from "../../interface"
-import { useLazyGetProductsQuery, useLazyFilterProductQuery, useLazySearchProductQuery } from "../../redux/slice/Product"
+import { useLazyGetProductsQuery, useLazyFilterProductQuery, useLazySearchProductQuery } from "../../redux/api/Product"
 import Filters from "./filters"
 
 

@@ -5,15 +5,16 @@ import DashboardWrapper from "../../components/DashboardWrapper"
 import CheckoutSummary from "../../components/Checkout"
 import { useState } from "react"
 import Cart, { CartSkeleton } from "./cartCard"
-import { useGetUserCartQuery } from "../../redux/slice/Cart"
+import { useGetUserCartQuery } from "../../redux/api/Cart"
 import { Wrapper, WrapperHeader } from "../../components"
-import { Button, Skeleton } from "@mui/material"
+import { Button, Skeleton, useMediaQuery } from "@mui/material"
 import { useCookies } from "react-cookie"
 import { FLEXIPAY_COOKIE } from "../../utils/constants"
 import { useNavigate } from "react-router-dom"
 
 
 export function Carts (){
+    const matches = useMediaQuery('(min-width:600px)');
     const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
 
     let {carts, loadingCart} = useGetUserCartQuery({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""}, {
@@ -52,28 +53,44 @@ export function Carts (){
                     </div>
                 </div> :
 
-                carts && carts?.length > 0 ?
-                <div className="flex justify-between items-stretch space-x-5 w-full h-fit">
-                    <div className="bg-white rounded-xl py-6 border w-7/12 h-full">
+                // carts && carts?.length > 0 
+                true?
+                <div className="sm:flex sm:justify-between sm:items-stretch sm:space-x-5 w-full h-full sm:h-fit">
+                    <Wrapper styles="border">
 
-                        <div className="flex justify-between mx-6">
-                            <h3 className="text-lg text-primary-dark-blue font-semibold">Carts({carts.length})</h3>
+                        <WrapperHeader styles="flex justify-between items-center">
 
-                            <div className="flex justify-between space-x-2 items-center cursor-pointer">
-                                <TrashIcon color="#FF5000" size="16" />
-                                <p className="text-primary-orange-200">Empty Cart</p>
-                            </div>
-                        </div>
+                            <h3>Carts({carts?.length})</h3>
 
-                        <div className="flex flex-col space-y-5 w-full mt-8 mb-2 overflow-y-auto scrollbar h-full">
                             {
-                                carts?.map((cart, idx) => <Cart cart={cart} key={idx}/>)
+                                matches ?
+                                <Button
+                                    color="secondary"
+                                    size={matches ? "medium" : "small"}
+                                    startIcon={<TrashIcon color="#FF5000" size="16" />}>
+                                        Empty Cart
+                                </Button> :
+                                <Button
+                                    color="primary"
+                                    size={matches ? "medium" : "small"}
+                                    startIcon={<TrashIcon color="#FF5000" size="16" />}>
+                                        Empty Cart
+                                </Button>
+                            }
+                        </WrapperHeader>
+
+                        <div className="flex flex-col space-y-3 sm:space-y-5 w-full mt-2 sm:mb-2 overflow-y-auto scrollbar h-full">
+                            {
+                                // carts?
+                                [1, 2, 3].map((cart, idx) => <Cart 
+                                // cart={cart} 
+                                key={idx}/>)
                             }
                         </div>
-                    </div>
+                    </Wrapper>
 
 
-                    <div className="w-5/12 relative">
+                    <div className="hidden sm:block w-5/12 relative">
                         <CheckoutSummary />
                     </div> 
                 </div> :

@@ -10,9 +10,9 @@ import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
 import { FPFormikWithdraw } from "../../page/Wallet/service";
 import { useEffect, useState } from "react";
-import { useLazyGetAllBanksQuery, useWithdrawFundMutation } from "../../redux/slice/wallet";
+import { useLazyGetAllBanksQuery, useWithdrawFundMutation } from "../../redux/api/wallet";
 import { IBanks, ISelectOptions } from "../../interface";
-import { useGetUserQuery } from "../../redux/slice/User";
+import { useGetUserQuery } from "../../redux/api/User";
 
 
 export function WithdrawalForm(){

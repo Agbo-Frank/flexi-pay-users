@@ -8,40 +8,46 @@ import CalenderIcon from "../icons/CalenderIcon";
 import { useDispatch, useSelector } from 'react-redux'
 import { seeOrderDetails } from "../../redux/slice/modal";
 import { RootState } from "../../redux/store";
+import { CardWrapper, CardImg, CardActions, CardText } from "..";
 
 function OrderDetails(){
     const orderDetails: boolean = useSelector((state: RootState) => state.modal.orderDetails)
     const dispatch = useDispatch()
     return(
         <ModelWrapper isOpen={orderDetails} closeModal={() => dispatch(seeOrderDetails())}>
-            <div className="h-full overflow-y-auto scrollbar relative">
+            <div className="h-full overflow-y-auto sm:scrollbar relative">
                 <div className="sticky top-0 left-0 bg-white">
                     <h2 className="text-lg text-primary-dark-blue font-semibold m-4">Order Details</h2>
-                    <div className="mx-4 mt-3 flex justify-between items-center">
-                        <div className="flex gap-4 items-center">
-                            <div className="w-24">
-                                <img src={TV} className="w-full h-auto object-contain "/>
-                            </div>
+                    <CardWrapper 
+                    // styles="border-0"
+                    // className="mx-4 mt-3 flex justify-between items-center"
+                    >
+                        <div className="flex w-full sm:w-9/12 space-x-2 sm:space-x-4 items-stretch pb-4 sm:pb-0">
+                            <CardImg src={TV} />
                             <div className="flex flex-col gap-3">
-                                <p className="w-9/12 text-grey-200 text-sm">43" inches D-LED TV +1 years Warranty - Black</p>
+                                <CardText 
+                                // className="w-9/12 text-grey-200 text-sm"
+                                >43" inches D-LED TV +1 years Warranty - Black</CardText>
                                 <p className="font-medium text-primary-dark-blue text-sm">150, 000</p>
                             </div>
                         </div>
-                        <div className="w-4/12">
+                        <CardActions 
+                        // className="w-4/12"
+                        >
                             <Button color="#FF5000">
                                 <div className="flex items-center gap-2">
                                     <BagIcon color="white" size="15"/>
                                     <p className="text-sm">Re-Order</p>
                                 </div>
                             </Button>
-                        </div>
-                    </div>
+                        </CardActions>
+                    </CardWrapper>
                 </div>
                 
                 <div className="m-4 h-fit">
-                    <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-2xl mb-3">
+                    <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-lg mb-3">
                         <div className="flex justify-start items-center gap-3">
-                            <p className={`delivered text-white px-2 py-1 rounded-sm uppercase text-xs w-fit`}>delivered</p>
+                            <p className={`delivered text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>delivered</p>
                             <p className="flex gap-2 items-center">
                                 <CalenderIcon color='#555555' size={"14"} />
                                 <p>19-06-2022</p>
@@ -53,8 +59,8 @@ function OrderDetails(){
                         <p>Order Placed: 14-06-2022</p>
                     </div>
                     
-                    <div className="flex justify-between gap-5 mb-4">
-                        <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-2xl w-1/2 leading-7">
+                    <div className="flex flex-col sm:flex-row justify-between gap-5 mb-4">
+                        <div className="text-grey-200 text-sm p-3 border border-solid rounded-lg w-full sm:w-1/2 leading-7">
                             <div className="leading-7">
                                 <h2 className="font-semibold">Delivery Method</h2>
                                 <p className="text-grey-200 text-sm">Door Delivery</p>
@@ -70,7 +76,7 @@ function OrderDetails(){
                                 </p>
                             </div>
                         </div>
-                        <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-2xl w-1/2">
+                        <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-lg w-full sm:w-1/2">
                             <div className="leading-7">
                                 <h2 className="font-semibold">Delivery Method</h2>
                                 <p className="text-grey-200 text-sm">Installmental </p>

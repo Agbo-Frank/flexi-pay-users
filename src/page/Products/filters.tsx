@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import { IFilter } from "../../interface";
-import { useGetCategoriesQuery } from "../../redux/slice/Product"
+import { useGetCategoriesQuery } from "../../redux/api/Product"
 
 
 interface IFiltersProps {

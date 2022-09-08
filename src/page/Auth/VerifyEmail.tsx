@@ -2,7 +2,7 @@ import { Button, Collapse, Dialog, DialogActions, DialogContent, DialogContentTe
 import React, { useEffect, useState } from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import { Body, FormInput } from "../../components"
-import { useResendVerificationMutation } from "../../redux/slice/Auth"
+import { useResendVerificationMutation } from "../../redux/api/Auth"
 
 import {  useFormik } from 'formik';
 import * as Yup from 'yup';

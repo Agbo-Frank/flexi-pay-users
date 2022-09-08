@@ -22,8 +22,10 @@ export function Card({ Icon, name, count }: ICardProps){
     }
     let color = returnColor(name)
     return(
-        <div className="flex space-x-5 items-center px-7 py-6 bg-white rounded-xl hover:card-shadow hover:shadow-lg cursor-pointer w-1/4">
-            <Icon size="35" color={color} />
+        <div className="flex space-x-5 items-center px-3 sm:px-7 shadow sm:shadow-none py-3 sm:py-6 bg-white rounded-xl hover:card-shadow hover:shadow-lg cursor-pointer w-fit">
+            <div className="hidden sm:block"><Icon size="35" color={color} /></div>
+            <div className="block sm:hidden"><Icon size="25" color={color} /></div>
+            
             <div>
                 <p className="text-2xl font-bold">{ count }</p>
                 <p className="text-sm text-grey-700 capitalize">{ name }</p>

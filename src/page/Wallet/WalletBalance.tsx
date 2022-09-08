@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { EditSqaureIcon, WalletIcon, WithdrawIcon } from "../../components/icons";
 import { toggleWithdrawalForm } from "../../redux/slice/modal";
-import { useGetUserQuery } from "../../redux/slice/User";
-import { useLazyGetWalletDetailsQuery } from "../../redux/slice/wallet";
+import { useGetUserQuery } from "../../redux/api/User";
+import { useLazyGetWalletDetailsQuery } from "../../redux/api/wallet";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface IWalletBalanceProps {
     open: {
@@ -19,6 +20,7 @@ interface IWalletBalanceProps {
 
 
 export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
+    const matches = useMediaQuery('(min-width:600px)'); 
     let dispatch = useDispatch()
 
     let { user, loadingUser} = useGetUserQuery(undefined,{
@@ -39,7 +41,7 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
     }, [user, loadingUser])
     
     return(
-        <div className="w-1/2 border rounded-xl text-center border-grey-100 flex flex-col justify-between px-4">
+        <div className="w-full sm:w-1/2 sm:border rounded-xl text-center flex flex-col justify-between py-4 px-2 sm:px-4 bg-white sm:bg-transparent">
             {
                 loadingUser ? 
                 <>
@@ -56,8 +58,8 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                     </div>
                 </>:
                 !user?.reserved_account?.account_number? 
-                <div className="flex flex-col justify-around items-center h-full">
-                    <WalletIcon color="#000541" size="40"/>
+                <div className="flex flex-col space-y-4 items-center h-full">
+                    <WalletIcon color="#000541" size={matches ? "48" : "35"}/>
                     <span className="text-center text-[#545362] text-lg font-medium">Create Account</span>
                     <span className="text-center text-[#545362] text-sm font-light">Create an account on FlexiPay to be able to buy and pay for your orders seamlessly. </span>
                     <Button
@@ -71,7 +73,7 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                     <>
                         <p className="text-xs text-left text-grey-700 ">Wallet Id: {wallet?.result.data.account_number}</p>
                         <div className="flex justify-center">
-                            <WalletIcon line color="#000541" size="60"/>
+                            <WalletIcon line color="#000541" size={matches ? "48" : "35"}/>
                         </div>
                         <p className="text-grey-700 text-lg">Balance</p>
                         <p className="text-primary-dark-blue font-semibold text-xl">₦ {wallet?.result.data.balance} </p>

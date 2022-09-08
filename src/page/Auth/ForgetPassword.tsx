@@ -2,7 +2,7 @@ import {  MailIcon, Spinner } from '../../components/icons';
 
 import FormInput from '../../components/FormInput';
 import Button from '../../components/Button';
-import { useForgotPasswordMutation } from '../../redux/slice/Auth'
+import { useForgotPasswordMutation } from '../../redux/api/Auth'
 import { FPFormikForgetPassword } from './service';
 
 export function ForgetPassword() {

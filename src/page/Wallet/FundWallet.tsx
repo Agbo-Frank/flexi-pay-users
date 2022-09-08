@@ -3,8 +3,8 @@ import { Button } from "@mui/material";
 import { FormInput, SelectInput } from "../../components";
 import { MailIcon, MessageIcon, NairaIcon, PhoneIcon, UserIcon } from "../../components/icons";
 import ModelWrapper from "../../components/Models/ModelWrapper";
-import { useGetUserQuery } from "../../redux/slice/User";
-import { useFundWalletByCardMutation } from "../../redux/slice/wallet";
+import { useGetUserQuery } from "../../redux/api/User";
+import { useFundWalletByCardMutation } from "../../redux/api/wallet";
 import { FundWalletByCard } from "./service";
 
 

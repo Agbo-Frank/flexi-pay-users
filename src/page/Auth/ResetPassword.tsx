@@ -5,7 +5,7 @@ import FormInput from '../../components/FormInput';
 
 import { useSearchParams } from "react-router-dom";
 import { FPFormikResetPassword } from './service';
-import { useResetPasswordMutation } from '../../redux/slice/Auth'
+import { useResetPasswordMutation } from '../../redux/api/Auth'
 import { useState } from 'react';
 
 export function ResetPassword() {

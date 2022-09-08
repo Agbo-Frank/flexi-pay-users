@@ -11,17 +11,17 @@ import React, { useEffect, useState } from "react"
 import Slide from "react-reveal/Slide"
 import { useNavigate } from "react-router-dom"
 import Iicon from "./interface"
-import { useLogoutMutation } from "../redux/slice/Auth"
-import { useLazyGetUserQuery } from "../redux/slice/User"
+import { useLogoutMutation } from "../redux/api/Auth"
+import { useLazyGetUserQuery } from "../redux/api/User"
 import { useSelector } from "react-redux"
 import { RootState } from "../redux/store"
 import { Avatar, Badge, IconButton, Skeleton } from "@mui/material"
 import { Drawer, SearchBar } from "."
-import { useLazyGetUserCartQuery } from "../redux/slice/Cart"
+import { useLazyGetUserCartQuery } from "../redux/api/Cart"
 import { useCookies } from "react-cookie"
 import { FLEXIPAY_COOKIE } from "../utils/constants"
 import MenuIcon from '@mui/icons-material/Menu';
-import { MenuDrawer } from './'
+import { MenuDrawer, SideBarDrawer } from './'
 
 interface Item {
     Icon: React.FC<Iicon>;
@@ -78,7 +78,8 @@ export function Header(){
     let [toggle, setToggle] = useState(false)
     let [openDrawer, setOpenDrawer] = useState({
         notification: false,
-        menu: false
+        menu: false,
+        sideBar: false
     })
 
     let navigate = useNavigate()
@@ -86,9 +87,10 @@ export function Header(){
     let time = date.getHours() > 11 ?  date.getHours() >  17 ? 'evening' : 'afternoon' : 'morning'
 
     return(
-        <>
+        <>  
             <MenuDrawer open={openDrawer.menu} close={() => setOpenDrawer(state => ({...state, menu: false}))}/>
-            <header className="bg-white w-full">
+            <SideBarDrawer open={openDrawer.sideBar} close={() => setOpenDrawer(state => ({...state, sideBar: false}))}/>
+            <header className="bg-white w-full shadow sm:shadow-none">
                 <div className="fp-screen flex justify-between py-2 sm:py-5 bg-white items-center sm:items-end">
                     <div className="sm:hidden">
                         <IconButton 
@@ -157,7 +159,7 @@ export function Header(){
                                                 <p className="font-bold capitalize ml-auto">{user?.result?.data.first_name}</p>
                                             </div>
                                             <div 
-                                                className="w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF] mr-3"
+                                                className="hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full sm:flex justify-center items-center cursor-pointer border border-[#E8E5FF] mr-3"
                                                 onClick={() => setToggle(state => !state)}>
                                                 <div className="hidden sm:block"><ProfilBG size="20" color="#000541"/></div>
                                                 <div className="block sm:hidden"><ProfilBG size="15" color="#000541"/></div>
@@ -192,12 +194,22 @@ export function Header(){
                                 </div>
                             </>
                         }
-                        <div 
-                            className="sm:hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF] mr-3"
-                            onClick={() => setToggle(state => !state)}>
-                            <div className="hidden sm:block"><ProfilBG size="20" color="#000541"/></div>
-                            <div className="block sm:hidden"><ProfilBG size="15" color="#000541"/></div>
-                        </div>
+                        {
+                            !loading &&
+                            <div 
+                                className="sm:hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF] mr-3"
+                                onClick={() => {
+                                    if(isAuth){
+                                        setOpenDrawer(state => ({...state, sideBar: true}))
+                                    }
+                                    else{
+                                        navigate("/auth/login")
+                                    }
+                                }}>
+                                <div className="hidden sm:block"><ProfilBG size="20" color="#000541"/></div>
+                                <div className="block sm:hidden"><ProfilBG size="15" color="#000541"/></div>
+                            </div>
+                        }
                     </div>
                 </div>
             </header>

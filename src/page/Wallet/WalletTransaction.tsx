@@ -1,7 +1,7 @@
 import { CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material"
 import React, { useEffect } from "react"
 import { ITransacation } from "../../interface"
-import { useLazyGetTransactionQuery } from "../../redux/slice/wallet"
+import { useLazyGetTransactionQuery } from "../../redux/api/wallet"
 
 
 function Row({txn}: {txn: ITransacation}){

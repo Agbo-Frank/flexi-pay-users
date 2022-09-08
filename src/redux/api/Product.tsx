@@ -52,7 +52,7 @@ export const ProductApi = createApi({
                 url: "/guest/product/search?search_param=" + body.search_params
             }),
             providesTags: ['Category']
-        }),
+        })
     })
 })
 

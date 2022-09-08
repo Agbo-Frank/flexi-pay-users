@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { ICreateAccountBody, IFundWalletByCard, IFundWalletResponse, IResponse, ITrigger, IUser, IWithdraw } from '../../interface';
 import { toggleSnackBar } from '../../redux/slice/modal';
-import { useGetUserQuery } from '../../redux/slice/User';
+import { useGetUserQuery } from '../../redux/api/User';
 import { validURL } from '../../utils';
 
 

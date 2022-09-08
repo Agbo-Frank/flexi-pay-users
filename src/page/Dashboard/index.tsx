@@ -3,18 +3,18 @@ import {BagIcon, CartIcon, EditIcon, HeartIcon, WalletIcon} from "../../componen
 import supportImage from '../../asset/supportImage.png'
 
 import DashboardWrapper from "../../components/DashboardWrapper";
-import { useGetUserQuery } from "../../redux/slice/User";
+import { useGetUserQuery } from "../../redux/api/User";
 import { Button, Skeleton } from "@mui/material";
-import { useGetUserCartQuery } from "../../redux/slice/Cart";
+import { useGetUserCartQuery } from "../../redux/api/Cart";
 import { FLEXIPAY_COOKIE } from "../../utils/constants";
 import { useCookies } from "react-cookie";
 import { useEffect } from "react";
-import { useLazyGetWalletDetailsQuery } from "../../redux/slice/wallet";
+import { useLazyGetWalletDetailsQuery } from "../../redux/api/wallet";
 import { formatNumber } from "../../utils";
 import Card from "./card";
 import DeliveryAddress from "./DeliceryAddress";
 import { Wrapper, WrapperHeader } from "../../components";
-import { useGetUserSavedItemsQuery } from "../../redux/slice/SavedItems";
+import { useGetUserSavedItemsQuery } from "../../redux/api/SavedItems";
 
 
 export  function Dashboard (): JSX.Element {
@@ -52,18 +52,18 @@ export  function Dashboard (): JSX.Element {
     console.log(user)
     return(
         <DashboardWrapper>
-            <div>
-                <div className="flex justify-between space-x-5">
+            <div className="bg-white">
+                <div className="flex py-3 sm:py-0 whitespace-nowrap overflow-x-auto justify-between space-x-5">
                     <Card Icon={HeartIcon} count={savedItems?.length || 0} name="saved items" />
                     <Card Icon={CartIcon} count={carts?.length || 0} name="cart items"/>
                     <Card Icon={BagIcon} count={5} name="order items"/>
                     <Card Icon={WalletIcon} count={user?.reserved_account?.account_number ? formatNumber(`${wallet?.balance}`) : 0} name="balance"/>
                 </div>
 
-                <div className="flex items-stretch justify-between my-7 space-x-6">
-                    <div className="bg-white rounded-xl p-5 w-1/2">
-                        <h3 className="text-primary-dark-blue text-lg font-semibold">Account Details</h3>
-                        <div className="rounded-xl border border-grey-100 pt-10 pb-5 mt-5 px-7 w-full">
+                <div className="flex flex-col sm:flex-row items-stretch justify-between my-7 space-y-3 sm:space-y-0 sm:space-x-6 px-2">
+                    <div className="bg-[#F4F4F4] sm:bg-white rounded-xl p-3 sm:p-5 w-full sm:w-1/2">
+                        <WrapperHeader>Account Details</WrapperHeader>
+                        <div className="rounded-xl border pt-5 sm:pt-10 pb-5 mt-3 sm:mt-5 px-5 sm:px-7 w-full bg-white">
                             <div className="text-grey-200 leading-9">
                                 {
                                     loading ?
@@ -78,10 +78,10 @@ export  function Dashboard (): JSX.Element {
                                     </>
                                 }
                             </div>
-                            <div className="mt-10 w-6/12">
+                            <div className="mt-10 sm:w-6/12">
                                 <Button 
-                                    variant="outlined"
-                                    startIcon={<EditIcon size="20" color="#FF5000"/>}
+                                    variant="contained"
+                                    startIcon={<EditIcon size="20" color="white"/>}
                                     size="large"
                                     color="secondary">
                                         Edit Profile
@@ -89,12 +89,12 @@ export  function Dashboard (): JSX.Element {
                             </div>
                         </div>
                     </div>
-                    <Wrapper styles="rounded-xl p-5 w-1/2">
+                    <Wrapper styles="rounded-xl p-3 sm:p-5 w-full sm:w-1/2 bg-[#F4F4F4] sm:bg-white">
                         <WrapperHeader>Delivery Address</WrapperHeader>
                         <DeliveryAddress user={user} loading={loading}/>
                     </Wrapper>
                 </div>
-
+{/* 
                 <div className="bg-primary-dark-blue items-center flex justify-between rounded-xl pr-5">
                     <div className="flex space-x-6 items-center text-white w-4/6">
                         <img src={supportImage} alt="support-img"/>
@@ -113,7 +113,7 @@ export  function Dashboard (): JSX.Element {
                                 Contact Us
                         </Button>
                     </div>
-                </div>
+                </div> */}
             </div>
         </DashboardWrapper>
     )

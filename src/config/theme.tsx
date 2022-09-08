@@ -1,6 +1,7 @@
 import { createTheme } from '@mui/material'
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-const theme = createTheme({
+let theme = createTheme({
     palette:{
         primary: {
             main: '#1900FE',
@@ -8,27 +9,7 @@ const theme = createTheme({
         },
         secondary: {
             main: '#FF5000'
-        },
-        // success: {
-        //     main: '#66bb6a',
-        //     light: '#81c784',
-        //     dark: '#388e3c'
-        // },
-        // error: {
-        //     main: '#e57373',
-        //     light: '#81c784',
-        //     dark: '#d32f2f'
-        // },
-        // info: {
-        //     main: '#29b6f6',
-        //     light: '#4fc3f7',
-        //     dark: '#0288d1'
-        // },
-        // warning: {
-        //     main: '#ffa726',
-        //     light: '#ffb74d',
-        //     dark: '#f57c00'
-        // }
+        }
     },
     typography: {
         fontFamily: ['Montserrat', 'sans-serif'].join(',')
@@ -96,5 +77,22 @@ const theme = createTheme({
         // }
       },
 })
+
+theme = createTheme(theme, {
+    components: {
+        MuiButton: {
+            defaultProps: {
+                disableElevation: theme.breakpoints.down('xs') ? false : true
+            },
+            styleOverrides: {
+                root: {
+                    textTransform: 'capitalize',
+                    borderRadius: theme.breakpoints.down('sm') ? 5 : 5
+                }
+            }
+        },
+    }
+  });
+  
 
 export default theme

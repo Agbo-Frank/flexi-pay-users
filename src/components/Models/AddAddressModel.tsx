@@ -9,7 +9,7 @@ import ModelWrapper from "./ModelWrapper"
 import { toggleAddAddress } from "../../redux/slice/modal";
 import { RootState } from "../../redux/store";
 import { FPFormikEditUser } from "../../services/user"
-import { useEditUserMutation, useGetUserQuery } from "../../redux/slice/User"
+import { useEditUserMutation, useGetUserQuery } from "../../redux/api/User"
 import { LoadingButton } from "@mui/lab"
 import { useEffect, useState } from "react"
 
@@ -48,7 +48,7 @@ function AddAddressModel(){
         <ModelWrapper isOpen={addAddress} size="medium" closeModal={() => dispatch(toggleAddAddress())}>
             <form className="py-5 px-4 h-full overflow-y-auto overflow-x-hidden scrollbar" onSubmit={formik.handleSubmit}>
                 <p className="text-lg text-grey-200 font-medium mb-6 sticky left-0">Add Your Delivery Address</p>
-                <div className="flex w-full justify-between items-center gap-4">
+                <div className="flex flex-col sm:flex-row w-full justify-between items-center sm:gap-4">
                     <FormInput 
                         type="text"
                         name="firstName"
@@ -65,7 +65,7 @@ function AddAddressModel(){
                     />
                 </div>
 
-                <div className="flex w-full justify-between items-center gap-4">
+                <div className="flex flex-col sm:flex-row w-full justify-between items-center gap-4">
                     <FormInput 
                         type="text" 
                         name="phone_number" 

@@ -2,7 +2,7 @@ import { Drawer, Button as MuiButton, IconButton, ClickAwayListener } from "@mui
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/Auth";
-import { useLogoutMutation } from "../redux/slice/Auth";
+import { useLogoutMutation } from "../redux/api/Auth";
 import Button from "./Button";
 import { BagIcon, HeartIcon, LoginIcon, LogOutIcon, Spinner, UserIcon, WhiteLogo } from "./icons";
 import Iicon from "./interface";
@@ -49,13 +49,14 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
             sx={{
                 maxWidth: 450,
                 width: '100%'
-            }}>
+            }}
+            className="block sm:hiddden">
             <ClickAwayListener onClickAway={close}>
-                <div className="max-w-[450px] w-full h-fit bg-primary-dark-blue py-5 px-4">
+                <div className="max-w-[450px] w-[280px] h-fit bg-primary-dark-blue py-5 px-4">
                     <div className="flex justify-between items-start">
                         <WhiteLogo />
                         <IconButton onClick={close}>
-                            <i className="fa-solid fa-xmark hover:text-crimson text-xl text-white absolute right-3 top-3"></i>
+                            <i className="fa-solid fa-xmark hover:text-crimson text-lg text-white"></i>
                         </IconButton>
                     </div>
                     <ul className={`text-sm top-full shadow-lg pb-1`}>

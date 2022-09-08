@@ -13,7 +13,7 @@ import { Tab, Tabs } from "@mui/material";
 
 import NaijaStates from 'naija-state-local-government';
 import { FPFormikChangePassword, FPFormikEditUser } from "../../services/user";
-import { useChangePasswordMutation, useEditUserMutation, useGetUserQuery } from "../../redux/slice/User";
+import { useChangePasswordMutation, useEditUserMutation, useGetUserQuery } from "../../redux/api/User";
 
 
 function Profile(){
@@ -43,8 +43,8 @@ function Profile(){
     const formik = FPFormikEditUser(editUser, () => dispatch(toggleEditProfile()))
 
     return(
-        <form className="px-5 mt-5" onSubmit={formik.handleSubmit}>
-            <div className="flex w-full justify-between items-center gap-4">
+        <form className="px-2 sm:px-5 mt-5" onSubmit={formik.handleSubmit}>
+            <div className="flex flex-col sm:flex-row w-full justify-between items-center gap-0 sm:gap-4">
                 <FormInput 
                     type="text"
                     name="firstName"
@@ -61,7 +61,7 @@ function Profile(){
                 />
             </div>
 
-            <div className="flex w-full justify-between items-center gap-4">
+            <div className="flex flex-col sm:flex-row w-full justify-between items-center gap-0 sm:gap-4">
                 <FormInput 
                     type="email"
                     name="email"
@@ -78,7 +78,7 @@ function Profile(){
                 />
             </div>
 
-            <div className="flex w-full justify-between items-center gap-4">
+            <div className="flex flex-col sm:flex-row w-full justify-between items-center gap-0 sm:gap-4">
                 <SelectInput 
                     label="Gender" 
                     name="gender" 
@@ -92,7 +92,7 @@ function Profile(){
                 />
             </div>
 
-            <div className="flex w-full justify-between items-center gap-4">
+            <div className="flex flex-col sm:flex-row w-full justify-between items-center gap-0 sm:gap-4">
                 <SelectInput 
                     label="State" 
                     name="state" 
@@ -116,7 +116,7 @@ function Profile(){
                 label={data?.result.data.address || "Address"}
                 formik={formik}
             />
-            <div className="flex w-full justify-between items-center gap-4">
+            <div className="flex flex-col sm:flex-row w-full justify-between items-center gap-0 sm:gap-4">
                 <FormInput 
                     type="text"
                     name="nearest_bus_stop"
@@ -133,7 +133,7 @@ function Profile(){
                     formik={formik}
                 />
             </div>
-            <div className="flex justify-center gap-2 w-9/12 mx-auto my-5">
+            <div className="flex justify-center gap-2 w-full sm:w-9/12 mx-auto my-2 sm:my-5">
                 <MuiButton 
                     variant="outlined" 
                     color="secondary" 
@@ -150,7 +150,7 @@ function Profile(){
                     disableElevation
                     size="large"
                     sx={{width: '50%'}}>
-                        Save Changes
+                        Save
                 </LoadingButton>
             </div>
         </form>
@@ -164,7 +164,7 @@ function Password(){
 
     let formik = FPFormikChangePassword(changePassword)
     return(
-        <form className="w-9/12 mx-auto my-5" onSubmit={formik.handleSubmit}>
+        <form className="w-10/12 sm:w-9/12 mx-auto my-5" onSubmit={formik.handleSubmit}>
             <FormInput 
                 type="password"
                 name="password"
@@ -188,7 +188,7 @@ function Password(){
                 formik={formik}
             />
 
-            <div className="flex justify-center gap-2 w-10/12 mx-auto my-5">
+            <div className="flex justify-center gap-2 w-full sm:w-10/12 mx-auto my-5">
                 <MuiButton 
                     variant="outlined" 
                     color="secondary" 

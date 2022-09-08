@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { FormikConfig, FormikHelpers, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { toggleEditProfile, toggleSnackBar } from "../redux/slice/modal";
-import { useGetUserQuery } from "../redux/slice/User";
+import { useGetUserQuery } from "../redux/api/User";
 
 
 export function FPFormikEditUser(edit: ITrigger<Partial<IUser>, IResponse<null | any>>, done: () => void | any){

@@ -2,9 +2,9 @@ import React, { createContext, useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { IUser } from "../interface";
-import { useLogoutMutation } from "../redux/slice/Auth";
+import { useLogoutMutation } from "../redux/api/Auth";
 import { setToken, unsetToken } from "../redux/slice/OtherData";
-import { useGetUserQuery } from "../redux/slice/User";
+import { useGetUserQuery } from "../redux/api/User";
 import { RootState } from "../redux/store";
 
 interface AuthContextType {

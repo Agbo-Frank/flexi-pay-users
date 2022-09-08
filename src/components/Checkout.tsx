@@ -4,7 +4,7 @@ import BagIcon from './icons/Bag'
 
 import { useCookies } from "react-cookie"
 import { FLEXIPAY_COOKIE } from "../utils/constants"
-import { useGetUserCartQuery } from '../redux/slice/Cart'
+import { useGetUserCartQuery } from '../redux/api/Cart'
 import { Button, Skeleton } from '@mui/material'
 import { formatNumber } from '../utils'
 import { useLocation, useNavigate } from 'react-router-dom'

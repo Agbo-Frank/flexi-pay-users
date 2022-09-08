@@ -79,7 +79,8 @@ export function ProductSlide(){
     };
     let data = [1, 2, 3]
     return(
-        <div className="w-full flex flex-col space-y-3">
+        <>
+        <div className="hidden sm:flex w-full flex-col space-y-3">
             <div className='relative rounded-md overflow-hidden'>
                 <Slider ref={slide} {...settings}>
                     {
@@ -127,6 +128,16 @@ export function ProductSlide(){
                 }
             </div>
         </div>
+        <div className="sm:hidden flex whitespace-nowrap overflow-x-auto space-x-2 bordder">
+            {
+                data.map((img, imgIdx) => (
+                    <div className='w-11/12 h-[180px] sm:h-auto flex-shrink-0'>
+                        <img src={Product1} className="object-cover w-[98%] h-full rounded"/>
+                    </div>
+                ))
+            }
+        </div>
+        </>
     )
 }
 
@@ -143,7 +154,7 @@ export function ProductsSlide({products, loading}: {products: IProduct[] | undef
 
     const navigate = useNavigate()
     return(
-        <div className="overflow-hidden rounded-2xl">
+        <div className="sm:overflow-hidden rounded-2xl">
             <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:p-4">
                 <p className="uppercase font-medium text-sm  sm:text-lg">similar products</p>
                 <Button 
@@ -163,7 +174,7 @@ export function ProductsSlide({products, loading}: {products: IProduct[] | undef
                         ))
                     }
                 </div>:
-                <div className="bg-white p-4">
+                <div className="bg-white py-2 sm:p-4">
                     <div className="relative rounded-md overflow-x-hidden">
                         <Slider ref={slide} {...settings}>
                             {
@@ -204,7 +215,7 @@ export function ProductsSlideDummy(){
 
     const navigate = useNavigate()
     return(
-        <div className="overflow-hidden rounded-2xl">
+        <div className="sm:overflow-hidden rounded-2xl">
             <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:p-4">
                 <p className="uppercase font-medium text-sm  sm:text-lg">similar products</p>
                 <Button 
@@ -215,8 +226,8 @@ export function ProductsSlideDummy(){
                         View More
                 </Button>
             </div>
-            <div className="bg-white p-4">
-                <div className="relative rounded-md overflow-x-hidden hidden sm:block">
+            <div className="bg-white py-2 sm:p-4 h-fit">
+                <div className="relative rounded-md sm:overflow-x-hidden hidden sm:block">
                     <Slider ref={slide} {...settings}>
                         <div className="w-64 h-fit px-1">
                             <ProductCardDummy />

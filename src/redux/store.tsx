@@ -1,13 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/dist/query'
-import { AuthApi } from './slice/Auth'
-import { CartApi } from './slice/Cart'
+import { AuthApi } from './api/Auth'
+import { CartApi } from './api/Cart'
 import modalSlice from './slice/modal'
 import dataSlice from './slice/OtherData'
-import { ProductApi } from './slice/Product'
-import { SavedItemsApi } from './slice/SavedItems'
-import { UserApi } from './slice/User'
-import { WalletApi } from './slice/wallet'
+import { ProductApi } from './api/Product'
+import { SavedItemsApi } from './api/SavedItems'
+import { UserApi } from './api/User'
+import { WalletApi } from './api/wallet'
+import { ReviewApi } from './api/Reviews'
 
 export const store = configureStore({
   reducer: {
@@ -18,13 +19,15 @@ export const store = configureStore({
     [WalletApi.reducerPath]: WalletApi.reducer,
     [ProductApi.reducerPath]: ProductApi.reducer,
     [CartApi.reducerPath]: CartApi.reducer,
-    [SavedItemsApi.reducerPath]: SavedItemsApi.reducer
+    [SavedItemsApi.reducerPath]: SavedItemsApi.reducer,
+    [ReviewApi.reducerPath]: ReviewApi.reducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
     AuthApi.middleware, 
     UserApi.middleware, 
     WalletApi.middleware,
     CartApi.middleware,
+    ReviewApi.middleware,
     SavedItemsApi.middleware,
     ProductApi.middleware
   ),

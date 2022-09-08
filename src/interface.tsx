@@ -279,3 +279,11 @@ export interface IInstallment {
     uuid: string;
     installment_uuid: string;
 }
+
+export interface IRate {
+    comment: string;
+    rate: number;
+    created_at: string | Date;
+    updated_at: string | Date;
+    user: IUser
+}

@@ -13,7 +13,7 @@ import WalletIcon from "./icons/WalletIcon";
 import Iicon from "./icons/interface";
 
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { useLogoutMutation } from "../redux/slice/Auth";
+import { useLogoutMutation } from "../redux/api/Auth";
 import { useAuth } from "../context/Auth";
 
 interface ISideBarItem {
@@ -25,7 +25,7 @@ interface ISideBarItem {
 }
 
 
-function SideBarItem ({ active = false, Icon, name, link, handleClick}: ISideBarItem): JSX.Element {
+export function SideBarItem ({ active = false, Icon, name, link, handleClick}: ISideBarItem): JSX.Element {
     let [active_, setActive] = useState(false)
     let nav = useRef<HTMLAnchorElement>(null);
 
@@ -65,7 +65,7 @@ function SideBar(): JSX.Element {
     let {signout} = useAuth()
 
   return (
-    <div className="w-2/12 h-fit bg-white pt-9 pb-2 rounded-xl">
+    <div className="hidden sm:block w-2/12 h-fit bg-white pt-9 pb-2 rounded-xl">
         <div>
             <SideBarItem 
             Icon={DashboardIcon} name="overview" link="dashboard"

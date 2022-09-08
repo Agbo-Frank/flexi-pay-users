@@ -4,17 +4,19 @@ import { UserIcon } from "../../components/icons";
 import { Button } from "@mui/material";
 import { IUser } from "../../interface";
 import { FPcreateAccForm } from "./service";
-import { useCreateAccountMutation } from "../../redux/slice/wallet";
+import { useCreateAccountMutation } from "../../redux/api/wallet";
 import { LoadingButton } from "@mui/lab";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export function CreateAccForm({userData, open, close}: {userData: IUser | null | undefined, open: boolean, close:() => void | any}){
     let [createAccount, {data, isLoading}] = useCreateAccountMutation()
     const formik = FPcreateAccForm(userData, createAccount, close)
+    const matches = useMediaQuery('(min-width:600px)'); 
     return(
         <ModelWrapper isOpen={open} closeModal={close}>
             <p className="text-lg px-4 text-grey-200 font-medium mb-6 sticky left-0">Get an account with us</p>
             <form className="px-3" onSubmit={formik.handleSubmit}>
-                <div className="flex w-full justify-between items-center gap-4">
+                <div className="flex flex-col sm:flex-row w-full justify-between items-center sm:gap-4">
                     <FormInput
                         type="text"
                         name="first_name"
@@ -31,7 +33,7 @@ export function CreateAccForm({userData, open, close}: {userData: IUser | null |
                     />
                 </div>
 
-                <div className="flex w-full justify-between items-center gap-4">
+                <div className="flex flex-col sm:flex-row w-full justify-between items-center sm:gap-4">
                     <FormInput
                         type="text"
                         name="email"
@@ -56,18 +58,18 @@ export function CreateAccForm({userData, open, close}: {userData: IUser | null |
                     formik={formik}
                 />
                 
-                <div className="flex w-10/12 mx-auto mt-9 items-center gap-5">
+                <div className="flex sm:w-10/12 mx-auto mt-5 sm:mt-7 items-center gap-5">
                     <Button 
                         variant="outlined" 
                         color="secondary" 
-                        size="large" 
+                        size={matches ? "large" : "medium"}  
                         className="w-1/2"
                         onClick={close}>Cancel</Button>
                     <LoadingButton 
                         type="submit"
                         variant="contained" 
                         color="secondary" 
-                        size="large" 
+                        size={matches ? "large" : "medium"} 
                         className="w-1/2"
                         loading={isLoading}>
                             Get an Account

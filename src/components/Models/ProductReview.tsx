@@ -1,5 +1,4 @@
 import ModelWrapper from "./ModelWrapper"
-import Button from "../Button"
 import TV from '../../asset/monitor.png'
 import StarIcon from "../icons/StarIcon"
 import { useState } from "react"
@@ -7,6 +6,8 @@ import { useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleProductReview } from "../../redux/slice/modal";
 import { RootState } from "../../redux/store";
+import { Button } from "@mui/material"
+import { CardImg } from "../StyledComponent"
 
 
 function ProductReview(){
@@ -20,27 +21,25 @@ function ProductReview(){
                 <div className="sticky top-0 left-0 bg-white">
                     <div className="flex w-11/12 mx-4">
                         <div 
-                        className={`w-1/2 mb-2 ${!isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200'} border-solid  py-3 px-2 hover:bg-gray-100 cursor-pointer`}
+                        className={`w-1/2 mb-2 ${!isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200'} border-solid text-sm sm:text-base  py-3 px-2 hover:bg-gray-100 cursor-pointer`}
                         onClick={() => setIsReport(false)}>Rate This Prodcuct</div>
                         <div 
-                        className={`w-1/2 text-right mb-2 ${isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200 '} hover:bg-gray-100 py-3 px-2 cursor-pointer`}
-                        onClick={() => setIsReport(true)}>Report This Prodcuct</div>
+                        className={`w-1/2 text-right mb-2 ${isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200 '} text-sm sm:text-base hover:bg-gray-100 py-3 px-2 cursor-pointer`}
+                        onClick={() => setIsReport(true)}>Report This Product</div>
                     </div>
 
                     <div className="mx-4 mt-3 flex justify-between items-center">
                         <div className="flex gap-4 items-center">
-                            <div className="w-24">
-                                <img src={TV} className="w-full h-auto object-contain "/>
-                            </div>
-                            <div className="flex flex-col gap-3">
-                                <p className="w-9/12 text-grey-700 text-sm">43" inches D-LED TV +1 years Warranty - Black</p>
-                                <p className="font-medium text-primary-dark-blue text-sm">150, 000</p>
+                            <CardImg src={TV} />
+                            <div className="flex flex-col h-full items-stretch justify-evenly ">
+                                <p className="text-grey-700 text-sm sm:text-base">43" inches D-LED TV +1 years Warranty - Black</p>
+                                <p className="font-semibold text-primary-dark-blue ">₦ 150, 000</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <p className="w-11/12 text-center text-crimson text-sm font-medium bg-primary-orange-300 py-1 my-5 mx-4 rounded-lg">
+                <p className="w-11/12 text-center text-crimson text-[13px] sm:text-sm font-medium bg-primary-orange-300 p-1 my-5 mx-4 rounded-lg">
                     Your { !isReport ? 
                    'Review will be visible to the seller and other customers' :
                    'Report will be submitted to the admin'
@@ -64,12 +63,12 @@ function ProductReview(){
                 }
                 
 
-                <div className="mx-auto my-3 flex justify-center w-5/12">
-                    <Button color="#FF5000" >
-                        <div className="flex gap-3">
-                            {!isReport && <StarIcon color="white" size="20" />}
-                            <p className="white">Submit {!isReport ? 'Review' : 'Report' }</p>
-                        </div>
+                <div className="mx-auto my-4 flex justify-center w-fit">
+                    <Button 
+                        color="secondary" 
+                        startIcon={<StarIcon color="white" size="20" />}
+                        variant="contained">
+                            Submit {!isReport ? 'Review' : 'Report' }
                     </Button>
                 </div>
             </div>

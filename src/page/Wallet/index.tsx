@@ -13,11 +13,13 @@ import FundWallet from "./FundWallet"
 import { useSearchParams } from "react-router-dom"
 import { WalletTransaction } from "./WalletTransaction"
 import { toggleSnackBar } from "../../redux/slice/modal"
-import { useGetUserQuery } from "../../redux/slice/User"
+import { useGetUserQuery } from "../../redux/api/User"
 import { WalletBalance } from "./WalletBalance"
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 export function Wallet (){
+    const matches = useMediaQuery('(min-width:600px)'); 
     let [searchParams, setSearchParams] = useSearchParams();
     let [transactionFeedBack, setTransactionFeedBack] = useState(searchParams.get('status'))
 
@@ -62,16 +64,16 @@ export function Wallet (){
             {open.fundWallet && <FundWallet open={open.fundWallet} close={() => setOpen(state => ({...state, fundWallet: false}))}/>}
             {open.createAccForm && <CreateAccForm userData={data?.result?.data} open={open.createAccForm} close={() => setOpen(state => ({...state, createAccForm: false}))}/>}
             <div>
-            <div className="bg-white rounded-xl p-6 mb-5">
-                <h3 className="font-semibold text-primary-dark-blue">Wallet</h3>
-                <div className="flex items-stretch space-x-3 mt-5">
+            <Wrapper>
+                <WrapperHeader>Wallet</WrapperHeader>
+                <div className="flex flex-col sm:flex-row items-stretch space-y-3 sm:space-y-0 sm:space-x-3 mt-2 sm:mt-4">
                     
                     <WalletBalance open={open} setOpen={setOpen}/>
 
-                    <div className=" w-1/2 rounded-xl text-center bg-grey-900 flex flex-col justify-center p-6">
+                    <div className="w-full sm:w-1/2 rounded-xl text-center bg-white sm:bg-grey-900 flex flex-col justify-center py-3 px-2 sm:p-6">
                         <p className="text-xs text-right text-grey-700 ">Referred (0)</p>
                         <div className="flex justify-center">
-                            <GroupIcon color="#000541" size="60"/>
+                            <GroupIcon color="#000541" size={matches ? "60" : "45"}/>
                         </div>
                         <p className="text-grey-700 text-xl">Referial Balance</p>
                         <p className="text-primary-dark-blue font-semibold text-xl">₦ 0.00 </p>
@@ -89,6 +91,7 @@ export function Wallet (){
                                     color="secondary" 
                                     onClick={copy}
                                     variant="contained"
+                                    size="small"
                                     startIcon={copied ?<MarkCircleIcon color="white" size="16"/> :<CopyIcon color="white" size="14"/>}>
                                         {copied ? 'Copied!' : 'Copy'}
                                 </MuiButton>
@@ -96,7 +99,7 @@ export function Wallet (){
                         </div>
                     </div>
                 </div>
-            </div>
+            </Wrapper>
             </div>
 
             <div>

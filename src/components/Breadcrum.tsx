@@ -5,7 +5,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 export function Breadcrumb(){
     let location = useLocation()
     return(
-        <header className="w-full">
+        <header className="hidden sm:block w-full">
             <div className="my-2 fp-screen">
                 <MuiBreadcrumbs
                     separator={<NavigateNextIcon fontSize="small" />}>
