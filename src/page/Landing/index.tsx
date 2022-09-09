@@ -36,8 +36,8 @@ export function Landing(){
                         <CategorySlide />
                     </div>
 
-                    {/* <ProductsSlide products={products} loading={loadingProduct}/> */}
-                    <ProductsSlideDummy />
+                    <ProductsSlide products={products} loading={loadingProduct}/>
+                    {/* <ProductsSlideDummy /> */}
 
                     <BannerSlides />
 

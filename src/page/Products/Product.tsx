@@ -5,10 +5,14 @@ import { CartIcon, HeartIcon,  } from "../../components/icons"
 import { useGetProductQuery } from "../../redux/api/Product";
 import { LoadingButton } from "@mui/lab";
 import { useAddToCartMutation } from "../../redux/api/Cart";
-import { HandleAddToCartClick, HandleSaveItemClick } from "../../services";
+import { handleAddToCartClick, handleSaveItemClick } from "../../services";
 import { useSavedItemMutation } from "../../redux/api/SavedItems";
 import ProductVendor from "./productVendor";
 import ProductDetails from "./productDetails";
+import { formatNumber } from "../../utils";
+import { useCookies } from "react-cookie";
+import { FLEXIPAY_COOKIE } from "../../utils/constants";
+import { useDispatch } from "react-redux";
 
 export function Product(){
     let { slug } = useParams()
@@ -20,8 +24,13 @@ export function Product(){
         })
     })
 
+    const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
+    const dispatch = useDispatch()
+
     let [addToCart, {data, isLoading, error}] = useAddToCartMutation()
     let [savedItem, { isLoading: savingItem,}] = useSavedItemMutation()
+
+    console.log(product)
 
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
@@ -33,11 +42,11 @@ export function Product(){
                     <div className="bg-white sm:p-7 sm:space-y-10">
                         <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-8">
                             <div className="w-full sm:w-5/12">
-                                <ProductSlide />
+                                <ProductSlide images={product ? product.product_images.map(image => image.image_link) : []}/>
                             </div>
                             <div className="w-full sm:w-6/12 flex flex-col space-y-6 px-2 sm:px-0">
                                 <div>
-                                    <h1 className="text-grey-1200 text-xl sm:text-3xl">Anti Blue Computer & Phone Glasses....</h1>
+                                    <h1 className="text-grey-1200 text-xl sm:text-3xl">{product?.name}</h1>
 
                                     <div className="flex space-x-2">
                                         <Rating />
@@ -47,7 +56,7 @@ export function Product(){
 
                                 <div className="border-y border-grey-1100 py-3 sm:py-5 my-2 space-y-2">
                                     <div className="flex items-center space-x-3">
-                                        <p className="text-primary-dark-blue font-bold text-2xl">₦ 4,600</p>
+                                        <p className="text-primary-dark-blue font-bold text-2xl">₦ {formatNumber(`${product?.price}`)}</p>
                                         <s className="text-[13px] font-light text-grey-200">₦ 10,600</s>
                                     </div>
                                     <p className="text-grey-1200 text-[13px] sm:text-base">Pay ₦ 100 / daily, ₦ 300/week or ₦ 500/month</p>
@@ -60,7 +69,7 @@ export function Product(){
                                         size="large"
                                         loading={savingItem}
                                         color="secondary"
-                                        onClick={() => HandleSaveItemClick(product?.uuid, savedItem)}>
+                                        onClick={() => handleSaveItemClick(product?.uuid, savedItem, dispatch)}>
                                         Save item
                                     </LoadingButton>
                                     <LoadingButton
@@ -69,7 +78,7 @@ export function Product(){
                                         size="large"
                                         loading={isLoading}
                                         color="secondary"
-                                        onClick={() => HandleAddToCartClick(product?.uuid, addToCart)}>
+                                        onClick={() => handleAddToCartClick(product?.uuid, addToCart, dispatch, {cookies, setCookie})}>
                                         Add to Cart
                                     </LoadingButton>
                                 </div>
@@ -97,9 +106,9 @@ export function Product(){
                         <ProductVendor />
                     </div>
                     
+                    {/* <ProductsSlideDummy />
                     <ProductsSlideDummy />
-                    <ProductsSlideDummy />
-                    <ProductsSlideDummy />
+                    <ProductsSlideDummy /> */}
                 </div>
 
                 <Footer />

@@ -30,7 +30,7 @@ export const SavedItemsApi = createApi({
         }),
         getUserSavedItems: build.query<IResponse<{data: ISavedItems[]}>, void>({
             query: (body) => ({
-                url: "/fetch-all",
+                url: "/wishlist/fetch-all",
             }),
             providesTags: ['SaveItem']
         }),

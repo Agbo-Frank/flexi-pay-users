@@ -7,11 +7,13 @@ import { ISavedItems } from "../../interface";
 import { useAddToCartMutation } from "../../redux/api/Cart";
 import { toggleSnackBar } from "../../redux/slice/modal";
 import { useRemoveItemMutation } from "../../redux/api/SavedItems";
-import { HandleAddToCartClick } from "../../services";
+import { handleAddToCartClick } from "../../services";
 import { formatNumber } from "../../utils";
 import TV from '../../asset/Product2.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { CardActions, CardImg, CardText, CardWrapper } from "../../components";
+import { FLEXIPAY_COOKIE } from "../../utils/constants";
+import { useCookies } from "react-cookie";
 
 
 
@@ -19,7 +21,8 @@ export function SavedItem ({savedItem}: {savedItem: ISavedItems}) {
     let [addToCart, {isLoading}] = useAddToCartMutation()
     let [rmItem, { isLoading: removing }] = useRemoveItemMutation()
 
-    let dispatch = useDispatch()
+    const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
+    const dispatch = useDispatch()
 
     const matches = useMediaQuery('(min-width:600px)');
 
@@ -61,7 +64,10 @@ export function SavedItem ({savedItem}: {savedItem: ISavedItems}) {
                     color="secondary"
                     variant="contained"
                     loading={isLoading}
-                    onClick={() => HandleAddToCartClick(savedItem.product.uuid, addToCart)}
+                    onClick={() => {
+                        handleAddToCartClick(savedItem.product.uuid, addToCart, dispatch, {cookies, setCookie})
+                            .then(() => removeItem())
+                    }}
                     startIcon={<CartIcon color='white' size="17" />}
                     size={matches ? "large" : "medium"}>
                         Add to Cart

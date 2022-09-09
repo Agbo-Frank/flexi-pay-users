@@ -4,6 +4,7 @@ import { ILogin, IRegister, IForgetPassword } from '../../interface'
 import { REACT_APP_BASE_URL } from '../../config'
 import { RootState } from '../store'
 import { FLEXIPAY_URL } from '../../utils/constants'
+import { IAddAddress } from '../../components/interface'
 
 
 export const UserApi = createApi({
@@ -47,6 +48,22 @@ export const UserApi = createApi({
                 body
             }),
             transformResponse: (response: IResponse<{data: null}>, meta, arg) => response
+        }),
+        createDeliveryAddress: build.mutation<IResponse<{data: null}>, Omit<IAddAddress, 'id'>>({
+            query: (body) => ({
+                url: "/user/create/delivery_address-details",
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ['User'],
+        }),
+        updateDeliveryAddress: build.mutation<IResponse<{data: null}>, IAddAddress>({
+            query: (body) => ({
+                url: "/user/create/delivery_address-details",
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ['User'],
         })
     })
 })

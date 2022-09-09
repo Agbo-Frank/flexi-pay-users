@@ -9,6 +9,7 @@ import { SavedItemsApi } from './api/SavedItems'
 import { UserApi } from './api/User'
 import { WalletApi } from './api/wallet'
 import { ReviewApi } from './api/Reviews'
+import { OrderApi } from './api/Order'
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     [UserApi.reducerPath]: UserApi.reducer,
     [WalletApi.reducerPath]: WalletApi.reducer,
     [ProductApi.reducerPath]: ProductApi.reducer,
+    [OrderApi.reducerPath]: OrderApi.reducer,
     [CartApi.reducerPath]: CartApi.reducer,
     [SavedItemsApi.reducerPath]: SavedItemsApi.reducer,
     [ReviewApi.reducerPath]: ReviewApi.reducer
@@ -29,6 +31,7 @@ export const store = configureStore({
     CartApi.middleware,
     ReviewApi.middleware,
     SavedItemsApi.middleware,
+    OrderApi.middleware,
     ProductApi.middleware
   ),
 })

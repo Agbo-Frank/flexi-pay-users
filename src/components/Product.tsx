@@ -68,7 +68,7 @@ export function ProductCardSkeleton(){
     )
 }
 
-export function ProductSlide(){
+export function ProductSlide({images}: {images: string[]}){
     let slide: any = useRef()
     let [index, setIndex] = useState(0)
     const settings = {
@@ -84,10 +84,10 @@ export function ProductSlide(){
             <div className='relative rounded-md overflow-hidden'>
                 <Slider ref={slide} {...settings}>
                     {
-                        data.map(d => (
-                            <div className='w-full' key={d}>
+                        images?.map((image, idx)=> (
+                            <div className='w-full' key={idx}>
                                 <div className='w-full pr-4'>
-                                    <div className='w-full'><img src={Product1} className="object-cover w-full h-full"/></div>
+                                    <div className='w-full'><img src={image} className="object-cover w-full h-full"/></div>
                                 </div>
                             </div>
                         ))
@@ -103,26 +103,29 @@ export function ProductSlide(){
                     }}>
                     <i className="text-white font-bold text-sm fa-solid fa-chevron-left"></i>
                 </div>
-                <div className={`absolute top-2/4 right-0 rounded-full ${index === data.length - 1 && 'hidden'} bg-black/50 w-8 h-8 grid place-items-center cursor-pointer`}
-                onClick={() => {
-                    if(index < data.length - 1){
-                        setIndex(state => state + 1)
-                    }
-                    slide.current?.slickNext()
-                }}>
-                    <i className="text-white font-bold text-sm fa-solid fa-chevron-right"></i>
-                </div>
+                {
+                    images?.length > 0 ?
+                    <div className={`absolute top-2/4 right-0 rounded-full ${index === images?.length - 1 ? 'hidden' : ""} bg-black/50 w-8 h-8 grid place-items-center cursor-pointer`}
+                    onClick={() => {
+                        if(index < images?.length - 1){
+                            setIndex(state => state + 1)
+                        }
+                        slide.current?.slickNext()
+                    }}>
+                        <i className="text-white font-bold text-sm fa-solid fa-chevron-right"></i>
+                    </div> : <></>
+                }
             </div>
             <div className='w-full h-20 whitespace-nowrap scrollbar-hidden space-x-3 overflow-x-auto overflow-y-hidden'>
                 {
-                    data.map((d, i) => (
+                    images?.map((image, i) => (
                         <div className={`relative inline-block group w-20 h-full hover:border-2 hover:border-primary-orange-200 rounded-lg ${index === i && 'border-2 border-primary-orange-200'} overflow-hidden cursor-pointer`}
                         onClick={() => {
                             setIndex(i)
                             slide.current.slickGoTo(i)
                         }}>
                             <div className={`absolute block ${index !== i && 'hidden' } group-hover:block w-full h-full bg-white/75`}></div>
-                            <img src={Product1}  className="object-cover w-full h-full"/>
+                            <img src={image}  className="object-cover w-full h-full"/>
                         </div>
                     ))
                 }
@@ -130,9 +133,9 @@ export function ProductSlide(){
         </div>
         <div className="sm:hidden flex whitespace-nowrap overflow-x-auto space-x-2 bordder">
             {
-                data.map((img, imgIdx) => (
+                images?.map((image, imgIdx) => (
                     <div className='w-11/12 h-[180px] sm:h-auto flex-shrink-0'>
-                        <img src={Product1} className="object-cover w-[98%] h-full rounded"/>
+                        <img src={image} className="object-cover w-[98%] h-full rounded"/>
                     </div>
                 ))
             }
@@ -175,12 +178,12 @@ export function ProductsSlide({products, loading}: {products: IProduct[] | undef
                     }
                 </div>:
                 <div className="bg-white py-2 sm:p-4">
-                    <div className="relative rounded-md overflow-x-hidden">
+                    <div className="relative rounded-md overflow-x-hidden hidden sm:block">
                         <Slider ref={slide} {...settings}>
                             {
-                                products?.map(product => (
+                                products?.map((product, idx) => (
                                     <div className="w-64 h-fit px-1">
-                                        <ProductCard product={product}/>
+                                        <ProductCard product={product} key={idx}/>
                                     </div>
                                 ))
                             }
@@ -195,6 +198,15 @@ export function ProductsSlide({products, loading}: {products: IProduct[] | undef
                         onClick={() => slide.current.slickNext()}>
                             <i className="text-white font-bold text-sm fa-solid fa-chevron-right"></i>
                         </div>
+                    </div>
+                    <div className='flex sm:hidden whitespace-nowrap overflow-x-auto'>
+                        {
+                            products?.map((product, idx) => (
+                                <div className="w-[180px] h-fit pr-3">
+                                    <ProductCard product={product} key={idx}/>
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
             }

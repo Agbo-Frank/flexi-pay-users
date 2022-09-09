@@ -9,6 +9,7 @@ import { Button, Skeleton } from '@mui/material'
 import { formatNumber } from '../utils'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CartIcon } from './icons'
+import { WrapperHeader } from './StyledComponent'
 
 
 function CheckoutCard({cart}: {cart: ICart}){
@@ -22,6 +23,22 @@ function CheckoutCard({cart}: {cart: ICart}){
             <div className='flex flex-col'>
                 <p className="font-medium text-primary-dark-blue ml-auto">₦ {formatNumber(cart.price)}</p>
                 <small className="text-[14px] block ml-auto text-grey-700">x{cart.quantity}</small>
+            </div>
+        </div>
+    )
+}
+
+function CheckoutCardDummy(){
+    return(
+        <div className="w-full flex justify-between space-x-2 mb-2 sm:mb-4 p-2 border rounded">
+            <img src={TV} className="w-[75px] h-[75px] sm:w-[80px] sm:h-[80px] object-cover rounded-lg" />
+            <div className='flex flex-col'>
+                <p className="text-sm text-grey-200">Anti Blue Computer & Phone Glasses....</p>
+
+                <div className='flex flex-col'>
+                    <p className="font-medium text-primary-dark-blue ml-auto">₦ 4,600000</p>
+                    <small className="text-[14px] block ml-auto text-grey-700">x1</small>
+                </div>
             </div>
         </div>
     )
@@ -64,14 +81,15 @@ export function CheckoutSummary (){
     }, 0) || 0
 
     return(
-        <div className="bg-white h-fit rounded-xl py-6 px-6 border w-full self-start">
-            <h2 className="text-lg text-primary-dark-blue font-semibold">Order Summary</h2>
+        <div className="bg-white h-fit rounded-xl p-3 sm:p-4 w-full self-start shadow">
+            <WrapperHeader>Order Summary</WrapperHeader>
 
-            <div className="my-4 border-b border-solid border-grey-100">
+            <div className="my-2">
                 {
                     loadingCart?
                     [1, 2].map((cart, idx) => <CheckoutCardSkeleton /> ):
-                    carts?.map((cart, idx) => <CheckoutCard cart={cart}/> )
+                    carts?.map((cart, idx) => <CheckoutCard cart={cart} key={idx}/> )
+                    // [1, 2, 3, 4].map((cart, idx) => <CheckoutCardDummy  /> )
                 }
             </div>
 

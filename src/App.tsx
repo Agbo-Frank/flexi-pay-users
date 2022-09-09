@@ -17,7 +17,7 @@ function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/" element={<Landing />}/>
+        <Route path="/"  element={<Landing  />}/>
         <Route path="auth/*" element={<Auth />}/>
         <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>}/>
         <Route path='/cart' element={<Carts />} />

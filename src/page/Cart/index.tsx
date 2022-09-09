@@ -11,10 +11,13 @@ import { Button, Skeleton, useMediaQuery } from "@mui/material"
 import { useCookies } from "react-cookie"
 import { FLEXIPAY_COOKIE } from "../../utils/constants"
 import { useNavigate } from "react-router-dom"
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 
 export function Carts (){
     const matches = useMediaQuery('(min-width:600px)');
+    let [showOrderSummary, setShowOrderSummary] = useState(false)
     const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
 
     let {carts, loadingCart} = useGetUserCartQuery({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""}, {
@@ -53,10 +56,9 @@ export function Carts (){
                     </div>
                 </div> :
 
-                // carts && carts?.length > 0 
-                true?
+                carts && carts?.length > 0 ?
                 <div className="sm:flex sm:justify-between sm:items-stretch sm:space-x-5 w-full h-full sm:h-fit">
-                    <Wrapper styles="border">
+                    <Wrapper styles={` shadow sm:w-7/12`}>
 
                         <WrapperHeader styles="flex justify-between items-center">
 
@@ -73,26 +75,30 @@ export function Carts (){
                                 <Button
                                     color="primary"
                                     size={matches ? "medium" : "small"}
-                                    startIcon={<TrashIcon color="#FF5000" size="16" />}>
-                                        Empty Cart
+                                    startIcon={showOrderSummary && <ChevronLeftIcon />}
+                                    endIcon={!showOrderSummary && <ChevronRightIcon />}
+                                    onClick={() => setShowOrderSummary(state => !state)}>
+                                        Order Summary
                                 </Button>
                             }
                         </WrapperHeader>
 
-                        <div className="flex flex-col space-y-3 sm:space-y-5 w-full mt-2 sm:mb-2 overflow-y-auto scrollbar h-full">
+                        <div className={`${showOrderSummary && 'hidden'} flex flex-col space-y-3 sm:space-y-5 w-full mt-2 sm:mb-2 overflow-y-auto scrollbar h-full`}>
                             {
-                                // carts?
-                                [1, 2, 3].map((cart, idx) => <Cart 
-                                // cart={cart} 
-                                key={idx}/>)
+                                carts?.map((cart, idx) => <Cart cart={cart}/>)
                             }
+                        </div>
+
+                        <div className={`${!showOrderSummary && 'hidden'} w-full sm:w-5/12 relative`}>
+                            <CheckoutSummary />
                         </div>
                     </Wrapper>
 
 
-                    <div className="hidden sm:block w-5/12 relative">
+                    <div className={`hidden sm:block w-full sm:w-5/12 relative`}>
                         <CheckoutSummary />
                     </div> 
+                    
                 </div> :
                 <Wrapper>
                     <WrapperHeader>Cart(0)</WrapperHeader>

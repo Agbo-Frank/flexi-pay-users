@@ -4,6 +4,7 @@ import { FormikConfig, FormikHelpers, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { toggleEditProfile, toggleSnackBar } from "../redux/slice/modal";
 import { useGetUserQuery } from "../redux/api/User";
+import { IAddAddress } from "../components/interface";
 
 
 export function FPFormikEditUser(edit: ITrigger<Partial<IUser>, IResponse<null | any>>, done: () => void | any){
@@ -19,7 +20,10 @@ export function FPFormikEditUser(edit: ITrigger<Partial<IUser>, IResponse<null |
         city: '',
         gender: '',
         address: '',
-        dob: ''
+        dob: '',
+        nearest_bus_stop: "",
+        house_address: "",
+        postal_code: "",
     }
 
     async function onSubmit (value: Partial<IUser>, formikHelpers: FormikHelpers<IUser| any>){
@@ -105,21 +109,16 @@ export function FPFormikChangePassword(changePassword: ITrigger<IChangePassword,
         try{
             let data = await changePassword(value).unwrap()
             
-            if(data.status === 'success'){
+            if(data){
                 dispatch(toggleSnackBar({
                     message: data.message,
                     open: true,
-                    severity: 'success'
+                    severity: data.status === 'success' ? 'success' : 'error'
                 }))
 
-                dispatch(toggleEditProfile())
-            }
-            else{
-                dispatch(toggleSnackBar({
-                    message: data.message,
-                    open: true,
-                    severity: 'error'
-                }))
+                if(data.status === 'success'){
+                    dispatch(toggleEditProfile())
+                }
             }
         }
         catch(err){
@@ -127,6 +126,14 @@ export function FPFormikChangePassword(changePassword: ITrigger<IChangePassword,
             if(err){
                 let error: any = err
                 formikHelpers.setErrors(error.data.errors)
+
+                if(error?.data){
+                    dispatch(toggleSnackBar({
+                        message: error?.data.message,
+                        open: true,
+                        severity: 'error'
+                    }))
+                }
             }
         }
     }
@@ -145,4 +152,68 @@ export function FPFormikChangePassword(changePassword: ITrigger<IChangePassword,
     })
 
     return formik
+}
+
+export function FPFormikAddDeliveryAddress(createAddress: ITrigger<Omit<IAddAddress, 'id'>, IResponse<{data: null}>>){
+    const dispatch = useDispatch()
+
+    let initialValues = {
+        name: '',
+        phone_number: "",
+        state: "",
+        city: "",
+        nearest_bus_stop: "",
+        house_address: "",
+        postal_code: "",
+    }
+
+    async function onSubmit(value: Omit<IAddAddress, 'id'> | any, formikHelpers: FormikHelpers<Omit<IAddAddress, 'id'> | any>){
+        console.log(value)
+        try{
+            let data = await createAddress(value).unwrap()
+            
+            if(data){
+                dispatch(toggleSnackBar({
+                    message: data.message,
+                    open: true,
+                    severity: data.status === 'success' ? 'success' : 'error'
+                }))
+
+                if(data.status === 'success'){
+                    dispatch(toggleEditProfile())
+                }
+            }
+        }
+        catch(err){
+            console.log(err)
+            if(err){
+                let error: any = err
+                formikHelpers.setErrors(error.data.errors)
+
+                if(error?.data){
+                    dispatch(toggleSnackBar({
+                        message: error?.data.message,
+                        open: true,
+                        severity: 'error'
+                    }))
+                }
+            }
+        }
+    }
+    let validationSchema = () => {
+        return Yup.object({
+            name: Yup.string().required("name field is required"),
+            phone_number: Yup.string().required("The phone number field is required").min(8),
+            state: Yup.string().required("the state field is required").min(8),
+            city: Yup.string().required("the city field is required").min(8),
+            nearest_bus_stop: Yup.string().required("the nearest bus stop field is required").min(8),
+            house_address: Yup.string().required("the house address field is required").min(8),
+            postal_code: Yup.string().required("the postal code field is required").min(8),
+        })
+    }
+    return useFormik({
+        onSubmit,
+        validationSchema,
+        initialValues
+    })
 }

@@ -2,18 +2,25 @@ import { MutationTrigger } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { MutationDefinition, BaseQueryFn, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from "@reduxjs/toolkit/dist/query";
 import { AlertColor } from "@mui/material";
 
-export interface IUser {
+export interface AddressDetails {
+    id: string;
+    name?: string;
+    phone_number: string;
+    state: string;
+    city: string;
+    nearest_bus_stop: string;
+    house_address: string;
+    postal_code: string;
+    created_at?: string | Date;
+    updated_at?: string | Date;
+}
+
+export interface IUser extends Omit<AddressDetails, 'id'> {
     first_name?: string;
     last_name?: string;
     email: string;
-    phone_number: string;
-    state?: string;
     gender?: string;
-    city?: string;
     address?: string;
-    house_address?: string;
-    postal_code?: string;
-    nearest_bus_stop?: string;
     dob?: string;
     referral_link?: string;
     bank_account?: {
@@ -286,4 +293,22 @@ export interface IRate {
     created_at: string | Date;
     updated_at: string | Date;
     user: IUser
+}
+
+export type TCheckoutMethod = "directly_via_wallet" | ""
+
+export interface ICheckoutDetails {
+    details: {
+        delivery_period: string;
+        delivery_fee: string;
+        quantity: number;
+        unit_price: number;
+        total_price: number;
+        vendor_id: number;
+        created_at: string | Date;
+        updated_at: string | Date;
+        product: IProduct
+    }[],
+    total_delivery_fee: number;
+    address_details: AddressDetails
 }

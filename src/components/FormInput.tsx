@@ -4,19 +4,21 @@ import{ IAutoComplete, IDateInput, IInputProps, ISelectInput } from './interface
 import { Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { Link, useLocation } from "react-router-dom";
 
 export function FormInput({ Icon, type, name, label, formik }: IInputProps): JSX.Element {
   let [focus, setFocus] = useState<boolean>(false)
   let [error, setError] = useState<boolean>(false)
+  let location = useLocation()
 
   let [password, setPassword] = useState('password')
   let [seePassword, setSeePassword] = useState<boolean>(false)
   return (
-    <div className="relative w-full">
+    <div className="relative w-full mb-2 sm:mb-4">
         <div 
-        onFocus={() => setFocus(true)}
-        onBlur={() => setFocus(false)}
-        className={`flex justify-between bg-white items-center rounded-xl border border-solid ${focus ? 'border-primary-blue' : formik.touched[name] && formik.errors[name] ? 'border-crimson' : 'border-grey-1000'} py-3 px-5 mb-2 sm:mb-4`}>
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
+          className={`flex justify-between bg-white items-center rounded-xl border border-solid ${focus ? 'border-primary-blue' : formik.touched[name] && formik.errors[name] ? 'border-crimson' : 'border-grey-1000'} py-3 px-5`}>
             <input 
             type={type === 'password' ? password : type} 
             name={name} 
@@ -51,14 +53,21 @@ export function FormInput({ Icon, type, name, label, formik }: IInputProps): JSX
               </>
             }
         </div>
+        <>
         {
           formik.touched[name] && formik.errors[name] ?
-          <div className={`absolute flex space-x-1 items-center text-crimson text-sm px-2 py-0 bg-white -translate-y-7 translate-x-4`}>
+          <div className={`absolute flex space-x-1 items-center text-crimson text-sm px-2 py-0 bg-white -translate-y-3 translate-x-4`}>
             <ExclamationIcon size="10" color="#FF5000" />
             <small className="block w-full whitespace-nowrap">{formik.errors[name]}</small>
           </div>:
           null
         }
+        <>
+          {
+            location.pathname === "/auth/login" && type === 'password' && <Link to="/auth/forget-password" className='text-primary-orange-200 text-xs m-0 p-0 float-right'>Forgetten password?</Link>
+          }
+        </>
+        </>
     </div>
   );
 }
@@ -103,11 +112,12 @@ export function DateInput({label, name, formik}: IDateInput){
           onChange={(newValue) => {
             setValue(newValue);
           }}
+          className="mb-4 w-full"
           disableFuture
           inputFormat="yyyy-MM-dd"
           renderInput={(params) => <TextField 
             {...params} 
-            sx={{borderRadius: 3}}
+            sx={{borderRadius: 3, width: '100%'}}
             name={name}
             {...formik.getFieldProps(name)}/>}
         />

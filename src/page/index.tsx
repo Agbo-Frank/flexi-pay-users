@@ -1,5 +1,5 @@
 export * from './Cart/index'
-export * from './CheckOut'
+export * from './Checkout'
 export * from './Contact'
 export * from './Dashboard/index'
 export * from './Landing/index'

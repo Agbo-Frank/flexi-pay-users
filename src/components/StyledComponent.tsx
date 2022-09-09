@@ -48,9 +48,9 @@ export function CardImg({ src }: {src: string}){
     )
 }
 
-export function CardText({children}: React.PropsWithChildren){
+export function CardText({children, styles}: IWrapperProps){
     return(
-        <span className="sm:w-9/12 text-black sm:text-grey-200 font-semibold sm:font-normal text-sm sm:text-base sm:mb-5">
+        <span className={`sm:w-9/12 text-black sm:text-grey-200 font-semibold sm:font-normal text-sm sm:text-base sm:mb-5 ${styles}`}>
             {children}
         </span>
     )

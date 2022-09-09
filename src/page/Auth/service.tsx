@@ -16,9 +16,10 @@ export function FPFormikLogin(login: ITrigger<ILogin, IAuthResponse>){
     }
 
     async function onSubmit (value: ILogin, formikHelpers: FormikHelpers<ILogin| any>){
+        console.log(value)
         try{
             let data = await login(value).unwrap()
-            console.log(data)
+            
             if(data.status === 'success'){
                 if(!data.is_verified){
                     navigate('/auth/verify/email?email=' + value.email, { replace: true })

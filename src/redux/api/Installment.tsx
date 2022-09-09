@@ -20,7 +20,7 @@ export const InstallmentApi = createApi({
     reducerPath: 'Insatallment',
     tagTypes: ['Insatallment'],
     endpoints: (build) => ({
-        createInstallment: build.mutation<IResponse<{data: null}>, Omit<IInstallment, 'installment_uuid'>>({
+        createInstallment: build.mutation<IResponse<{data: null}>, Omit<IInstallment, 'installment_uuid' | 'uuid'>>({
             query: (body) => ({
                 url: "/vendor/create/instalment",
                 method: 'POST',
