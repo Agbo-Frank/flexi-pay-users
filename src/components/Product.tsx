@@ -49,7 +49,7 @@ export function ProductCardDummy(){
 
 export function ProductCardSkeleton(){
     return(
-        <div className="w-[220px] rounded-lg h-fit p-2 space-y-4 my-2">
+        <div className="w-[150px] sm:w-[220px] rounded-lg h-fit p-2 space-y-4 my-2">
             <div className='relative'>
                 <Skeleton variant='rounded' width={'100%'} height={150} />
                 <div className='absolute top-0 right-1/2 translate-x-1/2 translate-y-1/2'>

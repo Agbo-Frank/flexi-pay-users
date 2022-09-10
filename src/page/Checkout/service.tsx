@@ -1,9 +1,12 @@
+import { AnyAction } from '@reduxjs/toolkit';
 import { FormikHelpers, useFormik } from 'formik';
+import { Dispatch } from 'react';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { IInstallment, IResponse, ITrigger } from '../../interface';
 import { toggleSnackBar } from '../../redux/slice/modal';
-
+import { TCheckoutMethod  } from '../../interface';
+import { validURL } from '../../utils';
 
 export function FPFormikCreateInstallment(createInstallment: ITrigger<Omit<IInstallment, 'installment_uuid' | 'uuid'>, IResponse<{data: null}>>){
     let dispatch = useDispatch()
@@ -64,4 +67,58 @@ export function FPFormikCreateInstallment(createInstallment: ITrigger<Omit<IInst
     })
 
     return formik
+}
+
+export async function confirmOrder(checkout_method: TCheckoutMethod | "", dispatch: Dispatch<AnyAction>, checkout: ITrigger<{checkout_method: TCheckoutMethod}, IResponse<{data: {link: string}}>>){
+    let methods = ["directly_via_wallet", "install_mental_via_card", "install_mental_via_wallet", "directly_via_card"]
+    if(checkout_method == ""){
+        dispatch(toggleSnackBar({
+            open: true,
+            message: "Please select a checkout method",
+            severity: 'error'
+        }))
+    }
+    else if(!methods.includes(checkout_method)){
+        dispatch(toggleSnackBar({
+            open: true,
+            message: "Please select a valid checkout method",
+            severity: 'error'
+        }))
+    }
+    else {
+        try{
+            let data = await checkout({ checkout_method }).unwrap()
+
+            if(data.status === "success"){
+                if(validURL(data.result.data.link)){
+                    window.location.replace(data.result.data.link)
+                }
+                else{
+                    dispatch(toggleSnackBar({
+                        message: "Invalid URL, Try again",
+                        open: true,
+                        severity: 'error'
+                    }))
+                }
+            }
+            else{
+                dispatch(toggleSnackBar({
+                    message: data.message,
+                    open: true,
+                    severity: 'error'
+                }))
+            }
+        }
+        catch(err){
+            if(err){
+                let error: any = err
+
+                dispatch(toggleSnackBar({
+                    open: true,
+                    severity: 'error',
+                    message: error.data.message
+                }))
+            }
+        }
+    }
 }

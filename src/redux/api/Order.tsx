@@ -1,4 +1,4 @@
-import {  ICheckoutDetails, IPagination, IRate, IResponse } from '../../interface'
+import {  ICheckoutDetails, IOrder, IPagination, IRate, IResponse, TCheckoutMethod } from '../../interface'
 import { RootState } from '../store'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { FLEXIPAY_URL } from '../../utils/constants'
@@ -20,7 +20,7 @@ export const OrderApi = createApi({
     reducerPath: 'Order',
     tagTypes: ['Product', 'Order'],
     endpoints: (build) => ({
-        checkout: build.mutation<IResponse<{data: {link: string}}>, {checkout_method: string}>({
+        checkout: build.mutation<IResponse<{data: {link: string}}>, {checkout_method: TCheckoutMethod}>({
             query: (body) => ({
                 url: "/checkout",
                 method: "POST",
@@ -34,16 +34,18 @@ export const OrderApi = createApi({
                 method: "POST",
             })
         }),
-        getUserOrders: build.query<any, any>({
+        getUserOrders: build.query<IResponse<IPagination<IOrder>>, void>({
             query: () => ({
-                url: "",
+                url: "user/orders",
                 method: "GET"
-            })
+            }),
+            providesTags: ["Order"]
         })
     })
 })
 
 export const { 
     useProcessCheckoutMutation,
-    useCheckoutMutation
+    useCheckoutMutation,
+    useGetUserOrdersQuery
 } = OrderApi

@@ -1,5 +1,5 @@
 import TV from '../asset/monitor.png'
-import { ICart } from '../interface'
+import { ICart, IDetails } from '../interface'
 import BagIcon from './icons/Bag'
 
 import { useCookies } from "react-cookie"
@@ -10,35 +10,21 @@ import { formatNumber } from '../utils'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CartIcon } from './icons'
 import { WrapperHeader } from './StyledComponent'
+import { ICheckoutSummaryProps } from './interface'
 
 
-function CheckoutCard({cart}: {cart: ICart}){
+function CheckoutCard({checkoutdetail}: {checkoutdetail: Partial<IDetails>}){
+    
     return(
-        <div className="w-full flex justify-between mb-5">
+        <div className="w-full flex justify-between mb-5 p-1 shadow-sm hover:shadow rounded-lg">
             <div className="flex w-9/12 gap-3">
-                <img src={cart.product.product_images[0].image_link} className="w-[80px] h-[80px] object-cover rounded-lg" />
-                <p className="text-sm text-grey-200">{cart.product.name}</p>
+                <img src={checkoutdetail?.product?.product_images[0].image_link} className="w-[80px] h-[80px] object-cover rounded-lg" />
+                <p className="text-sm text-grey-200">{checkoutdetail?.product?.name}</p>
             </div>
 
             <div className='flex flex-col'>
-                <p className="font-medium text-primary-dark-blue ml-auto">₦ {formatNumber(cart.price)}</p>
-                <small className="text-[14px] block ml-auto text-grey-700">x{cart.quantity}</small>
-            </div>
-        </div>
-    )
-}
-
-function CheckoutCardDummy(){
-    return(
-        <div className="w-full flex justify-between space-x-2 mb-2 sm:mb-4 p-2 border rounded">
-            <img src={TV} className="w-[75px] h-[75px] sm:w-[80px] sm:h-[80px] object-cover rounded-lg" />
-            <div className='flex flex-col'>
-                <p className="text-sm text-grey-200">Anti Blue Computer & Phone Glasses....</p>
-
-                <div className='flex flex-col'>
-                    <p className="font-medium text-primary-dark-blue ml-auto">₦ 4,600000</p>
-                    <small className="text-[14px] block ml-auto text-grey-700">x1</small>
-                </div>
+                <p className="font-medium text-primary-dark-blue ml-auto">₦ {formatNumber(`${checkoutdetail?.price || checkoutdetail.unit_price}`)}</p>
+                <small className="text-[14px] block ml-auto text-grey-700">x{checkoutdetail.quantity}</small>
             </div>
         </div>
     )
@@ -61,7 +47,7 @@ function CheckoutCardSkeleton(){
 }
 
 
-export function CheckoutSummary (){
+export function CheckoutSummary ({checkoutdetails, price}: ICheckoutSummaryProps){
     const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
 
     let {carts, loadingCart} = useGetUserCartQuery({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""}, {
@@ -76,9 +62,7 @@ export function CheckoutSummary (){
     let navigate = useNavigate()
     let location = useLocation()
 
-    let subTotal = carts?.reduce((total, cart) => {
-        return total + (parseFloat(cart?.quantity) * parseFloat(cart?.price))
-    }, 0) || 0
+    
 
     return(
         <div className="bg-white h-fit rounded-xl p-3 sm:p-4 w-full self-start shadow">
@@ -88,8 +72,7 @@ export function CheckoutSummary (){
                 {
                     loadingCart?
                     [1, 2].map((cart, idx) => <CheckoutCardSkeleton /> ):
-                    carts?.map((cart, idx) => <CheckoutCard cart={cart} key={idx}/> )
-                    // [1, 2, 3, 4].map((cart, idx) => <CheckoutCardDummy  /> )
+                    checkoutdetails?.map((checkoutdetail, idx) => <CheckoutCard checkoutdetail={checkoutdetail} key={idx}/> )
                 }
             </div>
 
@@ -97,12 +80,33 @@ export function CheckoutSummary (){
                 {
                     loadingCart ?
                     <Skeleton sx={{fontSize: 14}} width={100}/>:
-                    <p className="flex justify-between">
-                        <p className="text-grey-200">Sub Total:</p>
-                        <p className="text-primary-dark-blue text-xl font-semibold">₦ {formatNumber(subTotal)}</p>
-                    </p>
+                    <ul>
+                        <li className="flex justify-between">
+                            <span className="text-grey-200 text-sm">Subtotal</span>
+                            <span className="text-primary-dark-blue font-medium">₦ {formatNumber(`${price?.sub_total}`)}</span>
+                        </li>
+                        {
+                            price?.total_delivery_fee &&
+                            <li className="flex justify-between">
+                                <span className="text-grey-200 text-sm">Delivery Fee</span>
+                                <span className="text-primary-dark-blue font-medium">₦ {formatNumber(`${price?.total_delivery_fee}`)}</span>
+                            </li>
+                        }
+                        {
+                            price?.vat &&
+                            <li className="flex justify-between">
+                                <span className="text-grey-200 text-sm">Vat</span>
+                                <span className="text-primary-dark-blue font-medium">₦ {formatNumber(`${price?.vat}`)}</span>
+                            </li>
+                        }
+                        
+                        <li className="flex justify-between border-t mt-4 pt-2">
+                            <span>Total</span>
+                            <span className={`text-lg font-semibold text-primary-orange-200`}>₦ {formatNumber(`${price?.total}`)}</span>
+                        </li>
+                    </ul>
                 }
-                <div className="flex justify-center my-5 w-full mx-auto">
+                <div className="flex justify-center mt-3 w-full mx-auto">
 
                     <Button 
                         color="secondary"
@@ -127,3 +131,25 @@ export function CheckoutSummary (){
 }
 
 export default CheckoutSummary
+
+
+
+
+
+
+
+// function CheckoutCardDummy(){
+//     return(
+//         <div className="w-full flex justify-between space-x-2 mb-2 sm:mb-4 p-2 border rounded">
+//             <img src={TV} className="w-[75px] h-[75px] sm:w-[80px] sm:h-[80px] object-cover rounded-lg" />
+//             <div className='flex flex-col'>
+//                 <p className="text-sm text-grey-200">Anti Blue Computer & Phone Glasses....</p>
+
+//                 <div className='flex flex-col'>
+//                     <p className="font-medium text-primary-dark-blue ml-auto">₦ 4,600000</p>
+//                     <small className="text-[14px] block ml-auto text-grey-700">x1</small>
+//                 </div>
+//             </div>
+//         </div>
+//     )
+// }

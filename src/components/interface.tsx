@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
+import { ICart, IDetails, IProduct } from "../interface";
 
 export default interface Iicon {
     size: string;
@@ -60,7 +60,7 @@ export interface IAutoComplete {
 }
 
 export interface IDateInput {
-    label: string,
+    label: string;
     name: string;
     formik?: any
 }
@@ -79,5 +79,15 @@ export interface ICreditCardComponent {
 
 export interface IWrapperProps extends  React.PropsWithChildren{
     styles?: string
+}
+
+export interface ICheckoutSummaryProps {
+    checkoutdetails?: Partial<IDetails>[] | Partial<ICart>[] ,
+    price: {
+        total: number;
+        sub_total: number;
+        total_delivery_fee: number | null;
+        vat: number | null
+    }
 }
   

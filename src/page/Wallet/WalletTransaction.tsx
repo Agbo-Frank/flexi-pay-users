@@ -23,8 +23,13 @@ function Row({txn}: {txn: ITransacation}){
                 <span>{txn.type === "CREDIT" ? "Credit" : "Debit"}</span>
             </TableCell>
             <TableCell>₦ {txn.amount}</TableCell>
+            <TableCell className="" sx={{maxWidth: 300}}><span className="capitalize truncate w-full block text-sm">{txn.info}</span></TableCell>
+            <TableCell>
+                <span className={txn.status === "SUCCESSFUL" ? "text-[#8EC162] bg-[#8EC162]/20 p-1" : "text-[#FF5000] bg-[#FF5000]/20 p-1 text-xs" }>
+                    { txn?.status }
+                </span>
+            </TableCell>
             <TableCell>{ formateDate(txn.created_at)}</TableCell>
-            <TableCell className="" sx={{maxWidth: 300}}><span className="capitalize truncate w-full block">{txn.info}</span></TableCell>
             <TableCell>Debit Card</TableCell>
         </TableRow>
     )
@@ -48,15 +53,16 @@ export function WalletTransaction(){
         getTransaction(page.toString())
     }
     return(
-        <div>
+        <div className="w-full">
             <TableContainer className="bg-white rounded-lg" sx={{ maxHeight: 340 }}>
                 <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">
                     <TableHead sx={{bgcolor: '#F9F8FF'}}>
                         <TableRow className="text-[#545362]" sx={{bgcolor: '#F9F8FF'}}>
                             <TableCell sx={{color: '#545362', fontSize: 15.5}}>Type</TableCell>
                             <TableCell sx={{color: '#545362', fontSize: 15.5}}>Amount</TableCell>
-                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Date</TableCell>
                             <TableCell sx={{color: '#545362', fontSize: 15.5}}>Description</TableCell>
+                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Status</TableCell>
+                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Date</TableCell>
                             <TableCell sx={{color: '#545362', fontSize: 15.5}}>Actions</TableCell>
                         </TableRow>
                     </TableHead>

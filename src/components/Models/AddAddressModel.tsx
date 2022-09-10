@@ -8,8 +8,8 @@ import NaijaStates from 'naija-state-local-government';
 import ModelWrapper from "./ModelWrapper"
 import { toggleAddAddress } from "../../redux/slice/modal";
 import { RootState } from "../../redux/store";
-import { FPFormikEditUser } from "../../services/user"
-import { useEditUserMutation, useGetUserQuery } from "../../redux/api/User"
+import { FPFormikAddDeliveryAddress, FPFormikEditUser } from "../../services/user"
+import { useCreateDeliveryAddressMutation, useEditUserMutation, useGetUserQuery } from "../../redux/api/User"
 import { LoadingButton } from "@mui/lab"
 import { useEffect, useState } from "react"
 
@@ -41,45 +41,27 @@ function AddAddressModel(){
         setLgas(lgas)
     }
 
-    let [editUser, { isLoading }] = useEditUserMutation()
+    let [createAddress, { isLoading }] = useCreateDeliveryAddressMutation()
 
-    const formik = FPFormikEditUser(editUser, () => dispatch(toggleAddAddress()))
+    const formik = FPFormikAddDeliveryAddress(createAddress, () => dispatch(toggleAddAddress()))
     return(
         <ModelWrapper isOpen={addAddress} size="medium" closeModal={() => dispatch(toggleAddAddress())}>
             <form className="py-5 px-4 h-full overflow-y-auto overflow-x-hidden scrollbar" onSubmit={formik.handleSubmit}>
                 <p className="text-lg text-grey-200 font-medium mb-6 sticky left-0">Add Your Delivery Address</p>
-                <div className="flex flex-col sm:flex-row w-full justify-between items-center sm:gap-4">
-                    <FormInput 
-                        type="text"
-                        name="firstName"
-                        Icon={UserIcon}
-                        label={user?.first_name?.toLocaleUpperCase() || "First Name"}
-                        formik={formik}
-                    />
-                    <FormInput 
-                        type="text"
-                        name="lastName"
-                        Icon={UserIcon}
-                        label={user?.last_name?.toLocaleUpperCase() || "Last Name"}
-                        formik={formik}
-                    />
-                </div>
-
-                <div className="flex flex-col sm:flex-row w-full justify-between items-center gap-4">
-                    <FormInput 
-                        type="text" 
-                        name="phone_number" 
-                        label={user?.phone_number || "Phone Number"} 
-                        Icon={PhoneIcon}
-                        formik={formik}
-                    />
-
-                    <DateInput 
-                        label="Date of Birth" 
-                        name="dob"
-                        formik={formik}
-                    />
-                </div>
+                <FormInput 
+                    type="text"
+                    name="name"
+                    Icon={UserIcon}
+                    label={user?.first_name?.toLocaleUpperCase() + " " + user?.last_name?.toLocaleUpperCase() || "First Name"}
+                    formik={formik}
+                />
+                <FormInput 
+                    type="text" 
+                    name="phone_number" 
+                    label={user?.phone_number || "Phone Number"} 
+                    Icon={PhoneIcon}
+                    formik={formik}
+                />
 
                 <SelectInput 
                     label={ user?.state || "State of residence" }
@@ -106,6 +88,13 @@ function AddAddressModel(){
                     type="text" 
                     name="house_address" 
                     label={ user?.house_address || "House Address"} 
+                    Icon={PhoneIcon}
+                    formik={formik}
+                />
+                <FormInput 
+                    type="text" 
+                    name="postal_code" 
+                    label={ user?.postal_code || "Postal Code"} 
                     Icon={PhoneIcon}
                     formik={formik}
                 />

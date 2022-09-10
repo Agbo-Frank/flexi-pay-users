@@ -32,6 +32,9 @@ export function Carts (){
     let navigate = useNavigate()
 
     console.log(carts)
+    let subTotal = carts?.reduce((total, cart) => {
+        return total + (parseFloat(cart?.quantity) * parseFloat(cart?.price))
+    }, 0) || 0
     return(
         <DashboardWrapper>
             {
@@ -90,13 +93,27 @@ export function Carts (){
                         </div>
 
                         <div className={`${!showOrderSummary && 'hidden'} w-full sm:w-5/12 relative`}>
-                            <CheckoutSummary />
+                            <CheckoutSummary 
+                                checkoutdetails={carts} 
+                                price={{
+                                    sub_total: subTotal,
+                                    total_delivery_fee: null,
+                                    total: subTotal,
+                                    vat: null
+                                }}/>
                         </div>
                     </Wrapper>
 
 
                     <div className={`hidden sm:block w-full sm:w-5/12 relative`}>
-                        <CheckoutSummary />
+                        <CheckoutSummary 
+                            checkoutdetails={carts} 
+                            price={{
+                                sub_total: subTotal,
+                                total_delivery_fee: null,
+                                total: subTotal,
+                                vat: null
+                            }}/>
                     </div> 
                     
                 </div> :

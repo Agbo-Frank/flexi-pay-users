@@ -7,7 +7,7 @@ import { ISavedItems } from "../../interface";
 import { useAddToCartMutation } from "../../redux/api/Cart";
 import { toggleSnackBar } from "../../redux/slice/modal";
 import { useRemoveItemMutation } from "../../redux/api/SavedItems";
-import { handleAddToCartClick } from "../../services";
+import { handleAddToCartClick } from "../Cart/service";
 import { formatNumber } from "../../utils";
 import TV from '../../asset/Product2.png'
 import useMediaQuery from '@mui/material/useMediaQuery';

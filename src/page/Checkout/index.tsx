@@ -17,62 +17,20 @@ import AddCreditCard from "../../components/Models/AddCreditcard"
 import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Skeleton, useMediaQuery } from "@mui/material"
 import AddAddressModel from "../../components/Models/AddAddressModel"
 import CreateInstallment from "./createInstallment"
-import { useGetUserCartQuery } from "../../redux/api/Cart"
+import { useGetUserCartQuery, useLazyGetUserCartQuery } from "../../redux/api/Cart"
 import { useCookies } from "react-cookie"
 import { FLEXIPAY_COOKIE } from "../../utils/constants"
-import { useProcessCheckoutMutation } from "../../redux/api/Order"
+import { useCheckoutMutation, useProcessCheckoutMutation } from "../../redux/api/Order"
 import AddressBook from "./Addressbook"
+import { formatNumber } from "../../utils"
+import moment from "moment"
+import { ICart, IDetails, TCheckoutMethod } from "../../interface"
+import PaymentMethod from "./paymentMethod"
+import { confirmOrder } from "./service"
+import { LoadingButton } from "@mui/lab"
 
 
 
-function EmptyWallet({type}: {type: 'wallet' | 'card'}){
-    return(
-        <div className="mx-auto flex flex-col justify-center text-center w-full gap-3">
-            <div className="mx-auto">
-                {
-                    type === 'wallet' ?
-                    <CreditCardIcon size="50" color="#E8E5FF" line/> :
-                    <CreditCardIcon size="50" color="#E8E5FF" line/>
-                }
-            </div>
-            <p className="text-md font-medium">{type === 'card' && 'Insufficient Fund'}</p>
-            <p className="text-center font-light text-grey-700">
-                {
-                    type === 'wallet' ?
-                    'Your balance is Low':
-                    "You dont have any saved card yet, kindly add and save new card"
-                }
-            </p>
-            
-            {
-                type === 'wallet' ?
-                <span className="text-primary-orange-200 text-center text-sm mt-5 cursor-pointer">
-                    View Balance
-                </span> :
-                <p className="text-primary-orange-200 flex items-center gap-3 text-sm mt-5 mx-auto cursor-pointer">
-                    <WalletIcon color="#FF5000" size="17"/>
-                    <span>Add New Card</span>
-                </p>
-            }
-            
-        </div>
-    )
-}
-
-function Wallet() {
-    return(
-        <>
-            {/* <EmptyWallet type="wallet" /> */}
-            <div className="flex items-center gap-4 flex-col w-full">
-                <p className="font-semibold text-700 text-center text-lg text-grey-700">Balance</p>
-                <p className="text-xl font-medium text-primary-dark-blue text-center">₦ 20, 000 - ₦ 10,000</p>
-                <p className="text-center font-light text-sm text-grey-700 w-7/12">
-                    You will be deducted ₦ 10,900 from your wallet balance 
-                </p>
-            </div>
-        </>
-    )
-}
 
 // function SavedCard(){
 //     return(
@@ -82,14 +40,12 @@ function Wallet() {
 
 export function CheckOut(){
     const matches = useMediaQuery('(min-width:600px)');
+    let [checkoutMethod, setCheckoutMethod] = useState<TCheckoutMethod>("")
+    const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
     const [open, setOpen] = useState({
         addressBook: false,
         createInstallment: false,
     })
-
-    let [deliveryMethod, setDeliveryMethod] = useState()
-
-    let dispatch = useDispatch()
 
     let [processCheckout, { isLoading, data, error, response }] = useProcessCheckoutMutation({
         selectFromResult: ({ data, error, isLoading }) => ({
@@ -100,8 +56,61 @@ export function CheckOut(){
         })
     })
 
+    let [getUserCart, {carts, loadingCart}] = useLazyGetUserCartQuery({
+        selectFromResult: ({data, isLoading}) => ({
+            carts: data?.result.data,
+            loadingCart: isLoading
+        }),
+        refetchOnFocus: true,
+        refetchOnReconnect: true
+    })
+
+    let [checkout, { isLoading: checkingout }] = useCheckoutMutation()
+
+    let [price, setPrice] = useState<{sub_total: number, total_delivery_fee: number | null, total: number, vat: number | null}>({
+        sub_total: 0,
+        total_delivery_fee: 0,
+        vat: 0,
+        total: 0
+    })
+    let [checkoutdetails, setCheckoutdetails] = useState<Partial<IDetails>[]>()
+
+    let dispatch = useDispatch()
+    
+
     useEffect(() => {
         processCheckout()
+            .unwrap()
+            .then(res => {
+                let data = res.result.data
+                if(!data?.address_details){
+                    getUserCart({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""})
+                        .unwrap()
+                        .then(data => {
+                            // data.result.data.
+                            let sub_total = data.result.data?.reduce((total, cart) => {
+                                return total + (parseFloat(cart?.quantity) * parseFloat(cart?.price))
+                            }, 0) || 0
+                            setPrice({
+                                sub_total, 
+                                total_delivery_fee: null,
+                                total: sub_total,
+                                vat: null
+                            })
+                            setCheckoutdetails({...data.result.data})
+                        })
+                }
+                else{
+                    setPrice({
+                        sub_total: data.sub_total, 
+                        total_delivery_fee: data.total_delivery_fee,
+                        total: data.total,
+                        vat: data.vat
+                    })
+                    // let products = data.details.map(detail => detail.product)
+                    setCheckoutdetails(data.details)
+                }
+            })
         if(response?.status === "failed"){
             dispatch(toggleSnackBar({
                 open: true,
@@ -110,8 +119,6 @@ export function CheckOut(){
             }))
         }
     }, [])
-    console.log(data)
-    console.log('error', error)
 
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
@@ -120,7 +127,10 @@ export function CheckOut(){
             <Breadcrumb />
             <AddCreditCard />
             <AddAddressModel />
-            <AddressBook open={open.addressBook} close={() => setOpen(state => ({...state, addressBook: false}))}/>
+            {/* <AddressBook 
+                open={open.addressBook} 
+                close={() => setOpen(state => ({...state, addressBook: false}))}
+                addresses={data?.address_details}/> */}
             <CreateInstallment open={open.createInstallment} close={() => setOpen(state => ({...state, createInstallment: false}))}/>
 
             <div className="flex flex-col sm:flex-row sm:px-6 gap-5 justify-between xl:px-fp-5 2xl:px-fp-10">
@@ -131,7 +141,7 @@ export function CheckOut(){
                         <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
                             <div className="flex  justify-between items-start">
                                 <div className="space-x-2 flex items-center">
-                                    <i className={`fa-solid fa-circle-check ${data?.address_details ? "text-[#6DBD28]" : "text-black/30"}`}></i>
+                                    {/* <i className={`fa-solid fa-circle-check ${data?.address_details ? "text-[#6DBD28]" : "text-black/30"}`}></i> */}
                                     <h3 className="text-primary-dark-blue text-sm sm:text-base font-medium">Delivery Address:</h3>
                                 </div>
                                 
@@ -140,7 +150,10 @@ export function CheckOut(){
                                         variant="outlined" 
                                         color="secondary"
                                         size={matches ? "medium" : "small"}
-                                        onClick={() => dispatch(toggleAddAddress())}>
+                                        onClick={() => {
+                                            // setOpen(state => ({...state, addressBook: true}))
+                                            dispatch(toggleAddAddress())
+                                        }}>
                                             {data?.address_details ? "Change Address" :  "Add Address"}
                                     </Button>
                                 </div>
@@ -174,49 +187,18 @@ export function CheckOut(){
                             }
                         </div>
 
-
-                        {/* <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
-                            <h3 className="text-primary-dark-blue text-sm sm:text-base font-medium mb-3">Delivery Method</h3>
-
-                            <div>
-                            <FormControl>
-                                <RadioGroup
-                                    name="delivery-method"
-                                    // value={value}
-                                    // onChange={handleChange}
-                                >
-                                    <FormControl>
-                                        <FormControlLabel value="door_delivery" control={<Radio size="small"/>} label="Door Delivery"  />
-                                        <div className="ml-5">
-                                            <p className="text-sm text-grey-200 font-light mb-3 mt-1">Your item(s) will be delivered between  to your delivery address, it might take about 48Hours to get to you</p>
-                                            <p className="font-medium mb-3 text-[15px]">Delivery Cost:  <span>₦ 1,000</span></p>
-                                        </div>
-                                    </FormControl>
-
-                                    <FormControl>
-                                        <FormControlLabel value="pickup" control={<Radio size="small"/>} label="PickUp Station" />
-                                        <div className="ml-5">
-                                            <p className="text-sm mb-3 mt-1">Cheaper Shipping Fees than Door Delivery</p>
-                                            <div className="w-full sm:w-[300px] border rounded-md p-2">
-                                                <select className="w-full">
-                                                    <option>Port Harcout</option>
-                                                    <option>Port Harcout</option>
-                                                    <option>Port Harcout</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </FormControl>
-                                </RadioGroup>
-                            </FormControl>
-                            </div>
-                        </div> */}
-
                         {
                             data?.address_details &&
                             <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
                                 <div className="">
-                                    <p className="text-sm text-grey-200 font-light mb-3 mt-1">Your item(s) will be delivered between  to your delivery address, it might take about 48Hours to get to you</p>
-                                    <p className="font-medium mb-3 text-[15px]">Delivery Cost:  <span>₦ 1,000</span></p>
+                                    <p className="text-sm text-grey-200 font-light mb-3 mt-1">
+                                        Your item(s) will be delivered between 
+                                        { moment(moment.min(data.details.map(detail => detail.delivery_period))).format("LL") }  
+                                        to 
+                                        { moment(moment.max(data.details.map(detail => detail.delivery_period))).format("LL") } 
+                                        your delivery address
+                                    </p>
+                                    <p className="font-medium mb-3 text-[15px]">Delivery Cost:  <span>₦ {formatNumber(data.total_delivery_fee)}</span></p>
                                 </div>
                             </div>
                         }
@@ -225,39 +207,26 @@ export function CheckOut(){
                     <Wrapper>
                         <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
                             <div className="space-x-2 flex items-center">
-                                <i className={`fa-solid fa-circle-check ${data?.address_details ? "text-[#6DBD28]" : "text-black/30"}`}></i>
+                                {/* <i className={`fa-solid fa-circle-check ${data?.address_details ? "text-[#6DBD28]" : "text-black/30"}`}></i> */}
                                 <h3 className="text-primary-dark-blue text-sm sm:text-base font-medium">Shippment Details</h3>
                             </div>
 
-                            {/* <ul>
+                            <ul className="text-grey-200 font-light text-sm my-3 ml-5">
                                 {
-                                    data?.details.map()
+                                    checkoutdetails?.map((detail, idx) => (
+                                        <li key={idx} className="space-x-4">
+                                            <span>{ detail.quantity }x</span>
+                                            <span>{detail.product?.name}</span>
+                                        </li>
+                                    ))
                                 }
-                            </ul> */}
-                            
-                        </div>
-
-                        <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
-                            <p className="text-primary-dark-blue text-sm sm:text-base font-medium mb-3">Confirm Order</p>
-                            
-                            <ul>
-                                <li className="flex justify-between items-center font-medium py-2">
-                                    <span>Subtotal</span>
-                                    <span>₦ 4,600000</span>
-                                </li>
-                                <li className="flex justify-between items-center font-medium py-3 border-t mt-2">
-                                    <span>Total</span>
-                                    <span className={`text-[18px] font-semibold ${data?.address_details ? "text-primary-orange-200" : "text-grey-700"} `}>₦ 4,600000</span>
-                                </li>
                             </ul>
-
-                            <Button
-                                fullWidth
-                                variant="contained"
-                                color="secondary"
-                                disabled={data?.address_details ? false : true}>
-                                    confirm order
-                            </Button>
+                            
+                            {
+                                data?.address_details && 
+                                <p className="text-grey-200 font-light text-sm">To be Delivered on <span className="font-medium">{data?.details[0].delivery_period}</span> </p>
+                            }
+                            
                         </div>
 
                         <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
@@ -266,29 +235,55 @@ export function CheckOut(){
                                 <CreditCardIcon size={matches ? "25" : "18"} color="#555555" />
                             </WrapperHeader>
 
-                            <FormControl>
-                                <RadioGroup
-                                    name="payment method"
-                                    // value={value}
-                                    // onChange={handleChange}
-                                >
-                                    <FormControlLabel value="cash_on_delivery" control={<Radio size="small"/>} label="Cash On Delivery" />
-                                    <FormControlLabel value="wallet" control={<Radio size="small"/>} label="Flexipay Wallet" />
-                                    <FormControlLabel 
-                                        value="installment" 
-                                        control={<Radio 
-                                            size="small"
-                                            onChange={(e) => setOpen(state => ({...state, createInstallment: e.target.checked}))}/>} 
-                                        label="By Installment" />
-                                </RadioGroup>
-                            </FormControl>
-                            
+                            <PaymentMethod setCheckoutMethod={setCheckoutMethod}/>
                         </div>
+
+                        <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
+                            <p className="text-primary-dark-blue text-sm sm:text-base font-medium mb-3">Confirm Order</p>
+                            
+                            <ul>
+                                <li className="flex justify-between items-center font-medium py-2">
+                                    <span>Subtotal</span>
+                                    <span>₦ {formatNumber(`${price?.sub_total}`)}</span>
+                                </li>
+                                {
+                                    price?.total_delivery_fee &&
+                                    <li className="flex justify-between items-center font-medium py-2">
+                                        <span>Delivery Fee</span>
+                                        <span>₦ {formatNumber(`${price?.total_delivery_fee}`)}</span>
+                                    </li>
+                                }
+                                {
+                                    price?.vat &&
+                                    <li className="flex justify-between items-center font-medium py-2">
+                                        <span>Vat</span>
+                                        <span>₦ {formatNumber(`${price?.vat}`)}</span>
+                                    </li>
+                                }
+                                
+                                <li className="flex justify-between items-center font-medium py-3 border-t mt-2">
+                                    <span>Total</span>
+                                    <span className={`text-[18px] font-semibold ${data?.address_details ? "text-primary-orange-200" : "text-grey-700"} `}>₦ {formatNumber(`${price?.total}`)}</span>
+                                </li>
+                            </ul>
+
+                            <LoadingButton
+                                fullWidth
+                                variant="contained"
+                                color="secondary"
+                                loading={checkingout}
+                                disabled={data?.address_details ? false : true}
+                                onClick={() => confirmOrder(checkoutMethod, dispatch, checkout)}>
+                                    confirm order
+                            </LoadingButton>
+                        </div>
+
+                        
                     </Wrapper>
                 </div>
 
                 <div className="hidden sm:block w-full sm:w-4/12">
-                    <CheckoutSummary />
+                    <CheckoutSummary checkoutdetails={checkoutdetails} price={price}/>
                 </div>
             </div>
         </Body>

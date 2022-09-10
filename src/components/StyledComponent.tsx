@@ -28,7 +28,7 @@ export function TitlePage({children}: React.PropsWithChildren){
 
 export function CardWrapper({children, styles}: IWrapperProps){
     return(
-        <div className={`flex flex-col sm:flex-row justify-between rounded sm:rounded-2xl w-full sm:hover:shadow-lg border sm:hover:border-0 border-solid items-center p-3 sm:p-6 mb-3 bg-white ${styles} whitespace-pre-wrap truncate`}>
+        <div className={`flex flex-col sm:flex-row justify-between rounded sm:rounded-2xl w-full sm:hover:shadow-lg shadow-md border-solid items-center p-3 sm:p-4 mb-3 bg-white ${styles} whitespace-pre-wrap truncate`}>
             {children}
         </div>
     )
@@ -50,7 +50,7 @@ export function CardImg({ src }: {src: string}){
 
 export function CardText({children, styles}: IWrapperProps){
     return(
-        <span className={`sm:w-9/12 text-black sm:text-grey-200 font-semibold sm:font-normal text-sm sm:text-base sm:mb-5 ${styles}`}>
+        <span className={`whitespace-normal sm:w-11/12 text-black sm:text-grey-200 font-semibold sm:font-normal text-sm sm:text-base sm:mb-2 ${styles}`}>
             {children}
         </span>
     )

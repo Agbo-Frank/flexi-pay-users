@@ -13,6 +13,7 @@ import { CardText } from "../../components"
 import { LoadingButton } from "@mui/lab"
 import { handleSaveItemClick } from "../../services"
 import { useSavedItemMutation } from "../../redux/api/SavedItems"
+import { deleteCart, handleQuantityControlClick } from "./service"
 
 
 
@@ -25,28 +26,6 @@ export function Cart({cart}: {cart: ICart}){
 
     let [savedItem, { isLoading: savingItem,}] = useSavedItemMutation()
 
-    async function deleteCart(){
-        try{
-            let data = await delCart({ uuid: cart.uuid}).unwrap()
-            if(data){
-                dispatch(toggleSnackBar({
-                    open: true,
-                    message: data.message,
-                    severity: data.status === 'success' ? 'success' : 'error'
-                }))
-            }
-        }
-        catch(err){
-            let error: any = err
-            if(error?.data){
-                dispatch(toggleSnackBar({
-                    open: true,
-                    severity: 'error',
-                    message: error?.data.message
-                }))
-            }
-        }
-    }
     return(
         <>
         <Dialog open={open} onClose={() => setOpen(false)}>
@@ -64,10 +43,10 @@ export function Cart({cart}: {cart: ICart}){
                 loading={savingItem}
                 onClick={() => {
                     handleSaveItemClick(cart.product.uuid, savedItem, dispatch, () => setOpen(false))
-                        .then(() => deleteCart())
+                        .then(() => deleteCart({uuid: cart.uuid}, delCart, dispatch))
                 }}>Save {matches && "for later"} </LoadingButton>
                 <LoadingButton 
-                onClick={deleteCart}
+                onClick={() => deleteCart({uuid: cart.uuid}, delCart, dispatch)}
                 loading={removing}
                 color="secondary"
                 startIcon={<DeleteIcon />}
@@ -78,7 +57,7 @@ export function Cart({cart}: {cart: ICart}){
             </DialogActions>
         </Dialog>
             <div 
-            className="flex flex-col sm:flex-row justify-between shadow sm:hover:shadow-lg border sm:hover:border-0 border-solid sm:p-2 w-[98%] rounded-xl bg-white">
+            className="flex flex-col sm:flex-row justify-between shadow hover:shadow-lg sm:p-2 w-[98%] rounded-xl bg-white">
                 <div className="p-2 pb-3 sm:pb-0">
                     <div className="flex space-x-2 sm:space-x-3 items-stretch">
                         <Link to={"/product/" + cart.product.slug} className="block w-fit">
@@ -109,11 +88,31 @@ export function Cart({cart}: {cart: ICart}){
                     <div className="flex flex-col justify-end">
                         <p className="hidden sm:block font-semibold ml-auto text-primary-dark-blue text-lg mb-4">₦ {formatNumber(cart.price)}</p>
                         <div className="flex justify-between items-center space-x-3">
-                            <div className="rounded-full cursor-pointer font-bold text-white bg-primary-orange-200 w-5 opacity-50 h-5 flex justify-center items-center text-xl">
+                            <div 
+                                className={`rounded-full cursor-pointer font-bold text-white bg-primary-orange-200 w-5 ${(isLoading ||  parseInt(cart.quantity) === 1) && "opacity-50"} h-5 flex justify-center items-center text-xl`}
+                                onClick={() => {
+                                    if(!isLoading && parseInt(cart.quantity) > 1){
+                                        handleQuantityControlClick(
+                                            {quantity: (parseInt(cart.quantity) - 1).toString(), cart_uuid: cart.uuid},
+                                            updateCart,
+                                            dispatch
+                                        )
+                                    }
+                                }}>
                                 <MinusIcon color="white" size="14" />
                             </div>
-                            <div className="font-medium text-lg"> 1 </div>
-                            <div className="rounded-full cursor-pointer font-bold text-white bg-primary-orange-200 w-5 h-5 flex justify-center items-center text-xl">
+                            <div className="font-medium text-lg">{cart.quantity}</div>
+                            <div 
+                            className={`rounded-full cursor-pointer font-bold text-white bg-primary-orange-200 w-5 h-5 flex ${isLoading && "opacity-50"} justify-center items-center text-xl`}
+                            onClick={() => {
+                                if(!isLoading){
+                                    handleQuantityControlClick(
+                                        {quantity: (parseInt(cart.quantity) + 1).toString(), cart_uuid: cart.uuid},
+                                        updateCart,
+                                        dispatch
+                                    )
+                                }
+                            }}>
                                 <PlusIcon size="14" color="white" />
                             </div>
                         </div>

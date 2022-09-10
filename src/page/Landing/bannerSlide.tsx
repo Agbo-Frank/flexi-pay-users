@@ -33,7 +33,7 @@ export function BannerSlides(){
                 }
             </div>
 
-            <div className='block sm:hidden relative'>
+            <div className='block w-11/12 mx-auto sm:hidden relative'>
                 <Slider ref={slide} {...settings}>
                     {
                         imgs.map((img, imgIdx) => (

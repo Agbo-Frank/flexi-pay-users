@@ -5,6 +5,7 @@ import { ICreateAccountBody, IFundWalletByCard, IFundWalletResponse, IResponse, 
 import { toggleSnackBar } from '../../redux/slice/modal';
 import { useGetUserQuery } from '../../redux/api/User';
 import { validURL } from '../../utils';
+import { FLEXIPAY_REDIRECT } from '../../utils/constants';
 
 
 export function FPcreateAccForm(userData: IUser | null | undefined, createAccount: ITrigger<ICreateAccountBody, IResponse<{data: null}>>, done:() => any){
@@ -93,7 +94,7 @@ export function FPFormikWithdraw(user: IUser | undefined, withdraw: ITrigger<IWi
             ...value,
             full_name: user?.first_name ? user?.first_name + " " + user?.last_name : value.full_name,
         }
-        value['redirect_url'] = 'http://localhost:3000/wallet'
+        value['redirect_url'] = FLEXIPAY_REDIRECT + '/wallet'
         console.log(value)
         try{
             let data = await withdraw(value).unwrap()
@@ -165,7 +166,7 @@ export function FundWalletByCard(fundWallet: ITrigger<IFundWalletByCard, IRespon
             email: data?.result.data.email || value.email,
             phone_number: data?.result.data.phone_number || value.phone_number,
             amount: value.amount,
-            redirect_url: 'http://localhost:3000/wallet'
+            redirect_url: FLEXIPAY_REDIRECT + '/wallet'
         }
         console.log(value)
         try{

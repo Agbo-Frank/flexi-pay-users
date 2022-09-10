@@ -5,7 +5,8 @@ import { CartIcon, HeartIcon,  } from "../../components/icons"
 import { useGetProductQuery } from "../../redux/api/Product";
 import { LoadingButton } from "@mui/lab";
 import { useAddToCartMutation } from "../../redux/api/Cart";
-import { handleAddToCartClick, handleSaveItemClick } from "../../services";
+import { handleSaveItemClick } from "../../services";
+import { handleAddToCartClick } from "../Cart/service";
 import { useSavedItemMutation } from "../../redux/api/SavedItems";
 import ProductVendor from "./productVendor";
 import ProductDetails from "./productDetails";

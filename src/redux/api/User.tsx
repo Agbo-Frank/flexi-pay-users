@@ -72,5 +72,7 @@ export const {
     useGetUserQuery,
     useEditUserMutation,
     useChangePasswordMutation,
-    useLazyGetUserQuery
+    useLazyGetUserQuery,
+    useCreateDeliveryAddressMutation,
+    useUpdateDeliveryAddressMutation
 } = UserApi

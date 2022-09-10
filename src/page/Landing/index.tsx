@@ -19,7 +19,7 @@ export function Landing(){
             <div className="h-fit bg-white sm:bg-grey-500">
                 <Header />
                 <Categories />
-                <div className="block sm:hidden w-11/12 mx-auto bg-white">
+                <div className="block sm:hidden w-11/12 my-2 mx-auto bg-white">
                     <SearchBar />
                 </div>
                 <div className="fp-screen bg-white sm:bg-grey-500 space-y-3 my-3">

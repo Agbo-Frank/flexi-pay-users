@@ -6,10 +6,15 @@ import {
     DropDown, Header, 
     ProductCard, Empty,
     ProductCardSkeleton, 
-    Breadcrumb} from "../../components"
+    Breadcrumb,
+    SearchBar} from "../../components"
 import { SearchIcon } from "../../components/icons"
 import { IFilter, IPagination, IProduct } from "../../interface"
-import { useLazyGetProductsQuery, useLazyFilterProductQuery, useLazySearchProductQuery } from "../../redux/api/Product"
+import { 
+    useLazyGetProductsQuery, 
+    useLazyFilterProductQuery, 
+    useLazySearchProductQuery 
+} from "../../redux/api/Product"
 import Filters from "./filters"
 
 
@@ -80,11 +85,14 @@ export function Products(){
                 <Header />
                 <Categories />
                 <Breadcrumb />
-                <div className="fp-screen flex space-x-6 bg-grey-500 justify- items-stretch">
+                <div className="block sm:hidden w-11/12 my-2 mx-auto bg-white">
+                    <SearchBar />
+                </div>
+                <div className="fp-screen flex flex-col sm:flex-row sm:space-x-6 bg-grey-500 justify- items-stretch">
                     <Filters 
                         filters={filters} 
                         setFilters={setFilters} />
-                    <div className="w-9/12">
+                    <div className="w-full sm:w-9/12">
                         <div className="rounded-lg bg-white">
                             <div className="flex justify-between items-center py-3 px-6 border-b border-grey-100">
                                 <p>{
@@ -92,7 +100,7 @@ export function Products(){
                                     <Skeleton width={150} sx={{fontSize: 16}}/>: 
                                     `${pagination?.total} Results Found`
                                 }</p>
-                                <div className="flex items-center space-x-4">
+                                {/* <div className="flex items-center space-x-4">
                                     <p>Sort By:</p>
                                     <div className="w-52">
                                         <DropDown component={<span>Payment Type</span>} arrow>
@@ -101,11 +109,11 @@ export function Products(){
                                             <MenuItem>Logout</MenuItem>
                                         </DropDown>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
-                            <div className={`${products!.length > 0 && 'grid grid-cols-4'} gap-2 px-6 py-1`}>
+                            <div className={`${products!.length > 0 && 'grid grid-cols-2 md:grid-cols-4'} gap-2 px-3 sm:px-6 py-1`}>
                                 {
-                                    loading ?
+                                    !loading ?
                                     [1, 2, 3, 4, 5].map((product, idx) => <ProductCardSkeleton key={idx}/>) :
                                     products.length === 0 ? 
                                     <div className="grid place-items-center w-full">

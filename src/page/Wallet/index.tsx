@@ -104,7 +104,7 @@ export function Wallet (){
 
             <div>
                 <Wrapper styles="rounded-b-none">
-                    <WrapperHeader>Transaction History</WrapperHeader>
+                    <WrapperHeader>Wallet History</WrapperHeader>
                 </Wrapper>
                 <WalletTransaction />
             </div>

@@ -155,6 +155,21 @@ export interface ITransacation {
     info: string
 }
 
+export interface IUserTransacation {
+    user_id: number;
+    reference?: string;
+    amount: string;
+    service_type: string;
+    service_provider: string;
+    service_number: string;
+    charges: string;
+    status: "success";
+    created_at: string;
+    updated_at: string;
+    narration: string
+}
+
+
 export interface IWalletDetails {
     uuid: string;
     account_number: string;
@@ -295,20 +310,30 @@ export interface IRate {
     user: IUser
 }
 
-export type TCheckoutMethod = "directly_via_wallet" | ""
+export type TCheckoutMethod = "directly_via_wallet" | "install_mental_via_card" | "install_mental_via_wallet" | "directly_via_card" | string
+
+export interface IDetails extends ICart {
+    delivery_period: string | Date | any;
+    delivery_fee: string;
+    unit_price: number;
+    total_price: number;
+    vendor_id: number;
+}
 
 export interface ICheckoutDetails {
-    details: {
-        delivery_period: string;
-        delivery_fee: string;
-        quantity: number;
-        unit_price: number;
-        total_price: number;
-        vendor_id: number;
-        created_at: string | Date;
-        updated_at: string | Date;
-        product: IProduct
-    }[],
+    details: IDetails[],
     total_delivery_fee: number;
-    address_details: AddressDetails
+    address_details: AddressDetails;
+    sub_total: number;
+    total: number;
+    vat: number
+}
+
+export interface IOrder {
+    status: string;
+    discount_rate: string;
+    discount_price: string;
+    created_at: string | Date;
+    updated_at: string | Date;
+    customer: any
 }

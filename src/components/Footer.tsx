@@ -11,7 +11,7 @@ export function Footer(){
                 <div className="fp-screen py-5 flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0 sm:items-center bg-[#545362]">
                     <Logo color="white"/>
                     <div className="flex flex-col sm:flex-row sm:space-x-5 space-y-3 sm:space-y-0">
-                        <div className="flex text-white sm:space-x-2">
+                        <div className="flex text-white space-x-1 sm:space-x-2">
                             <div className="bg-white  grid place-items-center rounded-full w-10 h-10 sm:w-12 sm:h-12">
                                 <MailIcon color="#000541" size="20"/>
                             </div>
@@ -21,7 +21,7 @@ export function Footer(){
                             </div>
                         </div>
 
-                        <div className="flex text-white sm:space-x-2">
+                        <div className="flex text-white space-x-1 sm:space-x-2">
                             <div className="bg-white grid place-items-center rounded-full w-10 h-10 sm:w-12 sm:h-12">
                                 <WhatappIcon color="#000541" size="20"/>
                             </div>
@@ -59,7 +59,7 @@ export function Footer(){
 
                         <div>
                             <p className="font-semibold mb-2 sm:mb-4">Get latest updates in your inbox</p>
-                            <div className="bg-white flex justify-between rounded-xl overflow-hidden p-1 mx-2">
+                            <div className="bg-white flex justify-between rounded overflow-hidden p-1 mx-2">
                                 <input type='email' placeholder="Email"/>
                                 <div className="scale-90">
                                     <div className="scale">

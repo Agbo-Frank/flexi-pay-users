@@ -154,8 +154,13 @@ export function FPFormikChangePassword(changePassword: ITrigger<IChangePassword,
     return formik
 }
 
-export function FPFormikAddDeliveryAddress(createAddress: ITrigger<Omit<IAddAddress, 'id'>, IResponse<{data: null}>>){
+export function FPFormikAddDeliveryAddress(createAddress: ITrigger<Omit<IAddAddress, 'id'>, IResponse<{data: null}>>, done: () => void | any){
     const dispatch = useDispatch()
+    let { user } = useGetUserQuery(undefined, {
+        selectFromResult: ({ data }) => ({
+            user: data?.result.data
+        })
+    })
 
     let initialValues = {
         name: '',
@@ -168,6 +173,16 @@ export function FPFormikAddDeliveryAddress(createAddress: ITrigger<Omit<IAddAddr
     }
 
     async function onSubmit(value: Omit<IAddAddress, 'id'> | any, formikHelpers: FormikHelpers<Omit<IAddAddress, 'id'> | any>){
+        value = {
+            name: value.name || user?.first_name + " " + user?.last_name,
+            phone_number: value.phone_number || user?.phone_number,
+            state: value.state || user?.state,
+            city: value.city || user?.city,
+            house_address: value.house_address || user?.house_address,
+            dob: value.dob || user?.dob,
+            nearest_bus_stop: value.nearest_bus_stop || user?.nearest_bus_stop,
+            postal_code: value.postal_code || user?.postal_code
+        }
         console.log(value)
         try{
             let data = await createAddress(value).unwrap()
@@ -180,7 +195,7 @@ export function FPFormikAddDeliveryAddress(createAddress: ITrigger<Omit<IAddAddr
                 }))
 
                 if(data.status === 'success'){
-                    dispatch(toggleEditProfile())
+                    done()
                 }
             }
         }
@@ -202,13 +217,13 @@ export function FPFormikAddDeliveryAddress(createAddress: ITrigger<Omit<IAddAddr
     }
     let validationSchema = () => {
         return Yup.object({
-            name: Yup.string().required("name field is required"),
-            phone_number: Yup.string().required("The phone number field is required").min(8),
-            state: Yup.string().required("the state field is required").min(8),
-            city: Yup.string().required("the city field is required").min(8),
-            nearest_bus_stop: Yup.string().required("the nearest bus stop field is required").min(8),
-            house_address: Yup.string().required("the house address field is required").min(8),
-            postal_code: Yup.string().required("the postal code field is required").min(8),
+            name: Yup.string(),
+            phone_number: Yup.string(),
+            state: Yup.string(),
+            city: Yup.string(),
+            nearest_bus_stop: Yup.string(),
+            house_address: Yup.string(),
+            postal_code: Yup.string(),
         })
     }
     return useFormik({

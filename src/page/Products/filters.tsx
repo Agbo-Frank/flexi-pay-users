@@ -21,7 +21,7 @@ export function Filters({filters, setFilters}: IFiltersProps){
     })
     console.log(categories)
     return(
-        <div className="w-3/12 h-full border bg-white py-2 rounded-lg">
+        <div className="hidden sm:block sm:w-3/12 h-full border bg-white py-2 rounded-lg">
             <h3 className="text-[#222222] font-medium ml-4 text-lg">Category</h3>
             <ul className="">
                 {
