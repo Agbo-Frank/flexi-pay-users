@@ -65,7 +65,7 @@ export function Cart({cart}: {cart: ICart}){
                         </Link>
                         <div className="sm:w-7/12 flex flex-col justify-around">
                             <CardText>{cart.product.name}</CardText>
-                            <p className="font-semibold text-primary-dark-blue sm:hidden">₦ 3,000</p>
+                            <p className="font-semibold text-primary-dark-blue sm:hidden">₦ {formatNumber(cart.price)}</p>
                             <small className="text-grey-200 text-xs sm:text-sm font-medium">Qty: {cart.quantity}</small>
                             <div className="hidden sm:block">
                                 <Button

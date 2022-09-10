@@ -34,14 +34,17 @@ export function Products(){
     let [searchParams] = useSearchParams()
     let navigate = useNavigate()
 
-    let [searchProduct, { isLoading }] = useLazySearchProductQuery()
+    let [searchProduct] = useLazySearchProductQuery()
     let [filterProduct] = useLazyFilterProductQuery()
     let [getProducts] = useLazyGetProductsQuery()
 
     useEffect(() => {
         setLoading(true)
         if(searchParams.has('search')){
-            searchProduct({search_params: searchParams.has('search') ? `${searchParams.get('search')}` : ""})
+            searchProduct({
+                search_params: searchParams.has('search') ? `${searchParams.get('search')}` : "",
+                page: page.toString()
+            })
                 .unwrap()
                 .then(result => {
                     setProducts(result.result.data.data)
@@ -65,7 +68,7 @@ export function Products(){
     }, [page, searchParams])
 
     useEffect(() => {
-        // if(searchParams.has('filters')){
+        if(searchParams.has('filters')){
             filterProduct(filters)
                 .unwrap()
                 .then(result => {
@@ -76,25 +79,25 @@ export function Products(){
                 })
                 .catch(err => console.log(err))
 
-        // }
+        }
     }, [filters])
 
     return(
-        <Body bgColor="bg-grey-500">
-            <div className="w-full h-fit bg-grey-500">
+        <Body bgColor="bg-white sm:bg-grey-500">
+            <div className="w-full h-fit bg-white sm:bg-grey-500">
                 <Header />
                 <Categories />
                 <Breadcrumb />
                 <div className="block sm:hidden w-11/12 my-2 mx-auto bg-white">
                     <SearchBar />
                 </div>
-                <div className="fp-screen flex flex-col sm:flex-row sm:space-x-6 bg-grey-500 justify- items-stretch">
+                <div className="fp-screen flex flex-col sm:flex-row sm:space-x-6 bg-white sm:bg-grey-500 justify- items-stretch">
                     <Filters 
                         filters={filters} 
                         setFilters={setFilters} />
                     <div className="w-full sm:w-9/12">
                         <div className="rounded-lg bg-white">
-                            <div className="flex justify-between items-center py-3 px-6 border-b border-grey-100">
+                            <div className="flex justify-between items-center py-3 px-2 sm:px-6 border-b border-grey-100">
                                 <p>{
                                     loading ?
                                     <Skeleton width={150} sx={{fontSize: 16}}/>: 
@@ -111,11 +114,12 @@ export function Products(){
                                     </div>
                                 </div> */}
                             </div>
-                            <div className={`${products!.length > 0 && 'grid grid-cols-2 md:grid-cols-4'} gap-2 px-3 sm:px-6 py-1`}>
+                            <div className={`${products?.length > 0 || loading ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4' : ""} grid gap-2 px-2 sm:px-6 py-1`}>
                                 {
-                                    !loading ?
-                                    [1, 2, 3, 4, 5].map((product, idx) => <ProductCardSkeleton key={idx}/>) :
-                                    products.length === 0 ? 
+                                    loading ?
+                                    [1, 2, 3, 4].map((product, idx) => <ProductCardSkeleton key={idx}/>) :
+                                    products.length > 0 ? 
+                                    products?.map((product, idx) => <ProductCard product={product} key={idx}/>) :
                                     <div className="grid place-items-center w-full">
                                         <Empty 
                                             title="No Search Results"
@@ -132,8 +136,6 @@ export function Products(){
                                                 </Button>
                                             }/>
                                     </div>
-                                    :
-                                    products?.map((product, idx) => <ProductCard product={product} key={idx}/>)
                                 }
                             </div>
                         </div>

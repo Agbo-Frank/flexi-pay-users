@@ -56,11 +56,6 @@ let theme = createTheme({
                 }
             }
         },
-        // MuiFormControl: {
-        //     styleOverrides: {
-        //         root: {}
-        //     }
-        // },
         MuiTextField: {
             styleOverrides: {
                 root: { 
@@ -72,9 +67,6 @@ let theme = createTheme({
                 }
             }
         }
-        // MuiTableHead: {
-
-        // }
       },
 })
 

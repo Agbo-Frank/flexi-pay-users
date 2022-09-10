@@ -4,7 +4,7 @@ import { IWrapperProps } from "./interface";
 
 export function Wrapper({children, styles}: IWrapperProps){
     return(
-        <div className={`rounded-lg bg-[#F4F4F4] sm:bg-white py-2 sm:py-3 px-3 sm:px-6 ${styles} m-2`}>
+        <div className={`rounded-lg bg-[#F4F4F4] sm:bg-white py-2 sm:py-3 px-3 sm:px-6 ${styles}`}>
             {children}
         </div>
     )

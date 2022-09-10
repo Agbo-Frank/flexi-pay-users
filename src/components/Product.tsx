@@ -4,7 +4,7 @@ import product2 from '../asset/Product2.png'
 import Slider from "react-slick";
 import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Skeleton } from '@mui/material';
+import { Button, Skeleton, useMediaQuery } from '@mui/material';
 import { IProduct } from '../interface';
 import { formatNumber } from '../utils';
 import { GreyLogo } from './icons';
@@ -13,7 +13,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export function ProductCard({product}: {product: IProduct}){
     return(
-        <Link to={'/product/' + product.slug} className="w-full bg-white rounded-lg h-fit p-2 space-y-4 hover:shadow-xl hover:-translate-y-1 hover:z-30 my-2">
+        <Link to={'/product/' + product.slug} className="w-full bg-white rounded-lg h-fit p-2 space-y-4 shadow hover:shadow-lg hover:-translate-y-1 hover:z-30 my-2">
             <div className='w-full h-44 overflow-hidden rounded-lg'>
                 <img src={product.product_images[0].image_link} className="w-full h-full object-cover" alt={product.name}/>
             </div>
@@ -145,6 +145,7 @@ export function ProductSlide({images}: {images: string[]}){
 }
 
 export function ProductsSlide({products, loading}: {products: IProduct[] | undefined, loading: boolean}){
+    let matches = useMediaQuery("(min-width:600px)")
     let slide: any = useRef()
     const settings = {
         infinite: false,
@@ -157,7 +158,7 @@ export function ProductsSlide({products, loading}: {products: IProduct[] | undef
 
     const navigate = useNavigate()
     return(
-        <div className="sm:overflow-hidden rounded-2xl">
+        <div className="px-2 sm:overflow-hidden rounded-2xl">
             <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:p-4">
                 <p className="uppercase font-medium text-sm  sm:text-lg">similar products</p>
                 <Button 
@@ -170,7 +171,7 @@ export function ProductsSlide({products, loading}: {products: IProduct[] | undef
             </div>
             {
                 loading ?
-                <div className='grid grid-cols-5'> 
+                <div className='flex whitespace-nowrap overflow-x-auto scrollbar-hidden'> 
                     {
                         data.map(d => (
                             <ProductCardSkeleton />

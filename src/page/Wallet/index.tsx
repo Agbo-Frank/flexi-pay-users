@@ -63,43 +63,43 @@ export function Wallet (){
             <WithdrawalForm />
             {open.fundWallet && <FundWallet open={open.fundWallet} close={() => setOpen(state => ({...state, fundWallet: false}))}/>}
             {open.createAccForm && <CreateAccForm userData={data?.result?.data} open={open.createAccForm} close={() => setOpen(state => ({...state, createAccForm: false}))}/>}
-            <div>
-            <Wrapper>
-                <WrapperHeader>Wallet</WrapperHeader>
-                <div className="flex flex-col sm:flex-row items-stretch space-y-3 sm:space-y-0 sm:space-x-3 mt-2 sm:mt-4">
-                    
-                    <WalletBalance open={open} setOpen={setOpen}/>
+            <div className="mb-3 sm:mb-5">
+                <Wrapper>
+                    <WrapperHeader>Wallet</WrapperHeader>
+                    <div className="flex flex-col sm:flex-row items-stretch space-y-3 sm:space-y-0 sm:space-x-3 mt-2 sm:mt-4">
+                        
+                        <WalletBalance open={open} setOpen={setOpen}/>
 
-                    <div className="w-full sm:w-1/2 rounded-xl text-center bg-white sm:bg-grey-900 flex flex-col justify-center py-3 px-2 sm:p-6">
-                        <p className="text-xs text-right text-grey-700 ">Referred (0)</p>
-                        <div className="flex justify-center">
-                            <GroupIcon color="#000541" size={matches ? "60" : "45"}/>
-                        </div>
-                        <p className="text-grey-700 text-xl">Referial Balance</p>
-                        <p className="text-primary-dark-blue font-semibold text-xl">₦ 0.00 </p>
-                        <p className="text-grey-700 text-sm">
-                            You haven’t refer anyone on FlexiPay, kindly use your referial link to 
-                            refer your friend and start making money
-                        </p>
-
-                        <div className="flex items-center w-9/12 mx-auto my-1 justify-center bg-white py-1 rounded-lg">
-                            <div className="w-10/12 overflow-x-auto whitespace-nowrap scrollbar-hidden">
-                                <p className="ml-5 text-sm" ref={code}>{data?.result?.data.referral_link}</p>
+                        <div className="w-full sm:w-1/2 rounded-xl text-center bg-white sm:bg-grey-900 flex flex-col justify-center py-3 px-2 sm:p-6">
+                            <p className="text-xs text-right text-grey-700 ">Referred (0)</p>
+                            <div className="flex justify-center">
+                                <GroupIcon color="#000541" size={matches ? "60" : "45"}/>
                             </div>
-                            <div className="">
-                                <MuiButton 
-                                    color="secondary" 
-                                    onClick={copy}
-                                    variant="contained"
-                                    size="small"
-                                    startIcon={copied ?<MarkCircleIcon color="white" size="16"/> :<CopyIcon color="white" size="14"/>}>
-                                        {copied ? 'Copied!' : 'Copy'}
-                                </MuiButton>
+                            <p className="text-grey-700 text-xl">Referial Balance</p>
+                            <p className="text-primary-dark-blue font-semibold text-xl">₦ 0.00 </p>
+                            <p className="text-grey-700 text-sm">
+                                You haven’t refer anyone on FlexiPay, kindly use your referial link to 
+                                refer your friend and start making money
+                            </p>
+
+                            <div className="flex items-center w-9/12 mx-auto my-1 justify-center bg-white py-1 rounded-lg">
+                                <div className="w-10/12 overflow-x-auto whitespace-nowrap scrollbar-hidden">
+                                    <p className="ml-5 text-sm" ref={code}>{data?.result?.data.referral_link}</p>
+                                </div>
+                                <div className="">
+                                    <MuiButton 
+                                        color="secondary" 
+                                        onClick={copy}
+                                        variant="contained"
+                                        size="small"
+                                        startIcon={copied ?<MarkCircleIcon color="white" size="16"/> :<CopyIcon color="white" size="14"/>}>
+                                            {copied ? 'Copied!' : 'Copy'}
+                                    </MuiButton>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </Wrapper>
+                </Wrapper>
             </div>
 
             <div>

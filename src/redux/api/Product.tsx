@@ -49,7 +49,7 @@ export const ProductApi = createApi({
         }),
         searchProduct: build.query<IResponse<{data: IPagination<IProduct[]>}>, {page?: string; search_params: string;}>({
             query: (body) => ({
-                url: "/guest/product/search?search_param=" + body.search_params
+                url: "/guest/product/search?search_param=" + body.search_params + "&page=" + body.page
             }),
             providesTags: ['Category']
         })

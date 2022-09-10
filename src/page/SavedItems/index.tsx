@@ -52,7 +52,7 @@ export function SavedItems (){
                             </div>
                         </>:
                         <Empty 
-                            title="your cart is empty " 
+                            title="you have no saved items " 
                             Icon={HeartIcon}
                             message="You currently don’t have any item in your Saved Items, kindly to go shop and add item to your Saved Items"
                             button={

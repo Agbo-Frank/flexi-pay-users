@@ -30,9 +30,7 @@ export function Filters({filters, setFilters}: IFiltersProps){
                         className="py-1 pl-9 w-full cursor-pointer hover:bg-grey-500 text-[#222222]"
                         key={idx}
                         onClick={() => {
-                            navigate({
-                                search: '?filters=true'
-                            })
+                            navigate("?category='me")
                             setFilters(state => ({...state, parent_category: category.name}))
                         }}
                         >

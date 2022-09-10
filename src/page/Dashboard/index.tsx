@@ -15,6 +15,8 @@ import Card from "./card";
 import DeliveryAddress from "./DeliceryAddress";
 import { Wrapper, WrapperHeader } from "../../components";
 import { useGetUserSavedItemsQuery } from "../../redux/api/SavedItems";
+import { useDispatch } from "react-redux";
+import { toggleEditProfile } from "../../redux/slice/modal";
 
 
 export  function Dashboard (): JSX.Element {
@@ -24,6 +26,7 @@ export  function Dashboard (): JSX.Element {
             loading: isLoading
         })
     })
+    let dispatch = useDispatch()
 
     const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
 
@@ -52,8 +55,8 @@ export  function Dashboard (): JSX.Element {
     console.log(user)
     return(
         <DashboardWrapper>
-            <div className="bg-white">
-                <div className="flex py-3 sm:py-0 whitespace-nowrap overflow-x-auto justify-between space-x-5">
+            <div className="bg-white sm:bg-transparent">
+                <div className="flex py-3 sm:py-4 whitespace-nowrap overflow-x-auto justify-between space-x-5 sm:space-x-2 px-2">
                     <Card Icon={HeartIcon} count={savedItems?.length || 0} name="saved items" />
                     <Card Icon={CartIcon} count={carts?.length || 0} name="cart items"/>
                     <Card Icon={BagIcon} count={5} name="order items"/>
@@ -61,7 +64,7 @@ export  function Dashboard (): JSX.Element {
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-stretch justify-between my-7 space-y-3 sm:space-y-0 sm:space-x-6 px-2">
-                    <div className="bg-[#F4F4F4] sm:bg-white rounded-xl p-3 sm:p-5 w-full sm:w-1/2">
+                    <Wrapper styles="rounded-xl p-3 sm:p-5 w-full sm:w-1/2 bg-[#F4F4F4] sm:bg-white">
                         <WrapperHeader>Account Details</WrapperHeader>
                         <div className="rounded-xl border pt-5 sm:pt-10 pb-5 mt-3 sm:mt-5 px-5 sm:px-7 w-full bg-white">
                             <div className="text-grey-200 leading-9">
@@ -83,19 +86,20 @@ export  function Dashboard (): JSX.Element {
                                     variant="contained"
                                     startIcon={<EditIcon size="20" color="white"/>}
                                     size="large"
-                                    color="secondary">
+                                    color="secondary"
+                                    onClick={() => dispatch(toggleEditProfile())}>
                                         Edit Profile
                                 </Button>
                             </div>
                         </div>
-                    </div>
+                    </Wrapper>
                     <Wrapper styles="rounded-xl p-3 sm:p-5 w-full sm:w-1/2 bg-[#F4F4F4] sm:bg-white">
                         <WrapperHeader>Delivery Address</WrapperHeader>
                         <DeliveryAddress user={user} loading={loading}/>
                     </Wrapper>
                 </div>
-{/* 
-                <div className="bg-primary-dark-blue items-center flex justify-between rounded-xl pr-5">
+
+                <div className="hidden sm:flex  bg-primary-dark-blue items-center justify-between rounded-xl pr-5">
                     <div className="flex space-x-6 items-center text-white w-4/6">
                         <img src={supportImage} alt="support-img"/>
                         <p>
@@ -113,7 +117,7 @@ export  function Dashboard (): JSX.Element {
                                 Contact Us
                         </Button>
                     </div>
-                </div> */}
+                </div>
             </div>
         </DashboardWrapper>
     )
