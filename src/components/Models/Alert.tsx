@@ -9,7 +9,7 @@ interface IAlertProps extends  React.PropsWithChildren{
 
 function Alert({isError = false, message, children}: IAlertProps) {
     return(
-        <AlertWrapper isOpen={false}>
+        <AlertWrapper isOpen={false} >
             <div className="w-full flex flex-col justify-center px-8 py-6">
                 <div className="mx-auto mt-3">
                     {

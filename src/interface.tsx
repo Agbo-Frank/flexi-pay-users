@@ -181,8 +181,6 @@ export interface IWalletDetails {
 }
 
 export interface IModalReducer {
-    orderDetails: boolean,
-    trackOrder: boolean,
     productReview: boolean,
     addAddress: boolean,
     addCreditCard: boolean,
@@ -335,5 +333,14 @@ export interface IOrder {
     discount_price: string;
     created_at: string | Date;
     updated_at: string | Date;
-    customer: any
+    customer: Pick<IUser, 'first_name' | 'last_name'>,
+    order_detail: IOrderDetails
+}
+
+export interface IOrderDetails {
+    quantity: number;
+    price: string;
+    product: IProduct;
+    created_at: string | Date;
+    updated_at: string | Date;
 }

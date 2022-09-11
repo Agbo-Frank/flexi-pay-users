@@ -52,7 +52,7 @@ let theme = createTheme({
             styleOverrides: {
                 root: {
                     textTransform: 'capitalize',
-                    borderRadius: 10
+                    borderRadius: 5
                 }
             }
         },
@@ -70,21 +70,21 @@ let theme = createTheme({
       },
 })
 
-theme = createTheme(theme, {
-    components: {
-        MuiButton: {
-            defaultProps: {
-                disableElevation: theme.breakpoints.down('xs') ? false : true
-            },
-            styleOverrides: {
-                root: {
-                    textTransform: 'capitalize',
-                    borderRadius: theme.breakpoints.down('sm') ? 5 : 5
-                }
-            }
-        },
-    }
-  });
+// theme = createTheme(theme, {
+//     components: {
+//         MuiButton: {
+//             defaultProps: {
+//                 disableElevation: theme.breakpoints.down('xs') ? false : true
+//             },
+//             styleOverrides: {
+//                 root: {
+//                     textTransform: 'capitalize',
+//                     borderRadius: theme.breakpoints.down('sm') ? 5 : 5
+//                 }
+//             }
+//         },
+//     }
+//   });
   
 
 export default theme

@@ -34,7 +34,7 @@ export const OrderApi = createApi({
                 method: "POST",
             })
         }),
-        getUserOrders: build.query<IResponse<IPagination<IOrder>>, void>({
+        getUserOrders: build.query<IResponse<{data: IPagination<IOrder[]>}>, void>({
             query: () => ({
                 url: "user/orders",
                 method: "GET"

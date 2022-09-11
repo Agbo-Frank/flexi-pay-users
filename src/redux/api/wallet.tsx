@@ -18,7 +18,7 @@ export const WalletApi = createApi({
         }
     }),
     reducerPath: 'Wallet',
-    tagTypes: ['User', 'Banks', 'Transaction'],
+    tagTypes: ['User', 'Banks', 'Transaction', 'Wallet'],
     endpoints: (build) => ({
         createAccount: build.mutation<IResponse<{data: null}>, ICreateAccountBody>({
             query: (body) => ({
@@ -35,7 +35,7 @@ export const WalletApi = createApi({
                 method: 'POST',
                 body
             }),
-            invalidatesTags: ['Transaction']
+            invalidatesTags: ['Wallet', 'Transaction']
         }),
         fundWalletByCard: build.mutation<IResponse<IFundWalletResponse>, IFundWalletByCard>({
             query: (body) => ({
@@ -43,7 +43,7 @@ export const WalletApi = createApi({
                 method: 'POST',
                 body
             }),
-            invalidatesTags: ['Transaction'],
+            invalidatesTags: ['Wallet', 'Transaction'],
             transformResponse: (response: IResponse<IFundWalletResponse>, meta, arg) => response,
         }),
         getAllBanks: build.query<IResponse<{data: IBanks[]}>, void>({
@@ -64,7 +64,8 @@ export const WalletApi = createApi({
             query: () => ({
                 url: '/wallet/details',
                 method: 'GET'
-            })
+            }),
+            providesTags: ['Wallet']
         })
     }),
 })

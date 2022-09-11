@@ -6,6 +6,8 @@ import { toggleWithdrawalForm } from "../../redux/slice/modal";
 import { useGetUserQuery } from "../../redux/api/User";
 import { useLazyGetWalletDetailsQuery } from "../../redux/api/wallet";
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { formatNumber } from "../../utils";
+import { CopyText } from "../../components";
 
 interface IWalletBalanceProps {
     open: {
@@ -32,7 +34,7 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
         })
     })
 
-    let [getUserBalance, { data: wallet }] = useLazyGetWalletDetailsQuery()
+    let [getUserBalance, { data: wallet, isLoading }] = useLazyGetWalletDetailsQuery()
 
     useEffect(() => {
         if(user?.reserved_account?.account_number){
@@ -71,13 +73,17 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                     </Button> 
                 </div>:
                     <>
-                        <p className="text-xs text-left text-grey-700 ">Wallet Id: {wallet?.result.data.account_number}</p>
+                        <p className="text-xs text-left text-grey-700 ">Wallet Id: <CopyText text={`${wallet?.result.data.account_number}`}/></p>
                         <div className="flex justify-center">
-                            <WalletIcon line color="#000541" size={matches ? "48" : "35"}/>
+                            <WalletIcon line={parseFloat(`${wallet?.result.data?.balance}`) === 0} color="#000541" size={matches ? "48" : "35"}/>
                         </div>
                         <p className="text-grey-700 text-lg">Balance</p>
-                        <p className="text-primary-dark-blue font-semibold text-xl">₦ {wallet?.result.data.balance} </p>
-                        <p className="text-grey-700 text-sm">Click on the button below  to fund your wallet</p>
+                        {
+                            isLoading ? 
+                            <Skeleton height={25} width="35%" className="mx-auto"/> :
+                            <p className="text-primary-dark-blue font-semibold text-xl">₦ {formatNumber(`${wallet?.result.data?.balance}`)} </p>
+                        }
+                        <p className="text-grey-700 text-sm">Click on the button below  to fund or Withdraw from your wallet</p>
                         <div className="flex justify-center space-x-4 items-center mx-auto my-4 w-full">
                             <Button
                                 color="secondary"

@@ -1,8 +1,8 @@
 
 import { useDispatch } from 'react-redux'
-import { seeOrderDetails, trackOrder, toggleProductReview } from "../../redux/slice/modal"
-import { CardActions, CardImg, CardText, CardWrapper, ProgressBar } from "../../components"
-import OrderDetails from "../../components/Models/OrderDetails"
+import { toggleProductReview } from "../../redux/slice/modal"
+import { CardActions, CardImg, CardText, CardWrapper, CopyText, ProgressBar } from "../../components"
+import OrderDetails from "./OrderDetails"
 import Empty from "../../components/Empty"
 import { useState, Dispatch, SetStateAction } from "react"
 import TV from '../../asset/monitor.png'
@@ -13,42 +13,55 @@ import {
     DocIcon, StarIcon
 } from "../../components/icons"
 import { Button, useMediaQuery } from '@mui/material'
+import { IOrder } from '../../interface'
+import moment from 'moment'
+import Tracker from './Tracker'
+import { formatNumber } from '../../utils'
 
 
-interface IOrderModel {
-    orderDetails: boolean
+export interface IOrderModel {
+    order: IOrder,
+    open: boolean;
+    close: () => void | any
 }
 
 
 interface IOrderDetails {
-    type: 'pending' | 'delivered' | 'processing' | 'subscription',
-    openModel?: Dispatch<SetStateAction<IOrderModel>>
+    order: IOrder;
+}
+interface IOrderButtons {
+    order: IOrder;
+    setOpen: Dispatch<SetStateAction<{
+        track: boolean;
+        details:boolean;
+    }>>
 }
 
-function Buttons ({type, openModel}: IOrderDetails): JSX.Element{
+function Buttons ( { order, setOpen }: IOrderButtons): JSX.Element{
     const matches = useMediaQuery('(min-width:600px)');
     const dispatch = useDispatch()
 
-    if(type === 'processing'){
+    if(order.status === 'processing'){
         return(
             <Button 
                 color="secondary"
                 size={matches ? "large" : "medium"} 
                 variant='contained'
                 startIcon={<TrackIcon color="white" size="17"/>}
-                onClick={() => dispatch(trackOrder())}>
+                onClick={() => setOpen(state => ({...state, track: true}))}
+                >
                     Track Item
             </Button>
         )
     }
-    else if(type === 'delivered'){
+    else if(order.status === 'delivered'){
         return (
         <>
              <Button 
                 color="secondary"
                 size={matches ? "large" : "medium"} 
                 variant='contained'
-                onClick={() => dispatch(seeOrderDetails())}
+                onClick={() => setOpen(state => ({...state, details: true}))}
                 startIcon={<DocIcon color='white' size="17" />}>
                     See Details
             </Button>
@@ -67,7 +80,7 @@ function Buttons ({type, openModel}: IOrderDetails): JSX.Element{
         <Button 
             color="secondary"
             size={matches ? "large" : "medium"}  
-            onClick={() => dispatch(trackOrder())}
+            onClick={() => setOpen(state => ({...state, track: true}))}
             startIcon={<TrackIcon color='white' size="17" />}
             variant="contained">
                 Track Items
@@ -81,28 +94,40 @@ function Buttons ({type, openModel}: IOrderDetails): JSX.Element{
     </>)
 }
 
-function Order ({type, openModel}: IOrderDetails) {
+function Order ({ order}: IOrderDetails) {
+    let [open, setOpen] = useState({
+        track: false,
+        details: false
+    })
     return(
-        <>
+        <>  <>
+                <Tracker order={order} open={open.track} close={() => setOpen(state => ({...state, track: false}))}/>
+                <OrderDetails order={order} open={open.details} close={() => setOpen(state => ({...state, details: false}))}/>
+            </>
             <CardWrapper>
-                <div className="flex w-full sm:w-9/12 space-x-2 sm:space-x-4 items-stretch pb-4 sm:pb-0">
-                    <CardImg src={TV} />
+                <div className="flex w-full sm:w-9/12 space-x-2 sm:space-x-4 items-stretch pb-4 sm:pb-0"
+                onClick={() => setOpen(state => ({...state, details: true}))}>
+                    <CardImg src={order.order_detail?.product.product_images[0].image_link} />
                     <div>
                         <div className="flex flex-col sm:h-full items-stretch">
-                            <CardText>43" inches D-LED TV +1 years Warranty - Black</CardText>
-                            <small className="text-grey-200 text-xs sm:text-sm">orderId: 345679</small>
+                            <CardText>{ order.order_detail?.product.name }</CardText>
+                            <small className="text-grey-200 text-xs sm:text-sm">Placed on  {moment(order.order_detail.created_at).format("MMM Do YY")}</small>
+                            <small className="text-grey-200 text-xs sm:text-sm my-1">orderId: <CopyText text={`${345679}`}/></small>
                             {
-                                type === 'subscription' ?
-                                <ProgressBar width="50%"/>:
-                                <p className={`${ type } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ type }</p>
+                                // type === 'subscription' ?
+                                // <ProgressBar width="50%"/>:
+                                <p className={`${ order.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ order.status }</p>
                             }
+                            <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(order.order_detail.price)}</p>
                             
                             {/* <p className="font-bold text-primary-dark-blue">150, 000</p> */}
                         </div>
                     </div>
                 </div>
                 <CardActions>
-                    <Buttons type={type} openModel={openModel}/>
+                    <Buttons 
+                        order={order}
+                        setOpen={setOpen}/>
                 </CardActions>
             </CardWrapper> 
         </>  
