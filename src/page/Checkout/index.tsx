@@ -192,11 +192,7 @@ export function CheckOut(){
                             <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
                                 <div className="">
                                     <p className="text-sm text-grey-200 font-light mb-3 mt-1">
-                                        Your item(s) will be delivered between 
-                                        { moment(moment.min(data.details.map(detail => detail.delivery_period))).format("LL") }  
-                                        to 
-                                        { moment(moment.max(data.details.map(detail => detail.delivery_period))).format("LL") } 
-                                        your delivery address
+                                        Your item(s) will be delivered on <span className="font-medium">{ data.details[0].delivery_period } </span>
                                     </p>
                                     <p className="font-medium mb-3 text-[15px]">Delivery Cost:  <span>₦ {formatNumber(data.total_delivery_fee)}</span></p>
                                 </div>
