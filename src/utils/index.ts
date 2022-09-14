@@ -29,3 +29,13 @@ export const formatNumber = (number: number | string) => {
   number = typeof number === 'number' ? number : parseFloat(number)
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+
+export function getColor(status: string){
+  switch(status){
+    case 'success' || 'SUCCESS':{
+      return {
+        
+      }
+    }
+  }
+}

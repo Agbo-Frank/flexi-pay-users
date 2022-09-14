@@ -20,16 +20,14 @@ function OrderDetails({order, open, close}: IOrderModel){
                     styles="rounded"
                     // className="mx-4 mt-3 flex justify-between items-center"
                     >
-                        <div className="flex w-full sm:w-9/12 space-x-2 sm:space-x-4 items-stretch pb-4 sm:pb-0">
-                            <CardImg src={order.order_detail.product.product_images[0].image_link} />
-                            <div className="flex flex-col gap-3">
-                                <CardText 
-                                // className="w-9/12 text-grey-200 text-sm"
-                                >{ order.order_detail.product.name }</CardText>
+                       <div className="flex w-full sm:w-full space-x-2 sm:space-x-4 items-stretch sm:pb-0">
+                            <img src={order.order_detail.product.product_images[0].image_link} alt="" className="w-[108px] h-[108px]  object-cover rounded sm:rounded-md"/>
+                            <div className="flex flex-col w-full">
+                                <CardText>{ order.order_detail.product.name }</CardText>
                                 <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(order.order_detail.price)}</p>
                             </div>
                         </div>
-                        <CardActions 
+                        {/* <CardActions 
                         // className="w-4/12"
                         >
                             <Button color="#FF5000">
@@ -38,7 +36,7 @@ function OrderDetails({order, open, close}: IOrderModel){
                                     <p className="text-sm">Re-Order</p>
                                 </div>
                             </Button>
-                        </CardActions>
+                        </CardActions> */}
                     </CardWrapper>
                 </div>
                 

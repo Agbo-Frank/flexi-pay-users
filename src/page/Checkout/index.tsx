@@ -28,6 +28,7 @@ import { ICart, IDetails, TCheckoutMethod } from "../../interface"
 import PaymentMethod from "./paymentMethod"
 import { confirmOrder } from "./service"
 import { LoadingButton } from "@mui/lab"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -41,7 +42,10 @@ import { LoadingButton } from "@mui/lab"
 export function CheckOut(){
     const matches = useMediaQuery('(min-width:600px)');
     let [checkoutMethod, setCheckoutMethod] = useState<TCheckoutMethod>("")
+
     const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
+    let navigate = useNavigate()
+
     const [open, setOpen] = useState({
         addressBook: false,
         createInstallment: false,
@@ -87,17 +91,22 @@ export function CheckOut(){
                     getUserCart({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""})
                         .unwrap()
                         .then(data => {
-                            // data.result.data.
-                            let sub_total = data.result.data?.reduce((total, cart) => {
-                                return total + (parseFloat(cart?.quantity) * parseFloat(cart?.price))
-                            }, 0) || 0
-                            setPrice({
-                                sub_total, 
-                                total_delivery_fee: null,
-                                total: sub_total,
-                                vat: null
-                            })
-                            setCheckoutdetails({...data.result.data})
+                            console.log(data.result.data)
+                            if(!data.result.data){
+                                navigate('/cart', { replace: true })
+                            }
+                            else{
+                                let sub_total = data.result.data?.reduce((total, cart) => {
+                                    return total + (parseFloat(cart?.quantity) * parseFloat(cart?.price))
+                                }, 0) || 0
+                                setPrice({
+                                    sub_total, 
+                                    total_delivery_fee: null,
+                                    total: sub_total,
+                                    vat: null
+                                })
+                                setCheckoutdetails({...data.result.data})
+                            }
                         })
                 }
                 else{
@@ -107,10 +116,10 @@ export function CheckOut(){
                         total: data.total,
                         vat: data.vat
                     })
-                    // let products = data.details.map(detail => detail.product)
                     setCheckoutdetails(data.details)
                 }
             })
+            .catch(err => console.log(err))
         if(response?.status === "failed"){
             dispatch(toggleSnackBar({
                 open: true,
@@ -201,38 +210,44 @@ export function CheckOut(){
                     </Wrapper>
 
                     <Wrapper>
-                        <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
-                            <div className="space-x-2 flex items-center">
-                                {/* <i className={`fa-solid fa-circle-check ${data?.address_details ? "text-[#6DBD28]" : "text-black/30"}`}></i> */}
-                                <h3 className="text-primary-dark-blue text-sm sm:text-base font-medium">Shippment Details</h3>
-                            </div>
+                        {
+                            data?.address_details &&
+                            <>
+                                <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
+                                    <div className="space-x-2 flex items-center">
+                                        {/* <i className={`fa-solid fa-circle-check ${data?.address_details ? "text-[#6DBD28]" : "text-black/30"}`}></i> */}
+                                        <h3 className="text-primary-dark-blue text-sm sm:text-base font-medium">Shippment Details</h3>
+                                    </div>
 
-                            <ul className="text-grey-200 font-light text-sm my-3 ml-5">
-                                {
-                                    checkoutdetails?.map((detail, idx) => (
-                                        <li key={idx} className="space-x-4">
-                                            <span>{ detail.quantity }x</span>
-                                            <span>{detail.product?.name}</span>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
+                                    <ul className="text-grey-200 font-light text-sm my-3 ml-5">
+                                        {
+                                            checkoutdetails?.map((detail, idx) => (
+                                                <li key={idx} className="space-x-4">
+                                                    <span>{ detail.quantity }x</span>
+                                                    <span>{detail.product?.name}</span>
+                                                </li>
+                                            ))
+                                        }
+                                    </ul>
+                                    
+                                    {
+                                        data?.address_details && 
+                                        <p className="text-grey-200 font-light text-sm">To be Delivered on <span className="font-medium">{data?.details[0].delivery_period}</span> </p>
+                                    }
+                                    
+                                </div>
                             
-                            {
-                                data?.address_details && 
-                                <p className="text-grey-200 font-light text-sm">To be Delivered on <span className="font-medium">{data?.details[0].delivery_period}</span> </p>
-                            }
-                            
-                        </div>
 
-                        <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
-                            <WrapperHeader styles="flex justify-between items-center">
-                                <p className="text-primary-dark-blue text-sm sm:text-base font-medium mb-3">Payment Method</p>
-                                <CreditCardIcon size={matches ? "25" : "18"} color="#555555" />
-                            </WrapperHeader>
+                                <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
+                                    <WrapperHeader styles="flex justify-between items-center">
+                                        <p className="text-primary-dark-blue text-sm sm:text-base font-medium mb-3">Payment Method</p>
+                                        <CreditCardIcon size={matches ? "25" : "18"} color="#555555" />
+                                    </WrapperHeader>
 
-                            <PaymentMethod setCheckoutMethod={setCheckoutMethod}/>
-                        </div>
+                                    <PaymentMethod setCheckoutMethod={setCheckoutMethod}/>
+                                </div>
+                            </>
+                        }
 
                         <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
                             <p className="text-primary-dark-blue text-sm sm:text-base font-medium mb-3">Confirm Order</p>

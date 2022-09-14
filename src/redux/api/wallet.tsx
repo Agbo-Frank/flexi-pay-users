@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IResponse, ICreateAccountBody, IWithdraw, IFundWalletByCard, IFundWalletResponse, IBanks, ITransacation, IGetTransactionResponse, IWalletDetails } from '../../interface'
+import { IResponse, ICreateAccountBody, IWithdraw, IFundWalletByCard, IFundWalletResponse, IBanks, ITransacation, IGetTransactionResponse, IWalletDetails, IPagination, IUserTransacation } from '../../interface'
 import { FLEXIPAY_URL } from '../../utils/constants'
 import { RootState } from '../store'
 
@@ -18,7 +18,7 @@ export const WalletApi = createApi({
         }
     }),
     reducerPath: 'Wallet',
-    tagTypes: ['User', 'Banks', 'Transaction', 'Wallet'],
+    tagTypes: ['User', 'Banks', 'Transaction', 'Wallet', 'UserTransaction'],
     endpoints: (build) => ({
         createAccount: build.mutation<IResponse<{data: null}>, ICreateAccountBody>({
             query: (body) => ({
@@ -35,7 +35,7 @@ export const WalletApi = createApi({
                 method: 'POST',
                 body
             }),
-            invalidatesTags: ['Wallet', 'Transaction']
+            invalidatesTags: ['Wallet', 'Transaction', 'UserTransaction']
         }),
         fundWalletByCard: build.mutation<IResponse<IFundWalletResponse>, IFundWalletByCard>({
             query: (body) => ({
@@ -43,7 +43,7 @@ export const WalletApi = createApi({
                 method: 'POST',
                 body
             }),
-            invalidatesTags: ['Wallet', 'Transaction'],
+            invalidatesTags: ['Wallet', 'Transaction', 'UserTransaction'],
             transformResponse: (response: IResponse<IFundWalletResponse>, meta, arg) => response,
         }),
         getAllBanks: build.query<IResponse<{data: IBanks[]}>, void>({
@@ -56,6 +56,13 @@ export const WalletApi = createApi({
         getTransaction: build.query<IResponse<IGetTransactionResponse>, string>({
             query: (page) => ({
                 url: "/wallet/transactions?page=" + page,
+                method: "GET",
+            }),
+            providesTags: ['UserTransaction']
+        }),
+        getUserTransaction: build.query<IResponse<IPagination<IUserTransacation[]>>, string | number>({
+            query: (page) => ({
+                url: "/user/transactions?page=" + page,
                 method: "GET",
             }),
             providesTags: ['Transaction']
@@ -77,5 +84,6 @@ export const {
     useWithdrawFundMutation,
     useLazyGetTransactionQuery,
     useGetWalletDetailsQuery,
-    useLazyGetWalletDetailsQuery
+    useLazyGetWalletDetailsQuery,
+    useGetUserTransactionQuery
 } = WalletApi

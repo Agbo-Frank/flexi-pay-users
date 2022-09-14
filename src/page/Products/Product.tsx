@@ -102,8 +102,8 @@ export function Product(){
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col sm:flex-col-reverse">
-                        <ProductDetails />
+                    <div className="flex flex-col gap-5 sm:flex-col-reverse">
+                        <ProductDetails product={product}/>
                         <ProductVendor />
                     </div>
                     

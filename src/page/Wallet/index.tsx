@@ -16,12 +16,14 @@ import { toggleSnackBar } from "../../redux/slice/modal"
 import { useGetUserQuery } from "../../redux/api/User"
 import { WalletBalance } from "./WalletBalance"
 import useMediaQuery from '@mui/material/useMediaQuery';
+import UserTransaction from "./UserTransaction"
 
 
 export function Wallet (){
     const matches = useMediaQuery('(min-width:600px)'); 
     let [searchParams, setSearchParams] = useSearchParams();
     let [transactionFeedBack, setTransactionFeedBack] = useState(searchParams.get('status'))
+    let [tab, setTab] = useState(0)
 
     let [open, setOpen] = useState({
         createAccForm: false,
@@ -103,10 +105,20 @@ export function Wallet (){
             </div>
 
             <div>
-                <Wrapper styles="rounded-b-none">
-                    <WrapperHeader>Wallet History</WrapperHeader>
-                </Wrapper>
-                <WalletTransaction />
+                <div className="flex bg-white rounded-t-lg">
+                    <div 
+                    className={` mb-2 ${tab === 0 ? 'text-primary-dark-blue border-primary-dark-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200'} font-medium border-solid text-sm sm:text-base  py-3 px-2 hover:bg-gray-100 cursor-pointer`}
+                    onClick={() => setTab(0)}>Wallet Transaction</div>
+                    <div 
+                    className={`text-right mb-2 ${tab === 1 ? 'text-primary-dark-blue border-primary-dark-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200 '} font-medium text-sm sm:text-base hover:bg-gray-100 py-3 px-2 cursor-pointer`}
+                    onClick={() => setTab(1)}>User Transaction</div>
+                </div>
+                {
+                    tab === 0 ?
+                    <WalletTransaction />:
+                    <UserTransaction />
+                }
+                
             </div>
         </DashboardWrapper>
     )

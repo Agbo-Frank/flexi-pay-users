@@ -1,4 +1,4 @@
-import {  IPagination, IRate, IResponse } from '../../interface'
+import {  IPagination, IRate, IResponse, IReview } from '../../interface'
 import { RootState } from '../store'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { FLEXIPAY_URL } from '../../utils/constants'
@@ -20,7 +20,7 @@ export const ReviewApi = createApi({
     reducerPath: 'Review',
     tagTypes: ['Product', 'Review'],
     endpoints: (build) => ({
-        commentOnAProduct: build.mutation<IResponse<{data: null}>, {comment: string; slug: string}>({
+        commentOnAProduct: build.mutation<IResponse<{data: any}>, Omit<IReview, 'rate'>>({
             query: (body) => ({
                 url: "/reviews/submit",
                 method: 'POST',
@@ -28,7 +28,7 @@ export const ReviewApi = createApi({
             }),
             invalidatesTags: ['Review']
         }),
-        rateAProduct: build.mutation<IResponse<{data: null}>, any>({
+        rateAProduct: build.mutation<IResponse<{data: any}>, Omit<IReview, 'comment'>>({
             query: (body) => ({
                 url: "/reviews/rate",
                 method: "POST",
@@ -36,11 +36,11 @@ export const ReviewApi = createApi({
             }),
             invalidatesTags: ['Review']
         }),
-        getReviews: build.query<IResponse<IPagination<IRate>>, {data: {slug: string}, page: string}>({
+        getReviews: build.query<IResponse<{data: IPagination<IRate[]>}>, {slug: string, page: string}>({
             query: (body) => ({
                 url: "/reviews/fetch-all?page=" + body.page,
                 method: 'GET',
-                params: body.data
+                params: { slug: body.slug }
             }),
             providesTags: ["Review"]
         })

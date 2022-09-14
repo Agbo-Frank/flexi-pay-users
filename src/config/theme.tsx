@@ -1,5 +1,8 @@
-import { createTheme } from '@mui/material'
-import useMediaQuery from '@mui/material/useMediaQuery';
+import createTheme from '@mui/material/styles/createTheme'
+
+const { palette } = createTheme();
+const { augmentColor } = palette
+const createColor = (main: string) => augmentColor({color: { main }})
 
 let theme = createTheme({
     palette:{
@@ -9,7 +12,8 @@ let theme = createTheme({
         },
         secondary: {
             main: '#FF5000'
-        }
+        },
+        darkBlue: createColor('#000541')
     },
     typography: {
         fontFamily: ['Montserrat', 'sans-serif'].join(',')

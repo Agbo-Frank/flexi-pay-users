@@ -73,9 +73,8 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                     </Button> 
                 </div>:
                     <>
-                        <p className="text-xs text-left text-grey-700 ">Wallet Id: <CopyText text={`${wallet?.result.data.account_number}`}/></p>
                         <div className="flex justify-center">
-                            <WalletIcon line={parseFloat(`${wallet?.result.data?.balance}`) === 0} color="#000541" size={matches ? "48" : "35"}/>
+                            <WalletIcon line={parseFloat(`${wallet?.result.data?.balance}`) === 0} color="#000541" size={matches ? "40" : "30"}/>
                         </div>
                         <p className="text-grey-700 text-lg">Balance</p>
                         {
@@ -83,7 +82,9 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                             <Skeleton height={25} width="35%" className="mx-auto"/> :
                             <p className="text-primary-dark-blue font-semibold text-xl">₦ {formatNumber(`${wallet?.result.data?.balance}`)} </p>
                         }
-                        <p className="text-grey-700 text-sm">Click on the button below  to fund or Withdraw from your wallet</p>
+                        <p className="text-grey-700">Account no: <CopyText text={`${wallet?.result.data.account_number}`}/></p>
+                        <p className="text-grey-700">Bank: <CopyText text={`${wallet?.result.data.bank_name }`}/></p>
+                        {/* <p className="text-grey-700 text-sm">Click on the button below  to fund or Withdraw from your wallet</p> */}
                         <div className="flex justify-center space-x-4 items-center mx-auto my-4 w-full">
                             <Button
                                 color="secondary"

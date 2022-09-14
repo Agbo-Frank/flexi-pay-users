@@ -28,7 +28,7 @@ export function TitlePage({children}: React.PropsWithChildren){
 
 export function CardWrapper({children, styles}: IWrapperProps){
     return(
-        <div className={`flex flex-col sm:flex-row justify-between rounded sm:rounded-2xl w-full sm:hover:shadow-lg shadow-md border-solid items-center p-3 sm:p-4 mb-3 bg-white ${styles} whitespace-pre-wrap truncate`}>
+        <div className={`flex flex-col sm:flex-row justify-between rounded sm:rounded-lg w-full sm:hover:shadow-lg shadow-md border-solid items-center p-3 sm:p-4 mb-3 bg-white ${styles} whitespace-pre-wrap truncate`}>
             {children}
         </div>
     )
@@ -36,7 +36,7 @@ export function CardWrapper({children, styles}: IWrapperProps){
 
 export function CardActions({children, styles}: IWrapperProps){
     return(
-        <div className={`flex w-full sm:w-3/12 justify-between border-t pt-3 sm:pt-0 flex-row-reverse sm:flex-col sm:space-y-3 ${styles}`}>
+        <div className={`flex w-full sm:w-[20%] justify-between border-t pt-3 sm:pt-0 flex-row-reverse sm:flex-col sm:space-y-3 ${styles}`}>
             {children}
         </div>
     )
@@ -44,7 +44,7 @@ export function CardActions({children, styles}: IWrapperProps){
 
 export function CardImg({ src }: {src: string}){
     return(
-        <img src={src} alt="" className="w-[100px] h-[100px] sm:w-[148px] sm:h-[148px]  object-cover rounded sm:rounded-xl"/>
+        <img src={src} alt="" className="w-[100px] h-[100px] sm:w-[148px] sm:h-[148px]  object-cover rounded sm:rounded-md"/>
     )
 }
 

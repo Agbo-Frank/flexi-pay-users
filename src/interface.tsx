@@ -139,7 +139,7 @@ export interface IGetTransactionResponse {
     per_page: number;
     prev_page_url: null | string;
     total: number;
-    to: 15
+    to: number
 }
 
 export interface ITransacation {
@@ -163,7 +163,7 @@ export interface IUserTransacation {
     service_provider: string;
     service_number: string;
     charges: string;
-    status: "success";
+    status: string;
     created_at: string;
     updated_at: string;
     narration: string
@@ -216,18 +216,19 @@ export interface IPagination<T> {
     data: T;
     first_page_url: string;
     from: number;
-    last_page: 1;
+    last_page: number;
     last_page_url: string;
     links: {
-        url: null | string;
+        url: string | null;
         label: string;
         active: boolean
-    }[];
-    next_page_url: null | string;
+    }[],
+    next_page_url: string | null;
     path: string;
-    prev_page_url: string;
-    to: string;
-    total: number
+    per_page: number;
+    prev_page_url: null | string;
+    total: number;
+    to: number
 }
 
 export interface IAddToCartReq{
@@ -302,7 +303,7 @@ export interface IInstallment {
 
 export interface IRate {
     comment: string;
-    rate: number;
+    rate: number | string;
     created_at: string | Date;
     updated_at: string | Date;
     user: IUser
@@ -343,4 +344,10 @@ export interface IOrderDetails {
     product: IProduct;
     created_at: string | Date;
     updated_at: string | Date;
+}
+
+export interface IReview {
+    comment: string;
+    rate: string | number;
+    slug: string
 }

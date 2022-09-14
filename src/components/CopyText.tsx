@@ -11,11 +11,11 @@ export function CopyText({text}: {text: string}){
     }
     return(
 
-        <span className="relative"> 
+        <span className="relative z-0"> 
             <span ref={code}>{ text }</span>
             {
                 copied ?
-                <i className="text-[12]px] fa-solid fa-check absolute -top-1.5 -right-3.5"></i> :
+                <i className="text-[12]px] fa-solid fa-check absolute -top-1.5 -right-3.5 "></i> :
                 <i className="text-[11px] fa-regular fa-clone absolute -top-1.5 -right-3.5 cursor-pointer" onClick={copy}></i>
             }
             

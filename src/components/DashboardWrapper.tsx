@@ -5,7 +5,6 @@ import SideBar from "./SideBar";
 
 
 import React from "react";
-import ProductReview from "./Models/ProductReview";
 import {EditProfile} from "./Models/EditProfile";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -18,7 +17,6 @@ function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
             <div className="w-full min-h-screen h-fit">
-                <ProductReview />
                 <EditProfile />
                 <AddAddressModel />
                 

@@ -9,3 +9,5 @@ declare module 'react-reveal/makeCarousel';
 declare module 'uuid'
 declare module 'naija-state-local-government'
 declare module 'react-transition-group/TransitionGroup'
+declare module '@mui/material/styles/createTheme'
+  

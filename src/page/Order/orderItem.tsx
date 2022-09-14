@@ -1,6 +1,5 @@
 
 import { useDispatch } from 'react-redux'
-import { toggleProductReview } from "../../redux/slice/modal"
 import { CardActions, CardImg, CardText, CardWrapper, CopyText, ProgressBar } from "../../components"
 import OrderDetails from "./OrderDetails"
 import Empty from "../../components/Empty"
@@ -12,11 +11,13 @@ import {
     TrashIcon, TrackIcon, 
     DocIcon, StarIcon
 } from "../../components/icons"
-import { Button, useMediaQuery } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery } from '@mui/material'
 import { IOrder } from '../../interface'
 import moment from 'moment'
 import Tracker from './Tracker'
 import { formatNumber } from '../../utils'
+import ProductReviewForm from './ProductReviewForm'
+import { LoadingButton } from '@mui/lab'
 
 
 export interface IOrderModel {
@@ -34,6 +35,8 @@ interface IOrderButtons {
     setOpen: Dispatch<SetStateAction<{
         track: boolean;
         details:boolean;
+        review: boolean;
+        cancel: boolean
     }>>
 }
 
@@ -70,8 +73,8 @@ function Buttons ( { order, setOpen }: IOrderButtons): JSX.Element{
                 size={matches ? "large" : "medium"}  
                 variant="outlined" 
                 startIcon={<StarIcon color="#ff5000" size="17"/>}
-                onClick={() => dispatch(toggleProductReview())}>
-                    Rate Item
+                onClick={() => setOpen(state => ({...state, review: true}))}>
+                    Review Item
             </Button>
         </>
         )
@@ -88,7 +91,8 @@ function Buttons ( { order, setOpen }: IOrderButtons): JSX.Element{
         <Button 
             color="secondary"
             size={matches ? "large" : "medium"}  
-            variant="outlined">
+            variant="outlined"
+            onClick={() => setOpen(state => ({...state, cancel: true}))}>
                 Cancel
         </Button>
     </>)
@@ -97,12 +101,39 @@ function Buttons ( { order, setOpen }: IOrderButtons): JSX.Element{
 function Order ({ order}: IOrderDetails) {
     let [open, setOpen] = useState({
         track: false,
-        details: false
+        details: false,
+        review: false,
+        cancel: false
     })
     return(
         <>  <>
                 <Tracker order={order} open={open.track} close={() => setOpen(state => ({...state, track: false}))}/>
                 <OrderDetails order={order} open={open.details} close={() => setOpen(state => ({...state, details: false}))}/>
+                <ProductReviewForm order={order} open={open.review} close={() => setOpen(state => ({...state, review: false}))}/>
+                <Dialog open={open.cancel} onClose={() => setOpen(state => ({...state, cancel: false}))}>
+                    <DialogTitle>Cancel Order</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Do you want to cancel your order?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => setOpen(state => ({...state,  cancel: false}))}
+                        >Cancel </Button>
+
+                        <LoadingButton
+                        // onClick={}
+                        // loading={removing}
+                        color="secondary"
+                        variant="contained"
+                        >
+                            Confirm
+                        </LoadingButton>
+                    </DialogActions>
+                </Dialog>
             </>
             <CardWrapper>
                 <div className="flex w-full sm:w-9/12 space-x-2 sm:space-x-4 items-stretch pb-4 sm:pb-0"
