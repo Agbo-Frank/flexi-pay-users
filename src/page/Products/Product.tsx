@@ -40,13 +40,17 @@ export function Product(){
                 <title className="capitalize">{product?.name} | FlexiPay</title>
                 <meta property="og:type" content="website" />
                 <meta property="og:site_name" content="Flexipay Nigeria" />
-                <meta name="description" content={product?.description} />
+                <meta property="og:description" content={product?.description} />
                 <meta property="og:title" content={product?.name} />
                 <meta property="og:image" content={product?.product_images[0].image_link} />
                 <meta property="og:image:url" content={product?.product_images[0].image_link} />
                 <meta property="og:image:secure_url" content={product?.product_images[0].image_link} />
-                <meta property="og:image:width" content="1280" />
-                <meta property="og:image:height" content="640" />
+                <meta property="fb:add_id" content="769500967651765" />
+                <meta name="og:image" content={product?.product_images[0].image_link} />
+                <meta name="og:image:url" content={product?.product_images[0].image_link} />
+                <meta name="og:image:secure_url" content={product?.product_images[0].image_link} />
+                {/* <meta property="og:image:width" content="1280" />
+                <meta property="og:image:height" content="640" /> */}
                 <meta property="og:url" content={FLEXIPAY_REDIRECT + "/product/" + product?.slug} />
             </MetaTags>
             <div className="w-full h-fit bg-white sm:bg-grey-500">
