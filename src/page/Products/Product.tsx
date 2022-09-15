@@ -37,7 +37,7 @@ export function Product(){
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
             <Helmet>
-                <title className="capitalize">{product?.name} | FlexiPay</title>
+                <title className="capitalize">{product?.name + "| FlexiPay"}</title>
                 <meta property="og:type" content="website" />
                 <meta property="og:site_name" content="Flexipay Nigeria" />
                 <meta property="og:description" content={product?.description} />
