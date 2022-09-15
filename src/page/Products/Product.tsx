@@ -11,8 +11,9 @@ import { useSavedItemMutation } from "../../redux/api/SavedItems";
 import ProductVendor from "./productVendor";
 import ProductDetails from "./productDetails";
 import { formatNumber } from "../../utils";
+import MetaTags from 'react-meta-tags';
 import { useCookies } from "react-cookie";
-import { FLEXIPAY_COOKIE, FLEXIPAY_URL } from "../../utils/constants";
+import { FLEXIPAY_COOKIE, FLEXIPAY_REDIRECT, FLEXIPAY_URL } from "../../utils/constants";
 import { useDispatch } from "react-redux";
 
 export function Product(){
@@ -35,6 +36,17 @@ export function Product(){
 
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
+            <MetaTags>
+                <title className="capitalize">{product?.name} | FlexiPay</title>
+                <meta property="og:type" content="product" />
+                <meta property="og:site_name" content="Flexipay Nigeria" />
+                <meta name="description" content={product?.description} />
+                <meta property="og:title" content={product?.name} />
+                <meta property="og:image" content={`${product?.product_images[0]}`} />
+                <meta property="og:image:width" content="1280" />
+                <meta property="og:image:height" content="640" />
+                <meta property="og:url" content={FLEXIPAY_REDIRECT + "/product/" + product?.slug} />
+            </MetaTags>
             <div className="w-full h-fit bg-white sm:bg-grey-500">
                 <Header />
                 <Categories />
@@ -90,22 +102,22 @@ export function Product(){
                                 <p className="font-medium sm:font-semibold text-sm sm:text-md text-primary-dark-blue">Share this product</p>
                                 <div className="space-x-2 sm:space-x-3 flex items-center my-1 sm:my-3">
                                     <a 
-                                        href={"https://twitter.com/intent/tweet?text=Checkout%20this%20product%20on%20Flexipay&url=" + FLEXIPAY_URL + "/product/" + product?.slug } 
+                                        href={"https://twitter.com/intent/tweet?text=Checkout%20this%20product%20on%20Flexipay&url=" + FLEXIPAY_REDIRECT + "/product/" + product?.slug } 
                                         target="_blank"
-                                        className="w-[30px] h-[30px] border border-primary-dark-blue rounded-full grid place-items-center cursor-pointer">
-                                        <i className="fa-brands fa-twitter text-primary-dark-blue"></i>
+                                        className="w-[25px] h-[25px] sm:w-[30px] sm:h-[30px] border border-primary-dark-blue rounded-full grid place-items-center cursor-pointer">
+                                        <i className="fa-brands fa-twitter text-primary-dark-blue text-sm sm:text-base"></i>
                                     </a>
                                     <a 
-                                        href={"https://www.facebook.com/sharer/sharer.php?quote=Checkout%20this%20product%20on%20Flexipay&u=" + FLEXIPAY_URL + "/product/" + product?.slug}
+                                        href={"https://www.facebook.com/sharer/sharer.php?quote=Checkout%20this%20product%20on%20Flexipay&u=" + FLEXIPAY_REDIRECT + "/product/" + product?.slug}
                                         target="_blank"
-                                        className="w-[30px] h-[30px] border border-primary-dark-blue rounded-full grid place-items-center cursor-pointer">
-                                        <i className="fa-brands fa-facebook-f text-primary-dark-blue"></i>
+                                        className="w-[25px] h-[25px] sm:w-[30px] sm:h-[30px] border border-primary-dark-blue rounded-full grid place-items-center cursor-pointer">
+                                        <i className="fa-brands fa-facebook-f text-primary-dark-blue text-sm sm:text-base"></i>
                                     </a>
                                     <a 
-                                        href={"whatsapp://send?text=Checkout%20this%20product%20on%20Flexipay" + FLEXIPAY_URL + "/product/" + product?.slug}
+                                        href={"whatsapp://send?text=Checkout%20this%20product%20on%20Flexipay%0A" + FLEXIPAY_REDIRECT + "/product/" + product?.slug}
                                         target="_blank"
-                                        className="w-[30px] h-[30px] border border-primary-dark-blue rounded-full grid place-items-center cursor-pointer">
-                                        <i className="fa-brands fa-whatsapp text-primary-dark-blue"></i>
+                                        className="w-[25px] h-[25px] sm:w-[30px] sm:h-[30px] border border-primary-dark-blue rounded-full grid place-items-center cursor-pointer">
+                                        <i className="fa-brands fa-whatsapp text-primary-dark-blue text-sm sm:text-base"></i>
                                     </a>
                                 </div>
                             </div>
