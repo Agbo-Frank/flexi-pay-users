@@ -12,7 +12,7 @@ import ProductVendor from "./productVendor";
 import ProductDetails from "./productDetails";
 import { formatNumber } from "../../utils";
 import { useCookies } from "react-cookie";
-import { FLEXIPAY_COOKIE } from "../../utils/constants";
+import { FLEXIPAY_COOKIE, FLEXIPAY_URL } from "../../utils/constants";
 import { useDispatch } from "react-redux";
 
 export function Product(){
@@ -88,12 +88,25 @@ export function Product(){
                         <div className="flex justify-between my-2 sm:my-0 px-2 sm:px-0">
                             <div>
                                 <p className="font-medium sm:font-semibold text-sm sm:text-md text-primary-dark-blue">Share this product</p>
-                                <div className="space-x-3 sm:space-x-5 flex items-center my-1 sm:my-3">
-                                    <i className="text-primary-dark-blue sm:text-2xl fa-brands fa-facebook"></i>
-                                    {/* <i className="text-primary-dark-blue sm:text-2xl fa-brands fa-instagram-square"></i> */}
-                                    <div className="bg-primary-dark-blue rounded-full w-5 h-5 sm:w-7 sm:h-7 inline-grid place-items-center">
-                                        <i className="text-white text-xs sm:text-md fa-brands fa-twitter"></i>
-                                    </div>
+                                <div className="space-x-2 sm:space-x-3 flex items-center my-1 sm:my-3">
+                                    <a 
+                                        href={"https://twitter.com/intent/tweet?text=Checkout%20this%20product%20on%20Flexipay&url=" + FLEXIPAY_URL + "/product/" + product?.slug } 
+                                        target="_blank"
+                                        className="w-[30px] h-[30px] border border-primary-dark-blue rounded-full grid place-items-center cursor-pointer">
+                                        <i className="fa-brands fa-twitter text-primary-dark-blue"></i>
+                                    </a>
+                                    <a 
+                                        href={"https://www.facebook.com/sharer/sharer.php?quote=Checkout%20this%20product%20on%20Flexipay&u=" + FLEXIPAY_URL + "/product/" + product?.slug}
+                                        target="_blank"
+                                        className="w-[30px] h-[30px] border border-primary-dark-blue rounded-full grid place-items-center cursor-pointer">
+                                        <i className="fa-brands fa-facebook-f text-primary-dark-blue"></i>
+                                    </a>
+                                    <a 
+                                        href={"whatsapp://send?text=Checkout%20this%20product%20on%20Flexipay" + FLEXIPAY_URL + "/product/" + product?.slug}
+                                        target="_blank"
+                                        className="w-[30px] h-[30px] border border-primary-dark-blue rounded-full grid place-items-center cursor-pointer">
+                                        <i className="fa-brands fa-whatsapp text-primary-dark-blue"></i>
+                                    </a>
                                 </div>
                             </div>
                             <div className="flex items-center space-x-1 self-start sm:self-end">

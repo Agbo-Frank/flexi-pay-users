@@ -49,7 +49,7 @@ export function ProductCardDummy(){
 
 export function ProductCardSkeleton(){
     return(
-        <div className="w-[150px] sm:w-[220px] rounded-lg h-fit p-2 space-y-4 my-2">
+        <div className="w-[180px] bg-white shadow sm:w-[220px] rounded-lg h-fit p-2 space-y-4 my-2">
             <div className='relative'>
                 <Skeleton variant='rounded' width={'100%'} height={150} />
                 <div className='absolute top-0 right-1/2 translate-x-1/2 translate-y-1/2'>
@@ -74,6 +74,7 @@ export function ProductSlide({images}: {images: string[]}){
     const settings = {
         infinite: false,
         speed: 800,
+        fade: true,
         slidesToShow: 1,
         slidesToScroll: 1,
     };
@@ -86,7 +87,7 @@ export function ProductSlide({images}: {images: string[]}){
                     {
                         images?.map((image, idx)=> (
                             <div className='w-full' key={idx}>
-                                <div className='w-full pr-4'>
+                                <div className='w-full'>
                                     <div className='w-full'><img src={image} className="object-cover w-full h-full"/></div>
                                 </div>
                             </div>
@@ -144,7 +145,7 @@ export function ProductSlide({images}: {images: string[]}){
     )
 }
 
-export function ProductsSlide({products, loading}: {products: IProduct[] | undefined, loading: boolean}){
+export function ProductsSlide({products, loading, title, link}: {products: IProduct[] | undefined, loading: boolean, title: string, link?: string}){
     let matches = useMediaQuery("(min-width:600px)")
     let slide: any = useRef()
     const settings = {
@@ -159,10 +160,10 @@ export function ProductsSlide({products, loading}: {products: IProduct[] | undef
     const navigate = useNavigate()
     return(
         <div className="px-2 sm:overflow-hidden rounded-2xl">
-            <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:p-4">
-                <p className="uppercase font-medium text-sm  sm:text-lg">similar products</p>
+            <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:px-4 sm:py-2">
+                <p className="Capitalize font-medium text-sm  sm:text-lg">{title}</p>
                 <Button 
-                    onClick={() => navigate('/products')} 
+                    onClick={() => navigate(`/${link}`)} 
                     color="secondary"
                     endIcon={<i className="fa-solid fa-chevron-right text-[8px] sm:text-[10px]"></i>}
                     className="text-xs">
@@ -171,7 +172,7 @@ export function ProductsSlide({products, loading}: {products: IProduct[] | undef
             </div>
             {
                 loading ?
-                <div className='flex whitespace-nowrap overflow-x-auto scrollbar-hidden'> 
+                <div className='flex space-x-2 whitespace-nowrap overflow-x-auto scrollbar-hidden'> 
                     {
                         data.map(d => (
                             <ProductCardSkeleton />

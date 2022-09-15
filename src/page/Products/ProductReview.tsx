@@ -36,10 +36,11 @@ export function ProductReview({ slug }: {slug: string}){
             <div className="w-full sm:py-5 sm:space-y-3">
                 <div className="flex justify-between border border-b-0 sm:border-0">
                     <p className="font-semibold sm:font-medium sm:text-lg m-2 sm:mb-0">Verified Customer’s Reviews</p>
-                    <div className="hidden sm:blockflex space-x-2 items-center cursor-pointer text-primary-orange-200">
-                        <p className="capitalize text-sm">View More</p>
-                        <i className="font-bold text-xs fa-solid fa-chevron-right"></i>
-                    </div>
+                    <Button
+                    color="secondary"
+                    endIcon={<i className="font-bold text-xs fa-solid fa-chevron-right"></i>}>
+                        View More
+                    </Button>
                 </div>
 
                 <div className="flex flex-col sm:flex-row sm:space-x-6 space-y-3 sm:space-y-0 border sm:border-0 p-2">
@@ -47,7 +48,7 @@ export function ProductReview({ slug }: {slug: string}){
                         <div className="p-4 border-b border-grey-100">
                             <h1 className="font-medium text-sm">Verified Ratings ({ reviews?.length })</h1>
                         </div>
-                        <div className="bg-white grid place-items-center text-4xl text-primary-gold font-medium m-4 py-10 rounded-lg">{ average_rating.toFixed(1) }</div>
+                        <div className="bg-white grid place-items-center text-4xl text-primary-gold font-medium m-4 py-10 rounded-lg">{ (average_rating/(reviews?.length || 1)).toFixed(1) }</div>
                         <div className="px-4 pb-4">
                             <div className="flex space-x-2 items-center">
                                 <p>{reviews?.filter(review => review.rate > 4.4).length}</p>
@@ -113,7 +114,7 @@ export function ProductReview({ slug }: {slug: string}){
                                     </div>
                                 )):
                                 reviews?.map((review, idx) => (
-                                    <div className="space-y-2">
+                                    <div className="space-y-2 border-b pb-4 w-full">
                                         <p className="text-sm">{review.comment}</p>
                                         {
                                             review.rate &&

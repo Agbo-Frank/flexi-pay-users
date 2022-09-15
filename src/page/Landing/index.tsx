@@ -36,12 +36,21 @@ export function Landing(){
                         <CategorySlide />
                     </div> */}
 
-                    <ProductsSlide products={products} loading={loadingProduct}/>
+                    <ProductsSlide 
+                        products={products} 
+                        title="Top Deals"
+                        
+                        loading={loadingProduct}
+                    />
                     {/* <ProductsSlideDummy /> */}
 
                     <BannerSlides />
 
-                    <ProductsSlide products={products} loading={loadingProduct}/>
+                    <ProductsSlide 
+                        products={products}
+                        title="Hot Deals" 
+                        loading={loadingProduct}
+                    />
                 </div>
 
                 <Footer />
