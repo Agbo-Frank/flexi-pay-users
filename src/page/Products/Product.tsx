@@ -43,6 +43,8 @@ export function Product(){
                 <meta name="description" content={product?.description} />
                 <meta property="og:title" content={product?.name} />
                 <meta property="og:image" content={product?.product_images[0].image_link} />
+                <meta property="og:image:url" content={product?.product_images[0].image_link} />
+                <meta property="og:image:secure_url" content={product?.product_images[0].image_link} />
                 <meta property="og:image:width" content="1280" />
                 <meta property="og:image:height" content="640" />
                 <meta property="og:url" content={FLEXIPAY_REDIRECT + "/product/" + product?.slug} />
