@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import theme from './config/theme';
 import { ThemeProvider } from '@mui/material';
 import { CookiesProvider } from 'react-cookie';
+import { HelmetProvider } from 'react-helmet-async';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,7 +19,9 @@ root.render(
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <CookiesProvider>
-            < App />
+            <HelmetProvider>
+              < App />
+            </HelmetProvider>
           </CookiesProvider>
         </ThemeProvider>
       </Provider>
