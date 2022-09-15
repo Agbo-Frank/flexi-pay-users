@@ -11,7 +11,7 @@ import { useSavedItemMutation } from "../../redux/api/SavedItems";
 import ProductVendor from "./productVendor";
 import ProductDetails from "./productDetails";
 import { formatNumber } from "../../utils";
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet-async';
 import { useCookies } from "react-cookie";
 import { FLEXIPAY_COOKIE, FLEXIPAY_REDIRECT, FLEXIPAY_URL } from "../../utils/constants";
 import { useDispatch } from "react-redux";
@@ -36,7 +36,7 @@ export function Product(){
 
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
-            <MetaTags>
+            <Helmet>
                 <title className="capitalize">{product?.name} | FlexiPay</title>
                 <meta property="og:type" content="website" />
                 <meta property="og:site_name" content="Flexipay Nigeria" />
@@ -53,7 +53,7 @@ export function Product(){
                 {/* <meta property="og:image:width" content="1280" />
                 <meta property="og:image:height" content="640" /> */}
                 <meta property="og:url" content={FLEXIPAY_REDIRECT + "/product/" + product?.slug} />
-            </MetaTags>
+            </Helmet>
             <div className="w-full h-fit bg-white sm:bg-grey-500">
                 <Header />
                 <Categories />
