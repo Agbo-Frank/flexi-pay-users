@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 import './index.css';
 import App from './App';
@@ -10,21 +10,21 @@ import { ThemeProvider } from '@mui/material';
 import { CookiesProvider } from 'react-cookie';
 import { HelmetProvider } from 'react-helmet-async';
 
-const root = ReactDOM.createRoot(
+ReactDOM.hydrate(
+  (
+    <React.StrictMode>
+      <BrowserRouter>
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>
+            <CookiesProvider>
+              <HelmetProvider>
+                < App />
+              </HelmetProvider>
+            </CookiesProvider>
+          </ThemeProvider>
+        </Provider>
+      </BrowserRouter>
+    </React.StrictMode>
+  ),
   document.getElementById('root') as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CookiesProvider>
-            <HelmetProvider>
-              < App />
-            </HelmetProvider>
-          </CookiesProvider>
-        </ThemeProvider>
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
 );
