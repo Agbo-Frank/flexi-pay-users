@@ -38,7 +38,7 @@ export function Product(){
         <Body bgColor="bg-white sm:bg-grey-500">
             <MetaTags>
                 <title className="capitalize">{product?.name} | FlexiPay</title>
-                <meta property="og:type" content="product" />
+                <meta property="og:type" content="website" />
                 <meta property="og:site_name" content="Flexipay Nigeria" />
                 <meta name="description" content={product?.description} />
                 <meta property="og:title" content={product?.name} />
