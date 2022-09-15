@@ -43,13 +43,7 @@ export function Product(){
                 <meta property="og:description" content={product?.description} />
                 <meta property="og:title" content={product?.name} />
                 <meta property="og:image" content={product?.product_images[0].image_link} />
-                <meta property="og:image:url" content={product?.product_images[0].image_link} />
-                <meta property="og:image:secure_url" content={product?.product_images[0].image_link} />
-                <link rel="canonical" href="https://rankmath.com" />
                 <meta property="fb:add_id" content="769500967651765" />
-                <meta name="og:image" content={product?.product_images[0].image_link} />
-                <meta name="og:image:url" content={product?.product_images[0].image_link} />
-                <meta name="og:image:secure_url" content={product?.product_images[0].image_link} />
                 {/* <meta property="og:image:width" content="1280" />
                 <meta property="og:image:height" content="640" /> */}
                 <meta property="og:url" content={FLEXIPAY_REDIRECT + "/product/" + product?.slug} />
