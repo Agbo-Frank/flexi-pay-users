@@ -44,7 +44,7 @@ function Buttons ( { order, setOpen }: IOrderButtons): JSX.Element{
     const matches = useMediaQuery('(min-width:600px)');
     const dispatch = useDispatch()
 
-    if(order.status === 'processing'){
+    if(order.status === 'processed'){
         return(
             <Button 
                 color="secondary"
@@ -79,23 +79,25 @@ function Buttons ( { order, setOpen }: IOrderButtons): JSX.Element{
         </>
         )
     }
-    return(<>
-        <Button 
-            color="secondary"
-            size={matches ? "large" : "medium"}  
-            onClick={() => setOpen(state => ({...state, track: true}))}
-            startIcon={<TrackIcon color='white' size="17" />}
-            variant="contained">
-                Track Items
-        </Button>
-        <Button 
-            color="secondary"
-            size={matches ? "large" : "medium"}  
-            variant="outlined"
-            onClick={() => setOpen(state => ({...state, cancel: true}))}>
-                Cancel
-        </Button>
-    </>)
+    else{
+        return(<>
+            <Button 
+                color="secondary"
+                size={matches ? "large" : "medium"}  
+                onClick={() => setOpen(state => ({...state, track: true}))}
+                startIcon={<TrackIcon color='white' size="17" />}
+                variant="contained">
+                    Track Items
+            </Button>
+            <Button 
+                color="secondary"
+                size={matches ? "large" : "medium"}  
+                variant="outlined"
+                onClick={() => setOpen(state => ({...state, cancel: true}))}>
+                    Cancel
+            </Button>
+        </>)
+    }
 }
 
 function Order ({ order}: IOrderDetails) {
@@ -143,7 +145,7 @@ function Order ({ order}: IOrderDetails) {
                         <div className="flex flex-col sm:h-full items-stretch">
                             <CardText>{ order.order_detail?.product.name }</CardText>
                             <small className="text-grey-200 text-xs sm:text-sm">Placed on  {moment(order.order_detail.created_at).format("MMM Do YY")}</small>
-                            <small className="text-grey-200 text-xs sm:text-sm my-1">orderId: <CopyText text={`${345679}`}/></small>
+                            <small className="text-grey-200 text-xs sm:text-sm my-1">orderId: <CopyText text={order.id}/></small>
                             {
                                 // type === 'subscription' ?
                                 // <ProgressBar width="50%"/>:

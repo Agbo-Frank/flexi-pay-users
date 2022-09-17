@@ -1,5 +1,5 @@
 import { CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { ITransacation } from "../../interface"
 import { useLazyGetTransactionQuery } from "../../redux/api/wallet"
 import { formatNumber } from "../../utils"
@@ -19,9 +19,11 @@ function Row({txn}: {txn: ITransacation}){
         <TableRow hover 
         // sx={{'&:hover': {boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)'}}}
         >
-            <TableCell className="flex items-center space-x-2">
-                <i className={`fa-solid ${txn.type === "CREDIT" ? "text-[#8EC162] bg-[#8EC162]/20 fa-arrow-down" : "text-[#FF5000] bg-[#FF5000]/20 fa-arrow-up"}  rounded-full w-6 h-6 inline-grid place-items-center`}></i>
-                <span>{txn.type === "CREDIT" ? "Credit" : "Debit"}</span>
+            <TableCell>
+                <span className="flex items-center space-x-2">
+                    <i className={`fa-solid ${txn.type === "CREDIT" ? "text-[#8EC162] bg-[#8EC162]/20 fa-arrow-down" : "text-[#FF5000] bg-[#FF5000]/20 fa-arrow-up"}  rounded-full w-6 h-6 inline-grid place-items-center`}></i>
+                    <span>{txn.type === "CREDIT" ? "Credit" : "Debit"}</span>
+                </span>
             </TableCell>
             <TableCell>₦ {formatNumber(txn.amount)}</TableCell>
             <TableCell className="" sx={{maxWidth: 300}}><span className="capitalize truncate w-full block text-sm">{txn.info}</span></TableCell>
@@ -37,6 +39,7 @@ function Row({txn}: {txn: ITransacation}){
 }
 
 export function WalletTransaction(){
+    let [page, setPage] = useState(1)
     let [getTransaction, {transaction, pagination, isLoading}] = useLazyGetTransactionQuery({
         selectFromResult: ({ data, isLoading }) => ({
             transaction: data?.result.data,
@@ -48,8 +51,8 @@ export function WalletTransaction(){
     })
 
     useEffect(() => {
-        getTransaction("1")
-    }, [transaction, pagination])
+        getTransaction(page.toString())
+    }, [transaction, page])
     function onChangePage(e: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, page: number){
         getTransaction(page.toString())
     }

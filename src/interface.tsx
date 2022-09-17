@@ -329,6 +329,8 @@ export interface ICheckoutDetails {
 }
 
 export interface IOrder {
+    id: string;
+    order_type: string;
     status: string;
     discount_rate: string;
     discount_price: string;

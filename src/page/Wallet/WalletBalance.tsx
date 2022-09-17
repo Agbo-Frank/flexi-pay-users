@@ -82,8 +82,17 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                             <Skeleton height={25} width="35%" className="mx-auto"/> :
                             <p className="text-primary-dark-blue font-semibold text-xl">₦ {formatNumber(`${wallet?.result.data?.balance}`)} </p>
                         }
-                        <p className="text-grey-700">Account no: <CopyText text={`${wallet?.result.data.account_number}`}/></p>
-                        <p className="text-grey-700">Bank: <CopyText text={`${wallet?.result.data.bank_name }`}/></p>
+                        {
+                            isLoading ? 
+                            <>
+                                <Skeleton height={25} width="55%" className="mx-auto"/> 
+                                <Skeleton height={25} width="65%" className="mx-auto"/>
+                            </> :
+                            <>
+                                <p className="text-grey-700">Account no: <CopyText text={`${wallet?.result.data.account_number}`}/></p>
+                                <p className="text-grey-700">Bank: <CopyText text={`${wallet?.result.data.bank_name }`}/></p>
+                            </>
+                        }
                         {/* <p className="text-grey-700 text-sm">Click on the button below  to fund or Withdraw from your wallet</p> */}
                         <div className="flex justify-center space-x-4 items-center mx-auto my-4 w-full">
                             <Button

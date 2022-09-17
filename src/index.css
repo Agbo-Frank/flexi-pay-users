@@ -46,17 +46,45 @@ html{
 .scrollbar-hidden::-webkit-scrollbar{
   display: none;
 }
-.proccessing{
-  background-color: #E78405;
+.processed{
+  background-color: rgba(25, 0, 254, 0.05);
+  color: #1900FE;
 }
+.solid.processed{
+  background-color: #1900FE;
+  color: white;
+}
+.icon.processed{
+  color: #1900FE;
+}
+
+.pending{
+  background-color: #FFF9F7;
+  color: #FF5000;
+}
+.solid.pending{
+  background-color: #FF5000;
+  color: white;
+}
+.icon.pending{
+  color: #FF5000;
+}
+
+.placed{
+  background-color: #FFF9F7;
+  color: #A0A0A1;
+}
+.solid.placed{
+  background-color: #A0A0A1;
+  color: white;
+}
+.icon.placed{
+  color: #A0A0A1;
+}
+
+
 .delivered{
   background-color: #91CD5E;
-}
-.pending{
-  background-color: #FF5000;
-}
-.placed{
-  background-color: #A0A0A1;
 }
 
 .slider{

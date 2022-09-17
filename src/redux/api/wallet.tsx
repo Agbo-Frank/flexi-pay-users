@@ -85,5 +85,6 @@ export const {
     useLazyGetTransactionQuery,
     useGetWalletDetailsQuery,
     useLazyGetWalletDetailsQuery,
-    useGetUserTransactionQuery
+    useGetUserTransactionQuery,
+    useLazyGetUserTransactionQuery
 } = WalletApi

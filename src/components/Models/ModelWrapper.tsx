@@ -13,7 +13,7 @@ function ModelWrapper({ children, isOpen, closeModal, size = "large" }: IModel):
           <ClickAwayListener onClickAway={() => {if(closeModal)closeModal()}}>
             <>
               {children}
-              <i className="fa-solid fa-xmark hover:text-crimson text-xl absolute right-3 top-3"
+              <i className="fa-solid fa-xmark hover:text-crimson text-xl absolute right-3 top-3 z-50"
               onClick={closeModal}></i>
             </>
           </ClickAwayListener>

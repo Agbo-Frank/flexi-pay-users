@@ -18,7 +18,7 @@ export function ProductCard({product}: {product: IProduct}){
                 <img src={product.product_images[0].image_link} className="w-full h-full object-cover" alt={product.name}/>
             </div>
             <div className='space-y-1'>
-                <p className='truncate text-grey-1200 text-sm capitalize font-light'>{product.description}</p>
+                <p className='truncate text-grey-1200 text-sm capitalize font-light'>{product.name}</p>
                 <div className="flex items-center space-x-3">
                     <p className="text-primary-dark-blue font-medium text-md">₦ {formatNumber(product.price)}</p>
                     <s className="text-xs font-light text-grey-200">₦ 10,600</s>
@@ -86,9 +86,9 @@ export function ProductSlide({images}: {images: string[]}){
                 <Slider ref={slide} {...settings}>
                     {
                         images?.map((image, idx)=> (
-                            <div className='w-full' key={idx}>
-                                <div className='w-full'>
-                                    <div className='w-full'><img src={image} className="object-cover w-full h-full"/></div>
+                            <div className='w-full h-[400px] rounded overflow-hidden' key={idx}>
+                                <div className='w-full h-full'>
+                                    <div className='w-full h-full'><img src={image} className="object-cover w-full h-full"/></div>
                                 </div>
                             </div>
                         ))
@@ -120,7 +120,7 @@ export function ProductSlide({images}: {images: string[]}){
             <div className='w-full h-20 whitespace-nowrap scrollbar-hidden space-x-3 overflow-x-auto overflow-y-hidden'>
                 {
                     images?.map((image, i) => (
-                        <div className={`relative inline-block group w-20 h-full hover:border-2 hover:border-primary-orange-200 rounded-lg ${index === i && 'border-2 border-primary-orange-200'} overflow-hidden cursor-pointer`}
+                        <div className={`relative inline-block group w-[70px] h-[70px] hover:border-2 hover:border-primary-orange-200 rounded-lg ${index === i && 'border-2 border-primary-orange-200'} overflow-hidden cursor-pointer`}
                         onClick={() => {
                             setIndex(i)
                             slide.current.slickGoTo(i)
