@@ -23,7 +23,6 @@ import { FLEXIPAY_COOKIE } from "../../utils/constants"
 import { useCheckoutMutation, useProcessCheckoutMutation } from "../../redux/api/Order"
 import AddressBook from "./Addressbook"
 import { formatNumber } from "../../utils"
-import moment from "moment"
 import { ICart, IDetails, TCheckoutMethod } from "../../interface"
 import PaymentMethod from "./paymentMethod"
 import { confirmOrder } from "./service"
@@ -80,6 +79,8 @@ export function CheckOut(){
     let [checkoutdetails, setCheckoutdetails] = useState<Partial<IDetails>[]>()
 
     let dispatch = useDispatch()
+    console.log('process', data, response)
+    console.log('cart', carts)
     
 
     useEffect(() => {
@@ -87,12 +88,19 @@ export function CheckOut(){
             .unwrap()
             .then(res => {
                 let data = res.result.data
-                if(!data?.address_details){
+                // if(res.status === 'failed'){
+                //     dispatch(toggleSnackBar({
+                //         open: true,
+                //         message: res.message,
+                //         severity: 'error'
+                //     }))
+                // }
+                if(!data){
                     getUserCart({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""})
                         .unwrap()
                         .then(data => {
                             console.log(data.result.data)
-                            if(!data.result.data){
+                            if(!data.result.data || data.result.data.length === 0){
                                 navigate('/cart', { replace: true })
                             }
                             else{
@@ -105,7 +113,7 @@ export function CheckOut(){
                                     total: sub_total,
                                     vat: null
                                 })
-                                setCheckoutdetails({...data.result.data})
+                                setCheckoutdetails(data.result.data)
                             }
                         })
                 }
@@ -128,6 +136,8 @@ export function CheckOut(){
             }))
         }
     }, [])
+
+    console.log(checkoutdetails)
 
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
@@ -209,9 +219,9 @@ export function CheckOut(){
                         }
                     </Wrapper>
 
-                    <Wrapper>
-                        {
-                            data?.address_details &&
+                    {
+                        data?.address_details &&
+                        <Wrapper>
                             <>
                                 <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
                                     <div className="space-x-2 flex items-center">
@@ -246,51 +256,49 @@ export function CheckOut(){
 
                                     <PaymentMethod setCheckoutMethod={setCheckoutMethod}/>
                                 </div>
+
+                                <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
+                                    <p className="text-primary-dark-blue text-sm sm:text-base font-medium mb-3">Confirm Order</p>
+                                    
+                                    <ul>
+                                        <li className="flex justify-between items-center font-medium py-2">
+                                            <span>Subtotal</span>
+                                            <span>₦ {formatNumber(`${price?.sub_total}`)}</span>
+                                        </li>
+                                        {
+                                            price?.total_delivery_fee &&
+                                            <li className="flex justify-between items-center font-medium py-2">
+                                                <span>Delivery Fee</span>
+                                                <span>₦ {formatNumber(`${price?.total_delivery_fee}`)}</span>
+                                            </li>
+                                        }
+                                        {
+                                            price?.vat &&
+                                            <li className="flex justify-between items-center font-medium py-2">
+                                                <span>Vat</span>
+                                                <span>₦ {formatNumber(`${price?.vat}`)}</span>
+                                            </li>
+                                        }
+                                        
+                                        <li className="flex justify-between items-center font-medium py-3 border-t mt-2">
+                                            <span>Total</span>
+                                            <span className={`text-[18px] font-semibold ${data?.address_details ? "text-primary-orange-200" : "text-grey-700"} `}>₦ {formatNumber(`${price?.total}`)}</span>
+                                        </li>
+                                    </ul>
+
+                                    <LoadingButton
+                                        fullWidth
+                                        variant="contained"
+                                        color="secondary"
+                                        loading={checkingout}
+                                        disabled={data?.address_details ? false : true}
+                                        onClick={() => confirmOrder(checkoutMethod, dispatch, checkout)}>
+                                            confirm order
+                                    </LoadingButton>
+                                </div>
                             </>
-                        }
-
-                        <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
-                            <p className="text-primary-dark-blue text-sm sm:text-base font-medium mb-3">Confirm Order</p>
-                            
-                            <ul>
-                                <li className="flex justify-between items-center font-medium py-2">
-                                    <span>Subtotal</span>
-                                    <span>₦ {formatNumber(`${price?.sub_total}`)}</span>
-                                </li>
-                                {
-                                    price?.total_delivery_fee &&
-                                    <li className="flex justify-between items-center font-medium py-2">
-                                        <span>Delivery Fee</span>
-                                        <span>₦ {formatNumber(`${price?.total_delivery_fee}`)}</span>
-                                    </li>
-                                }
-                                {
-                                    price?.vat &&
-                                    <li className="flex justify-between items-center font-medium py-2">
-                                        <span>Vat</span>
-                                        <span>₦ {formatNumber(`${price?.vat}`)}</span>
-                                    </li>
-                                }
-                                
-                                <li className="flex justify-between items-center font-medium py-3 border-t mt-2">
-                                    <span>Total</span>
-                                    <span className={`text-[18px] font-semibold ${data?.address_details ? "text-primary-orange-200" : "text-grey-700"} `}>₦ {formatNumber(`${price?.total}`)}</span>
-                                </li>
-                            </ul>
-
-                            <LoadingButton
-                                fullWidth
-                                variant="contained"
-                                color="secondary"
-                                loading={checkingout}
-                                disabled={data?.address_details ? false : true}
-                                onClick={() => confirmOrder(checkoutMethod, dispatch, checkout)}>
-                                    confirm order
-                            </LoadingButton>
-                        </div>
-
-                        
-                    </Wrapper>
+                        </Wrapper>
+                    }
                 </div>
 
                 <div className="hidden sm:block w-full sm:w-4/12">

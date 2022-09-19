@@ -21,7 +21,7 @@ export const UserApi = createApi({
         }
     }),
     reducerPath: 'User',
-    tagTypes: ['User'],
+    tagTypes: ['User', "Checkout"],
     refetchOnReconnect: true,
     endpoints: (build) => ({
         getUser: build.query<IResponse<{data: IUser}>, void>({
@@ -55,7 +55,7 @@ export const UserApi = createApi({
                 method: "POST",
                 body
             }),
-            invalidatesTags: ['User'],
+            invalidatesTags: ['User', "Checkout"],
         }),
         updateDeliveryAddress: build.mutation<IResponse<{data: null}>, IAddAddress>({
             query: (body) => ({
@@ -63,7 +63,7 @@ export const UserApi = createApi({
                 method: "POST",
                 body
             }),
-            invalidatesTags: ['User'],
+            invalidatesTags: ['User', "Checkout"],
         })
     })
 })

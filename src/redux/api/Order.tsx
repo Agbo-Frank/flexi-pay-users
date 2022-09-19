@@ -18,7 +18,7 @@ export const OrderApi = createApi({
         }
     }),
     reducerPath: 'Order',
-    tagTypes: ['Product', 'Order', 'Subscription'],
+    tagTypes: ['Product', 'Order', 'Subscription', "Checkout"],
     endpoints: (build) => ({
         checkout: build.mutation<IResponse<{data: {link: string}}>, {checkout_method: TCheckoutMethod}>({
             query: (body) => ({
@@ -32,7 +32,8 @@ export const OrderApi = createApi({
             query: () => ({
                 url: "/process-checkout",
                 method: "POST",
-            })
+            }),
+            invalidatesTags: ["Checkout"]
         }),
         getUserOrders: build.query<IResponse<{data: IPagination<IOrder[]>}>, void>({
             query: () => ({
