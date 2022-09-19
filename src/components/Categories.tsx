@@ -149,7 +149,7 @@ function AllCategories(){
 
 export function Categories (): JSX.Element {
     return(
-        <div className="hidden sm:block relative w-full bg-primary-dark-blue z-50">
+        <div className="hidden sm:block relative w-full bg-primary-dark-blue">
             <div className="flex py-2 bg-primary-dark-blue font-medium justify-between fp-screen">
                 <div className="flex justify-start space-x-5 capitalize items-center  text-sm">
                     <AllCategories />
