@@ -38,7 +38,8 @@ export const ProductApi = createApi({
             query: (body) => ({
                 url: '/guest/product/filter',
                 method: 'GET',
-                params: body
+                params: body,
+    
             })
         }),
         getCategories: build.query<IResponse<ICategory[]>, void>({

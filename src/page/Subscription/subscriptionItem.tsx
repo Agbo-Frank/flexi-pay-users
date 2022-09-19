@@ -1,22 +1,19 @@
 
 import { useDispatch } from 'react-redux'
 import { CardActions, CardImg, CardText, CardWrapper, CopyText, ProgressBar } from "../../components"
-import OrderDetails from "./OrderDetails"
+// import OrderDetails from "./OrderDetails"
 import Empty from "../../components/Empty"
 import { useState, Dispatch, SetStateAction } from "react"
 import TV from '../../asset/monitor.png'
 import BagIcon from "../../components/icons/Bag"
 import {
-    HeartIcon, CartIcon, 
-    TrashIcon, TrackIcon, 
+    TrackIcon, 
     DocIcon, StarIcon
 } from "../../components/icons"
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery } from '@mui/material'
-import { IOrder } from '../../interface'
+import { IOrder, ISubscription } from '../../interface'
 import moment from 'moment'
-import Tracker from './Tracker'
 import { formatNumber } from '../../utils'
-import ProductReviewForm from './ProductReviewForm'
 import { LoadingButton } from '@mui/lab'
 
 
@@ -100,18 +97,15 @@ function Buttons ( { order, setOpen }: IOrderButtons): JSX.Element{
     }
 }
 
-function Order ({ order}: IOrderDetails) {
+function Subscription ({ subscription }: {subscription: ISubscription}) {
+    const matches = useMediaQuery('(min-width:600px)');
     let [open, setOpen] = useState({
-        track: false,
         details: false,
-        review: false,
         cancel: false
     })
     return(
         <>  <>
-                <Tracker order={order} open={open.track} close={() => setOpen(state => ({...state, track: false}))}/>
-                <OrderDetails order={order} open={open.details} close={() => setOpen(state => ({...state, details: false}))}/>
-                <ProductReviewForm order={order} open={open.review} close={() => setOpen(state => ({...state, review: false}))}/>
+                {/* <OrderDetails order={order} open={open.details} close={() => setOpen(state => ({...state, details: false}))}/> */}
                 <Dialog open={open.cancel} onClose={() => setOpen(state => ({...state, cancel: false}))}>
                     <DialogTitle>Cancel Order</DialogTitle>
                     <DialogContent>
@@ -140,25 +134,36 @@ function Order ({ order}: IOrderDetails) {
             <CardWrapper>
                 <div className="flex w-full sm:w-9/12 space-x-2 sm:space-x-4 items-stretch pb-4 sm:pb-0"
                 onClick={() => setOpen(state => ({...state, details: true}))}>
-                    <CardImg src={order.order_detail?.product.product_images[0].image_link} />
+                    <CardImg src={TV} />
                     <div>
                         <div className="flex flex-col sm:h-full items-stretch">
-                            <CardText>{ order.order_detail?.product.name }</CardText>
-                            <small className="text-grey-200 text-xs sm:text-sm">Placed on  {moment(order.order_detail.created_at).format("MMM Do YY")}</small>
-                            <small className="text-grey-200 text-xs sm:text-sm my-1">orderId: <CopyText text={order.id}/></small>
-                            <p className={`${ order.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ order.status }</p>
-                            <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(order.order_detail.price)}</p>
+                            <CardText>Books</CardText>
+                            <small className="text-grey-200 text-xs sm:text-sm">Placed on  {moment(subscription.created_at).format("MMM Do YY")}</small>
+                            <ProgressBar width="50%"/>
+                            <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(subscription.amount)}</p>
                         </div>
                     </div>
                 </div>
                 <CardActions>
-                    <Buttons 
-                        order={order}
-                        setOpen={setOpen}/>
+                <Button 
+                    color="secondary"
+                    size={matches ? "large" : "medium"}  
+                    onClick={() => setOpen(state => ({...state, track: true}))}
+                    startIcon={<TrackIcon color='white' size="17" />}
+                    variant="contained">
+                        Track Items
+                </Button>
+                <Button 
+                    color="secondary"
+                    size={matches ? "large" : "medium"}  
+                    variant="outlined"
+                    onClick={() => setOpen(state => ({...state, cancel: true}))}>
+                        Cancel
+                </Button>
                 </CardActions>
             </CardWrapper> 
         </>  
     )
 }
 
-export default Order
+export default Subscription

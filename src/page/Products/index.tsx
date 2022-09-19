@@ -1,4 +1,4 @@
-import { Button, MenuItem, Pagination, Skeleton } from "@mui/material"
+import { Button, Checkbox, MenuItem, Pagination, Skeleton } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
 import { 
@@ -15,6 +15,7 @@ import {
     useLazyFilterProductQuery, 
     useLazySearchProductQuery 
 } from "../../redux/api/Product"
+import { hasQueryString, serializeFormQuery } from "../../utils"
 import Filters from "./filters"
 
 
@@ -23,32 +24,30 @@ export function Products(){
     let [products, setProducts] = useState<IProduct[]>([])
     let [loading, setLoading] = useState(false)
     let [pagination, setPagination] = useState<IPagination<IProduct[]>>()
+
+    let [searchParams, setSearchParams] = useSearchParams()
+    
     let [filters, setFilters] = useState<IFilter>({
-        parent_category: "",
-        sub_category: "",
+        parent_category: searchParams.get('parent_category') || "",
+        sub_category:  "",
         price: "",
-        product_name: "",
-        latest: ""
+        product_name: searchParams.get('search') || "",
+        latest: searchParams.get('latest')  || 'false',
+        page
     })
 
-    let [searchParams] = useSearchParams()
     let navigate = useNavigate()
-
-    let [searchProduct] = useLazySearchProductQuery()
     let [filterProduct] = useLazyFilterProductQuery()
     let [getProducts] = useLazyGetProductsQuery()
 
     useEffect(() => {
         setLoading(true)
-        if(searchParams.has('search')){
-            searchProduct({
-                search_params: searchParams.has('search') ? `${searchParams.get('search')}` : "",
-                page: page.toString()
-            })
+        if(hasQueryString(searchParams)){
+            filterProduct(filters)
                 .unwrap()
                 .then(result => {
+                    console.log(result)
                     setProducts(result.result.data.data)
-
                     setPagination(result.result.data)
                     setLoading(false)
                 })
@@ -61,26 +60,11 @@ export function Products(){
                 .then(result => {
                     setProducts(result.result.data)
                     setPagination(result.result)
-                    setLoading(false)
                 })
                 .catch(err => console.log(err))
         }
-    }, [page, searchParams])
-
-    useEffect(() => {
-        if(searchParams.has('filters')){
-            filterProduct(filters)
-                .unwrap()
-                .then(result => {
-                    console.log(result)
-                    setProducts(result.result.data.data)
-                    setPagination(result.result.data)
-                    setLoading(false)
-                })
-                .catch(err => console.log(err))
-
-        }
-    }, [filters])
+        setLoading(false)
+    }, [page, searchParams, filters])
 
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
@@ -94,14 +78,17 @@ export function Products(){
                 <div className="fp-screen flex flex-col sm:flex-row sm:space-x-6 bg-white sm:bg-grey-500 justify- items-stretch">
                     <Filters 
                         filters={filters} 
-                        setFilters={setFilters} />
+                        setFilters={setFilters}
+                        searchParams={searchParams} 
+                        setSearchParams={setSearchParams}
+                    />
                     <div className="w-full sm:w-9/12">
                         <div className="rounded-lg bg-white">
                             <div className="flex justify-between items-center py-3 px-2 sm:px-6 border-b border-grey-100">
                                 <p>{
                                     loading ?
                                     <Skeleton width={150} sx={{fontSize: 16}}/>: 
-                                    `${pagination?.total} Results Found`
+                                    `${pagination?.total || 0} Results Found`
                                 }</p>
                                 {/* <div className="flex items-center space-x-4">
                                     <p>Sort By:</p>
@@ -113,6 +100,19 @@ export function Products(){
                                         </DropDown>
                                     </div>
                                 </div> */}
+                                <div className="flex items-center">
+                                    <Checkbox 
+                                        color="secondary"
+                                        checked={
+                                            searchParams.has('latest') ?
+                                            searchParams.get('latest') === 'true' ? true : false :
+                                            filters.latest === 'true' ? true : false
+                                        }
+                                        size="small"
+                                        onChange={(e, checked) => setSearchParams({...serializeFormQuery(searchParams), latest: `${checked}`})}
+                                    />
+                                    <span>Latest</span>
+                                </div>
                             </div>
                             <div className={`${products?.length > 0 || loading ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4' : ""} grid gap-2 px-2 sm:px-6 py-1`}>
                                 {

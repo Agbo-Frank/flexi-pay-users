@@ -39,3 +39,18 @@ export function getColor(status: string){
     }
   }
 }
+
+export function serializeFormQuery(search: URLSearchParams){
+  let params: any = {}
+  for (let [key, value] of search.entries()){
+    params[key] = value
+  }
+  return params
+}
+export function hasQueryString(search: URLSearchParams){
+  let keys = []
+  for (let key of search.keys()){
+    keys.push(key)
+  }
+  return keys.length > 0 ? true : false
+}

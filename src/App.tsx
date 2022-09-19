@@ -5,7 +5,8 @@ import {
   Orders, Dashboard, SavedItems, 
   Wallet, Product, Products,
   Contact, Landing,
-  Auth
+  Auth,
+  Subscriptions
 } from './page';
 
 import "slick-carousel/slick/slick.css"; 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>}/>
         <Route path='/cart' element={<Carts />} />
         <Route path='/order' element={<RequireAuth><Orders /></RequireAuth>} />
+        <Route path='/subscription' element={<RequireAuth><Subscriptions /></RequireAuth>} />
         <Route path='/product/:slug' element={<Product />} />
         <Route path='/saved-items' element={<RequireAuth><SavedItems /></RequireAuth>} />
         <Route path='/checkout' element={<CheckOut />} />

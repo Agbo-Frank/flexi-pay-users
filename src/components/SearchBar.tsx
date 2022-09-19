@@ -1,17 +1,17 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { SearchIcon } from "./icons"
 
 
 export function SearchBar(){
-    let [searchInput, setSearchInput] = useState('')
+    let searchParams = useSearchParams()[0]
+    let [searchInput, setSearchInput] = useState(searchParams.get('search') || '')
 
     let navigate = useNavigate()
 
     function search(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault()
         navigate("/products?search=" + searchInput)
-        setSearchInput('')
     }
     
     return(

@@ -18,7 +18,7 @@ export function FPFormikCreateInstallment(createInstallment: ITrigger<Omit<IInst
         name: ''
     }
 
-    async function onSubmit (value: typeof initialValues, formikHelpers: FormikHelpers<Omit<IInstallment, 'installment_uuid' | 'uuid'>| any>){
+    async function onSubmit (value: any, formikHelpers: FormikHelpers<Omit<IInstallment, 'installment_uuid' | 'uuid'>| any>){
         try{
             let data = await createInstallment(value).unwrap()
 

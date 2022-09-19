@@ -162,7 +162,6 @@ export interface IUserTransacation {
     service_type: string;
     service_provider: string;
     service_number: string;
-    charges: string;
     status: string;
     created_at: string;
     updated_at: string;
@@ -259,7 +258,8 @@ export interface IFilter {
     sub_category?: string;
     price?: string;
     product_name?: string;
-    latest?: string;
+    latest?: boolean | string;
+    page?: string | number
 }
 
 export interface ICategory {
@@ -299,6 +299,7 @@ export interface IInstallment {
     name: string;
     uuid: string;
     installment_uuid: string;
+    is_approved: number
 }
 
 export interface IRate {
@@ -352,4 +353,16 @@ export interface IReview {
     comment: string;
     rate: string | number;
     slug: string
+}
+
+export interface ISubscription {
+    amount_to_be_paid: string;
+    amount: string;
+    amount_left: string;
+    is_completed: number;
+    method: string;
+    created_at: string | Date;
+    updated_at: string | Date;
+    status: string;
+    installment: IInstallment
 }

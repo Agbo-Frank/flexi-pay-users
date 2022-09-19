@@ -9,4 +9,5 @@ export * from './Products/index'
 export * from './Products/Product'
 export * from './Profile/index'
 export * from './SavedItems/index'
+export * from "./Subscription/index"
 export * from './Wallet/index'

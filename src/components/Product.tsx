@@ -163,7 +163,7 @@ export function ProductsSlide({products, loading, title, link}: {products: IProd
             <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:px-4 sm:py-2">
                 <p className="Capitalize font-medium text-sm  sm:text-lg">{title}</p>
                 <Button 
-                    onClick={() => navigate(`/${link}`)} 
+                    onClick={() => navigate(`${link}`)} 
                     color="secondary"
                     endIcon={<i className="fa-solid fa-chevron-right text-[8px] sm:text-[10px]"></i>}
                     className="text-xs">

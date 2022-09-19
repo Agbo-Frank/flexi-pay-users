@@ -39,7 +39,7 @@ export function Landing(){
                     <ProductsSlide 
                         products={products} 
                         title="Top Deals"
-                        
+                        link="/products"
                         loading={loadingProduct}
                     />
                     {/* <ProductsSlideDummy /> */}
@@ -49,6 +49,7 @@ export function Landing(){
                     <ProductsSlide 
                         products={products}
                         title="Hot Deals" 
+                        link="/products"
                         loading={loadingProduct}
                     />
                 </div>
