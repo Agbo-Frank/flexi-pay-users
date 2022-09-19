@@ -13,9 +13,11 @@ export function CreateAccForm({userData, open, close}: {userData: IUser | null |
     const formik = FPcreateAccForm(userData, createAccount, close)
     const matches = useMediaQuery('(min-width:600px)'); 
     return(
-        <ModelWrapper isOpen={open} closeModal={close}>
-            <p className="text-lg px-4 text-grey-200 font-medium mb-6 sticky left-0">Get an account with us</p>
-            <form className="px-3" onSubmit={formik.handleSubmit}>
+        <ModelWrapper 
+            isOpen={open} 
+            closeModal={close}
+            title="Get an account with us">
+            <form className="py-5 px-4 h-full" onSubmit={formik.handleSubmit}>
                 <div className="flex flex-col sm:flex-row w-full justify-between items-center sm:gap-4">
                     <FormInput
                         type="text"

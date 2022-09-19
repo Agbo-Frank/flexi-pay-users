@@ -20,29 +20,30 @@ function ProductReviewForm({order, open, close}: IOrderModel){
 
     let formik = FPFormikProductReview(comment, rate)
     return(
-        <ModelWrapper isOpen={open} closeModal={close}>
+        <ModelWrapper 
+            isOpen={open} 
+            closeModal={close}
+            components={
+            <div className="flex w-full">
+                <div 
+                className={`w-1/2 ${!isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200'} border-solid text-sm sm:text-base  py-3 px-2 hover:bg-gray-100 cursor-pointer`}
+                onClick={() => setIsReport(false)}>Rate This Prodcuct</div>
+                <div 
+                className={`w-1/2 text-right ${isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200 '} text-sm sm:text-base hover:bg-gray-100 py-3 px-2 cursor-pointer`}
+                onClick={() => setIsReport(true)}>Report This Product</div>
+            </div>
+        }>
             <div className="h-full overflow-y-auto scrollbar relative px-1">
-                <div className="sticky top-0 left-0 bg-white">
-                    <div className="flex w-11/12 mx-4">
-                        <div 
-                        className={`w-1/2 mb-2 ${!isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200'} border-solid text-sm sm:text-base  py-3 px-2 hover:bg-gray-100 cursor-pointer`}
-                        onClick={() => setIsReport(false)}>Rate This Prodcuct</div>
-                        <div 
-                        className={`w-1/2 text-right mb-2 ${isReport ? 'text-primary-blue border-primary-blue border-b-2' : 'text-grey-200 border-b-1 border-grey-200 '} text-sm sm:text-base hover:bg-gray-100 py-3 px-2 cursor-pointer`}
-                        onClick={() => setIsReport(true)}>Report This Product</div>
-                    </div>
-
-                    <CardWrapper 
-                    styles="rounded-sm">
-                        <div className="flex w-full sm:w-full space-x-2 sm:space-x-4 items-stretch sm:pb-0">
-                            <img src={order.order_detail.product.product_images[0].image_link} alt="" className="w-[108px] h-[108px]  object-cover rounded sm:rounded-md"/>
-                            <div className="flex flex-col w-full">
-                                <CardText>{ order.order_detail.product.name }</CardText>
-                                <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(order.order_detail.price)}</p>
-                            </div>
+                <CardWrapper 
+                styles="rounded-sm">
+                    <div className="flex w-full sm:w-full space-x-2 sm:space-x-4 items-stretch sm:pb-0">
+                        <img src={order.order_detail.product.product_images[0].image_link} alt="" className="w-[108px] h-[108px]  object-cover rounded sm:rounded-md"/>
+                        <div className="flex flex-col w-full">
+                            <CardText>{ order.order_detail.product.name }</CardText>
+                            <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(order.order_detail.price)}</p>
                         </div>
-                    </CardWrapper>
-                </div>
+                    </div>
+                </CardWrapper>
 
                 <p className="w-11/12 text-center text-crimson text-[13px] sm:text-sm font-medium bg-primary-orange-300 p-1 my-5 mx-4 rounded-lg">
                     Your { !isReport ? 

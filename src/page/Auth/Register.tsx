@@ -104,7 +104,7 @@ export function Register() {
                         }
                     </div>
                 </Button>
-                <small className='text-center block'>Already have an account? <Link to="/auth/login" className='text-primary-orange-200'>Login</Link></small>
+                <small className='text-center block sm:hidden'>Already have an account? <Link to="/auth/login" className='text-primary-orange-200'>Login</Link></small>
             </div>
             </form>
         </div>

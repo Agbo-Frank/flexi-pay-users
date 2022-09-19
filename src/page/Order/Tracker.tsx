@@ -36,13 +36,14 @@ function TrackRec({ name, color, date, style, line = false, active}: ITrackRec){
 function Tracker({order, open, close}: IOrderModel){
     let orderStatus = ['placed', 'pending', 'processed', 'shipped', 'delivered']
     return(
-        <ModelWrapper isOpen={open} closeModal={close}>
+        <ModelWrapper 
+            isOpen={open} 
+            closeModal={close}
+            title="Tracker Order">
             <div className="h-full overflow-y-auto scrollbar relative">
-                <div className="sticky top-0 left-0 bg-white z-40">
-                    <h2 className="text-lg text-primary-dark-blue font-semibold m-4 mx-5">Tracker Order</h2>
+                <div className="bg-white z-40">
                         <CardWrapper 
-                        styles="rounded"
-                        // className="mx-4 mt-3 flex justify-between items-center"
+                        styles="rounded my-0"
                         >
                             <div className="flex w-full sm:w-full space-x-2 sm:space-x-4 items-stretch sm:pb-0">
                                 <img src={order.order_detail.product.product_images[0].image_link} alt="" className="w-[108px] h-[108px]  object-cover rounded sm:rounded-md"/>

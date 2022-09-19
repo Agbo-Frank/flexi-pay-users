@@ -64,7 +64,10 @@ export function Wallet (){
         <DashboardWrapper>
             <WithdrawalForm />
             {open.fundWallet && <FundWallet open={open.fundWallet} close={() => setOpen(state => ({...state, fundWallet: false}))}/>}
-            {open.createAccForm && <CreateAccForm userData={data?.result?.data} open={open.createAccForm} close={() => setOpen(state => ({...state, createAccForm: false}))}/>}
+            {open.createAccForm && <CreateAccForm 
+                userData={data?.result?.data} 
+                open={open.createAccForm} 
+                close={() => setOpen(state => ({...state, createAccForm: false}))}/>}
             <div className="mb-3 sm:mb-5">
                 <Wrapper>
                     <WrapperHeader>Wallet</WrapperHeader>

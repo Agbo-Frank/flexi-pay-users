@@ -43,7 +43,7 @@ function Profile(){
     const formik = FPFormikEditUser(editUser, () => dispatch(toggleEditProfile()))
 
     return(
-        <form className="px-2 sm:px-5 mt-5" onSubmit={formik.handleSubmit}>
+        <form className="px-2 sm:px-5" onSubmit={formik.handleSubmit}>
             <div className="flex flex-col sm:flex-row w-full justify-between items-center gap-0 sm:gap-4">
                 <FormInput 
                     type="text"
@@ -164,7 +164,7 @@ function Password(){
 
     let formik = FPFormikChangePassword(changePassword)
     return(
-        <form className="w-10/12 sm:w-9/12 mx-auto my-5" onSubmit={formik.handleSubmit}>
+        <form className="w-10/12 sm:w-9/12 mx-auto" onSubmit={formik.handleSubmit}>
             <FormInput 
                 type="password"
                 name="password"
@@ -219,13 +219,16 @@ export function EditProfile(){
     let editProfile = useSelector((state: RootState) => state.modal.editProfile)
     let dispatch = useDispatch()
     return(
-        <ModelWrapper isOpen={editProfile} closeModal={() => dispatch(toggleEditProfile())}>
+        <ModelWrapper 
+            isOpen={editProfile} 
+            closeModal={() => dispatch(toggleEditProfile())}
+            components={
+            <Tabs value={value} onChange={(e, newValue) => setValue(newValue)}>
+                <Tab label="Profile Details" sx={{textTransform: 'capitalize', fontSize: 16, width: '50%', alignItems: 'start'}}/>
+                <Tab label="Change Password" sx={{textTransform: 'capitalize', fontSize: 16, width: '50%', alignItems: 'end'}}/>
+            </Tabs>
+        }>
             <div className="h-full overflow-y-auto scrollbar relative">
-                <Tabs value={value} onChange={(e, newValue) => setValue(newValue)}>
-                    <Tab label="Profile Details" sx={{textTransform: 'capitalize', fontSize: 16, width: '50%', alignItems: 'start'}}/>
-                    <Tab label="Change Password" sx={{textTransform: 'capitalize', fontSize: 16, width: '50%', alignItems: 'end'}}/>
-                </Tabs>
-
                 <div>
                     <div hidden={value !== 0}>
                         <Profile />

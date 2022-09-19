@@ -12,10 +12,12 @@ import moment from 'moment';
 
 function OrderDetails({order, open, close}: IOrderModel){
     return(
-        <ModelWrapper isOpen={open} closeModal={close}>
+        <ModelWrapper 
+            isOpen={open} 
+            closeModal={close}
+            title="Order Details">
             <div className="h-full overflow-y-auto sm:scrollbar relative">
                 <div className="sticky top-0 left-0 bg-white">
-                    <h2 className="text-lg text-primary-dark-blue font-semibold m-4">Order Details</h2>
                     <CardWrapper 
                     styles="rounded"
                     // className="mx-4 mt-3 flex justify-between items-center"
@@ -27,16 +29,6 @@ function OrderDetails({order, open, close}: IOrderModel){
                                 <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(order.order_detail.price)}</p>
                             </div>
                         </div>
-                        {/* <CardActions 
-                        // className="w-4/12"
-                        >
-                            <Button color="#FF5000">
-                                <div className="flex items-center gap-2">
-                                    <BagIcon color="white" size="15"/>
-                                    <p className="text-sm">Re-Order</p>
-                                </div>
-                            </Button>
-                        </CardActions> */}
                     </CardWrapper>
                 </div>
                 

@@ -39,18 +39,18 @@ export function WithdrawalForm(){
     const formik = FPFormikWithdraw(user?.result.data, withdraw, () => dispatch(toggleWithdrawalForm()))
     
     return(
-        <ModelWrapper isOpen={isOpen} size="medium" closeModal={() => dispatch(toggleWithdrawalForm())}>
+        <ModelWrapper 
+            isOpen={isOpen} 
+            size="medium" 
+            closeModal={() => dispatch(toggleWithdrawalForm())}
+            title="Cash Withdrawal">
             <div className="h-full overflow-y-auto scrollbar relative">
-                <div className="sticky bg-white top-0 left-0 w-fit px-5 z-20 pb-2">
-                    <p className="font-medium text-lg capitalize my-1">Cash Withdrawal</p>
-                    <p className="font-light">Kindly provided  us with your information</p>
-                </div>
-                <form className="w-full px-8 my-7" onSubmit={formik.handleSubmit}>
+                <form className="w-full px-2 sm:px-5" onSubmit={formik.handleSubmit}>
                     <FormInput 
                         type="text" 
                         name="full_name" 
-                        label={user?.result.data.first_name ? user?.result.data.first_name + " " + user?.result.data.last_name : "Full Name"}
-                        Icon={NairaIcon}
+                        label={user?.result.data.first_name ? user?.result.data.first_name.toUpperCase() + " " + user?.result.data.last_name?.toUpperCase() : "Full Name"}
+                        Icon={UserIcon}
                         formik={formik}
                     />
                     <SelectInput  
@@ -70,7 +70,7 @@ export function WithdrawalForm(){
                         type="text" 
                         name="amount" 
                         label="Amount"
-                        Icon={UserIcon}
+                        Icon={NairaIcon}
                         formik={formik}
                     />
                     <div className="flex justify-center items-center gap-4 my-8 w-10/12 mx-auto">

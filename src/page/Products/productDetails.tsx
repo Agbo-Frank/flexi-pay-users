@@ -1,14 +1,7 @@
 import { useState } from "react"
-import { useParams } from "react-router-dom";
-import Slider from "react-slick";
-
-import { Body, Header, Categories, Toast, ProductSlide, Rating, Button, ProductsSlide, Footer,  } from "../../components"
-import { BusIcon, CartIcon, ExclamationIcon, HeartIcon, QuestionIcon, ReturnIcon, StarIcon, WalletIcon, WarrantyIcon } from "../../components/icons"
-import StoreIcon from "../../components/icons/StoreIcon";
+import { BusIcon, ReturnIcon, WarrantyIcon } from "../../components/icons"
 import { IProduct } from "../../interface";
-import { useGetProductQuery } from "../../redux/api/Product";
 import ProductReview from "./ProductReview";
-import ProductVendor from "./productVendor";
 
 
 function ProductDetails({ product }: {product: IProduct | undefined}){

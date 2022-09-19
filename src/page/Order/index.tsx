@@ -17,8 +17,8 @@ export function Orders (){
     let navigate = useNavigate()
     let { orders, pagination, loading } = useGetUserOrdersQuery(undefined, {
         selectFromResult: ({ data, isLoading }) => ({
-            orders: data?.result.data.data,
-            pagination: data?.result.data,
+            orders: data?.result?.data?.data,
+            pagination: data?.result?.data,
             loading: isLoading
         })
     })
@@ -44,7 +44,7 @@ export function Orders (){
                                 }
                             </div>
                         </div> :
-                        orders?.length === 0 ?
+                        !orders || orders?.length === 0 ?
                         <Empty 
                         title="You have no order yet"
                         Icon={BagIcon}

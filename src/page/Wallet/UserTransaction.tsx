@@ -16,6 +16,7 @@ function Row({txn}: {txn: IUserTransacation}){
             <TableRow hover 
             // sx={{'&:hover': {boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)'}}}
             onClick={() => setOpen(true)}
+            className="cursor-pointer"
             >
                 <TableCell className="flex items-center space-x-2" sx={{maxWidth: 100}}>
                     <span className="capitalize truncate w-full block text-sm">

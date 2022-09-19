@@ -45,9 +45,12 @@ function AddAddressModel(){
 
     const formik = FPFormikAddDeliveryAddress(createAddress, () => dispatch(toggleAddAddress()))
     return(
-        <ModelWrapper isOpen={addAddress} size="medium" closeModal={() => dispatch(toggleAddAddress())}>
-            <form className="py-5 px-4 h-full overflow-y-auto overflow-x-hidden scrollbar" onSubmit={formik.handleSubmit}>
-                <p className="text-lg text-grey-200 font-medium mb-6 sticky left-0">Add Your Delivery Address</p>
+        <ModelWrapper 
+            isOpen={addAddress} 
+            size="medium" 
+            closeModal={() => dispatch(toggleAddAddress())}
+            title="Add Your Delivery Address">
+            <form className="py-5 px-4 h-full" onSubmit={formik.handleSubmit}>  
                 <FormInput 
                     type="text"
                     name="name"

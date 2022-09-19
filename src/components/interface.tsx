@@ -31,7 +31,9 @@ export interface IInputProps {
 export interface IModel extends React.PropsWithChildren {
     isOpen: boolean,
     size?: 'medium' | 'large';
-    closeModal?: () => any
+    title?: string;
+    closeModal?: () => any,
+    components?: JSX.Element
 }
 
 export interface IAddAddress {

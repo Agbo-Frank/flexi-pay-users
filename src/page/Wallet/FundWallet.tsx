@@ -14,20 +14,22 @@ export function FundWallet({open, close}: {open: boolean; close: () => void | an
     let [fundwallet, { isLoading }] = useFundWalletByCardMutation()
     let formik = FundWalletByCard(fundwallet, close)
     return(
-        <ModelWrapper isOpen={open} closeModal={close}>
+        <ModelWrapper 
+            isOpen={open} 
+            closeModal={close}
+            title="Fund Wallet"
+            size="medium"
+            >
             <div className="h-full overflow-y-auto scrollbar relative">
-                <div className="sticky bg-white top-0 left-0 w-fit px-2 sm:px-5 z-20 pb-2">
-                    <p className="font-medium text-lg capitalize my-1">Fund Wallet</p>
-                    <p className="font-light">Fund your wallet by card</p>
-                </div>
+                {/* <p className="font-light px-1 sm:px-3">Fund your wallet by card</p> */}
 
-                <form className="w-full px-3 sm:px-8 my-7" onSubmit={formik.handleSubmit}>
+                <form className="w-full px-2 sm:px-5" onSubmit={formik.handleSubmit}>
                     <FormInput
                         type="text" 
                         name="full_name" 
                         label={
                             data?.result.data.first_name ? 
-                            data?.result.data.first_name + " " + data?.result.data.last_name :
+                            data?.result.data.first_name.toUpperCase() + " " + data?.result.data.last_name?.toUpperCase() :
                             "Full Name"
                         }
                         Icon={UserIcon}

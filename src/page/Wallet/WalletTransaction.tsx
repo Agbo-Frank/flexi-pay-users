@@ -15,6 +15,7 @@ function Row({txn}: {txn: ITransacation}){
             <TableRow hover 
             // sx={{'&:hover': {boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)'}}}
             onClick={() => setOpen(true)}
+            className="cursor-pointer"
             >
                 <TableCell>
                     <span className="flex items-center space-x-2">
