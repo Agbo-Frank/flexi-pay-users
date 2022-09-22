@@ -11,7 +11,7 @@ export function FPFormikEditUser(edit: ITrigger<Partial<IUser>, IResponse<null |
     let dispatch = useDispatch()
     let { data: user } = useGetUserQuery()
 
-    let initialValues: IUser = {
+    let initialValues = {
         first_name: '',
         last_name: '',
         email: '',
@@ -26,7 +26,7 @@ export function FPFormikEditUser(edit: ITrigger<Partial<IUser>, IResponse<null |
         postal_code: "",
     }
 
-    async function onSubmit (value: Partial<IUser>, formikHelpers: FormikHelpers<IUser| any>){
+    async function onSubmit (value: Partial<IUser> | any, formikHelpers: FormikHelpers<IUser| any>){
         value = {
             first_name: value.first_name || user?.result.data.first_name,
             last_name: value.last_name || user?.result.data.last_name,

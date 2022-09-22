@@ -23,7 +23,11 @@ function Profile(){
     const dispatch = useDispatch()
 
     const [editUser, { isLoading }] = useEditUserMutation()
-    const { data } = useGetUserQuery()
+    const { data } = useGetUserQuery(undefined, {
+        selectFromResult: ({ data }) => ({
+            data: data?.result.data
+        })
+    })
 
     useEffect(() => {
         let states = NaijaStates.states()
@@ -49,14 +53,14 @@ function Profile(){
                     type="text"
                     name="firstName"
                     Icon={UserIcon}
-                    label={data?.result.data.first_name || "First Name"}
+                    label={data?.first_name || "First Name"}
                     formik={formik}
                 />
                 <FormInput 
                     type="text"
                     name="lastName"
                     Icon={UserIcon}
-                    label={data?.result.data.last_name || "Last Name"}
+                    label={data?.last_name || "Last Name"}
                     formik={formik}
                 />
             </div>
@@ -66,14 +70,14 @@ function Profile(){
                     type="email"
                     name="email"
                     Icon={MailIcon}
-                    label={data?.result.data.email || "Email"}
+                    label={data?.email || "Email"}
                     formik={formik}
                 />
                 <FormInput 
                     type="text"
                     name="phone_number"
                     Icon={PhoneIcon}
-                    label={data?.result.data.phone_number || "Phone Number"}
+                    label={data?.phone_number || "Phone Number"}
                     formik={formik}
                 />
             </div>
@@ -113,7 +117,7 @@ function Profile(){
                 type="text"
                 name="house_address"
                 Icon={UserIcon}
-                label={data?.result.data.address || "Address"}
+                label={data?.address?.house_address || "Address"}
                 formik={formik}
             />
             <div className="flex flex-col sm:flex-row w-full justify-between items-center gap-0 sm:gap-4">
@@ -121,7 +125,7 @@ function Profile(){
                     type="text"
                     name="nearest_bus_stop"
                     Icon={UserIcon}
-                    label={data?.result.data.nearest_bus_stop || "Nearest Bus Stop"}
+                    label={data?.address?.nearest_bus_stop || "Nearest Bus Stop"}
                     formik={formik}
                 />
 
@@ -129,7 +133,7 @@ function Profile(){
                     type="text"
                     name="postal_code"
                     Icon={UserIcon}
-                    label={data?.result.data.postal_code || "Postal Code"}
+                    label={data?.address?.postal_code || "Postal Code"}
                     formik={formik}
                 />
             </div>

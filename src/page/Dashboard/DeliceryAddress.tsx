@@ -2,7 +2,7 @@ import { Button, Skeleton } from "@mui/material"
 import { useDispatch } from "react-redux"
 import { EditIcon } from "../../components/icons"
 import { IUser } from "../../interface"
-import { toggleAddAddress } from "../../redux/slice/modal"
+import { toggleAddAddress, toggleEditProfile } from "../../redux/slice/modal"
 
 interface IDeliveryAddress{
     user?: IUser,
@@ -12,6 +12,7 @@ interface IDeliveryAddress{
 
 export function DeliveryAddress({ user, loading }: IDeliveryAddress){
     let dispatch = useDispatch()
+    console.log(user)
     return(
         <div className="rounded-xl border pt-5 sm:pt-10 pb-5 mt-3 sm:mt-5 px-5 sm:px-7 w-full bg-white">
             <div className="text-grey-200 leading-9 capitalize">
@@ -22,9 +23,11 @@ export function DeliveryAddress({ user, loading }: IDeliveryAddress){
                         <Skeleton variant="text" sx={{fontSize: 16}} width={'80%'}/>
                         <Skeleton variant="text" sx={{fontSize: 16}} width={'80%'}/>
                     </> :
-                    false?
+                    user?.address ?
                     <div>
-                        <p>Please Provide your delivery address </p>
+                        <p>{user?.address?.house_address}</p>
+                        <p>{user?.address.nearest_bus_stop + " " + user?.address?.city}</p>
+                        <p>{user?.address?.state}</p>
                         <Button
                             variant="outlined"
                             size="large"
@@ -40,7 +43,7 @@ export function DeliveryAddress({ user, loading }: IDeliveryAddress){
                         <Button
                             color="secondary"
                             variant="contained"
-                            onClick={() => dispatch(toggleAddAddress())}
+                            onClick={() => dispatch(toggleEditProfile())}
                         >
                             Add Address
                         </Button> 

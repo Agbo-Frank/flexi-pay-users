@@ -23,7 +23,7 @@ export function Profile(){
     return(
         <>
             <DashboardWrapper>
-                <div className="bg-white flex flex-col space-y-9">
+                <div className="bg-white sm:bg-transparent flex flex-col space-y-9">
                     <div className="flex flex-col sm:flex-row  justify-between items-stretch space-y-3 sm:space-y-0 sm:space-x-8">
                         <Wrapper styles="rounded-xl p-5 w-[97%] mx-auto sm:w-1/2">
                             <WrapperHeader>Account Details</WrapperHeader>
@@ -58,7 +58,7 @@ export function Profile(){
                         </Wrapper>
 
                         <Wrapper styles="rounded-xl p-5 w-[97%] mx-auto sm:w-1/2">
-                            <WrapperHeader>Delivery Address</WrapperHeader>
+                            <WrapperHeader>Address</WrapperHeader>
                             <DeliveryAddress user={user} loading={loading}/>
                         </Wrapper>
                     </div>

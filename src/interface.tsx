@@ -20,7 +20,13 @@ export interface IUser extends Omit<AddressDetails, 'id'> {
     last_name?: string;
     email: string;
     gender?: string;
-    address?: string;
+    address?: {
+        city: string;
+        house_address: string;
+        nearest_bus_stop: string;
+        postal_code: string;
+        state: string
+    };
     dob?: string;
     referral_link?: string;
     bank_account?: {
