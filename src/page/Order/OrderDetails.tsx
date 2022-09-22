@@ -2,13 +2,11 @@ import TV from '../../asset/monitor.png'
 import Button from "../../components/Button";
 import BagIcon from "../../components/icons/Bag";
 import CalenderIcon from "../../components/icons/CalenderIcon";
-
-import { useDispatch, useSelector } from 'react-redux'
-import { CardWrapper, CardImg, CardActions, CardText, CopyText } from "../../components";
+import { CardWrapper, CardText, CopyText } from "../../components";
 import ModelWrapper from '../../components/Models/ModelWrapper';
-import { IOrderModel } from './orderItem';
 import { formatNumber } from '../../utils';
 import moment from 'moment';
+import { IOrderModel } from './orderItem';
 
 function OrderDetails({order, open, close}: IOrderModel){
     return(

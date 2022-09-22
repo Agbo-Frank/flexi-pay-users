@@ -12,7 +12,7 @@ function ModelWrapper({ children, isOpen, closeModal, size = "large", title, com
         <div className={`relative block ${size === 'large' ? 'w-fp-500' : 'w-fp-450'} h-screen xs:max-h-[80vh] xs:h-fit bg-white xs:rounded-xl z-50 scrollbar overflow-y-auto`}>
           <ClickAwayListener onClickAway={() => {if(closeModal)closeModal()}}>
             <>
-              <div className={`${title && 'flex'} justify-between items-center sticky top-0 bg-white z-20 p-1 sm:p-3`}>
+              <div className={`${title && 'flex'} justify-between items-center sticky top-0 bg-white z-20 p-3`}>
                 {
                   title &&
                   <p className="text-lg text-grey-200 font-medium">{title}</p>

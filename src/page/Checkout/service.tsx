@@ -69,7 +69,12 @@ export function FPFormikCreateInstallment(createInstallment: ITrigger<Omit<IInst
     return formik
 }
 
-export async function confirmOrder(checkout_method: TCheckoutMethod | "", dispatch: Dispatch<AnyAction>, checkout: ITrigger<{checkout_method: TCheckoutMethod}, IResponse<{data: {link: string}}>>){
+export async function confirmOrder(
+    checkout_method: TCheckoutMethod | "", 
+    dispatch: Dispatch<AnyAction>, 
+    checkout: ITrigger<{checkout_method: TCheckoutMethod, install_mental_ids: string[] | undefined}, IResponse<{data: {link: string}}>>, 
+    install_mental_ids: string[] | undefined = []
+){
     let methods = ["directly_via_wallet", "install_mental_via_card", "install_mental_via_wallet", "directly_via_card"]
     if(checkout_method == ""){
         dispatch(toggleSnackBar({
@@ -87,7 +92,7 @@ export async function confirmOrder(checkout_method: TCheckoutMethod | "", dispat
     }
     else {
         try{
-            let data = await checkout({ checkout_method }).unwrap()
+            let data = await checkout({ checkout_method, install_mental_ids }).unwrap()
 
             if(data.status === "success"){
                 if(validURL(data.result.data.link)){
@@ -112,7 +117,7 @@ export async function confirmOrder(checkout_method: TCheckoutMethod | "", dispat
         catch(err){
             if(err){
                 let error: any = err
-
+                console.log(error)
                 dispatch(toggleSnackBar({
                     open: true,
                     severity: 'error',

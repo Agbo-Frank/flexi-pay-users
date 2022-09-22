@@ -21,6 +21,7 @@ export function Product(){
     let { slug } = useParams()
 
     let { product, loading } = useGetProductQuery(`${slug}`, {
+        refetchOnReconnect: true,
         selectFromResult: ({data, isLoading}) => ({
             product: data && data?.result.data,
             loading: isLoading
@@ -62,7 +63,7 @@ export function Product(){
                                 </div>
                                 <div className="w-full sm:w-6/12 flex flex-col space-y-6 px-2 sm:px-0">
                                     <div>
-                                        <h1 className="text-grey-1200 text-xl sm:text-3xl">{product?.name}</h1>
+                                        <h1 className="text-grey-1200 text-xl sm:text-3xl capitalize">{product?.name}</h1>
 
                                         <div className="flex space-x-2">
                                             <Rating readOnly

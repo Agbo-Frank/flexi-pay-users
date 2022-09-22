@@ -92,7 +92,7 @@ function AllCategories(){
                         open.sub && 
                         <div 
                             onMouseEnter={() => setOpen(state => ({...state, sub: true}))}
-                            className={`grid w-[800px] grid-cols-4 bg-white border rounded-md ${open.sub && 'rounded-l-none border-l-0'}`}>
+                            className={`grid w-[800px] grid-cols-4 bg-white border rounded-md ${open.sub && 'rounded-l-none border-l-0 z-50'}`}>
                             <ul className="m-4">
                                 <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
                                 {

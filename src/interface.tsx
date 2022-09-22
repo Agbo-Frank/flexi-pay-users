@@ -207,7 +207,8 @@ export interface IProduct {
     description: string;
     price: string;
     slug: string;
-    product_images: IProductImage[]
+    product_images: IProductImage[],
+    installments: IInstallment[]
 }
 
 export interface IPagination<T> {
@@ -318,6 +319,7 @@ export interface IDetails extends ICart {
     unit_price: number;
     total_price: number;
     vendor_id: number;
+    product: IProduct
 }
 
 export interface ICheckoutDetails {

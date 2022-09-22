@@ -13,7 +13,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export function ProductCard({product}: {product: IProduct}){
     return(
-        <Link to={'/product/' + product.uuid} className="w-full bg-white rounded-lg h-fit p-2 space-y-4 shadow hover:shadow-lg hover:-translate-y-1 hover:z-30 my-2">
+        <Link to={'/product/' + product.uuid} className="block w-full bg-white rounded-lg h-fit p-2 space-y-4 shadow-sm hover:shadow hover:-translate-y-1 hover:z-30 my-2">
             <div className='w-full h-44 overflow-hidden rounded-lg'>
                 <img src={product.product_images[0].image_link} className="w-full h-full object-cover" alt={product.name}/>
             </div>
@@ -49,7 +49,7 @@ export function ProductCardDummy(){
 
 export function ProductCardSkeleton(){
     return(
-        <div className="w-[180px] bg-white shadow sm:w-[220px] rounded-lg h-fit p-2 space-y-4 my-2">
+        <div className="w-[200px] bg-white shadow sm:w-[220px] rounded-lg h-fit p-2 space-y-4 my-2">
             <div className='relative'>
                 <Skeleton variant='rounded' width={'100%'} height={150} />
                 <div className='absolute top-0 right-1/2 translate-x-1/2 translate-y-1/2'>
@@ -201,7 +201,7 @@ export function ProductsSlide({products, loading, title, link}: {products: IProd
                             <i className="text-white font-bold text-sm fa-solid fa-chevron-right"></i>
                         </div>
                     </div>
-                    <div className='flex sm:hidden whitespace-nowrap overflow-x-auto'>
+                    <div className='flex sm:hidden whitespace-nowrap overflow-x-auto overflow-y-hidden'>
                         {
                             products?.map((product, idx) => (
                                 <div className="w-[180px] h-fit pr-3">

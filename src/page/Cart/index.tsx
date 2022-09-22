@@ -86,7 +86,7 @@ export function Carts (){
                             }
                         </WrapperHeader>
 
-                        <div className={`${showOrderSummary && 'hidden'} flex flex-col space-y-3 sm:space-y-5 w-full mt-2 sm:mb-2 overflow-y-auto scrollbar h-full`}>
+                        <div className={`${showOrderSummary && 'hidden'} flex flex-col space-y-3 w-full mt-2 sm:mb-2 overflow-y-auto scrollbar h-full`}>
                             {
                                 carts?.map((cart, idx) => <Cart cart={cart}/>)
                             }

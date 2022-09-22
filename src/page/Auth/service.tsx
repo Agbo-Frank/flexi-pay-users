@@ -136,9 +136,9 @@ export function FPFormikForgetPassword(sendRequest: any){
     let validationSchema = () => {
         return Yup.object({
             email: Yup
-                    .string()
-                    .required('email field isRequired')
-                    .email('Invalid email address'),
+                .string()
+                .required('email field isRequired')
+                .email('Invalid email address'),
         })
     }
 
@@ -152,6 +152,7 @@ export function FPFormikForgetPassword(sendRequest: any){
 }
 
 export function FPFormikResetPassword(reset: any, data: {token: string, email: string}){
+    let navigate = useNavigate()
     let initialValues = {
         password: '',
         password_confirmation: '',
@@ -164,6 +165,9 @@ export function FPFormikResetPassword(reset: any, data: {token: string, email: s
                 token: data.token,
                 email: data.email
             }).unwrap()
+            if(res.status === 'success'){
+                navigate('/auth/login', {replace: true})
+            }
         }
         catch(err){
             console.log(err)

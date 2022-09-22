@@ -1,12 +1,54 @@
-import { Button, Collapse, FormControl, FormControlLabel, Radio, RadioGroup, Tab, Tabs } from "@mui/material"
+import { Button, FormControlLabel, Radio, RadioGroup, Tab, Tabs } from "@mui/material"
 import React, { useState } from "react";
-import { EditSqaureIcon } from "../../components/icons";
-import { TCheckoutMethod } from "../../interface";
+import { IDetails, TCheckoutMethod } from "../../interface";
+import { formatNumber } from "../../utils";
+import SelectInstallmentPlan from "./SelectInstallmentPlan";
+
+
+
+function CheckoutCard(
+    {checkoutdetail, setCheckoutData}: 
+    {checkoutdetail: Partial<IDetails>, setCheckoutData:React.Dispatch<React.SetStateAction<{
+        method: TCheckoutMethod;
+        installment_ids: string[]
+        }>> 
+    }
+){
+    let [open, setOpen] = useState(false)
+    
+    return(
+        <>
+        <SelectInstallmentPlan 
+            open={open} 
+            close={() => setOpen(false)}
+            installments={checkoutdetail.product?.installments} 
+            setCheckoutData={setCheckoutData}/>
+        <div className="w-full flex justify-between mb-2 p-1 shadow-sm hover:shadow rounded-lg border">
+            <div className="flex w-9/12 gap-3">
+                <img src={checkoutdetail?.product?.product_images[0].image_link} className="w-[80px] h-[80px] object-cover rounded" />
+                <p className="text-sm text-grey-200 capitalize">{checkoutdetail?.product?.name}</p>
+            </div>
+
+            <div className='flex flex-col'>
+                <p className="font-medium text-primary-dark-blue ml-auto">₦ {formatNumber(`${checkoutdetail?.price || checkoutdetail.unit_price}`)}</p>
+                <small className="text-[14px] block ml-auto text-grey-700">x{checkoutdetail.quantity}</small>
+                <Button
+                    color="secondary"
+                    onClick={() => setOpen(true)}
+                    size="small">Select Plan</Button>
+            </div>
+        </div>
+        </>
+    )
+}
 
 
 
 
-function Options({type, setCheckoutMethod}: {type: number, setCheckoutMethod: React.Dispatch<React.SetStateAction<TCheckoutMethod>>}){
+function Options({type, setCheckoutData}: {type: number, setCheckoutData: React.Dispatch<React.SetStateAction<{
+    method: TCheckoutMethod;
+    installment_ids: string[]
+}>>}){
     let [value, setValue] = useState<string>("")
     
     return(
@@ -16,44 +58,20 @@ function Options({type, setCheckoutMethod}: {type: number, setCheckoutMethod: Re
                 value={value}
                 onChange={(e) => {
                     setValue(e.target.value)
-                    setCheckoutMethod(e.target.value)
+                    setCheckoutData(state => ({
+                        ...state,
+                        method: e.target.value
+                    }))
                 }}
             >
                 {/* "install_mental_via_card", "install_mental_via_wallet", "directly_via_wallet", "directly_via_card" */}
             <div className="px-3">
                 <FormControlLabel value={type === 0 ? "directly_via_wallet" : "install_mental_via_wallet"} control={<Radio size="small" />} label="By Wallet" />
-                {/* <Collapse in={ /wallet/i.test(value)}>
-                    <div className="w-10/12 mx-auto h-[150px] bg-[#F9F8FF] flex justify-center items-center rounded">
-                        <div className="w-fit flex flex-col text-center">
-                            <span className="text-[#545362] text-lg font-medium">Balance</span>
-                            <span className="text-[22px] text-primary-dark-blue font-medium">40,000</span>
-                            <Button
-                            color="secondary"
-                            startIcon={<EditSqaureIcon color="#FF5000" size="15"/>}
-                            >
-                                fund wallet
-                            </Button>
-                        </div>
-                    </div>
-                </Collapse> */}
             </div>
 
             <div className="px-3">
                 <FormControlLabel value={type === 0 ? "directly_via_card" : "install_mental_via_card"} control={<Radio size="small"/>} label="By Card" />
-                {/* <Collapse in={/card/i.test(value)}>
-                    <div className="w-10/12 mx-auto h-[150px] bg-[#F9F8FF] flex justify-center items-center rounded">
-                        <div className="w-fit flex flex-col text-center">
-                            <span className="text-[#545362] text-lg font-medium">Balance</span>
-                            <span className="text-[22px] text-primary-dark-blue font-medium">40,000</span>
-                            <Button
-                            color="secondary"
-                            startIcon={<EditSqaureIcon color="#FF5000" size="15"/>}
-                            >
-                                fund wallet
-                            </Button>
-                        </div>
-                    </div>
-                </Collapse> */}
+                
             </div>
                 
             </RadioGroup>
@@ -63,7 +81,16 @@ function Options({type, setCheckoutMethod}: {type: number, setCheckoutMethod: Re
 
 
 
-export function PaymentMethod({ setCheckoutMethod}: {setCheckoutMethod: React.Dispatch<React.SetStateAction<TCheckoutMethod>>}){
+export function PaymentMethod(
+    { setCheckoutData, checkoutdetails}: 
+    { 
+        setCheckoutData:React.Dispatch<React.SetStateAction<{
+        method: TCheckoutMethod;
+        installment_ids: string[]
+        }>>, 
+        checkoutdetails?: Partial<IDetails>[] 
+    }
+){
     const [value, setValue] = useState(0);
     // const matches = useMediaQuery('(min-width:600px)');
     return(
@@ -71,11 +98,28 @@ export function PaymentMethod({ setCheckoutMethod}: {setCheckoutMethod: React.Di
             <Tabs value={value} onChange={(e, newValue) => setValue(newValue)}>
                 <Tab 
                     label="Instant Payment" 
-                    sx={{textTransform: 'capitalize', fontSize: 14, width: '50%', alignItems: 'start'}}/>
-                <Tab label="Installmental Payment" sx={{textTransform: 'capitalize', fontSize: 14, width: '50%', alignItems: 'start'}}/>
+                    sx={{textTransform: 'capitalize', fontSize: 14, alignItems: 'start'}}/>
+                <Tab label="Installmental Payment" sx={{textTransform: 'capitalize', fontSize: 14, alignItems: 'start'}}/>
             </Tabs>
 
-            <Options type={value} setCheckoutMethod={setCheckoutMethod}/>
+            {
+                value === 1 && 
+                <div>
+                    {
+                        checkoutdetails?.map((checkoutdetail, idx) => (
+                            <div className="max-w-[380px] space-y-3" key={idx}>
+                                <CheckoutCard 
+                                    checkoutdetail={checkoutdetail} 
+                                    setCheckoutData={setCheckoutData} 
+                                />
+                            </div>
+                        ))
+                    }
+                </div>
+            }
+
+            <Options type={value} setCheckoutData={setCheckoutData}/>
+            
         </div>
     )
 }

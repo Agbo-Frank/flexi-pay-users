@@ -1,11 +1,13 @@
 import {  MailIcon, Spinner } from '../../components/icons';
 
 import FormInput from '../../components/FormInput';
-import Button from '../../components/Button';
 import { useForgotPasswordMutation } from '../../redux/api/Auth'
 import { FPFormikForgetPassword } from './service';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 export function ForgetPassword() {
+    let navigate = useNavigate()
     let [sendRequest, { isLoading: loading, data }] =  useForgotPasswordMutation()
 
     let formik = FPFormikForgetPassword(sendRequest)
@@ -27,18 +29,18 @@ export function ForgetPassword() {
                     label="Email"
                     formik={formik} />
 
-                    <div className='flex justify-between items-center w-full gap-6'>
-                        <Button outline={true} color="#FF5000">
-                            <p className='font-semibold text-sm mx-5'>Cancel</p>
+                    <div className='flex justify-between items-center w-full gap-3'>
+                        <Button
+                            variant='outlined'
+                            color="secondary"
+                            onClick={() => navigate(-1)}>
+                                Cancel
                         </Button>
-                        <Button type='submit' color="#FF5000">
-                            <div className='flex items-center gap-3'>
-                                {
-                                    loading ? 
-                                    <div className='w-5 h-5'><Spinner /></div> :
-                                    <p className='font-semibold text-sm mx-5'>Send Code</p>
-                                }
-                            </div>
+                        <Button 
+                            type='submit' 
+                            variant='contained'
+                            color="secondary">
+                                Send Code
                         </Button>
                     </div>
                 </div>

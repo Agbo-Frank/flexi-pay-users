@@ -50,7 +50,7 @@ export function CardImg({ src }: {src: string}){
 
 export function CardText({children, styles}: IWrapperProps){
     return(
-        <span className={`whitespace-normal sm:w-11/12 text-black sm:text-grey-200 font-semibold sm:font-normal text-sm sm:text-base sm:mb-2 ${styles}`}>
+        <span className={`whitespace-normal sm:w-11/12 text-black sm:text-grey-200 font-semibold sm:font-normal text-sm sm:text-base sm:mb-2 capitalize ${styles}`}>
             {children}
         </span>
     )
@@ -58,7 +58,7 @@ export function CardText({children, styles}: IWrapperProps){
 
 export function CardContentText({children, styles}: IWrapperProps){
     return(
-        <div className={`flex flex-col sm:w-6/12 sm:h-full items-stretch sm:justify-evenly ${styles}`}>
+        <div className={`flex flex-col sm:w-6/12 sm:h-full items-stretch sm:justify-evenly capitalize ${styles}`}>
             {children}
         </div>
     )

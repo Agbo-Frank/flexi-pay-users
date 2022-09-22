@@ -20,7 +20,7 @@ export const OrderApi = createApi({
     reducerPath: 'Order',
     tagTypes: ['Product', 'Order', 'Subscription', "Checkout"],
     endpoints: (build) => ({
-        checkout: build.mutation<IResponse<{data: {link: string}}>, {checkout_method: TCheckoutMethod}>({
+        checkout: build.mutation<IResponse<{data: {link: string}}>, {checkout_method: TCheckoutMethod, install_mental_ids: string[] | undefined}>({
             query: (body) => ({
                 url: "/checkout",
                 method: "POST",

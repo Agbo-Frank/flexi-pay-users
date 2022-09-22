@@ -56,8 +56,7 @@ export function FundWallet({open, close}: {open: boolean; close: () => void | an
                         Icon={NairaIcon}
                         formik={formik}
                     />
-                    <div className="flex justify-center items-center gap-4 my-8 w-full sm:w-10/12 mx-auto">
-
+                    <div className="flex justify-center items-center gap-4 my-5 sm:my-8 w-full sm:w-10/12 mx-auto">
                         <Button
                             variant="outlined" 
                             color="secondary" 
@@ -66,7 +65,6 @@ export function FundWallet({open, close}: {open: boolean; close: () => void | an
                             onClick={close}>
                                 Cancel
                         </Button>
-
                         <LoadingButton
                             loading={isLoading}
                             variant="contained"

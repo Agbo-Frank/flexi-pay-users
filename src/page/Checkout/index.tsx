@@ -21,26 +21,21 @@ import { useGetUserCartQuery, useLazyGetUserCartQuery } from "../../redux/api/Ca
 import { useCookies } from "react-cookie"
 import { FLEXIPAY_COOKIE } from "../../utils/constants"
 import { useCheckoutMutation, useProcessCheckoutMutation } from "../../redux/api/Order"
-import AddressBook from "./Addressbook"
 import { formatNumber } from "../../utils"
-import { ICart, IDetails, TCheckoutMethod } from "../../interface"
+import { IDetails, TCheckoutMethod } from "../../interface"
 import PaymentMethod from "./paymentMethod"
 import { confirmOrder } from "./service"
 import { LoadingButton } from "@mui/lab"
 import { useNavigate } from "react-router-dom"
 
 
-
-
-// function SavedCard(){
-//     return(
-        
-//     )
-// }
-
 export function CheckOut(){
     const matches = useMediaQuery('(min-width:600px)');
-    let [checkoutMethod, setCheckoutMethod] = useState<TCheckoutMethod>("")
+    let [checkoutData, setCheckoutData] = useState<{method:TCheckoutMethod, installment_ids: string[]}>({
+        method: "",
+        installment_ids: [] 
+    })
+    console.log(checkoutData)
 
     const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
     let navigate = useNavigate()
@@ -234,7 +229,7 @@ export function CheckOut(){
                                             checkoutdetails?.map((detail, idx) => (
                                                 <li key={idx} className="space-x-4">
                                                     <span>{ detail.quantity }x</span>
-                                                    <span>{detail.product?.name}</span>
+                                                    <span className="capitalize">{detail.product?.name}</span>
                                                 </li>
                                             ))
                                         }
@@ -254,7 +249,7 @@ export function CheckOut(){
                                         <CreditCardIcon size={matches ? "25" : "18"} color="#555555" />
                                     </WrapperHeader>
 
-                                    <PaymentMethod setCheckoutMethod={setCheckoutMethod}/>
+                                    <PaymentMethod setCheckoutData={setCheckoutData} checkoutdetails={checkoutdetails}/>
                                 </div>
 
                                 <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
@@ -292,7 +287,7 @@ export function CheckOut(){
                                         color="secondary"
                                         loading={checkingout}
                                         disabled={data?.address_details ? false : true}
-                                        onClick={() => confirmOrder(checkoutMethod, dispatch, checkout)}>
+                                        onClick={() => confirmOrder(checkoutData.method, dispatch, checkout, checkoutData.installment_ids)}>
                                             confirm order
                                     </LoadingButton>
                                 </div>

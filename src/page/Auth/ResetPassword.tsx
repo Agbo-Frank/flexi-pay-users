@@ -36,7 +36,7 @@ export function ResetPassword() {
             <div>
                 <h2 className='text-primary-dark-blue font-bold text-4xl'>Reset Your Password</h2>
                 <small className='block text-lg text-grey-300 mt-3'>A password reset code will be sent to your email</small>
-                <small className='text-lg text-primary-dark-blue'>Your email: { email && hashEmail(email) }</small>
+                <small className='text-lg text-primary-dark-blue'>Your email: { email && hashEmail(email) }</small> <br />
                 <small className='text-lg text-primary-dark-blue'>{ data && data.message }</small>
             </div>
 
