@@ -1,10 +1,12 @@
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { Logo, MailIcon, MasterCardIcon, PhoneIcon, VisaIcon } from "./icons";
 import WhatappIcon from "./icons/Whatapp";
 
 
 
 export function Footer(){
+    const navigate = useNavigate()
     return(
         <footer className="mt-5">
             <div className="bg-[#545362] px-2 sm:px-0">
@@ -39,22 +41,22 @@ export function Footer(){
                     <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 justify-between py-10 border-b border-white">
                         <ul>
                             <li className="font-semibold mb-2 sm:mb-4">About FlexiPay</li>
-                            <li className="font-light text-sm">About us</li>
-                            <li className="font-light text-sm">Contact us</li>
-                            <li className="font-light text-sm">Terms & Conditions</li>
+                            <li className="font-light text-sm cursor-pointer" onClick={()=>navigate("/about-us")}>About us</li>
+                            <li className="font-light text-sm cursor-pointer">Contact us</li>
+                            <li className="font-light text-sm cursor-pointer" onClick={()=>navigate("/terms-and-condition")}>Terms & Conditions</li>
                         </ul>
 
                         <ul>
                             <li className="font-semibold mb-2 sm:mb-4">Make Money on FlexiPay</li>
-                            <li className="font-light text-sm">Become a Vendor</li>
-                            <li className="font-light text-sm">Become an affiliate partner</li>
+                            <li className="font-light text-sm cursor-pointer">Become a Vendor</li>
+                            <li className="font-light text-sm cursor-pointer">Become an affiliate partner</li>
                         </ul>
 
                         <ul>
                             <li className="font-semibold mb-2 sm:mb-4">More Info</li>
-                            <li className="font-light text-sm">Returen Policy</li>
-                            <li className="font-light text-sm">Privacy Policy</li>
-                            <li className="font-light text-sm">Become an affiliate partner</li>
+                            <li className="font-light text-sm cursor-pointer">Returen Policy</li>
+                            <li className="font-light text-sm cursor-pointer">Privacy Policy</li>
+                            <li className="font-light text-sm cursor-pointer">Become an affiliate partner</li>
                         </ul>
 
                         <div>

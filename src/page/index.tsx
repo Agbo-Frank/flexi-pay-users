@@ -11,3 +11,5 @@ export * from './Profile/index'
 export * from './SavedItems/index'
 export * from "./Subscription/index"
 export * from './Wallet/index'
+export * from './About'
+export * from './TermsAndCondition'

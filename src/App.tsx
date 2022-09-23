@@ -6,13 +6,16 @@ import {
   Wallet, Product, Products,
   Contact, Landing,
   Auth,
-  Subscriptions
+  Subscriptions,
+  About,
+  // TermsAndCondition
 } from './page';
 
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import { AuthProvider } from './context/Auth';
 import RequireAuth from './components/RequireAuth';
+import TermsAndCondition from './page/TermsAndCondition';
 
 function App() {
   return (
@@ -30,6 +33,8 @@ function App() {
         <Route path='/wallet' element={<RequireAuth><Wallet/></RequireAuth>} />
         <Route path='/support' element={<Contact />} />
         <Route path='/products' element={<Products />} />
+        <Route path='/about-us' element={<About />} />
+        <Route path='/terms-and-condition' element={<TermsAndCondition />} />
         <Route path='/profile' element={<RequireAuth><Profile /></RequireAuth>} />
       </Routes>
     </AuthProvider>
