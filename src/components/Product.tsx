@@ -4,7 +4,7 @@ import product2 from '../asset/Product2.png'
 import Slider from "react-slick";
 import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Skeleton, useMediaQuery } from '@mui/material';
+import { Button, Grid, Skeleton, useMediaQuery } from '@mui/material';
 import { IProduct } from '../interface';
 import { formatNumber } from '../utils';
 import { GreyLogo } from './icons';
@@ -215,6 +215,119 @@ export function ProductsSlide({products, loading, title, link}: {products: IProd
         </div>
     )
 }
+
+
+export function ProductsBallSlide({products, loading, title, link}: {products: any, loading: boolean, title?: string, link?: string}){
+    let matches = useMediaQuery("(min-width:600px)")
+    let slide: any = useRef()
+    const settings = {
+        infinite: false,
+        draggable: true,
+        speed: 1000,
+        slidesToShow: 6,
+        slidesToScroll: 2,
+    };
+    let data = [1, 2, 3, 4, 5]
+
+    return(
+        <div className="px-2 sm:overflow-hidden rounded-2xl">
+            {
+                loading ?
+                <div className='flex space-x-2 whitespace-nowrap overflow-x-auto scrollbar-hidden'> 
+                    {
+                        data.map(d => (
+                            <ProductCardSkeleton />
+                        ))
+                    }
+                </div>:
+                <div className="bg-white py-2 sm:p-4">
+                    <div className="relative rounded-md overflow-x-hidden hidden sm:block">
+                        <Slider ref={slide} {...settings}>
+                            {
+                                products?.map((val: any) => (
+                                    <div className="w-64 h-fit p-3" key={val.id}>
+                                        <div className=' rounded-[100px] border-[10px] border-[#E8E5FF]'>
+                                            <img alt="flexipay" src={val.img} className="w-full h-full" />
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </Slider>
+
+                        <div 
+                            className={`absolute top-2/4 w-8 h-8  bg-black/50 rounded-full grid place-items-center cursor-pointer`}
+                            onClick={() => slide.current.slickPrev()}>
+                            <i className="text-white font-bold text-sm fa-solid fa-chevron-left"></i>
+                        </div>
+                        <div className={`absolute top-2/4 right-0 rounded-full bg-black/50 w-8 h-8 grid place-items-center cursor-pointer`}
+                        onClick={() => slide.current.slickNext()}>
+                            <i className="text-white font-bold text-sm fa-solid fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div className='flex sm:hidden whitespace-nowrap overflow-x-auto overflow-y-hidden'>
+                        {
+                            products?.map((val: any) => (
+                                <div className="w-64 h-fit p-3" key={val.id}>
+                                    <div className=' rounded-[100px] border-[10px] border-[#E8E5FF]'>
+                                        <img alt="flexipay" src={val.img} className="w-full h-full" />
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    )
+}
+
+
+export function ProductCategory({products, loading, title, link, grid}: {products: any, loading: boolean, title?: string, link?: string, grid?: any}){
+    
+    let data = [1, 2, 3, 4, 5]
+
+    const navigate = useNavigate()
+    return(
+        <div className="px-2 sm:overflow-hidden rounded-2xl">
+            <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:px-4 sm:py-2">
+                <p className="Capitalize font-medium text-sm  sm:text-lg">{title}</p>
+                {link && (
+                    <Button 
+                        onClick={() => navigate(`${link}`)} 
+                        color="secondary"
+                        endIcon={<i className="fa-solid fa-chevron-right text-[8px] sm:text-[10px]"></i>}
+                        className="text-xs">
+                            View More
+                    </Button>
+                )}
+            </div>
+            {
+                loading ?
+                <div className='flex space-x-2 whitespace-nowrap overflow-x-auto scrollbar-hidden'> 
+                    {
+                        data.map(d => (
+                            <ProductCardSkeleton />
+                        ))
+                    }
+                </div>:
+                <div className="bg-white py-2 sm:p-4">
+                    <div>
+                        <Grid container>
+                            {
+                                products?.map((val: any) => (
+                                    <Grid item sm={grid?.sm || 6} md={grid?.md || 3} lg={grid?.lg || 2} className="p-3" key={val.id}>
+                                        <img alt='flexipay' src={val.img} className="w-full h-full rounded-lg" />
+                                    </Grid>
+                                ))
+                            }
+                        </Grid>
+                    </div>
+                </div>
+            }
+        </div>
+    )
+}
+
 
 export function ProductsSlideDummy(){
     let slide: any = useRef()
