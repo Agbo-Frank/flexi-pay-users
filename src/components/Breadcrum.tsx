@@ -13,8 +13,8 @@ export function Breadcrumb(){
                         location.pathname.split('/').map((location, idx) => (
                             <Link 
                                 to={location === '' ? "/" : `/${location}`}
-                                className="text-sm"
-                                key={idx}>{location === '' ? "Home" : location}</Link>
+                                className="text-sm capitalize"
+                                key={idx}>{location === '' ? "Home" : location.replace('-', ' ')}</Link>
                         ))
                     }
                 </MuiBreadcrumbs>

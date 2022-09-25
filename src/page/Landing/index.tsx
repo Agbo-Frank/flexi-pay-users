@@ -82,13 +82,13 @@ export function Landing(){
                         </div>
                     </div>
 
-                    {/* <div className="bg-white rounded-xl py-2 px-1 overflow-x-auto sm:overflow-hidden">
+                    <div className="bg-white rounded-xl py-2 px-1 overflow-x-auto sm:overflow-hidden">
                         <CategorySlide />
-                    </div> */}
-                    <ProductsBallSlide 
+                    </div>
+                    {/* <ProductsBallSlide 
                         products={catTop} 
                         loading={loadingProduct}
-                    />
+                    /> */}
 
                     <ProductsSlide 
                         products={products} 

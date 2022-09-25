@@ -10,7 +10,7 @@ import {
     SearchBar,
     Footer} from "../../components"
 import Banner from "../../components/Banner"
-import TextHeader from "../../components/TextHeader"
+import TextHeader from "../TermsAndCondition/TextHeader"
 import img1 from '../../asset/banner5.png'
 import img2 from '../../asset/banner4.png'
 

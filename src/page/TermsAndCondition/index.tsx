@@ -10,7 +10,7 @@ import {
     SearchBar,
     Footer} from "../../components"
 import Banner from "../../components/Banner"
-import TextHeader from "../../components/TextHeader"
+import TextHeader from "./TextHeader"
 import banner from '../../asset/term.png'
 
 
@@ -134,6 +134,78 @@ export function TermsAndCondition(){
                         <ul className="list-disc px-4">
                           <li>
                             Registered users may place orders for Goods, which FlexiPay or the Third Party Seller may accept or reject. Whether or not FlexiPay or the Third Party Seller accepts an order depends on the availability of Goods, correctness of the information relating to the Goods (including without limitation the price) and receipt of payment or payment authorisation by FlexiPay for the Goods.
+                          </li>
+                          <li>
+                            NOTE: FlexiPay or the Third Party Seller will indicate the acceptance of your order by delivering the Goods to you or allowing you to collect them, and only at that point will an agreement of sale between you and FlexiPay or the Third Party Seller come into effect (the “Sale”). This is regardless of any communication from FlexiPay stating that your order or payment has been confirmed. FlexiPay will indicate the rejection of your order (by FlexiPay itself) by cancelling it and, as soon as possible thereafter, refunding you for any amount already paid.
+                          </li>
+                          <li>
+                            Prior to delivery or your collection of the Goods, you may cancel an order at any time provided you do so before receiving a dispatch or delivery notice. After delivery or your collection of the Goods, you may return the Goods only in accordance with the Returns Policy.
+                          </li>
+                          <li>
+                            Placing Goods in a wishlist or shopping basket without completing the purchase cycle does not constitute an order for such Goods, and as such, Goods may be removed from the shopping basket if stock is no longer available or the price thereof might change without notice to you. You cannot hold FlexiPay or the Third Party Seller liable if such Goods are not available or are not available at the particular price when you complete or attempt to complete the purchase cycle at a later stage.
+                          </li>
+                          <li>
+                            You acknowledge that stock of all Goods on offer is limited and that pricing may change at any time without notice to you. In the case of Goods for sale by FlexiPay, FlexiPay will take all reasonable efforts to monitor stock levels and ensure that when stock is no longer available, that offers thereof are discontinued on the Website. However, we cannot guarantee the availability of stock. When Goods are no longer available after you have placed an order, FlexiPay will notify you and you will be entitled to a refund of any amount already paid by you for such Goods. 
+                          </li>
+                          <li>
+                            In the case of Goods for sale by a Third Party Seller, FlexiPay relies on inventory information supplied by the relevant Third Party Seller and FlexiPay accordingly bears no liability for any inaccuracies in the information supplied to it. Consequently, should you order any Goods from a Third Party Seller which are in fact sold-out, any resulting dispute should be resolved between you and the relevant Third Party Seller, your respective rights and obligations being as set out in these Terms and Conditions.
+                          </li>
+                          <li>
+                            Certain Goods may not be purchased for re-sale. Should we suspect that any such Goods are being purchased for sale, we are entitled to cancel your order immediately on notice to you.
+                          </li>
+                          <li>
+                            Please see details relating to Pre-orders in our FAQ’s: Pre-Order, which are incorporated by reference.
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="w-full">
+                      <TextHeader title="Payment" />
+                      <div className="text-[#000541] my-3">
+                        <ul className="list-disc px-4">
+                          <li>
+                            We are committed to providing secure online payment facilities. All transactions are encrypted using appropriate encryption technology.
+                          </li>
+                          <li>
+                            Whether the Goods are for sale by FlexiPay or a Third Party Seller, payment may be made for Goods via the following methods (depending on its availability and/or your eligibility to use such a method) -
+
+                            <ul className="list-disc px-4">
+                              <li>
+                                Debit card; where payment is made by debit card, we may require additional information in order to authorise and/or verify the validity of payment. In such cases we are entitled to withhold delivery until such time as the additional information is received by us and authorisation is obtained by us for the amounts. If we do not receive authorisation your order for the Goods will be cancelled. You warrant that you are fully authorised to use the debit card supplied for purposes of paying for the Goods. You also warrant that your debit card has sufficient available funds to cover all the costs incurred as a result of the services used on the Website;
+                              </li>
+
+                              <li>
+                                Direct bank deposit or electronic funds transfer: if you pay via direct bank deposit or electronic funds transfer, payment must be made within 5 (five) days of placing your order. FlexiPay will not accept your order if payment has not been received;
+                              </li>
+
+                              <li>Instant EFT;</li>
+                              
+                              <li>Cash on delivery (except where any of our exclusions apply, as listed in our FAQ); by selecting this option, you undertake to ensure that you have the exact cash on hand at the time of delivery.</li>
+
+                              <li>eBucks;</li>
+
+                              <li>Discovery Miles;</li>
+                              
+                              <li>MasterPass;</li>
+
+                              <li>FlexiPay Vouchers;</li>
+                            </ul>
+                          </li>
+
+                          <li>
+                            Once you have selected your payment method (save for cash on delivery or direct bank deposit), you will be directed to a link to a secure site for payment of the applicable purchase price for the Goods.
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="w-full">
+                      <TextHeader title="Delivery of goods" />
+                      <div className="text-[#000541] my-3">
+                        <ul className="list-disc px-4">
+                          <li>
+                            FlexiPay offers 2 (two) methods of delivery of Goods to you. You may elect delivery via:
                           </li>
                           <li>
                             NOTE: FlexiPay or the Third Party Seller will indicate the acceptance of your order by delivering the Goods to you or allowing you to collect them, and only at that point will an agreement of sale between you and FlexiPay or the Third Party Seller come into effect (the “Sale”). This is regardless of any communication from FlexiPay stating that your order or payment has been confirmed. FlexiPay will indicate the rejection of your order (by FlexiPay itself) by cancelling it and, as soon as possible thereafter, refunding you for any amount already paid.

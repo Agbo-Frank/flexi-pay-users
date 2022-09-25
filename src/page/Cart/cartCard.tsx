@@ -43,10 +43,10 @@ export function Cart({cart}: {cart: ICart}){
                 loading={savingItem}
                 onClick={() => {
                     handleSaveItemClick(cart.product.uuid, savedItem, dispatch, () => setOpen(false))
-                        .then(() => deleteCart({uuid: cart.uuid}, delCart, dispatch))
+                        .then(() => deleteCart({uuid: cart.uuid}, delCart, dispatch, () => setOpen(false)))
                 }}>Save {matches && "for later"} </LoadingButton>
                 <LoadingButton 
-                onClick={() => deleteCart({uuid: cart.uuid}, delCart, dispatch)}
+                onClick={() => deleteCart({uuid: cart.uuid}, delCart, dispatch, () => setOpen(false))}
                 loading={removing}
                 color="secondary"
                 startIcon={<DeleteIcon />}

@@ -12,7 +12,8 @@ import { FLEXIPAY_COOKIE } from "../../utils/constants";
 export async function deleteCart(
     body: { uuid: string}, 
     deleteCart: ITrigger<{ uuid: string}, IResponse<{data: null}>>,
-    dispatch: Dispatch<AnyAction>
+    dispatch: Dispatch<AnyAction>,
+    done: () => void | any
 ){
     try{
         let data = await deleteCart(body).unwrap()
@@ -22,6 +23,10 @@ export async function deleteCart(
                 message: data.message,
                 severity: data.status === 'success' ? 'success' : 'error'
             }))
+
+            if(data.status === 'success'){
+                done()
+            }
         }
     }
     catch(err){
