@@ -55,7 +55,7 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
                 <div className="max-w-[450px] w-[280px] h-fit bg-primary-dark-blue py-5 px-4">
                     <div className="flex justify-between items-start">
                         <WhiteLogo />
-                        <IconButton onClick={close}>
+                        <IconButton onClick={close} sx={{width: 30, height: 30}}>
                             <i className="fa-solid fa-xmark hover:text-crimson text-lg text-white"></i>
                         </IconButton>
                     </div>

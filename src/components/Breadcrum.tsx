@@ -14,7 +14,7 @@ export function Breadcrumb(){
                             <Link 
                                 to={location === '' ? "/" : `/${location}`}
                                 className="text-sm capitalize"
-                                key={idx}>{location === '' ? "Home" : location.replace('-', ' ')}</Link>
+                                key={idx}>{location === '' ? "Home" : location.replace(/-/g, ' ')}</Link>
                         ))
                     }
                 </MuiBreadcrumbs>

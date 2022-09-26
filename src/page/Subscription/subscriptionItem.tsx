@@ -134,12 +134,12 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
             <CardWrapper>
                 <div className="flex w-full sm:w-9/12 space-x-2 sm:space-x-4 items-stretch pb-4 sm:pb-0"
                 onClick={() => setOpen(state => ({...state, details: true}))}>
-                    <CardImg src={TV} />
+                    <CardImg src={ `${subscription.installment.product?.product_images[0].image_link}` } />
                     <div>
                         <div className="flex flex-col sm:h-full items-stretch">
-                            <CardText>Books</CardText>
+                            <CardText>{ subscription.installment.product?.name }</CardText>
                             <small className="text-grey-200 text-xs sm:text-sm">Placed on  {moment(subscription.created_at).format("MMM Do YY")}</small>
-                            <ProgressBar width="50%"/>
+                            <ProgressBar width={((parseFloat(subscription.amount) / parseFloat(subscription.amount_to_be_paid)) * 100).toString()}/>
                             <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(subscription.amount)}</p>
                         </div>
                     </div>

@@ -121,7 +121,7 @@ export async function confirmOrder(
                 dispatch(toggleSnackBar({
                     open: true,
                     severity: 'error',
-                    message: error.data.message
+                    message: error?.data?.message
                 }))
             }
         }

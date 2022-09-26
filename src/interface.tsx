@@ -303,6 +303,7 @@ export interface IInstallment {
     amount: string;
     frequency: string;
     product_uuid: string;
+    product?: IProduct;
     name: string;
     uuid: string;
     installment_uuid: string;
@@ -372,5 +373,5 @@ export interface ISubscription {
     created_at: string | Date;
     updated_at: string | Date;
     status: string;
-    installment: IInstallment
+    installment: IInstallment  
 }

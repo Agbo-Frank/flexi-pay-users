@@ -55,7 +55,7 @@ export function SideBarDrawer({ open, close }: {open: boolean, close: () => void
             <ClickAwayListener onClickAway={close}>
                 <div className="max-w-[450px] w-[280px] h-fit bg-white rounded-xl">
                     <div className="flex justify-end">
-                        <IconButton onClick={close}>
+                        <IconButton onClick={close} sx={{width: 30, height: 30}}>
                             <i className="fa-solid fa-xmark hover:text-crimson text-lg"></i>
                         </IconButton>
                     </div>

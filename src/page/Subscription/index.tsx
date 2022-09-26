@@ -22,7 +22,7 @@ export function Subscriptions (){
             loading: isLoading
         })
     })
-    // console.log(subscriptions, pagination)
+    console.log(subscriptions, pagination)
     return(
         <>
             <DashboardWrapper>

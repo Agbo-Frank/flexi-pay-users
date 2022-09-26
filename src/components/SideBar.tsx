@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
+import React, { useRef, useState, useLayoutEffect } from "react";
 
 import BagIcon from "./icons/Bag";
 import CartIcon from "./icons/CartIcon";
 import DashboardIcon from "./icons/DashboardIcon";
-import GearIcon from "./icons/GearIcon";
 import HeadPhoneIcon from "./icons/HeadPhoneIcon";
 import {HeartIcon, Spinner, SubscriptionIcon} from "./icons";
 import LogOutIcon from "./icons/LogOutIcon";
@@ -46,7 +45,7 @@ export function SideBarItem ({ active = false, Icon, name, link, handleClick}: I
         >
             <div className={`rounded-full ${active_ && 'bg-primary-blue'} w-2 h-8`}></div>
             <div 
-            className={`flex justify-start capitalize space-x-4 rounded-l-xl ${active_ ? 'bg-grey-500 text-primary-dark-blue' : 'text-grey-1300' } text-primary-dark-blue px-5 py-4 w-full`}>
+            className={`flex justify-start items-center capitalize space-x-4 rounded-l-xl ${active_ ? 'bg-grey-500 text-primary-dark-blue' : 'text-grey-1300' } text-primary-dark-blue px-5 py-4 w-full`}>
                 <Icon size="20" color={active_ ? "#1900FE" :"#474747"}/>
                 <p>{name}</p>
             </div>
@@ -87,9 +86,9 @@ function SideBar(): JSX.Element {
             Icon={BagIcon} name="order" link="order"
             handleClick={setLocation}/>
 
-            {/* <SideBarItem 
+            <SideBarItem 
             Icon={SubscriptionIcon} name="subscription" link="subscription"
-            handleClick={setLocation}/> */}
+            handleClick={setLocation}/>
 
         </div>
         <svg className="my-7 mx-auto" width="80%" height="2" viewBox="0 0 171 2" fill="none" xmlns="http://www.w3.org/2000/svg">
