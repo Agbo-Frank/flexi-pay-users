@@ -32,7 +32,7 @@ export function Cart({cart}: {cart: ICart}){
             <DialogTitle>Remove From Cart</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Do you really want to remove this item from cart?
+                    Do you want to remove this item from cart?
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

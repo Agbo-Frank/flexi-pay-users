@@ -201,27 +201,34 @@ export function TermsAndCondition(){
                         <ul className="list-disc px-4">
                           <li>
                             FlexiPay offers 2 (two) methods of delivery of Goods to you. You may elect delivery via:
+                            <ul className="list-disc px-4">
+                              <li>courier; or</li>
+
+                              <li>self-collection.</li>
+                            </ul>
                           </li>
                           <li>
-                            NOTE: FlexiPay or the Third Party Seller will indicate the acceptance of your order by delivering the Goods to you or allowing you to collect them, and only at that point will an agreement of sale between you and FlexiPay or the Third Party Seller come into effect (the “Sale”). This is regardless of any communication from FlexiPay stating that your order or payment has been confirmed. FlexiPay will indicate the rejection of your order (by FlexiPay itself) by cancelling it and, as soon as possible thereafter, refunding you for any amount already paid.
+                            For more information about delivery, please see our FAQs: Shipping and Delivery, which are incorporated into these Terms by reference. Our delivery charges are subject to change at any time, without prior notice to you, so please check the FAQs for the most up-to-date information. You will see the applicable delivery charges in your cart when you check out.
                           </li>
                           <li>
-                            Prior to delivery or your collection of the Goods, you may cancel an order at any time provided you do so before receiving a dispatch or delivery notice. After delivery or your collection of the Goods, you may return the Goods only in accordance with the Returns Policy.
+                            Where it accepts your order, FlexiPay or the Third Party Seller will deliver the Goods to you as soon as reasonably possible, but no later than 30 (thirty) days of receipt of your payment (“Delivery Period”). We will notify you if we are unable to deliver the Goods during the Delivery Period. You may then, within 7 (seven) days of receiving such notification elect whether or not to cancel your order for the Goods. If you elect to cancel your order, we will reimburse you for the purchase price.
                           </li>
                           <li>
-                            Placing Goods in a wishlist or shopping basket without completing the purchase cycle does not constitute an order for such Goods, and as such, Goods may be removed from the shopping basket if stock is no longer available or the price thereof might change without notice to you. You cannot hold FlexiPay or the Third Party Seller liable if such Goods are not available or are not available at the particular price when you complete or attempt to complete the purchase cycle at a later stage.
+                          FlexiPay’s obligation to deliver a product to you is fulfilled when we deliver the product to the physical address nominated by you for delivery of the order. <strong>FlexiPay is not responsible for any loss or unauthorised use of a product, after it has delivered the product to the physical address nominated by you.</strong>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="w-full">
+                      <TextHeader title="Errors" />
+                      <div className="text-[#000541] my-3">
+                        <ul className="list-disc px-4">
+                          <li>
+                             <strong>We shall take all reasonable efforts to accurately reflect the description, availability, purchase price and delivery charges of Goods on the Website. However, should there be any errors of whatsoever nature on the Website (which are not due to our gross negligence), we shall not be liable for any loss, claim or expense relating to a transaction based on any error, save – in the case of any incorrect purchase price – to the extent of refunding you for any amount already paid, or otherwise as set out in the Returns Policy. </strong>
                           </li>
                           <li>
-                            You acknowledge that stock of all Goods on offer is limited and that pricing may change at any time without notice to you. In the case of Goods for sale by FlexiPay, FlexiPay will take all reasonable efforts to monitor stock levels and ensure that when stock is no longer available, that offers thereof are discontinued on the Website. However, we cannot guarantee the availability of stock. When Goods are no longer available after you have placed an order, FlexiPay will notify you and you will be entitled to a refund of any amount already paid by you for such Goods. 
-                          </li>
-                          <li>
-                            In the case of Goods for sale by a Third Party Seller, FlexiPay relies on inventory information supplied by the relevant Third Party Seller and FlexiPay accordingly bears no liability for any inaccuracies in the information supplied to it. Consequently, should you order any Goods from a Third Party Seller which are in fact sold-out, any resulting dispute should be resolved between you and the relevant Third Party Seller, your respective rights and obligations being as set out in these Terms and Conditions.
-                          </li>
-                          <li>
-                            Certain Goods may not be purchased for re-sale. Should we suspect that any such Goods are being purchased for sale, we are entitled to cancel your order immediately on notice to you.
-                          </li>
-                          <li>
-                            Please see details relating to Pre-orders in our FAQ’s: Pre-Order, which are incorporated by reference.
+                          FlexiPay shall not be bound by any incorrect information regarding our Goods displayed on any third party websites.
                           </li>
                         </ul>
                       </div>
