@@ -206,8 +206,8 @@ export function ProductsSlide({products, loading, title, link}: {products: IProd
                             {
                                 products?.map((product, idx) => (
                                     <div className="w-64 h-fit px-1">
-                                        <ProductCardFaded product={product} key={idx}/>
-                                        {/* <ProductCard product={product} key={idx}/> */}
+                                        {/* <ProductCardFaded product={product} key={idx}/> */}
+                                        <ProductCard product={product} key={idx}/>
                                     </div>
                                 ))
                             }
