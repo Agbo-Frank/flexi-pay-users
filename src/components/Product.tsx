@@ -115,7 +115,7 @@ export function ProductsSlide({products, loading, title, link}: {products: IProd
                 </Button>
             </div>
             {
-                !loading ?
+                loading ?
                 <div className='flex space-x-2 whitespace-nowrap overflow-x-auto scrollbar-hidden'> 
                     {
                         data.map(d => (
