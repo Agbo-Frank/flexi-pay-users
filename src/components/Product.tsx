@@ -71,7 +71,7 @@ export function ProductCardDummy(){
 export function ProductCardSkeleton(){
     return(
         <div className="block w-[200px] bg-white shadow sm:w-[220px] rounded-lg h-fit p-2 space-y-4 my-2">
-            <div className='relative'>
+            <div className='relative w-[200px]'>
                 <Skeleton variant='rounded' width={'100%'} height={150} />
                 <div className='absolute top-0 right-1/2 translate-x-1/2 translate-y-1/2'>
                     <GreyLogo />
@@ -115,7 +115,7 @@ export function ProductsSlide({products, loading, title, link}: {products: IProd
                 </Button>
             </div>
             {
-                loading ?
+                !loading ?
                 <div className='flex space-x-2 whitespace-nowrap overflow-x-auto scrollbar-hidden'> 
                     {
                         data.map(d => (
