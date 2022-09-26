@@ -1,11 +1,6 @@
-import { Button, Checkbox, Grid, MenuItem, Pagination, Skeleton } from "@mui/material"
-import { useEffect, useState } from "react"
-import { useSearchParams, useNavigate } from "react-router-dom"
 import { 
     Body, Categories, 
-    DropDown, Header, 
-    ProductCard, Empty,
-    ProductCardSkeleton, 
+    Header, 
     Breadcrumb,
     SearchBar,
     Footer} from "../../components"

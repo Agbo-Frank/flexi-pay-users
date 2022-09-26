@@ -11,6 +11,7 @@ import {
     Footer} from "../../components"
 import Banner from "../../components/Banner"
 import TextHeader from "../TermsAndCondition/TextHeader"
+import bannerImg from '../../asset/about.png'
 import img1 from '../../asset/banner5.png'
 import img2 from '../../asset/banner4.png'
 
@@ -26,7 +27,8 @@ export function About(){
                     <SearchBar />
                 </div>
                 <div className="w-full px-5 md:px-16">
-                  <Banner title="About Us" />
+                  <Banner title={bannerImg} />
+                  {/* <Banner title="About Us" /> */}
                   <div className="py-16">
                     <Grid container>
                       <Grid item md={6}>
@@ -45,8 +47,8 @@ export function About(){
                         </div>
                       </Grid>
                       <Grid item md={6}>
-                        <div className="w-full md:pl-10 max-h-[500px]">
-                          <img alt="flexipay" src={img1} className="w-full h-fit" />
+                        <div className="w-full md:pl-10">
+                          <img alt="flexipay" src={img1} className="w-full max-h-[500px]" />
                         </div>
                       </Grid>
                     </Grid>
@@ -54,24 +56,26 @@ export function About(){
                     <Grid container>
                       <Grid item md={6}>
                         <div className="w-full md:pr-10">
-                          <img alt="flexipay" src={img2} className="w-full" />
+                          <img alt="flexipay" src={img2} className="w-full max-h-[500px]" />
                         </div>
                       </Grid>
                       <Grid item md={6}>
-                        <div className="w-full">
-                          <TextHeader title="our mission" />
-                          <div className="text-[#000541] md:pr-10">
-                            <p className="my-3">
-                              To connect Nigerian online vendors and shoppers to each other through Technology & Commerce while ensuring affordability of goods.
-                            </p>
+                        <div className="py-10 md:py-16">
+                          <div className="w-full">
+                            <TextHeader title="our mission" />
+                            <div className="text-[#000541] md:pr-10">
+                              <p className="my-3">
+                                To connect Nigerian online vendors and shoppers to each other through Technology & Commerce while ensuring affordability of goods.
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                        <div className="w-full">
-                          <TextHeader title="our vision" />
-                          <div className="text-[#000541] md:pr-10">
-                            <p className="my-3">
-                              At FlexiPay we believe that anyone can afford anything if given time to plan and put resources together. Our vision is to provide this opportunity to Nigerians at large, so they can afford to shop at the convenience of their time and pocket.
-                            </p>
+                          <div className="w-full">
+                            <TextHeader title="our vision" />
+                            <div className="text-[#000541] md:pr-10">
+                              <p className="my-3">
+                                At FlexiPay we believe that anyone can afford anything if given time to plan and put resources together. Our vision is to provide this opportunity to Nigerians at large, so they can afford to shop at the convenience of their time and pocket.
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </Grid>
