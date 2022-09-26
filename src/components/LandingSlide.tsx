@@ -149,8 +149,8 @@ export function CategorySlide(){
             <div className="flex sm:hidden whitespace-nowrap overflow-x-auto">
                 {
                     categories.map((category, categoryIdx) => (
-                        <div className='w-fit h-fit p-2 flex items-center' key={categoryIdx}>
-                            <div className="w-[70px] h-[70px] border-4 rounded-full border-grey-100" key={categoryIdx}>
+                        <div className='w-fit h-fit py-2 px-1 flex items-center' key={categoryIdx}>
+                            <div className="w-[80px] h-[80px] border-4 rounded-full border-grey-100" key={categoryIdx}>
                                 <img src={category1} className="object-cover w-full h-full rounded-full"/>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 import { Logo, MailIcon, PadLock, Spinner } from '../../components/icons';
 
-import {Button, FormInput, AuthenticationForm, Toast2} from '../../components';
+import {Button, FormInput, AuthenticationForm} from '../../components';
 import { useLoginMutation } from '../../redux/api/Auth'
 
 import { Link, useSearchParams } from 'react-router-dom'

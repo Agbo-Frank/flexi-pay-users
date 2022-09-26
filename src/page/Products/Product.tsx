@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import { Body, Header, Categories, ProductSlide, Footer, Breadcrumb, ProductsSlide, ProductsSlideDummy,  } from "../../components"
+import { Body, Header, Categories, Footer, Breadcrumb, ProductsSlide, ProductsSlideDummy,  } from "../../components"
 import { CartIcon, HeartIcon,  } from "../../components/icons"
 import { useGetProductQuery } from "../../redux/api/Product";
 import { LoadingButton } from "@mui/lab";
@@ -16,6 +16,7 @@ import { Helmet } from 'react-helmet-async';
 import { useCookies } from "react-cookie";
 import { FLEXIPAY_COOKIE, FLEXIPAY_REDIRECT, FLEXIPAY_URL } from "../../utils/constants";
 import { useDispatch } from "react-redux";
+import ProductSlide from "./productSlide";
 
 export function Product(){
     let { slug } = useParams()
