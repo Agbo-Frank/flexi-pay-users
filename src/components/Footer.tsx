@@ -12,14 +12,24 @@ export function Footer(){
             <div className="bg-[#545362] px-2 sm:px-0">
                 <div className="fp-screen py-5 flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0 sm:items-center bg-[#545362]">
                     <Logo color="white"/>
-                    <div className="flex flex-col sm:flex-row sm:space-x-5 space-y-3 sm:space-y-0">
+                    <div className="flex justify-around flex-col sm:flex-row sm:space-x-5 space-y-3 sm:space-y-0">
                         <div className="flex text-white space-x-1 sm:space-x-2">
                             <div className="bg-white  grid place-items-center rounded-full w-10 h-10 sm:w-12 sm:h-12">
                                 <MailIcon color="#000541" size="20"/>
                             </div>
                             <div>
                                 <h1 className="text-sm sm:text-base font-semibold">Email Support</h1>
-                                <p className="text-xs sm:text-sm font-light">Support@flexipay.com</p>
+                                <p className="text-xs sm:text-sm font-light"><a href="mailto:support@flexipay.com">Support@flexipay.com</a></p>
+                            </div>
+                        </div>
+
+                        <div className="flex text-white space-x-1 sm:space-x-2">
+                            <div className="bg-white  grid place-items-center rounded-full w-10 h-10 sm:w-12 sm:h-12 rotate-180">
+                                <PhoneIcon color="#000541" size="20"/>
+                            </div>
+                            <div>
+                                <h1 className="text-sm sm:text-base font-semibold">Phone Support</h1>
+                                <p className="text-xs sm:text-sm font-light"><a href="tel:09093874726">09093874726</a>, <a href="tel:09092787322">09092787322</a></p>
                             </div>
                         </div>
 
@@ -29,7 +39,7 @@ export function Footer(){
                             </div>
                             <div className="">
                                 <h1 className="text-sm sm:text-base font-semibold">WhatsApp Support</h1>
-                                <p className="text-xs sm:text-sm font-light">Support@flexipay.com</p>
+                                <p className="text-xs sm:text-sm font-light"><a href="tel:09093874726">09093874726</a>, <a href="tel:09092787322">09092787322</a></p>
                             </div>
                         </div>
                     </div>
@@ -41,28 +51,29 @@ export function Footer(){
                     <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 justify-between py-10 border-b border-white">
                         <ul>
                             <li className="font-semibold mb-2 sm:mb-4">About FlexiPay</li>
-                            <li className="font-light text-sm cursor-pointer"><Link to="/about-us">About us</Link></li>
-                            <li className="font-light text-sm cursor-pointer"><Link to="/support">Contact us</Link></li>
-                            <li className="font-light text-sm cursor-pointer"><Link to="/terms-and-condition">Terms & Conditions</Link></li>
+                            <li className="font-light text-sm cursor-pointer my-2"><Link to="/about-us">About us</Link></li>
+                            <li className="font-light text-sm cursor-pointer my-2"><Link to="/support">Contact us</Link></li>
+                            <li className="font-light text-sm cursor-pointer my-2"><Link to="/terms-and-condition">Terms & Conditions</Link></li>
                         </ul>
 
                         <ul>
                             <li className="font-semibold mb-2 sm:mb-4">Make Money on FlexiPay</li>
-                            <li className="font-light text-sm cursor-pointer"><Link to="/vendor">Become a Vendor</Link></li>
-                            <li className="font-light text-sm cursor-pointer"><Link to="/partner">Become an affiliate partner</Link></li>
+                            <li className="font-light text-sm cursor-pointer my-2"><Link to="/vendor">Become a Product  Vendor</Link></li>
+                            <li className="font-light text-sm cursor-pointer my-2"><Link to="/vendor">Become a Service  Vendor</Link></li>
+                            <li className="font-light text-sm cursor-pointer my-2"><Link to="/partner">Become an affiliate partner</Link></li>
                         </ul>
 
                         <ul>
                             <li className="font-semibold mb-2 sm:mb-4">More Info</li>
-                            <li className="font-light text-sm cursor-pointer"><Link to="/return-policy">Returen Policy</Link></li>
-                            <li className="font-light text-sm cursor-pointer"><Link to="/privacy-policy">Privacy Policy</Link></li>
-                            <li className="font-light text-sm cursor-pointer"><Link to="/affiliate">Become an affiliate partner</Link></li>
+                            <li className="font-light text-sm cursor-pointer my-2"><Link to="/return-policy">Return Policy</Link></li>
+                            <li className="font-light text-sm cursor-pointer my-2"><Link to="/privacy-policy">Privacy Policy</Link></li>
+                            <li className="font-light text-sm cursor-pointer my-2"><Link to="/affiliate">Become an affiliate partner</Link></li>
                         </ul>
 
                         <div>
                             <p className="font-semibold mb-2 sm:mb-4">Get latest updates in your inbox</p>
                             <div className="bg-white flex justify-between rounded overflow-hidden p-1 mx-2">
-                                <input type='email' placeholder="Email"/>
+                                <input type='email' placeholder="Email" className="px-3" />
                                 <div className="scale-90">
                                     <div className="scale">
                                         <Button 
@@ -78,7 +89,7 @@ export function Footer(){
 
                     <div className="flex flex-col sm:flex-row justify-between sm:items-center py-4">
                         <div className="flex space-x-2 items-center">
-                            <p className="text-sm">Follow Us </p>
+                            <p className="text-sm">Follow Us: </p>
                             <div className="space-x-5 flex items-center my-3">
                                 <i className="text-white fa-brands fa-facebook"></i>
                                 <i className="text-white fa-brands fa-instagram-square"></i>
@@ -90,9 +101,11 @@ export function Footer(){
 
                         <div className="flex space-x-2 items-center">
                             <p className="text-sm">Payment Methods: </p>
-                            <div className="space-x-5 flex items-center my-3">
-                                <i className="fa-brands fa-cc-visa text-primary-dark-blue"></i>
-                                <i className="fa-brands fa-cc-mastercard text-primary-dark-blue"></i>
+                            <div className="space-x-3 flex items-center my-3">
+                                <i className="fa-brands fa-cc-visa text-white text-lg"></i>
+                                <i className="fa-brands fa-cc-mastercard text-white text-lg"></i>
+                                <i className="fa-solid fa-wallet text-white text-lg"></i>
+                                <i className="fa-sharp fa-solid fa-building-columns text-white text-lg"></i>
                             </div>
                         </div>
 
