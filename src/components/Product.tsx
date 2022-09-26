@@ -29,6 +29,27 @@ export function ProductCard({product}: {product: IProduct}){
     )
 }
 
+export function ProductCardFaded({product}: {product: IProduct}){
+    const navigate = useNavigate()
+    return(
+        <div onClick={()=>navigate(`/product/${product.uuid}`)} className="relative block w-full bg-white rounded-lg h-full shadow-sm hover:shadow hover:-translate-y-1 hover:z-30 my-2 mx-3">
+            <div className='w-full h-fit overflow-hidden rounded-lg'>
+                <img src={product.product_images[0].image_link} className="w-full h-[300px] object-cover" alt={product.name}/>
+            </div>
+            <div className=''>
+            </div>
+            <div className='h-[30%] bg-[#F4F4F4] mix-blend-screen w-full absolute bottom-0 left-0 right-0 p-3 rounded-b-lg'>
+                <p className='truncate text-grey-1200 text-sm capitalize font-light'>{product.name}</p>
+                <div className="flex items-center space-x-3">
+                    <p className="text-primary-dark-blue font-medium text-md">₦ {formatNumber(product.price)}</p>
+                    <s className="text-xs font-light text-grey-200">₦ 10,600</s>
+                </div>
+                <p className='text-xs text-primary-orange-200 font-medium'>Pay ₦ 120 / daily</p>
+            </div>
+        </div>
+    )
+}
+
 export function ProductCardDummy(){
     return(
         <Link to={'/product/1'} className="w-full bg-white rounded-lg h-fit p-2 space-y-4 hover:shadow-xl hover:-translate-y-1 hover:z-30 my-2">
@@ -159,6 +180,79 @@ export function ProductsSlide({products, loading, title, link}: {products: IProd
 
     const navigate = useNavigate()
     return(
+        <div className="px-2 sm:overflow-hidden rounded-2xl h-[400px]">
+            <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:px-4 sm:py-2">
+                <p className="Capitalize font-medium text-sm  sm:text-lg">{title}</p>
+                <Button 
+                    onClick={() => navigate(`${link}`)} 
+                    color="secondary"
+                    endIcon={<i className="fa-solid fa-chevron-right text-[8px] sm:text-[10px]"></i>}
+                    className="text-xs">
+                        View More
+                </Button>
+            </div>
+            {
+                loading ?
+                <div className='flex space-x-2 whitespace-nowrap overflow-x-auto scrollbar-hidden'> 
+                    {
+                        data.map(d => (
+                            <ProductCardSkeleton />
+                        ))
+                    }
+                </div>:
+                <div className="bg-white py-2 sm:p-4 h-full">
+                    <div className="relative h-full rounded-md overflow-x-hidden hidden sm:block">
+                        <Slider ref={slide} {...settings} className="h-full">
+                            {
+                                products?.map((product, idx) => (
+                                    <div className="w-64 h-fit px-1">
+                                        <ProductCardFaded product={product} key={idx}/>
+                                        {/* <ProductCard product={product} key={idx}/> */}
+                                    </div>
+                                ))
+                            }
+                        </Slider>
+
+                        <div 
+                            className={`absolute top-2/4 w-8 h-8  bg-black/50 rounded-full grid place-items-center cursor-pointer`}
+                            onClick={() => slide.current.slickPrev()}>
+                            <i className="text-white font-bold text-sm fa-solid fa-chevron-left"></i>
+                        </div>
+                        <div className={`absolute top-2/4 right-0 rounded-full bg-black/50 w-8 h-8 grid place-items-center cursor-pointer`}
+                        onClick={() => slide.current.slickNext()}>
+                            <i className="text-white font-bold text-sm fa-solid fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div className='flex sm:hidden whitespace-nowrap overflow-x-auto overflow-y-hidden h-full'>
+                        {
+                            products?.map((product, idx) => (
+                                <div className="w-[180px] h-fit pr-3">
+                                    <ProductCard product={product} key={idx}/>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    )
+}
+
+
+export function ProductsSlideFaded({products, loading, title, link}: {products: IProduct[] | undefined, loading: boolean, title: string, link?: string}){
+    let matches = useMediaQuery("(min-width:600px)")
+    let slide: any = useRef()
+    const settings = {
+        infinite: false,
+        draggable: true,
+        speed: 1000,
+        slidesToShow: 5,
+        slidesToScroll: 2,
+    };
+    let data = [1, 2, 3, 4, 5]
+
+    const navigate = useNavigate()
+    return(
         <div className="px-2 sm:overflow-hidden rounded-2xl">
             <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:px-4 sm:py-2">
                 <p className="Capitalize font-medium text-sm  sm:text-lg">{title}</p>
@@ -215,6 +309,7 @@ export function ProductsSlide({products, loading, title, link}: {products: IProd
         </div>
     )
 }
+
 
 
 export function ProductsBallSlide({products, loading, title, link}: {products: any, loading: boolean, title?: string, link?: string}){
