@@ -38,8 +38,8 @@ export function ProductCardFaded({product}: {product: IProduct}){
             </div>
             <div className=''>
             </div>
-            <div className='h-[30%] bg-[#F4F4F4] mix-blend-screen w-full absolute bottom-0 left-0 right-0 p-3 rounded-b-lg'>
-                <p className='truncate text-grey-1200 text-sm capitalize font-light'>{product.name}</p>
+            <div className='h-[30%] bg-[#F4F4F4] mix-blend-lighten w-full absolute bottom-0 left-0 right-0 p-3 rounded-b-lg'>
+                <p className='truncate text-[#222222] text-sm capitalize font-light'>{product.name}</p>
                 <div className="flex items-center space-x-3">
                     <p className="text-primary-dark-blue font-medium text-md">₦ {formatNumber(product.price)}</p>
                     <s className="text-xs font-light text-grey-200">₦ 10,600</s>
