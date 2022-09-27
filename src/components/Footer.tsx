@@ -119,7 +119,7 @@ const OldFooter = () => {
 const NewFooter = () => {
     return(
         <div className="w-full bg-primary-dark-blue p-5 md:px-10 md:py-5 text-white font-medium">
-            <div className="w-full h-full md:flex justify-between md:p-10 border-b-2 border-white">
+            <div className="w-full h-full md:flex justify-between md:p-5 border-b-2 border-white">
                 <div className="my-5 md:my-auto">
                     <p className="mb-2">Contact us/Follow us:</p>
                     <div className="flex justify-around flex-row sm:space-x-5 sm:space-y-0">
@@ -164,7 +164,7 @@ const NewFooter = () => {
             </div>
 
             <div className="w-full md:p-5">
-                <div className="flex flex-col md:flex-row space-y-2 sm:space-y-0 justify-between py-10 border-b border-white">
+                <div className="flex flex-col md:flex-row space-y-2 sm:space-y-0 justify-between py-5 border-b border-white">
                     <div>
                         <div className="mb-4">
                             <Logo color="white"/>
