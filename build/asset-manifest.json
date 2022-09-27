@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.fb9b7046.css",
-    "main.js": "/static/js/main.220eebb2.js",
+    "main.css": "/static/css/main.e1de35c8.css",
+    "main.js": "/static/js/main.487c53ac.js",
     "static/media/slide3.png": "/static/media/slide3.d67a57c961ec1b516bdd.png",
     "static/media/slide2.png": "/static/media/slide2.81412b3f4f3c9d151baf.png",
     "static/media/slide1.png": "/static/media/slide1.5b117d1feb8b269bb20e.png",
@@ -19,6 +19,7 @@
     "static/media/Product2.png": "/static/media/Product2.48baea09ed308aaadcc7.png",
     "static/media/categories10.png": "/static/media/categories10.a109e5804cce9826501a.png",
     "static/media/categories6.png": "/static/media/categories6.b41ead3c97d6e7a53a01.png",
+    "service-worker.js": "/service-worker.js",
     "static/media/categories5.png": "/static/media/categories5.bd91ccb569792f998bfc.png",
     "static/media/supportImage.png": "/static/media/supportImage.c3cd826135900762102a.png",
     "static/media/categories4.png": "/static/media/categories4.b213849b515b1a508a72.png",
@@ -33,11 +34,11 @@
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
-    "main.fb9b7046.css.map": "/static/css/main.fb9b7046.css.map",
-    "main.220eebb2.js.map": "/static/js/main.220eebb2.js.map"
+    "main.e1de35c8.css.map": "/static/css/main.e1de35c8.css.map",
+    "main.487c53ac.js.map": "/static/js/main.487c53ac.js.map"
   },
   "entrypoints": [
-    "static/css/main.fb9b7046.css",
-    "static/js/main.220eebb2.js"
+    "static/css/main.e1de35c8.css",
+    "static/js/main.487c53ac.js"
   ]
 }

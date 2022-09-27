@@ -141,7 +141,7 @@ export function Products(){
                         </div>
                         <div className="ml-auto float-right my-5">
                             <Pagination 
-                                count={pagination?.total} 
+                                count={pagination?.last_page} 
                                 variant="outlined" 
                                 shape="rounded" 
                                 color="secondary"
