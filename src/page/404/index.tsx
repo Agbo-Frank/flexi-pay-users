@@ -77,8 +77,8 @@ export function NotFound(){
                         <Fade arrows={false} autoplay infinite duration={2000}>
                           {
                             slides.map((val)=>(
-                              <div className="sliderContainer" key={val.id}>
-                                <img alt="..." src={val.img} className="w-full sliderImage h-[350px] lg:h-[400px]" />
+                              <div className="sliderContainer h-[350px] lg:h-[400px]" key={val.id}>
+                                <img alt="..." src={val.img} className="w-full sliderImage h-fit object-cover" />
                                 <div className="sliderMiddle">
                                   <div className="sliderText text-white pt-[30%]">
                                     <p className="text-2xl font-bold text-white mb-10">{val.text}</p>
