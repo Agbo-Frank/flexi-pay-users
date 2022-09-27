@@ -13,3 +13,4 @@ export * from "./Subscription/index"
 export * from './Wallet/index'
 export * from './About'
 export * from './TermsAndCondition'
+export * from './404'

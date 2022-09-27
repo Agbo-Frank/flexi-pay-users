@@ -40,7 +40,7 @@ export function Carts (){
             {
                 loadingCart ?
                 <div className="flex justify-between space-x-5 w-full h-full shadow-sm">
-                    <div className="bg-white rounded-xl py-6 border w-7/12">
+                    <div className="bg-white rounded-xl py-6 w-full sm:w-7/12">
 
                         <div className="flex justify-between mx-6">
                             <Skeleton sx={{fontSize: 18}} width={"30%"}/>

@@ -16,6 +16,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { AuthProvider } from './context/Auth';
 import RequireAuth from './components/RequireAuth';
 import TermsAndCondition from './page/TermsAndCondition';
+import NotFound from './page/404';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path='/support' element={<Contact />} />
         <Route path='/products' element={<Products />} />
         <Route path='/about-us' element={<About />} />
+        <Route path='*' element={<NotFound />} />
         <Route path='/terms-and-condition' element={<TermsAndCondition />} />
         <Route path='/profile' element={<RequireAuth><Profile /></RequireAuth>} />
       </Routes>

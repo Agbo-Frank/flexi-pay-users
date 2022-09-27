@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
+import 'react-slideshow-image/dist/styles.css';
 import './index.css';
 import App from './App';
 import { store } from './redux/store';
@@ -9,6 +10,7 @@ import theme from './config/theme';
 import { ThemeProvider } from '@mui/material';
 import { CookiesProvider } from 'react-cookie';
 import { HelmetProvider } from 'react-helmet-async';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration.';
 
 ReactDOM.hydrate(
   (
@@ -28,3 +30,6 @@ ReactDOM.hydrate(
   ),
   document.getElementById('root') as HTMLElement
 );
+
+serviceWorkerRegistration.register();
+
