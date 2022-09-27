@@ -118,7 +118,7 @@ const OldFooter = () => {
 
 const NewFooter = () => {
     return(
-        <div className="w-full bg-primary-dark-blue p-5 md:px-10 md:py-5 2xl:px-[10%] text-white font-medium">
+        <div className="w-full bg-primary-dark-blue p-5 md:px-10 md:py-5 xl:px-[10%] 2xl:px-[20%] text-white font-medium">
             <div className="w-full h-full md:flex justify-between md:p-5 border-b-2 border-white">
                 <div className="my-5 md:my-auto">
                     <p className="mb-2">Contact us/Follow us:</p>
@@ -221,7 +221,7 @@ const NewFooter = () => {
 export function Footer(){
     const navigate = useNavigate()
     return(
-        <footer className="mt-5">
+        <footer className="w-screen mt-5">
             <NewFooter />
             {/* <OldFooter /> */}
         </footer>
