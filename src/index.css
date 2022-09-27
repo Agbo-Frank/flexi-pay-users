@@ -17,6 +17,7 @@
   transition: all .2s linear; 
   font-family: 'Montserrat', sans-serif;
   outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 html{
   overflow-x: auto;
