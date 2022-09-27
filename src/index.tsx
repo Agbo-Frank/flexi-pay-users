@@ -10,6 +10,7 @@ import theme from './config/theme';
 import { ThemeProvider } from '@mui/material';
 import { CookiesProvider } from 'react-cookie';
 import { HelmetProvider } from 'react-helmet-async';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration.';
 
 ReactDOM.hydrate(
   (
@@ -29,3 +30,6 @@ ReactDOM.hydrate(
   ),
   document.getElementById('root') as HTMLElement
 );
+
+serviceWorkerRegistration.register();
+
