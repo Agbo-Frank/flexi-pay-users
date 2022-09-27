@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
+import 'react-slideshow-image/dist/styles.css';
 import './index.css';
 import App from './App';
 import { store } from './redux/store';
