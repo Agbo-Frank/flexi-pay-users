@@ -10,5 +10,6 @@ declare module 'uuid'
 declare module 'react-meta-tags'
 declare module 'naija-state-local-government'
 declare module 'react-transition-group/TransitionGroup'
+declare module 'react-slideshow-image'
 declare module '@mui/material/styles/createTheme'
   
