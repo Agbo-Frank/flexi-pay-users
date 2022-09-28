@@ -1,10 +1,13 @@
 import { Drawer, Button as MuiButton, IconButton, ClickAwayListener } from "@mui/material";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/Auth";
 import { useLogoutMutation } from "../redux/api/Auth";
+import { useGetCategoriesQuery } from "../redux/api/Product";
+import { RootState } from "../redux/store";
 import Button from "./Button";
-import { BagIcon, HeartIcon, LoginIcon, LogOutIcon, Spinner, UserIcon, WhiteLogo } from "./icons";
+import { BagIcon, CartIcon, DashboardIcon, HeartIcon, LoginIcon, LogOutIcon, Spinner, UserIcon, WhiteLogo } from "./icons";
 import Iicon from "./interface";
 
 
@@ -42,6 +45,14 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
     let [logout, {isLoading: loggingOut}] = useLogoutMutation({
         fixedCacheKey: 'logout',
     })
+
+    let { categories, loading } = useGetCategoriesQuery(undefined, {
+        selectFromResult: ({ data, isLoading }) => ({
+            categories: data?.result,
+            loading: isLoading
+        })
+    })
+
     return(
         <Drawer
             anchor='left'
@@ -52,62 +63,49 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
             }}
             className="block sm:hiddden">
             <ClickAwayListener onClickAway={close}>
-                <div className="max-w-[450px] w-[280px] h-fit bg-primary-dark-blue py-5 px-4">
+                <div className="max-w-[450px] w-[280px] h-screen  bg-primary-dark-blue py-5 px-4">
                     <div className="flex justify-between items-start">
                         <WhiteLogo />
                         <IconButton onClick={close} sx={{width: 30, height: 30}}>
                             <i className="fa-solid fa-xmark hover:text-crimson text-lg text-white"></i>
                         </IconButton>
                     </div>
-                    <ul className={`text-sm top-full shadow-lg pb-1`}>
-                        <Item Icon={UserIcon} name="Profile" link="profile" handleClick={() => console.log(false)} />
-                        <Item Icon={BagIcon} name="Order" link="order" handleClick={() => console.log(false)} />
-                        <Item Icon={HeartIcon} name="Saved Item" link="saved-items" handleClick={() => console.log(false)} />
-
-                        {/* <li className="mt-5">
-                            <Button color="#FF5000" onClick={signout}>
-                                <div className='flex items-center gap-3'>
-                                    {
-                                        loggingOut ? 
-                                        <div className='w-5 h-5'><Spinner /></div>:
-                                        <>
-                                            <LogOutIcon color="white" size="15"/> 
-                                            <p className='text-white font-semibold text-sm'>Logout</p>
-                                        </>
-                                    }
-                                </div>
-                            </Button>
-                        </li> */}
+                    <ul className={`text-sm top-full shadow-lg pb-1 mt-4`}>
+                        <Item Icon={DashboardIcon} name="Dashboard" link="dashboard" handleClick={close} />
+                        <Item Icon={CartIcon} name="Cart" link="cart" handleClick={close} />
+                        <Item Icon={BagIcon} name="Order" link="order" handleClick={close} />
+                        <Item Icon={HeartIcon} name="Saved Item" link="saved-items" handleClick={close} />
                     </ul>
-                    <div className="space-y-5">
-
-                        <MuiButton 
-                            variant="outlined" 
-                            color="secondary" 
-                            onClick={() => navigate('/auth/login')}
-                            fullWidth
-                            size="large"
-                            startIcon={<LoginIcon size="14" color="#FF5000"/>}>
-                                Log in
-                        </MuiButton>
-                        <MuiButton 
-                            color="secondary" 
-                            fullWidth
-                            size="large"
-                            variant="contained"
-                            onClick={() => navigate('/auth/register')}><p className="text-sm font-medium">Register</p></MuiButton>
-                    </div>
-                    <div className="border-y border-white my-8 py-5">
+                    {/* {
+                        isAuth &&
+                        <div className="space-y-5">
+                            <MuiButton 
+                                variant="outlined" 
+                                color="secondary" 
+                                onClick={() => navigate('/auth/login')}
+                                fullWidth
+                                size="large"
+                                startIcon={<LoginIcon size="14" color="#FF5000"/>}>
+                                    Log in
+                            </MuiButton>
+                            <MuiButton 
+                                color="secondary" 
+                                fullWidth
+                                size="large"
+                                variant="contained"
+                                onClick={() => navigate('/auth/register')}><p className="text-sm font-medium">Register</p></MuiButton>
+                        </div>
+                    } */}
+                    <div className="border-y border-white my-5 py-5">
                         <h3 className="text-primary-orange-200 font-medium">CATEGORIES</h3>
                         <ul className="my-3">
                             {
-                                [
-                                    'Fashion', 'Home & kitchen', 'Electronics',
-                                    'Fashion', 'Home & kitchen', 'Electronics',
-                                    'Fashion', 'Home & kitchen', 'Electronics'
-                                ].map((item, idx) => (
-                                    <li key={idx} className="text-white mb-2" >{item}</li>
-                                ))
+                                !loading && categories && 
+                                categories?.map((category, idx) => 
+                                    <li key={idx} className="text-white mb-2" >
+                                        {category.name}
+                                    </li>
+                                )
                             }
                         </ul>
                     </div>

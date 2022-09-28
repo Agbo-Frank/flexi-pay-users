@@ -22,6 +22,7 @@ import { useCookies } from "react-cookie"
 import { FLEXIPAY_COOKIE } from "../utils/constants"
 import MenuIcon from '@mui/icons-material/Menu';
 import { MenuDrawer, SideBarDrawer } from './'
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface Item {
     Icon: React.FC<Iicon>;
@@ -62,6 +63,7 @@ export function Header(){
         })
     })
     let isAuth = useSelector((state: RootState) => state.data.isAuth)
+    const matches = useMediaQuery('(min-width:600px)');
 
     useEffect(() => {
         if(isAuth){
@@ -90,17 +92,18 @@ export function Header(){
         <>  
             <MenuDrawer open={openDrawer.menu} close={() => setOpenDrawer(state => ({...state, menu: false}))}/>
             <SideBarDrawer open={openDrawer.sideBar} close={() => setOpenDrawer(state => ({...state, sideBar: false}))}/>
-            <header className="bg-white w-full shadow sm:shadow-none">
+            <header className="bg-white w-full shadow sm:shadow-none sticky top-0 z-[100]">
                 <div className="fp-screen flex justify-between py-2 sm:py-5 bg-white items-center sm:items-end">
-                    <div className="sm:hidden">
+                    <div className="flex items-center gap-2">
                         <IconButton 
                             className="sm:hidden"
                             onClick={() => setOpenDrawer(state => ({...state, menu: true}))}>
                             <MenuIcon />
                         </IconButton>
+                        <Logo />
                     </div>
                     
-                    <Logo />
+                    
                     <div className="hidden sm:block w-5/12">
                         <SearchBar />
                     </div>
@@ -161,8 +164,7 @@ export function Header(){
                                             <div 
                                                 className="hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full sm:flex justify-center items-center cursor-pointer border border-[#E8E5FF] mr-3"
                                                 onClick={() => setToggle(state => !state)}>
-                                                <div className="hidden sm:block"><ProfilBG size="20" color="#000541"/></div>
-                                                <div className="block sm:hidden"><ProfilBG size="15" color="#000541"/></div>
+                                                <ProfilBG size={matches ? "20" : "15"} color="#000541"/>
                                             </div>
                                             {/* <Avatar /> */}
                                         </div>
@@ -196,18 +198,34 @@ export function Header(){
                         }
                         {
                             !loading &&
-                            <div 
-                                className="sm:hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF] mr-3"
-                                onClick={() => {
-                                    if(isAuth){
-                                        setOpenDrawer(state => ({...state, sideBar: true}))
-                                    }
-                                    else{
-                                        navigate("/auth/login")
-                                    }
-                                }}>
-                                <div className="hidden sm:block"><ProfilBG size="20" color="#000541"/></div>
-                                <div className="block sm:hidden"><ProfilBG size="15" color="#000541"/></div>
+                            <div className="flex gap-2 justify-end items-center mr-3">
+                                <Badge  
+                                    color="secondary" 
+                                    overlap="circular"
+                                    badgeContent={carts?.length}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'left',
+                                    }}
+                                    onClick={() => navigate("/cart", { replace: true })}>
+                                    <div 
+                                        className="sm:hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF]">
+                                        <CartIcon size={matches ? "20" : "15"} color="#000541"/>
+                                    </div>
+                                </Badge>
+                                <div 
+                                    className="sm:hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF]"
+                                    onClick={() => {
+                                        if(isAuth){
+                                            // setOpenDrawer(state => ({...state, sideBar: true}))
+                                            navigate("/dashboard")
+                                        }
+                                        else{
+                                            navigate("/auth/login")
+                                        }
+                                    }}>
+                                    <ProfilBG size={matches ? "20" : "15"} color="#000541"/>
+                                </div>
                             </div>
                         }
                     </div>
