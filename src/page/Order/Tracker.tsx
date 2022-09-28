@@ -16,7 +16,7 @@ interface ITrackRec {
 }
 
 function TrackRec({ name, color, date, style, line = false, active}: ITrackRec){
-    let splitedDate: string[] = date.split('-')
+    let splitedDate: string[] = date.split('/')
     date = splitedDate.join(' - ')
 
     return(
@@ -66,8 +66,8 @@ function Tracker({order, open, close}: IOrderModel){
                                     name={status} 
                                     style={status} 
                                     color="#A0A0A1" 
-                                    active={orderStatus.indexOf('pending') + 1 > orderStatus.indexOf(status)}
-                                    date="12-05-2021" 
+                                    active={orderStatus.indexOf(order.status) + 1 > orderStatus.indexOf(status)}
+                                    date={moment(order?.updated_at).format('L')} 
                                     line={orderStatus.indexOf(status) !== orderStatus.length - 1}
                                 />
                             ))

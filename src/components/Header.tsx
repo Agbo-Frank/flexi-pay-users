@@ -95,11 +95,14 @@ export function Header(){
             <header className="bg-white w-full shadow sm:shadow-none sticky top-0 z-[100]">
                 <div className="fp-screen flex justify-between py-2 sm:py-5 bg-white items-center sm:items-end">
                     <div className="flex items-center gap-2">
-                        <IconButton 
-                            className="sm:hidden"
-                            onClick={() => setOpenDrawer(state => ({...state, menu: true}))}>
-                            <MenuIcon />
-                        </IconButton>
+                        {
+                            matches && 
+                            <IconButton 
+                                className="sm:hidden"
+                                onClick={() => setOpenDrawer(state => ({...state, menu: true}))}>
+                                <MenuIcon />
+                            </IconButton>
+                        }
                         <Logo />
                     </div>
                     
