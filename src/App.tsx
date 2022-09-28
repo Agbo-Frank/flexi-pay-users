@@ -40,6 +40,7 @@ function App() {
         <Route path='*' element={<NotFound />} />
         <Route path='/terms-and-condition' element={<TermsAndCondition />} />
         <Route path='/profile' element={<RequireAuth><Profile /></RequireAuth>} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </AuthProvider>
   );

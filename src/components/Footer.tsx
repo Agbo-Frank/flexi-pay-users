@@ -122,25 +122,53 @@ const NewFooter = () => {
             <div className="fp-screen h-full flex flex-col sm:flex-row md:p-2 border-b border-[#EDEEF0]">
                 <div className="my-2 sm:my-5 md:my-auto w-full sm:w-1/2 sm:px-5 border-r-0 sm:border-r border-[#EDEEF0] sm:py-4">
                     <p className="mb-2">Contact us/Follow us:</p>
-                    <div className="flex flex-row space-x-3 sm:space-x-5 sm:space-y-0">
-                        <div className="bg-white  grid place-items-center rounded-full w-10 h-10">
+                    <div className="flex flex-row flex-wrap gap-3 sm:gap-5 sm:space-y-0">
+                        <a 
+                            className="bg-white  grid place-items-center rounded-full w-10 h-10"
+                            href="https://www.facebook.com/FlexiPayNG"
+                            target="_blank">
                             <FacebookIcon color="#000541" size="20"/>
-                        </div>
-                        <div className="bg-white text-[#000541] text-xl  grid place-items-center rounded-full w-10 h-10">
+                        </a>
+                        <a 
+                            className="bg-white text-[#000541] text-xl  grid place-items-center rounded-full w-10 h-10"
+                            href="https://www.instagram.com/FlexiPayNG"
+                            target="_blank">
                             <Instagram />
-                        </div>
-                        <div className="bg-white  grid place-items-center rounded-full w-10 h-10">
+                        </a>
+                        <a 
+                            className="bg-white  grid place-items-center rounded-full w-10 h-10"
+                            href="https://twitter.com/@FlexiPayNG"
+                            target="_blank">
                             <TwitterIcon color="#000541" size="20"/>
-                        </div>
-                        <div className="bg-white  grid place-items-center rounded-full w-10 h-10 rotate-[150deg]">
+                        </a>
+                        <a 
+                            className="bg-white  grid place-items-center rounded-full w-10 h-10 rotate-[150deg]"
+                            href="tel:+2349020130444"
+                            target="_blank">
                             <PhoneIcon color="#000541" size="20"/>
-                        </div>
-                        <div className="bg-white grid place-items-center rounded-full w-10 h-10">
+                        </a>
+                        <a 
+                            className="bg-white grid place-items-center rounded-full w-10 h-10"
+                            href="https://wa.me/+2349020130444"
+                            target="_blank">
                             <WhatappIcon color="#000541" size="20"/>
-                        </div>
-                        <div className="bg-white  grid place-items-center rounded-full w-10 h-10">
+                        </a>
+                        <a 
+                            className="bg-white  grid place-items-center rounded-full w-10 h-10"
+                            href="mailto:hello@FlexiPay.ng"
+                            target="_blank">
                             <MailIcon color="#000541" size="20"/>
-                        </div>
+                        </a>
+                        <a 
+                            className="bg-white  grid place-items-center rounded-full w-10 h-10"
+                            href="https://www.youtube.com/FlexiPayNG">
+                            <i className="fa-brands fa-youtube text-primary-dark-blue text-xl"></i>
+                        </a>
+                        {/* <a 
+                            className="bg-white  grid place-items-center rounded-full w-10 h-10"
+                            href="mailto:hello@FlexiPay.ng">
+                            <i className="fa-brands fa-tiktok text-primary-dark-blue text-xl"></i>
+                        </a> */}
                     </div>
                 </div>
                 <div className="my-3 sm:my-5 md:my-auto sm:w-1/2 sm:px-[70px] sm:py-7">
