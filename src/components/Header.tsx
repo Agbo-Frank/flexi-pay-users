@@ -96,7 +96,7 @@ export function Header(){
                 <div className="fp-screen flex justify-between py-2 sm:py-5 bg-white items-center sm:items-end">
                     <div className="flex items-center gap-2">
                         {
-                            matches && 
+                            !matches && 
                             <IconButton 
                                 className="sm:hidden"
                                 onClick={() => setOpenDrawer(state => ({...state, menu: true}))}>

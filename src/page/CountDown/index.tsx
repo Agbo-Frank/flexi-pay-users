@@ -24,7 +24,7 @@ function CountDown() {
         </div>
 
         <div className='text-center sm:text-justify'>
-          <Countdown date={dateSeconds} className="text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber" />
+          <Countdown date={dateSeconds} className="text-[58px] md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber" />
         </div>
       </div>
       <div className='flex flex-col sm:flex-row gap-5 justify-between px-2'>
