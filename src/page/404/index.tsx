@@ -1,7 +1,8 @@
 import { 
     Body, Categories, Header, 
     SearchBar,
-    Footer} from "../../components"
+    Footer,
+    Button} from "../../components"
 import TextHeader from "../TermsAndCondition/TextHeader"
 import img1 from '../../asset/banner4.png'
 import img2 from '../../asset/banner5.png'
@@ -11,6 +12,7 @@ import img5 from '../../asset/banner6.png'
 import img6 from '../../asset/banner7.png'
 import { Fade } from "react-slideshow-image"
 import { useNavigate } from "react-router-dom"
+// import { Button } from "@mui/material"
 
 
 export function NotFound(){
@@ -68,17 +70,18 @@ export function NotFound(){
                       <div className="my-10 md:pr-5">
                         <h1 className="mb-5 md:mb-10 text-primary-dark-blue md:text-5xl lg:text-7xl font-bold">Hi There!</h1>
                         <p className="mb-5 md:mb-10 md:text-lg lg:text-xl font-medium">We can’t seem to find the content you are looking for. kindly go back to shopping.</p>
-                        <button onClick={()=>navigate('/products')} className="w-[70%] py-3 mx-auto md:mx-0 rounded-5xl bg-[#FF5000] text-white hover:bg-primary-dark-blue ">Go to Shopping</button>
+                        {/* <Button color="#FF5000" onClick={()=>navigate('/products')}>Go to Shopping</Button> */}
+                        <button onClick={()=>navigate('/products')} className="w-[70%] py-3 mx-auto md:mx-0 rounded-5xl bg-[#FF5000] text-white hover:opacity-50 ">Go to Shopping</button>
                       </div>
                     </div>
 
                     <div className="hidden md:block w-full md:w-[50%] lg:px-10">
                       <div className="w-100 h-100">
-                        <Fade arrows={false} autoplay infinite duration={2000}>
+                        <Fade arrows={false} autoplay infinite duration={5000}>
                           {
                             slides.map((val)=>(
                               <div className="sliderContainer h-[350px] lg:h-[400px]" key={val.id}>
-                                <img alt="..." src={val.img} className="w-full sliderImage h-fit object-cover" />
+                                <img alt="..." src={val.img} className="w-full sliderImage h-full object-cover" />
                                 <div className="sliderMiddle">
                                   <div className="sliderText text-white pt-[30%]">
                                     <p className="text-2xl font-bold text-white mb-10">{val.text}</p>

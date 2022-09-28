@@ -246,7 +246,7 @@ const NewFooter = () => {
 export function Footer(){
     const navigate = useNavigate()
     return(
-        <footer className="mt-5">
+        <footer className="w-full mt-5">
             <NewFooter />
             {/* <OldFooter /> */}
         </footer>
