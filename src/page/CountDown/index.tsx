@@ -9,7 +9,7 @@ import WhatappIcon from '../../components/icons/Whatapp';
 function CountDown() {
   const dateSeconds = new Date('2022-10-10')
   return (
-    <div className="w-full h-full md:h-screen count-down-container text-white p-[5%] sm:px-[10%] sm:py-[5%]">
+    <div className="w-full h-full count-down-container text-white p-[5%] sm:px-[10%] sm:py-[5%]">
       <div className='w-full'>
         <Logo color='#fff' />
       </div>
@@ -59,7 +59,7 @@ function CountDown() {
           </div>
         </div>
       </div>
-      <div className='py-[10%]'>
+      <div className='pt-[10%]'>
         <div className="flex flex-row justify-center space-x-3 sm:space-x-5 sm:space-y-0">
           <div className="bg-white  grid place-items-center rounded-full w-10 h-10">
               <FacebookIcon color="#000541" size="20"/>
