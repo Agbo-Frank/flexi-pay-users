@@ -17,12 +17,14 @@ import { AuthProvider } from './context/Auth';
 import RequireAuth from './components/RequireAuth';
 import TermsAndCondition from './page/TermsAndCondition';
 import NotFound from './page/404';
+import CountDown from './page/CountDown';
 
 function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/"  element={<Landing  />}/>
+        <Route path="/"  element={<CountDown  />}/>
+        <Route path="/home"  element={<Landing  />}/>
         <Route path="auth/*" element={<Auth />}/>
         <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>}/>
         <Route path='/cart' element={<Carts />} />

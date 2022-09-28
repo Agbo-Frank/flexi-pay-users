@@ -10,6 +10,25 @@
   }
 }
 
+
+@font-face {
+  font-family: 'digitalNumber';
+  src: url('./asset/fonts/digital-7/digital-7.ttf'); /* IE9 Compat Modes  */
+  src: url('./asset/fonts/digital-7/digital-7.ttf') format('embedded-opentype'), /* IE6-IE8  */
+       url('./asset/fonts/digital-7/digital-7.ttf') format('woff2'), Super Modern Browsers
+       url('./asset/fonts/digital-7/digital-7.ttf') format('woff'), /* Pretty Modern Browsers  */
+       url('./asset/fonts/digital-7/digital-7.ttf')  format('truetype'), /* Safari, Android, iOS  */
+       url('./asset/fonts/digital-7/digital-7.ttf') format('svg'); /* Legacy iOS  */
+}
+
+@font-face {
+  font-family: 'digitalNumber';
+  src: url('./asset/fonts/digital-7/digital-7.ttf') format('woff2'),
+       url('./asset/fonts/digital-7/digital-7.ttf') format('woff'),
+       url('./asset/fonts/digital-7/digital-7.ttf') format('truetype');
+}  
+
+
 *{
   margin: 0;
   padding: 0;
@@ -178,16 +197,19 @@ html{
   /* mix-blend-mode: darken; */
 }
 
-/* .sliderContainer:hover .sliderImage {
-  opacity: 0.3;
-} */
-
 .sliderContainer:hover .sliderMiddle {
   opacity: 1;
 }
 
-/* .sliderText {
-  color: white;
-  font-size: 16px;
-  padding: 16px 32px;
-} */
+.count-down-container{
+  width: 100%;
+  /* height: 100vh; */
+  background: url(./asset/bg.png);
+  background-repeat: no-repeat;
+  background-color: #000541;
+  mix-blend-mode: darken;
+}
+.ff-digitalNumber{
+  font-family: 'digitalNumber', Fallback, sans-serif;
+  letter-spacing: 15px;
+}
