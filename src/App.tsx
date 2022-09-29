@@ -24,7 +24,7 @@ function App() {
     <AuthProvider>
       <Routes>
         <Route path="/"  element={<CountDown  />}/>
-        <Route path="/home"  element={<Landing  />}/>
+        <Route path="/home"  element={<RequireAuth><Landing  /></RequireAuth>}/>
         <Route path="auth/*" element={<Auth />}/>
         <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>}/>
         <Route path='/cart' element={<Carts />} />
