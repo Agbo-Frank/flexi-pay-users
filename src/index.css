@@ -211,5 +211,11 @@ html{
 }
 .ff-digitalNumber{
   font-family: 'digitalNumber', Fallback, sans-serif;
-  letter-spacing: 15px;
+  /* letter-spacing: 15px; */
+}
+.bg-countDown{
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.1) 100%);
+  backdrop-filter: blur(32.5px);
+  /* opacity: 0.5; */
+  /* border: 0.5px solid #FFFFFF; */
 }
