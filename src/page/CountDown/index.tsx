@@ -31,7 +31,7 @@ function CountDown() {
       <div className='w-full'>
         <Logo color='#fff' />
       </div>
-      <div className='w-full md:flex justify-between py-[8vh]'>
+      <div className='w-full md:flex justify-between py-[5vh]'>
         <div className='w-full'>
           <div className='w-full'>
             <TextHeader title='Hi There!' center color='#fff' className="text-white capitalize text-center md:text-justify" />
@@ -46,24 +46,24 @@ function CountDown() {
 
         <div className='py-[5%] text-center sm:text-justify'>
           <div className='flex justify-center space-x-4'>
-            <div className=''>
+            <div className='text-center'>
               <div className='flex gap-2'>
-                <div id='countDays1' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber lg:w-[80px] bg-countDown rounded border-[0.2px] border-[white]/20 w-[45px] sm:w-[55px] md:w-[100px] h-fit flex justify-center'>0</div>
-                <div id='countDays2' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber lg:w-[80px] bg-countDown rounded border-[0.2px] border-[white]/20 w-[45px] sm:w-[55px] md:w-[100px] h-fit flex justify-center'>0</div>
+                <div id='countDays1' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber bg-countDown rounded border-[0.2px] border-[white]/20 w-[40px] sm:w-[55px] md:w-[100px] h-fit flex justify-center'>0</div>
+                <div id='countDays2' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber bg-countDown rounded border-[0.2px] border-[white]/20 w-[40px] sm:w-[55px] md:w-[100px] h-fit flex justify-center'>0</div>
               </div>
               <p className='text-md sm:text-3xl font-bold md:font-medium mt-3'>DAYS</p>
             </div>
             <div className='text-center'>
               <div className='flex gap-2'>
-                <div id='countHours1' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber lg:w-[80px] bg-countDown rounded border-[0.2px] border-[white]/20 w-[45px] sm:w-[55px] md:w-[100px] h-fit flex justify-center'>0</div>
-                <div id='countHours2' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber lg:w-[80px] bg-countDown rounded border-[0.2px] border-[white]/20 w-[45px] sm:w-[55px] md:w-[100px] h-fit flex justify-center'>0</div>
+                <div id='countHours1' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber bg-countDown rounded border-[0.2px] border-[white]/20 w-[40px] sm:w-[55px] md:w-[100px] h-fit flex justify-center'>0</div>
+                <div id='countHours2' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber bg-countDown rounded border-[0.2px] border-[white]/20 w-[40px] sm:w-[55px] md:w-[100px] h-fit flex justify-center'>0</div>
               </div>
               <p className='text-md sm:text-3xl font-bold md:font-medium mt-3'>HOURS</p>
             </div>
             <div className='text-center'>
               <div className='flex gap-2'>
-                <div id='countMins1' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber lg:w-[80px] bg-countDown rounded border-[0.2px] border-[white]/20 w-[45px] sm:w-[55px] md:w-[100px] h-fit flex justify-center'>0</div>
-                <div id='countMins2' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber lg:w-[80px] bg-countDown rounded border-[0.2px] border-[white]/20 w-[45px] sm:w-[55px] md:w-[100px] h-fit flex justify-center'>0</div>
+                <div id='countMins1' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber bg-countDown rounded border-[0.2px] border-[white]/20 w-[40px] sm:w-[55px] md:w-[100px] h-fit flex justify-center'>0</div>
+                <div id='countMins2' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber bg-countDown rounded border-[0.2px] border-[white]/20 w-[40px] sm:w-[55px] md:w-[100px] h-fit flex justify-center'>0</div>
               </div>
               <p className='text-md sm:text-3xl font-bold md:font-medium mt-3'>MINUTES</p>
             </div>
