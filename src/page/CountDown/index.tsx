@@ -1,16 +1,10 @@
 import { GroupAdd, Instagram, Send } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import React from 'react'
-<<<<<<< HEAD
-import Countdown from "react-countdown";
-import ribbon from '../../asset/bg.png'
 import { FacebookLink, InstagramLink, MailLink, PhoneLink, TiktokLink, TwitterLink, WhatappLink, YoutubeLink } from '../../components';
-import { Logo } from '../../components/icons';
-=======
 import { FacebookIcon, Logo, MailIcon, PhoneIcon, TwitterIcon } from '../../components/icons';
 import WhatappIcon from '../../components/icons/Whatapp';
 import TextHeader from '../TermsAndCondition/TextHeader';
->>>>>>> 8c1c27c8584c4b799a2e1947875a64c07b8511fd
 
 function CountDown() {
   const dateSeconds = new Date('2022-10-10')
@@ -51,25 +45,25 @@ function CountDown() {
         </div>
 
         <div className='py-[5%] text-center sm:text-justify'>
-          <div className='flex justify-around sm:gap-5 md:gap-8'>
-            <div className='text-center'>
-              <div className='flex justify-around gap-2'>
-                <div id='countDays1' className='text-4xl sm:text-5xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber px-3 lg:w-[80px] bg-countDown rounded-md'>0</div>
-                <div id='countDays2' className='text-4xl sm:text-5xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber px-3 lg:w-[80px] bg-countDown rounded-md'>0</div>
+          <div className='flex justify-center space-x-4'>
+            <div className=''>
+              <div className='flex gap-2'>
+                <div id='countDays1' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber lg:w-[80px] bg-countDown rounded border-[0.2px] border-[white]/20 w-[45px] sm:w-[55px] md:w-[100px] h-fit'>0</div>
+                <div id='countDays2' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber lg:w-[80px] bg-countDown rounded border-[0.2px] border-[white]/20 w-[45px] sm:w-[55px] md:w-[100px]'>0</div>
               </div>
               <p className='text-md sm:text-3xl font-bold md:font-medium mt-3'>DAYS</p>
             </div>
             <div className='text-center'>
-              <div className='flex justify-around gap-2'>
-                <div id='countHours1' className='text-4xl sm:text-5xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber px-3 lg:w-[80px] bg-countDown rounded-md'>0</div>
-                <div id='countHours2' className='text-4xl sm:text-5xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber px-3 lg:w-[80px] bg-countDown rounded-md'>0</div>
+              <div className='flex gap-2'>
+                <div id='countHours1' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber lg:w-[80px] bg-countDown rounded border-[0.2px] border-[white]/20 w-[45px] sm:w-[55px] md:w-[100px]'>0</div>
+                <div id='countHours2' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber lg:w-[80px] bg-countDown rounded border-[0.2px] border-[white]/20 w-[45px] sm:w-[55px] md:w-[100px]'>0</div>
               </div>
               <p className='text-md sm:text-3xl font-bold md:font-medium mt-3'>HOURS</p>
             </div>
             <div className='text-center'>
-              <div className='flex justify-around gap-2'>
-                <div id='countMins1' className='text-4xl sm:text-5xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber px-3 lg:w-[80px] bg-countDown rounded-md'>0</div>
-                <div id='countMins2' className='text-4xl sm:text-5xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber px-3 lg:w-[80px] bg-countDown rounded-md'>0</div>
+              <div className='flex gap-2'>
+                <div id='countMins1' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber lg:w-[80px] bg-countDown rounded border-[0.2px] border-[white]/20 w-[45px] sm:w-[55px] md:w-[100px]'>0</div>
+                <div id='countMins2' className='text-6xl md:text-7xl xl:text-9xl font-bold md:font-medium ff-digitalNumber lg:w-[80px] bg-countDown rounded border-[0.2px] border-[white]/20 w-[45px] sm:w-[55px] md:w-[100px]'>0</div>
               </div>
               <p className='text-md sm:text-3xl font-bold md:font-medium mt-3'>MINUTES</p>
             </div>
@@ -109,7 +103,7 @@ function CountDown() {
           </div>
         </div>
       </div>
-      <div className='px-2'>
+      <div className='px-2 my-10'>
         <div className="flex flex-row flex-wrap justify-center gap-3 sm:gap-5 sm:space-y-0">
           <FacebookLink />
           <InstagramLink />
