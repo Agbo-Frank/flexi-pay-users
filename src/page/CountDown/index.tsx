@@ -33,7 +33,7 @@ function CountDown() {
       <div className='w-full md:flex justify-between py-[8vh]'>
         <div className='w-full'>
           <div className='w-full'>
-            <TextHeader title='Hi There!' center color='#fff' className="text-white capitalize text-center" />
+            <TextHeader title='Hi There!' center color='#fff' className="text-white capitalize text-center md:text-justify" />
           </div>
           {/* <span className='bg-[#FF5000] px-10 py-2 rounded-3xl text-xl'>Hi There!</span> */}
           <div className='text-4xl xl:text-6xl font-black text-white my-5 text-center md:text-justify'>

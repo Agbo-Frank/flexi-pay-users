@@ -12,11 +12,11 @@ interface Prop {
 
 function TextHeader({title, color, center, className}: Prop) {
   return (
-    <div className={`w-full ${center && "mx-auto"}`}>
+    <div className={`w-full ${center && "mx-auto md:mx-0"}`}>
       <h1 className={`uppercase md:text-3xl text-[${color || "#000541"}] font-semibold ${className} `}>{title}</h1>
       {/* delay={3} cascade damping={0.1} */}
       <Fade left cascade>
-        <div className={`w-[90px] ${center && "mx-auto"} text-center transition-all p-0.5 bg-[#FF5000] rounded-sm`} />
+        <div className={`w-[90px] ${center && "mx-auto md:mx-0"} text-center transition-all p-0.5 bg-[#FF5000] rounded-sm`} />
       </Fade>
     </div>
   )
