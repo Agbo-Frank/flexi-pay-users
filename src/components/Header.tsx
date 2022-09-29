@@ -92,7 +92,7 @@ export function Header(){
         <>  
             <MenuDrawer open={openDrawer.menu} close={() => setOpenDrawer(state => ({...state, menu: false}))}/>
             <SideBarDrawer open={openDrawer.sideBar} close={() => setOpenDrawer(state => ({...state, sideBar: false}))}/>
-            <header className="bg-white w-full shadow sm:shadow-none sticky top-0 z-[100]">
+            <header className="bg-white w-full shadow sm:shadow-none sticky top-0 right-0 left-0 z-[100]">
                 <div className="fp-screen flex justify-between py-2 sm:py-5 bg-white items-center sm:items-end">
                     <div className="flex items-center gap-2">
                         {
