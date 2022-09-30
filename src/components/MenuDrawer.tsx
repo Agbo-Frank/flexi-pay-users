@@ -109,12 +109,14 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
                             }
                         </ul>
                     </div>
-                    <div className="w-full h-fit  overflow-hidden rounded-xl">
+                    <a
+                        href="https://vendor.flexipay.ng"
+                        target="_blank" className="w-full h-fit  overflow-hidden rounded-xl">
                         <div className="relative flex w-full h-fit overflow-hidden rounded-xl p-1">
                             <div className="absolute inline-flex top-0 left-0 rounded-xl animate-ping h-full w-full bg-white"></div>
                             <a className="relative py-2 rounded-xl text-center bg-white text-primary-orange-200 w-full">Sell on <span className="text-primary-blue">FlexiPay</span></a>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </ClickAwayListener>
         </Drawer>

@@ -201,7 +201,7 @@ export function Header(){
                         }
                         {
                             !loading &&
-                            <div className="flex gap-2 justify-end items-center mr-3">
+                            <div className="sm:hidden flex gap-2 justify-end items-center mr-3">
                                 <Badge  
                                     color="secondary" 
                                     overlap="circular"
