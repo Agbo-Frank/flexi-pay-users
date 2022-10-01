@@ -66,15 +66,15 @@ html{
 .scrollbar-hidden::-webkit-scrollbar{
   display: none;
 }
-.processed{
+.processed, .paid{
   background-color: rgba(25, 0, 254, 0.05);
   color: #1900FE;
 }
-.solid.processed{
+.solid.processed, .solid.paid{
   background-color: #1900FE;
   color: white;
 }
-.icon.processed{
+.icon.processed, .icon.paid{
   color: #1900FE;
 }
 

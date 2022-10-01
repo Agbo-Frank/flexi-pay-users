@@ -48,6 +48,14 @@ export const OrderApi = createApi({
                 method: "GET"
             }),
             providesTags: ["Subscription"]
+        }),
+        cancelSubscription: build.mutation<IResponse<{data: any[] | null}>, {id: string}>({
+            query: (body) => ({
+                url: "/user/cancel/subscription",
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ["Subscription"]
         })
     })
 })
@@ -56,5 +64,6 @@ export const {
     useProcessCheckoutMutation,
     useCheckoutMutation,
     useGetUserOrdersQuery,
-    useGetUserSubscriptionsQuery
+    useGetUserSubscriptionsQuery,
+    useCancelSubscriptionMutation
 } = OrderApi

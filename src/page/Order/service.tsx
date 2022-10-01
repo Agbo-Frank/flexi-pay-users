@@ -42,7 +42,7 @@ export function FPFormikProductReview(comment: ITrigger<Omit<IReview, 'rate'>, I
                 dispatch(toggleSnackBar({
                     open: true,
                     severity: 'error',
-                    message: error.data.message
+                    message: error?.data?.message
                 }))
             }
         }

@@ -41,7 +41,7 @@ export function Card({ Icon, name, count }: ICardProps){
             <Icon size={matches ? "35" : "25"} color={returnProps(name).color} />
             
             <div>
-                <p className="text-2xl font-bold">{ count }</p>
+                <p className="text-2xl font-bold truncate">{ count }</p>
                 <p className="text-sm text-grey-700 capitalize">{ name }</p>
             </div>
         </Link>

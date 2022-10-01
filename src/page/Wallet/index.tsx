@@ -78,27 +78,34 @@ export function Wallet (){
                         <div className="w-full sm:w-1/2 rounded-xl text-center bg-white sm:bg-grey-900 flex flex-col justify-center py-3 px-2 sm:p-6">
                             <p className="text-xs text-right text-grey-700 ">Referred (0)</p>
                             <div className="flex justify-center">
-                                <GroupIcon color="#000541" size={matches ? "60" : "45"}/>
+                                <GroupIcon color="#000541" size={matches ? "48" : "35"}/>
                             </div>
                             <p className="text-grey-700 text-xl">Referial Balance</p>
                             <p className="text-primary-dark-blue font-semibold text-xl">₦ 0.00 </p>
                             <p className="text-grey-700 text-sm">
-                                You haven’t refer anyone on FlexiPay, kindly use your referial link to 
-                                refer your friend and start making money
+                                Use your referial link to refer your friend and start making money
                             </p>
 
-                            <div className="flex items-center w-9/12 mx-auto my-1 justify-center bg-white py-1 rounded-lg">
-                                <div className="w-10/12 overflow-x-auto whitespace-nowrap scrollbar-hidden">
-                                    <p className="ml-5 text-sm" ref={code}>{data?.result?.data.referral_link}</p>
+                            <div className="flex items-center gap-4 my-1 justify-between">
+                                <div className="w-1/2">
+                                    <p className="hidden" ref={code}>{data?.result?.data.referral_link}</p>
+                                    <MuiButton 
+                                        color="secondary" 
+                                        onClick={copy}
+                                        variant="outlined"
+                                        fullWidth
+                                        startIcon={copied ?<MarkCircleIcon color="#FF5000" size="16"/> :<CopyIcon color="#FF5000" size="14"/>}>
+                                            { copied ? 'Copied!' : 'Copy' }
+                                    </MuiButton>
                                 </div>
-                                <div className="">
+                                <div className="w-1/2">
                                     <MuiButton 
                                         color="secondary" 
                                         onClick={copy}
                                         variant="contained"
-                                        size="small"
-                                        startIcon={copied ?<MarkCircleIcon color="white" size="16"/> :<CopyIcon color="white" size="14"/>}>
-                                            {copied ? 'Copied!' : 'Copy'}
+                                        fullWidth
+                                        startIcon={<WithdrawIcon color="white" size="16"/>}>
+                                            Withdraw
                                     </MuiButton>
                                 </div>
                             </div>

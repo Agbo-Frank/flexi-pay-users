@@ -17,6 +17,7 @@ import { Wrapper, WrapperHeader } from "../../components";
 import { useGetUserSavedItemsQuery } from "../../redux/api/SavedItems";
 import { useDispatch } from "react-redux";
 import { toggleEditProfile } from "../../redux/slice/modal";
+import { useGetUserOrdersQuery } from "../../redux/api/Order";
 
 
 export  function Dashboard (): JSX.Element {
@@ -45,6 +46,12 @@ export  function Dashboard (): JSX.Element {
             wallet: data?.result.data
         })
     })
+    let { orders } = useGetUserOrdersQuery(undefined, {
+        selectFromResult: ({ data, isLoading }) => ({
+            orders: data?.result?.data
+        })
+    })
+    console.log(orders)
 
     useEffect(() => {
         if(user?.reserved_account?.account_number){
@@ -59,7 +66,7 @@ export  function Dashboard (): JSX.Element {
                 <div className="flex py-3 sm:py-4 whitespace-nowrap overflow-x-auto justify-between space-x-5 sm:space-x-2 px-2">
                     <Card Icon={HeartIcon} count={savedItems?.length || 0} name="saved items" />
                     <Card Icon={CartIcon} count={carts?.length || 0} name="cart items"/>
-                    <Card Icon={BagIcon} count={5} name="order items"/>
+                    <Card Icon={BagIcon} count={orders?.total || 0} name="order items"/>
                     <Card Icon={WalletIcon} count={user?.reserved_account?.account_number ? formatNumber(`${wallet?.balance}`) : 0} name="balance"/>
                 </div>
 

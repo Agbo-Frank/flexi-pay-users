@@ -54,8 +54,9 @@ export async function handleAddToCartClick(
     let uuid = cookies[FLEXIPAY_COOKIE]
     
     if (!uuid || uuid == ""){
-        setCookie(FLEXIPAY_COOKIE, uuidv4(), {path: '/'})
-        uuid = cookies[FLEXIPAY_COOKIE]
+        let id = uuidv4()
+        setCookie(FLEXIPAY_COOKIE, id, {path: '/'})
+        uuid = id
     }
 
     if(uuid){

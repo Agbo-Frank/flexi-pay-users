@@ -15,6 +15,8 @@ import { IOrder, ISubscription } from '../../interface'
 import moment from 'moment'
 import { formatNumber } from '../../utils'
 import { LoadingButton } from '@mui/lab'
+import { useCancelSubscriptionMutation } from '../../redux/api/Order'
+import { cancelSubscription } from './services'
 
 
 export interface IOrderModel {
@@ -27,75 +29,6 @@ export interface IOrderModel {
 interface IOrderDetails {
     order: IOrder;
 }
-interface IOrderButtons {
-    order: IOrder;
-    setOpen: Dispatch<SetStateAction<{
-        track: boolean;
-        details:boolean;
-        review: boolean;
-        cancel: boolean
-    }>>
-}
-
-function Buttons ( { order, setOpen }: IOrderButtons): JSX.Element{
-    const matches = useMediaQuery('(min-width:600px)');
-    const dispatch = useDispatch()
-
-    if(order.status === 'processed'){
-        return(
-            <Button 
-                color="secondary"
-                size={matches ? "large" : "medium"} 
-                variant='contained'
-                startIcon={<TrackIcon color="white" size="17"/>}
-                onClick={() => setOpen(state => ({...state, track: true}))}
-                >
-                    Track Item
-            </Button>
-        )
-    }
-    else if(order.status === 'delivered'){
-        return (
-        <>
-             <Button 
-                color="secondary"
-                size={matches ? "large" : "medium"} 
-                variant='contained'
-                onClick={() => setOpen(state => ({...state, details: true}))}
-                startIcon={<DocIcon color='white' size="17" />}>
-                    See Details
-            </Button>
-            <Button 
-                color="secondary"
-                size={matches ? "large" : "medium"}  
-                variant="outlined" 
-                startIcon={<StarIcon color="#ff5000" size="17"/>}
-                onClick={() => setOpen(state => ({...state, review: true}))}>
-                    Review Item
-            </Button>
-        </>
-        )
-    }
-    else{
-        return(<>
-            <Button 
-                color="secondary"
-                size={matches ? "large" : "medium"}  
-                onClick={() => setOpen(state => ({...state, track: true}))}
-                startIcon={<TrackIcon color='white' size="17" />}
-                variant="contained">
-                    Track Items
-            </Button>
-            <Button 
-                color="secondary"
-                size={matches ? "large" : "medium"}  
-                variant="outlined"
-                onClick={() => setOpen(state => ({...state, cancel: true}))}>
-                    Cancel
-            </Button>
-        </>)
-    }
-}
 
 function Subscription ({ subscription }: {subscription: ISubscription}) {
     const matches = useMediaQuery('(min-width:600px)');
@@ -103,6 +36,7 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
         details: false,
         cancel: false
     })
+    let [cancelSub, {isLoading}] = useCancelSubscriptionMutation()
     return(
         <>  <>
                 {/* <OrderDetails order={order} open={open.details} close={() => setOpen(state => ({...state, details: false}))}/> */}
@@ -118,15 +52,15 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
                         variant="outlined"
                         color="secondary"
                         onClick={() => setOpen(state => ({...state,  cancel: false}))}
-                        >Cancel </Button>
+                        >Cancel</Button>
 
                         <LoadingButton
-                        // onClick={}
-                        // loading={removing}
+                        // onClick={() => cancelSubscription({id: subscription.})}
+                        loading={isLoading}
                         color="secondary"
                         variant="contained"
                         >
-                            Confirm
+                            Proceed
                         </LoadingButton>
                     </DialogActions>
                 </Dialog>
@@ -138,28 +72,29 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
                     <div>
                         <div className="flex flex-col sm:h-full items-stretch">
                             <CardText>{ subscription.installment.product?.name }</CardText>
-                            <small className="text-grey-200 text-xs sm:text-sm">Placed on  {moment(subscription.created_at).format("MMM Do YY")}</small>
+                            {/* <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(subscription.amount)}</p> */}
+                            <small className="text-grey-200 text-xs sm:text-sm">Subscribed on  {moment(subscription.created_at).format("MMM Do YY")}</small>
+                            <p className={`${ subscription.is_completed ? 'paid' : 'pending' } py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit my-1`}>{ subscription.is_completed ? 'paid' : 'pending' }</p>
                             <ProgressBar width={((parseFloat(subscription.amount) / parseFloat(subscription.amount_to_be_paid)) * 100).toString()}/>
-                            <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(subscription.amount)}</p>
                         </div>
                     </div>
                 </div>
                 <CardActions>
-                <Button 
-                    color="secondary"
-                    size={matches ? "large" : "medium"}  
-                    onClick={() => setOpen(state => ({...state, track: true}))}
-                    startIcon={<TrackIcon color='white' size="17" />}
-                    variant="contained">
-                        Track Items
-                </Button>
-                <Button 
-                    color="secondary"
-                    size={matches ? "large" : "medium"}  
-                    variant="outlined"
-                    onClick={() => setOpen(state => ({...state, cancel: true}))}>
-                        Cancel
-                </Button>
+                    <Button 
+                        color="secondary"
+                        size={matches ? "large" : "medium"}  
+                        onClick={() => setOpen(state => ({...state, track: true}))}
+                        startIcon={<i className="text-white fa-solid fa-plus"></i>}
+                        variant="contained">
+                            Top up
+                    </Button>
+                    <Button 
+                        color="secondary"
+                        size={matches ? "large" : "medium"}  
+                        variant="outlined"
+                        onClick={() => setOpen(state => ({...state, cancel: true}))}>
+                            Cancel
+                    </Button>
                 </CardActions>
             </CardWrapper> 
         </>  

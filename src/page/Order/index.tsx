@@ -4,7 +4,7 @@ import Order from "./orderItem"
 import { Empty, Wrapper, WrapperHeader } from "../../components"
 import { useGetUserOrdersQuery } from "../../redux/api/Order"
 import { BagIcon } from '../../components/icons'
-import { Button, Skeleton } from "@mui/material"
+import { Button, Pagination, Skeleton } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { SavedItemSkeleton } from "../SavedItems/SavedItemsCard"
 
@@ -15,6 +15,7 @@ interface IOrderModel {
 
 export function Orders (){
     let navigate = useNavigate()
+    let [page, setPage] = useState(1)
     let { orders, pagination, loading } = useGetUserOrdersQuery(undefined, {
         selectFromResult: ({ data, isLoading }) => ({
             orders: data?.result?.data?.data,
@@ -27,7 +28,7 @@ export function Orders (){
         <>
             <DashboardWrapper>
                 <Wrapper>
-                    <WrapperHeader>Order ({orders?.length || 0})</WrapperHeader>
+                    <WrapperHeader>Order ({pagination?.total || 0})</WrapperHeader>
                     {/* <Empty name="order" Icon={BagIcon}/> */}
                     
                     {   
@@ -64,6 +65,22 @@ export function Orders (){
                         ))
                     }
                 </Wrapper>
+                <div className="ml-auto float-right my-5">
+                    {
+                        !orders || orders?.length === 0 &&
+                        <Pagination
+                            count={pagination?.last_page} 
+                            variant="outlined" 
+                            shape="rounded" 
+                            color="secondary"
+                            hideNextButton={pagination?.next_page_url ? true : false}
+                            hidePrevButton={pagination?.prev_page_url ? true : false}
+                            page={pagination?.current_page || page}
+                            showLastButton
+                            showFirstButton
+                            onChange={(e, page) => setPage(page)}/>
+                    }
+                </div>
             </DashboardWrapper>
         </>
     )

@@ -1,7 +1,7 @@
 import DashboardWrapper from "../../components/DashboardWrapper"
 import { useState } from "react"
 import { Empty, Wrapper, WrapperHeader } from "../../components"
-import { Button, Skeleton } from "@mui/material"
+import { Button, Pagination, Skeleton } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { SavedItemSkeleton } from "../SavedItems/SavedItemsCard"
 import { useGetUserSubscriptionsQuery } from "../../redux/api/Order"
@@ -15,6 +15,7 @@ interface IOrderModel {
 
 export function Subscriptions (){
     let navigate = useNavigate()
+    let [page, setPage] = useState(1)
     let { subscriptions, pagination, loading } = useGetUserSubscriptionsQuery(undefined, {
         selectFromResult: ({ data, isLoading }) => ({
             subscriptions: data?.result.data,
@@ -64,6 +65,22 @@ export function Subscriptions (){
                         ))
                     }
                 </Wrapper>
+                <div className="ml-auto float-right my-5">
+                    {
+                        !subscriptions || subscriptions?.length === 0 &&
+                        <Pagination
+                            count={pagination?.last_page} 
+                            variant="outlined" 
+                            shape="rounded" 
+                            color="secondary"
+                            hideNextButton={pagination?.next_page_url ? true : false}
+                            hidePrevButton={pagination?.prev_page_url ? true : false}
+                            page={pagination?.current_page || page}
+                            showLastButton
+                            showFirstButton
+                            onChange={(e, page) => setPage(page)}/>
+                    }
+                </div>
             </DashboardWrapper>
         </>
     )

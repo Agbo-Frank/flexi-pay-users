@@ -94,8 +94,8 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                             </>
                         }
                         {/* <p className="text-grey-700 text-sm">Click on the button below  to fund or Withdraw from your wallet</p> */}
-                        <div className="flex justify-center space-x-4 items-center mx-auto my-4 w-full">
-                            <Button
+                        <div className="flex justify-center space-x-4 items-center mx-auto my-3 w-full">
+                            {/* <Button
                                 color="secondary"
                                 variant="outlined"
                                 startIcon={<WithdrawIcon color="#FF5000" size="16"/>}
@@ -103,7 +103,7 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                                 size="large"
                             >
                                 Withdraw
-                            </Button>
+                            </Button> */}
 
                             <Button
                                 color="secondary"
@@ -111,6 +111,8 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                                 startIcon={<EditSqaureIcon color="white" size="16"/>}
                                 onClick={() => setOpen(state => ({...state, fundWallet: true}))}
                                 size="large"
+                                // fullWidth
+                                className="w-10/12"
                             >
                                 Fund Wallet
                             </Button>
