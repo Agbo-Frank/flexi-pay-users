@@ -34,10 +34,10 @@ export function FPFormikSubscribe(setLoading: Dispatch<SetStateAction<boolean>>)
             if(docs?.docs[0]?.data()){
                 docs?.docs?.forEach(async (d) => {
                     if(d.data().id === uuid){
-                        if(value.email = ""){
+                        if(value.email === ""){
                             data = await updateDoc(doc(fireDB, "contact_info", d.id), {...docs.docs[0].data(), phone: value.phone})
                         }
-                        else if(value.phone = ""){
+                        else if(value.phone === ""){
                             data = await updateDoc(doc(fireDB, "contact_info", d.id), {...docs.docs[0].data(), email: value.email})
                         }
                         else{
