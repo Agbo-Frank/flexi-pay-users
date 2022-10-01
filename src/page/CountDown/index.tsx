@@ -1,9 +1,8 @@
 import { GroupAdd, Instagram, Send } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
-import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
-import { FacebookLink, InstagramLink, MailLink, PhoneLink, TiktokLink, TwitterLink, WhatappLink, YoutubeLink } from '../../components';
-import { FacebookIcon, Logo, MailIcon, PhoneIcon, TwitterIcon } from '../../components/icons';
+import { Button, FacebookLink, InstagramLink, MailLink, PhoneLink, TiktokLink, TwitterLink, WhatappLink, YoutubeLink } from '../../components';
+import { FacebookIcon, Logo, MailIcon, PhoneIcon, Spinner, TwitterIcon } from '../../components/icons';
 import WhatappIcon from '../../components/icons/Whatapp';
 import SnackBar from '../../components/SnackBar';
 import TextHeader from '../TermsAndCondition/TextHeader';
@@ -82,7 +81,7 @@ function CountDown() {
         <form onSubmit={formik.handleSubmit} className='md:flex justify-between'>
           <div className="my-3 md:my-0 md:pr-10 lg:p-0">
             <p className="text-sm mb-2 sm:mb-4 first-letter:capitalize "><span className='hidden md:inline'>Subscribe to our newsletter and </span>get latest updates in your inbox</p>
-            <div className="w-full flex items-stretch gap-1 h-[40px]">
+            <div className="w-full flex items-stretch gap-1 ">
                 <input 
                   type='email' 
                   // name='email' 
@@ -90,7 +89,21 @@ function CountDown() {
                   placeholder="Enter email" 
                   className="w-[80%] block px-3 py-auto h-auto rounded-md text-black" 
                 />
-                    <LoadingButton 
+                <div className='w-[20%'>
+                  <Button type='submit' color="#FF5000">
+                      <div className='flex items-center gap-3'>
+                          {
+                              loading ? 
+                              <div className='w-5 h-5'><Spinner /></div>: 
+                              <>
+                                <span className="hidden sm:block">Subscribe</span>
+                                <span className="block sm:hidden"><Send /></span>
+                              </>
+                          }
+                      </div>
+                  </Button>
+                </div>
+                    {/* <LoadingButton 
                         color="secondary" 
                         variant="contained"
                         className="h-full"
@@ -100,20 +113,34 @@ function CountDown() {
                     >
                         <span className="hidden sm:block">Subscribe</span>
                         <span className="block sm:hidden"><Send /></span>
-                    </LoadingButton>
+                    </LoadingButton> */}
             </div>
             <small className="block w-full whitespace-nowrap truncate text-crimson text-xs">{formik.errors['phone']}</small>
           </div>
           <div className="my-3 md:my-0 md:pl-10 lg:p-0">
             <p className="text-sm mb-2 sm:mb-4">Join our WhatsApp list to get updates</p>
-            <div className="w-full flex items-stretch gap-1 h-[40px]">
+            <div className="w-full flex items-stretch gap-1">
                 <input 
                   type='text' 
                   // name='phone' 
                   {...formik.getFieldProps('phone')}
                   placeholder="Enter Phone Number" 
                   className="w-[80%] block px-3 py-auto h-auto rounded-md text-black" />
-                    <LoadingButton 
+                  <div className='w-[20%]'>
+                    <Button type='submit' color="#FF5000">
+                          <div className='flex items-center gap-3'>
+                              {
+                                  loading ? 
+                                  <div className='w-5 h-5'><Spinner /></div>: 
+                                  <>
+                                    <span className="hidden sm:block">Join</span>
+                                    <span className="block sm:hidden"><GroupAdd /></span>
+                                  </>
+                              }
+                          </div>
+                      </Button>
+                    </div>
+                    {/* <LoadingButton 
                         color="secondary" 
                         variant="contained"
                         className="h-full"
@@ -123,7 +150,7 @@ function CountDown() {
                     >
                         <span className="hidden sm:block">Join</span>
                         <span className="block sm:hidden"><GroupAdd /></span>
-                    </LoadingButton>
+                    </LoadingButton> */}
             </div>
             <small className="block w-full whitespace-nowrap truncate text-crimson text-xs">{formik.errors['email']}</small>
           </div>

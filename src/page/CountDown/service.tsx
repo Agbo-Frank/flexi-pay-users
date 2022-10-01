@@ -31,8 +31,8 @@ export function FPFormikSubscribe(setLoading: Dispatch<SetStateAction<boolean>>)
         try{
             let doc_ref = query(contactInfo, where('id', "==", uuid))
             let docs = await getDocs(doc_ref)
-            if(docs.docs[0]?.data()){
-                docs.docs?.forEach(async (d) => {
+            if(docs?.docs[0]?.data()){
+                docs?.docs?.forEach(async (d) => {
                     if(d.data().id === uuid){
                         data = await updateDoc(doc(fireDB, "contact_info", d.id), {...docs.docs[0].data(),...value})
                         console.log(data)
