@@ -31,5 +31,10 @@ ReactDOM.hydrate(
   document.getElementById('root') as HTMLElement
 );
 
-serviceWorkerRegistration.register();
+serviceWorkerRegistration.register({
+  onUpdate:() => {
+    //Some UI notification comes here, then reload
+    window.location.reload();
+ }
+});
 

@@ -47,7 +47,7 @@ function CountDown() {
             <div className='text-4xl xl:text-6xl font-black text-white my-5 text-center md:text-justify'>
               <p className=''>We are</p>
               <p className=''>Launching</p>
-              <p className='text-[#FF5000]'>Soon!</p>
+              <p className='text-[#FF5000]'>Soon!.</p>
             </div>
           </div>
 
