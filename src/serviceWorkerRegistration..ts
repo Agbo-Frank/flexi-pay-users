@@ -51,7 +51,7 @@ export function register(config?: Config) {
         });
       } else {
         // Is not localhost. Just register service worker
-        registerValidSW(swUrl, config);
+        registerValidSW(swUrl + "v0.0.1", config);
       }
     });
   }
