@@ -44,7 +44,7 @@ export function Login() {
                     label="Password"
                     formik={formik}/>
                 </div>
-                <div className='w-full mt-5 sm:mt-0'>
+                <div className='w-full mt-3 sm:mt-0'>
                     <Button type='submit' color="#FF5000">
                         <div className='flex items-center gap-3'>
                             {

@@ -7,13 +7,14 @@ export function Button({
         type = 'button', 
         outline = false, 
         onClick, 
-        disable = false 
+        disable = false, 
+        padding = true
     }: IButtonProps): JSX.Element {
         return (
             <button 
             type={type}
             disabled={disable}
-            className={`border border-solid cursor-pointer rounded-[5px] py-3 px-4 min-w-max w-full hover:opacity-50 ${disable && 'opacity-50'} flex justify-center`}
+            className={`border border-solid cursor-pointer rounded-[5px] ${padding ? 'py-[10px]' : 'py-1'} px-4 min-w-max w-full hover:opacity-50 ${disable && 'opacity-50'} flex justify-center`}
             style={{
                 color: outline ? color : 'white',
                 borderColor: color,

@@ -94,7 +94,7 @@ export function Register() {
                 </Slide>
             </div>  */}
 
-            <div className='w-full sm:w-3/12 mt-5 sm:mt-0'>
+            <div className='w-full sm:w-3/12 mt-3 sm:mt-0'>
                 <Button type='submit' color="#FF5000">
                     <div className='flex items-center gap-3'>
                         {

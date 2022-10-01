@@ -45,7 +45,6 @@ function CountDown() {
             </div>
             {/* <span className='bg-[#FF5000] px-10 py-2 rounded-3xl text-xl'>Hi There!</span> */}
             <div className='text-4xl xl:text-6xl font-black text-white my-5 text-center md:text-justify'>
-              <p className=''>We are</p>
               <p className=''>Launching</p>
               <p className='text-[#FF5000]'>Soon!</p>
             </div>
@@ -80,7 +79,7 @@ function CountDown() {
         </div>
         <form onSubmit={formik.handleSubmit} className='md:flex justify-between'>
           <div className="my-3 md:my-0 md:pr-10 lg:p-0">
-            <p className="text-sm mb-2 sm:mb-4 first-letter:capitalize "><span className='hidden md:inline'>Subscribe to our newsletter and </span>get latest updates in your inbox</p>
+            <p className="text-sm mb-1 sm:mb-2 first-letter:capitalize "><span className='hidden md:inline'>Subscribe to our newsletter and </span>get latest updates in your inbox</p>
             <div className="w-full flex items-stretch gap-1 ">
                 <input 
                   type='email' 
@@ -89,8 +88,8 @@ function CountDown() {
                   placeholder="Enter email" 
                   className="w-[80%] block px-3 py-auto h-auto rounded-md text-black" 
                 />
-                <div className='w-[20%'>
-                  <Button type='submit' color="#FF5000">
+                <div className='w-[20%]'>
+                  <Button type='submit' color="#FF5000" padding={false}>
                       <div className='flex items-center gap-3'>
                           {
                               loading ? 
@@ -118,7 +117,7 @@ function CountDown() {
             <small className="block w-full whitespace-nowrap truncate text-crimson text-xs">{formik.errors['phone']}</small>
           </div>
           <div className="my-3 md:my-0 md:pl-10 lg:p-0">
-            <p className="text-sm mb-2 sm:mb-4">Join our WhatsApp list to get updates</p>
+            <p className="text-sm mb-1 sm:mb-2">Join our WhatsApp list to get updates</p>
             <div className="w-full flex items-stretch gap-1">
                 <input 
                   type='text' 
@@ -127,7 +126,7 @@ function CountDown() {
                   placeholder="Enter Phone Number" 
                   className="w-[80%] block px-3 py-auto h-auto rounded-md text-black" />
                   <div className='w-[20%]'>
-                    <Button type='submit' color="#FF5000">
+                    <Button type='submit' color="#FF5000" padding={false}>
                           <div className='flex items-center gap-3'>
                               {
                                   loading ? 
