@@ -23,7 +23,7 @@ function OrderSummary() {
     <div className='w-full text-grey-300 text-center'>
       <div className='w-full py-5 bg-primary-dark-blue' />
       <div className='w-full md:w-[70%] mx-auto border-2 rounded-xl'>
-        <div className='py-5 w-auto mx-auto flex justify-center align-middle items-center'>
+        <div className='py-5 w-auto mx-auto flex justify-center items-center'>
           <Logo />
         </div>
         <div className='text-center py-10 bg-primary-dark-blue text-white lg:px-[25%] font-semibold space-y-5'>
