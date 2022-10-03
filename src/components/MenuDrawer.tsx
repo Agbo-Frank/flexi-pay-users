@@ -100,7 +100,7 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
                         <h3 className="text-primary-orange-200 font-medium">CATEGORIES</h3>
                         <ul className="my-3">
                             {
-                                !loading && categories && 
+                                !loading && categories?.length && 
                                 categories?.map((category, idx) => 
                                     <li key={idx} className="text-white mb-2" >
                                         {category.name}

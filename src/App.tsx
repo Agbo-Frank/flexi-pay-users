@@ -18,6 +18,8 @@ import RequireAuth from './components/RequireAuth';
 import TermsAndCondition from './page/TermsAndCondition';
 import NotFound from './page/404';
 import CountDown from './page/CountDown';
+import CategoryPage from './page/Category';
+import OrderSummary from './page/Summary';
 
 function App() {
   return (
@@ -31,6 +33,7 @@ function App() {
         <Route path='/order' element={<RequireAuth><Orders /></RequireAuth>} />
         <Route path='/subscription' element={<RequireAuth><Subscriptions /></RequireAuth>} />
         <Route path='/product/:slug' element={<Product />} />
+        <Route path='/category/:id' element={<CategoryPage />} />
         <Route path='/saved-items' element={<RequireAuth><SavedItems /></RequireAuth>} />
         <Route path='/checkout' element={<CheckOut />} />
         <Route path='/wallet' element={<RequireAuth><Wallet/></RequireAuth>} />
@@ -41,6 +44,7 @@ function App() {
         <Route path='/terms-and-condition' element={<TermsAndCondition />} />
         <Route path='/profile' element={<RequireAuth><Profile /></RequireAuth>} />
         <Route path='*' element={<NotFound />} />
+        <Route path='/summary' element={<OrderSummary />} />
       </Routes>
     </AuthProvider>
   );
