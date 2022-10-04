@@ -20,6 +20,8 @@ import NotFound from './page/404';
 import CountDown from './page/CountDown';
 import CategoryPage from './page/Category';
 import OrderSummary from './page/Summary';
+import Login from './page/Auth/Login';
+import Register from './page/Auth/Register';
 
 function App() {
   return (
@@ -27,7 +29,9 @@ function App() {
       <Routes>
         <Route path="/"  element={<CountDown  />}/>
         <Route path="/home"  element={<Landing  />}/>
-        <Route path="auth/*" element={<Auth />}/>
+        <Route path="/login"  element={<Login  />}/>
+        <Route path="/register"  element={<Register  />}/>
+        <Route path="/auth/*" element={<Auth />}/>
         <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>}/>
         <Route path='/cart' element={<Carts />} />
         <Route path='/order' element={<RequireAuth><Orders /></RequireAuth>} />

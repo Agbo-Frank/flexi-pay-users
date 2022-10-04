@@ -78,7 +78,8 @@ export interface IRegister {
     email: string;
     password: string;
     password_confirmation: string;
-    phone_number: string
+    phone_number: string;
+    ref?: string | null
 }
 
 export interface ICreateAccountBody {
@@ -213,6 +214,7 @@ export interface IProduct {
     description: string;
     price: string;
     slug: string;
+    key_features: string;
     product_images: IProductImage[],
     installments: IInstallment[]
 }

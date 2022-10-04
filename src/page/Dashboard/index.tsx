@@ -1,4 +1,4 @@
-import {BagIcon, CartIcon, EditIcon, HeartIcon, WalletIcon} from "../../components/icons";
+import {BagIcon, CartIcon, EditIcon, HeartIcon, NairaIcon, WalletIcon} from "../../components/icons";
 
 import supportImage from '../../asset/supportImage.png'
 
@@ -17,6 +17,7 @@ import { Wrapper, WrapperHeader } from "../../components";
 import { useGetUserSavedItemsQuery } from "../../redux/api/SavedItems";
 import { useDispatch } from "react-redux";
 import { toggleEditProfile } from "../../redux/slice/modal";
+import { useGetUserOrdersQuery } from "../../redux/api/Order";
 
 
 export  function Dashboard (): JSX.Element {
@@ -45,6 +46,11 @@ export  function Dashboard (): JSX.Element {
             wallet: data?.result.data
         })
     })
+    let { orders } = useGetUserOrdersQuery(undefined, {
+        selectFromResult: ({ data, isLoading }) => ({
+            orders: data?.result?.data,
+        })
+    })
 
     useEffect(() => {
         if(user?.reserved_account?.account_number){
@@ -59,8 +65,8 @@ export  function Dashboard (): JSX.Element {
                 <div className="flex py-3 sm:py-4 whitespace-nowrap overflow-x-auto justify-between space-x-5 sm:space-x-2 px-2">
                     <Card Icon={HeartIcon} count={savedItems?.length || 0} name="saved items" />
                     <Card Icon={CartIcon} count={carts?.length || 0} name="cart items"/>
-                    <Card Icon={BagIcon} count={5} name="order items"/>
-                    <Card Icon={WalletIcon} count={user?.reserved_account?.account_number ? formatNumber(`${wallet?.balance}`) : 0} name="balance"/>
+                    <Card Icon={BagIcon} count={orders?.total || 0} name="order items"/>
+                    <Card Icon={NairaIcon} count={user?.reserved_account?.account_number ? formatNumber(`${wallet?.balance}`) : 0} name="balance"/>
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-stretch justify-between my-7 space-y-3 sm:space-y-0 sm:space-x-6 px-2">
