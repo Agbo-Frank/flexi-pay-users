@@ -18,7 +18,7 @@ export function FormInput({ Icon, type, name, label, formik }: IInputProps): JSX
         <div 
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
-          className={`flex justify-between bg-white items-center rounded-xl border border-solid ${focus ? 'border-primary-blue' : formik.touched[name] && formik.errors[name] ? 'border-crimson' : 'border-grey-1000'} py-3 px-5`}>
+          className={`flex justify-between bg-white items-center rounded-lg border border-solid ${focus ? 'border-primary-blue' : formik.touched[name] && formik.errors[name] ? 'border-crimson' : 'border-grey-1000'} py-3 px-5`}>
             <input 
             type={type === 'password' ? password : type} 
             name={name} 

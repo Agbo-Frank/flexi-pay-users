@@ -24,6 +24,7 @@
     "date-fns": "^2.29.1",
     "formik": "^2.2.9",
     "framer-motion": "^6.3.11",
+    "html-to-react": "^1.5.0",
     "moment": "^2.29.4",
     "naija-state-local-government": "^1.1.2",
     "react": "^18.2.0",

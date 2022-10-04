@@ -59,7 +59,7 @@ export function FPFormikLogin(login: ITrigger<ILogin, IAuthResponse>){
     })
 }
 
-export function FPFormikRegister(register: ITrigger<IRegister, IAuthResponse>){
+export function FPFormikRegister(register: ITrigger<IRegister, IAuthResponse>, referee: string | null){
     let navigate = useNavigate()
 
     let initialValues: IRegister = {
@@ -68,7 +68,8 @@ export function FPFormikRegister(register: ITrigger<IRegister, IAuthResponse>){
         email: '',
         password: '',
         password_confirmation: '',
-        phone_number: ''
+        phone_number: '',
+        ref: referee
     }
 
     async function onSubmit (value: IRegister, formikHelpers: FormikHelpers<IRegister | any>){

@@ -1,8 +1,11 @@
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { QuestionIcon } from "../../components/icons"
 import StoreIcon from "../../components/icons/StoreIcon";
+import { FLEXIPAY_VENDOR_URL} from '../../utils/constants'
 
 function ProductVendor(){
+    let navigate = useNavigate()
     return(
         <div className="gap-3 sm:gap-5 flex flex-col sm:flex-row justify-between items-stretch bg-white sm:bg-transparent my-3 sm:my-0">
             <div className="w-[87%] mx-auto sm:w-9/12 rounded-2xl bg-[#f4f4f4] sm:bg-white">
@@ -43,9 +46,12 @@ function ProductVendor(){
                 <div className="rounded-2xl bg-primary-orange-300 mx-auto sm:mx-0 w-10/12 sm:w-full py-10 grid place-items-center">
                     <div className="w-48 space-y-3">
                         <p className="text-center font-medium">Do you have products to sell?</p>
-                        <div className="w-auto flex justify-center">
-                            <Button color="secondary" variant="outlined">Become a Vendor</Button>
-                        </div>
+                        <a className="w-auto flex justify-center" href={FLEXIPAY_VENDOR_URL} target="_blank">
+                            <Button 
+                                color="secondary" 
+                                variant="outlined">
+                            Become a Vendor</Button>
+                        </a>
                     </div>
                 </div>
 
