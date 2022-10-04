@@ -1,4 +1,4 @@
-import {BagIcon, CartIcon, EditIcon, HeartIcon, WalletIcon} from "../../components/icons";
+import {BagIcon, CartIcon, EditIcon, HeartIcon, NairaIcon, WalletIcon} from "../../components/icons";
 
 import supportImage from '../../asset/supportImage.png'
 
@@ -67,7 +67,11 @@ export  function Dashboard (): JSX.Element {
                     <Card Icon={HeartIcon} count={savedItems?.length || 0} name="saved items" />
                     <Card Icon={CartIcon} count={carts?.length || 0} name="cart items"/>
                     <Card Icon={BagIcon} count={orders?.total || 0} name="order items"/>
+<<<<<<< HEAD
                     <Card Icon={WalletIcon} count={user?.reserved_account?.account_number ? formatNumber(`${wallet?.balance}`) : 0} name="balance"/>
+=======
+                    <Card Icon={NairaIcon} count={user?.reserved_account?.account_number ? formatNumber(`${wallet?.balance}`) : 0} name="balance"/>
+>>>>>>> dev
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-stretch justify-between my-7 space-y-3 sm:space-y-0 sm:space-x-6 px-2">

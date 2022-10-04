@@ -3,19 +3,17 @@ import { Logo, UserIcon, MailIcon, PadLock, PhoneIcon, UserIconPlus, Spinner } f
 import {Button, FormInput } from '../../components';
 import { useRegisterMutation } from '../../redux/api/Auth'
 
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useState } from 'react';
-import Slide from 'react-reveal/Slide'
-
-import Switch from '../../components/Switch';
 import { Alert, Collapse } from '@mui/material';
 import { FPFormikRegister } from './service';
 
 export function Register() {
     let [hasReferral, setHasReferral] = useState<boolean>(false)
     let [register, { isLoading: loading, data }] =  useRegisterMutation()
+    let searchParams = useSearchParams()[0]
 
-    let formik = FPFormikRegister(register)
+    let formik = FPFormikRegister(register, searchParams.get('referee'))
     
   return (
     <>
@@ -44,7 +42,7 @@ export function Register() {
                     label="Last name"
                     formik={formik}/>
                 </div>
-                <div className='fflex flex-col md:flex-row justify-start gap-3'>
+                <div className='flex flex-col md:flex-row justify-start gap-3'>
                     <FormInput 
                     type='email' 
                     Icon={MailIcon} 
@@ -94,7 +92,7 @@ export function Register() {
                 </Slide>
             </div>  */}
 
-            <div className='w-full sm:w-3/12 mt-3 sm:mt-0'>
+            <div className='w-full mt-5 sm:mt-0'>
                 <Button type='submit' color="#FF5000">
                     <div className='flex items-center gap-3'>
                         {
@@ -104,7 +102,7 @@ export function Register() {
                         }
                     </div>
                 </Button>
-                <small className='text-center block sm:hidden'>Already have an account? <Link to="/auth/login" className='text-primary-orange-200'>Login</Link></small>
+                <small className='text-center block sm:hidden'>Already have an account? <Link to="/login" className='text-primary-orange-200'>Login</Link></small>
             </div>
             </form>
         </div>

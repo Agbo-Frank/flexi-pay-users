@@ -114,13 +114,13 @@ export function Header(){
                         {
                             !isAuth ? 
                             <div className="hidden sm:flex space-x-5 justify-end ml-auto w-8/12">
-                                <Button outline color="#FF5000" onClick={() => navigate('/auth/login')}>
+                                <Button outline color="#FF5000" onClick={() => navigate('/login')}>
                                     <div className="flex items-center space-x-2">
                                         <LoginIcon size="14" color="#FF5000"/>
                                         <p className="text-sm font-medium">Log in</p>
                                     </div>
                                 </Button>
-                                <Button color="#FF5000" onClick={() => navigate('/auth/register')}><p className="text-sm font-medium">Register</p></Button>
+                                <Button color="#FF5000" onClick={() => navigate('/register')}><p className="text-sm font-medium">Register</p></Button>
                             </div>:
                             <>
                                 <ul className="hidden sm:flex justify-evenly items-center w-3/6">
@@ -224,7 +224,7 @@ export function Header(){
                                             navigate("/dashboard")
                                         }
                                         else{
-                                            navigate("/auth/login")
+                                            navigate("/login")
                                         }
                                     }}>
                                     <ProfilBG size={matches ? "20" : "15"} color="#000541"/>

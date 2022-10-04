@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { BusIcon, ReturnIcon, WarrantyIcon } from "../../components/icons"
 import { IProduct } from "../../interface";
+import ProductDescription from "./productDescription";
 import ProductReview from "./ProductReview";
 
 
@@ -24,13 +25,7 @@ function ProductDetails({ product }: {product: IProduct | undefined}){
                         {
                             index === 'product details' &&
                             (
-                                <p className="text-grey-1200 sm:w-9/12 leading-7 text-sm sm:text-base">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget sem feugiat lobortis arcu aliquam sit feugiat. Eros, arcu, tempus velit, 
-                                    id id ut enim amet. Bibendum at quam at malesuada. Posuere eget tempor urna dapibus ultrices ipsum feugiat pellentesque. Facilisis urna morbi 
-                                    mauris vel sit pharetra, quam commodo urna. 
-                                    Ac quam nulla volutpat risus elit et consectetur aliquam nunc. Sem potenti varius morbi integer sit. Sit sollicitudin arcu suspendisse 
-                                    quam amet, enim nec lacus. Massa amet, massa consectetur maecenas a, volutpat.
-                                </p>
+                                <ProductDescription product={product}/>
                             )
                         }
                     </div>

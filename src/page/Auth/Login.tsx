@@ -54,7 +54,7 @@ export function Login() {
                             }
                         </div>
                     </Button>
-                    {/* <small className='text-center block sm:hidden'>Don’t have an account? <Link to="/auth/register" className='text-primary-orange-200'>Create An Account</Link></small> */}
+                    <small className='text-center block sm:hidden'>Don’t have an account? <Link to="/register" className='text-primary-orange-200'>Create An Account</Link></small>
                 </div>
             </form>
         </div>

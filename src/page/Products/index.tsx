@@ -118,7 +118,7 @@ export function Products(){
                                 {
                                     loading ?
                                     [1, 2, 3, 4].map((product, idx) => <ProductCardSkeleton key={idx}/>) :
-                                    products.length > 0 ? 
+                                    products?.length > 0 ? 
                                     products?.map((product, idx) => <ProductCard product={product} key={idx}/>) :
                                     <div className="grid place-items-center w-full">
                                         <Empty 

@@ -116,7 +116,7 @@ export function VerifyEmail(){
                 <small className='block mt-3 text-lg text-grey-300'>
                     {
                         verified ? "Your Email has been Verified" :
-                        isSent ? "Verificationlink has been sent please check your mail" : "Please verify your email"
+                        isSent ? "Verification link has been sent please check your mail" : "Please verify your email"
                     }
                 </small>
             </div>

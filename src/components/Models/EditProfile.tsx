@@ -137,7 +137,7 @@ function Profile(){
                     formik={formik}
                 />
             </div>
-            <div className="flex justify-center gap-2 w-full sm:w-9/12 mx-auto my-2 sm:my-5">
+            <div className="flex justify-center gap-2 w-full sm:w-9/12 mx-auto my-2">
                 <MuiButton 
                     variant="outlined" 
                     color="secondary" 
