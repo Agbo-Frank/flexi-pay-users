@@ -4,11 +4,50 @@
   <meta charset="UTF-8">
   <title>Order Summary</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{font-family: 'Montserrat', sans-serif;}
+    .main-container{width: 70%;}
+    .display-detail{display: flex;}
+    .display-detail .detail-img{width: 40%; padding: 20px;}
+    .display-detail .detail-content{width: 60%; padding: 20px;}
+    .ship-detail{width: 80%; margin: 0px auto;}
+    .ship-detail .bill-ship{width: 100%; display: flex; justify-content: space-between; text-align: start;}
+    .ship-detail .method{width: 100%; display: flex; justify-content: space-between; text-align: start;}
+
+    @media only screen and (max-width: 1200px){
+      /*Tablets [601px -> 1200px]*/
+      .main-container{width: 70%;}
+      .display-detail{display: flex;}
+      .display-detail .detail-img{width: 40%; padding: 20px;}
+      .display-detail .detail-content{width: 60%; padding: 20px;}
+    }
+    @media only screen and (max-width: 600px){
+      /*Big smartphones [426px -> 600px]*/
+      .main-container{width: 90%;}
+      .display-detail{display: flex;}
+      .display-detail .detail-img{width: 40%; padding: 10px;}
+      .display-detail .detail-content{width: 60%; padding: 10px;}
+    }
+    @media only screen and (max-width: 425px){
+      /*Small smartphones [325px -> 425px]*/
+      .main-container{width: 100%;}
+      .display-detail{display: block;}
+      .display-detail .detail-img{width: 90%; margin: 10px auto; padding: 0px;}
+      .display-detail .detail-content{width: 90%; margin: 10px auto; padding: 0px;}
+      .ship-detail{width: 90%; margin: 0px auto; text-align: center;}
+      .ship-detail .bill-ship{width: 100%; display: block;}
+      .ship-detail .method{width: 100%; display: block; justify-content: center; align-items: center; text-align: start;}
+    }
+  </style>
 </head>
 <body style="background-color: white;">
   <div style="width: 100%; color: grey; text-align: center">
     <div style="padding: 20px; background-color: #000541;"></div>
-    <div style="width: 100%; margin: 0px auto; border: 2px solid silver; border-radius: 12px;">
+    <div class="main-container" style="margin: 0px auto; border: 2px solid silver; border-radius: 12px;">
       <div style="padding: 20px 0px; text-align: center;">
           <img alt="logo" src="https://firebasestorage.googleapis.com/v0/b/flexipay-51bcd.appspot.com/o/logo192.png?alt=media&token=7feadb6e-4791-45e0-9212-c1496aee0959" style="width: 50px; height: 50px; object-fit: cover"/>
       </div>
@@ -22,11 +61,11 @@
           <h2>ORDER SUMMARY</h2>
           <p>June 15, 2021</p>
         </div>
-        <div style="width: 100%; display: flex; justify-content: space-around; padding: 20px 0px;">
-          <div style="width: 40%; padding: 20px;">
+        <div class="display-detail" style="width: 100%; justify-content: space-around; padding: 20px 0px;">
+          <div class="detail-img">
             <img alt='flexipay' src="./banner7.png" style="width: 100%; border-radius: 12px;" />
           </div>
-          <div style="width: 60%; padding: 20px;">
+          <div class="detail-content">
             <div style="width: 100%; margin: 0px auto; border: 2px solid silver; border-radius: 12px; padding: 20px 0px;">
               <div style="width: 90%; margin: 0px auto;">
                 <div style="width: 100%; display: flex; justify-content: space-between; margin: 0px;">
@@ -90,8 +129,8 @@
         </div>
         <div style="width: 100%; padding-bottom: 50px;">
           <h2>BILLING & SHIPPING</h2>
-          <div style="width: 80%; margin: 0px auto;">
-            <div style="width: 100%; display: flex; justify-content: space-between; text-align: start;">
+          <div class="ship-detail">
+            <div class="bill-ship">
               <div>
                 <h3>Billing</h3>
                 <p>Name and Last Name </p>
@@ -109,7 +148,7 @@
                 <p>Country</p>
               </div>
             </div>
-            <div style="width: 100%; display: flex; justify-content: space-between; text-align: start;">
+            <div class="method">
               <div>
                 <h3>Payment method</h3>
                 <p>Visa **** **** **** **** </p>
