@@ -9,7 +9,6 @@ import { Alert, Collapse } from '@mui/material';
 import { FPFormikRegister } from './service';
 
 export function Register() {
-    let [hasReferral, setHasReferral] = useState<boolean>(false)
     let [register, { isLoading: loading, data }] =  useRegisterMutation()
     let searchParams = useSearchParams()[0]
 
