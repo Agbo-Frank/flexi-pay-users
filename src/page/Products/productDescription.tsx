@@ -44,11 +44,11 @@ export function ProductDescription({product}: {product: IProduct | undefined}){
                 header="product description"
                 body={product?.description}
             />
-            <div className="flex justify-between gap-2">
+            <div className="flex flex-col sm:flex-row justify-between gap-2">
                 <div className="w-1/2">
                     <DataDisplay 
                         header="key features"
-                        body={product?.description}
+                        body={product?.key_features}
                     />
                 </div>
                 <div className="w-1/2">

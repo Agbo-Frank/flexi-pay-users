@@ -6,7 +6,7 @@ import ProductReview from "./ProductReview";
 
 
 function ProductDetails({ product }: {product: IProduct | undefined}){
-    let tabNames = ['product details', 'delivery', 'shipping', 'return policy', 'specifications', 'reviews', 'warranty']
+    let tabNames = ['product details', 'delivery', 'return policy', 'reviews', 'warranty']
     let [index, setIndex] = useState('product details')
     return(
         <div className="overflow-hidden rounded-2xl">

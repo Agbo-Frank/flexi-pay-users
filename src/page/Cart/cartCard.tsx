@@ -1,9 +1,8 @@
 import { useState } from "react"
-import { TrashIcon, MinusIcon, PlusIcon, BagIcon, HeartIcon} from "../../components/icons"
+import { MinusIcon, PlusIcon, HeartIcon} from "../../components/icons"
 import { ICart } from '../../interface'
 import { useDelCartMutation, useUpdateCartMutation } from '../../redux/api/Cart'
 import { useDispatch } from 'react-redux'
-import { toggleSnackBar } from '../../redux/slice/modal'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Skeleton, useMediaQuery } from '@mui/material'
 import { formatNumber } from '../../utils'
 import { Link } from "react-router-dom"
@@ -28,34 +27,34 @@ export function Cart({cart}: {cart: ICart}){
 
     return(
         <>
-        <Dialog open={open} onClose={() => setOpen(false)}>
-            <DialogTitle>Remove From Cart</DialogTitle>
-            <DialogContent>
-                <DialogContentText>
-                    Do you want to remove this item from cart?
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <LoadingButton
-                startIcon={<HeartIcon color="#FF5000" size="18"/>} 
-                variant="outlined"
-                color="secondary"
-                loading={savingItem}
-                onClick={() => {
-                    handleSaveItemClick(cart.product.uuid, savedItem, dispatch, () => setOpen(false))
-                        .then(() => deleteCart({uuid: cart.uuid}, delCart, dispatch, () => setOpen(false)))
-                }}>Save {matches && "for later"} </LoadingButton>
-                <LoadingButton 
-                onClick={() => deleteCart({uuid: cart.uuid}, delCart, dispatch, () => setOpen(false))}
-                loading={removing}
-                color="secondary"
-                startIcon={<DeleteIcon />}
-                variant="contained"
-                >
-                    Remove {matches && "item"}
-                </LoadingButton>
-            </DialogActions>
-        </Dialog>
+            <Dialog open={open} onClose={() => setOpen(false)}>
+                <DialogTitle>Remove From Cart</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Do you want to remove this item from cart?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <LoadingButton
+                    startIcon={<HeartIcon color="#FF5000" size="18"/>} 
+                    variant="outlined"
+                    color="secondary"
+                    loading={savingItem}
+                    onClick={() => {
+                        handleSaveItemClick(cart.product.uuid, savedItem, dispatch, () => setOpen(false))
+                            .then(() => deleteCart({uuid: cart.uuid}, delCart, dispatch, () => setOpen(false)))
+                    }}>Save {matches && "for later"} </LoadingButton>
+                    <LoadingButton 
+                    onClick={() => deleteCart({uuid: cart.uuid}, delCart, dispatch, () => setOpen(false))}
+                    loading={removing}
+                    color="secondary"
+                    startIcon={<DeleteIcon />}
+                    variant="contained"
+                    >
+                        Remove {matches && "item"}
+                    </LoadingButton>
+                </DialogActions>
+            </Dialog>
             <div 
             className="flex flex-col sm:flex-row justify-between shadow hover:shadow-lg sm:p-2 w-[98%] rounded-xl bg-white">
                 <div className="p-2 pb-3 sm:pb-0">

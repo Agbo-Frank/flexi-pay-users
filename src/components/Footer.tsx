@@ -1,6 +1,7 @@
 import { AccountBalance, Instagram, Send } from "@mui/icons-material";
 import { Button, Divider } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import { FLEXIPAY_VENDOR_URL } from "../utils/constants";
 import { FacebookIcon, Logo, MailIcon, MasterCardIcon, PhoneIcon, TwitterIcon, VisaIcon, WalletIcon } from "./icons";
 import WhatappIcon from "./icons/Whatapp";
 import { FacebookLink, InstagramLink, MailLink, PhoneLink, TiktokLink, TwitterLink, WhatappLink, YoutubeLink } from "./SoicalLinks";
@@ -190,8 +191,7 @@ const NewFooter = () => {
 
                     <ul>
                         <li className="font-medium mb-2 sm:mb-4">Make Money on FlexiPay</li>
-                        <li className="font-light text-sm cursor-pointer my-2"><Link to="/vendor">Become a Product  Vendor</Link></li>
-                        <li className="font-light text-sm cursor-pointer my-2"><Link to="/vendor">Become a Service  Vendor</Link></li>
+                        <li className="font-light text-sm cursor-pointer my-2"><a href={FLEXIPAY_VENDOR_URL}>Become a Vendor</a></li>
                         <li className="font-light text-sm cursor-pointer my-2"><Link to="/partner">Become an affiliate partner</Link></li>
                     </ul>
                 </div>
