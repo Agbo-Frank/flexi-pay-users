@@ -13,7 +13,14 @@ export function Login() {
     
     let formik = FPFormikLogin(login)
   return (
-    <>
+    <AuthenticationForm>
+        <div className='flex justify-between items-center w-full px-2 py-6 border-b border-solid border-grey-100'>
+            <Logo />
+            <div className='hidden md:flex gap-5 items-center text-grey-200'>
+                <span>Don’t have an account?</span>
+                <Link to="/register" className='py-2  px-8 border border-solid border-grey-100 rounded-full'>Register</Link>
+            </div>
+        </div>
         <div className='mx-auto sm:mx-0 mt-5 sm:my-20 px-2 flex flex-col sm:items-center md:text-left md:items-start sm:w-9/12'>
             <div>
                 <h2 className='text-primary-dark-blue font-bold text-2xl sm:text-4xl'>Hi, You’ve Been Missed</h2>
@@ -58,7 +65,7 @@ export function Login() {
                 </div>
             </form>
         </div>
-    </>
+    </AuthenticationForm>
   );
 }
 

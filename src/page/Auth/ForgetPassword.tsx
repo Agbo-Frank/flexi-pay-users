@@ -1,10 +1,11 @@
-import {  MailIcon, Spinner } from '../../components/icons';
+import {  Logo, MailIcon, Spinner } from '../../components/icons';
 
 import FormInput from '../../components/FormInput';
 import { useForgotPasswordMutation } from '../../redux/api/Auth'
 import { FPFormikForgetPassword } from './service';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
+import { AuthenticationForm } from '../../components';
 
 export function ForgetPassword() {
     let navigate = useNavigate()
@@ -12,7 +13,14 @@ export function ForgetPassword() {
 
     let formik = FPFormikForgetPassword(sendRequest)
   return (
-    <>
+    <AuthenticationForm>
+        <div className='flex justify-between items-center w-full px-2 py-6 border-b border-solid border-grey-100'>
+            <Logo />
+            <div className='hidden md:flex gap-5 items-center text-grey-200'>
+                <span>Already have an account?</span>
+                <Link to="/login" className='py-2  px-8 border border-solid border-grey-100 rounded-full'>Login</Link>
+            </div>
+        </div>
         <div className='my-20'>
             <div>
             <h2 className='text-primary-dark-blue font-bold text-4xl'>Reset Your Password</h2>
@@ -46,7 +54,7 @@ export function ForgetPassword() {
                 </div>
             </form>
         </div>
-    </>
+    </AuthenticationForm>
   );
 }
 

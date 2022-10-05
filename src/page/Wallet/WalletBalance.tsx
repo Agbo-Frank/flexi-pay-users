@@ -41,6 +41,8 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
             getUserBalance()
         }
     }, [user, loadingUser])
+
+    console.log(wallet)
     
     return(
         <div className="w-full sm:w-1/2 sm:border rounded-xl text-center flex flex-col justify-between py-4 px-2 sm:px-4 bg-white sm:bg-transparent">

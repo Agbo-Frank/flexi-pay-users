@@ -3,10 +3,11 @@ import {Logo, PadLock, Spinner} from '../../components/icons';
 import Button from '../../components/Button';
 import FormInput from '../../components/FormInput';
 
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { FPFormikResetPassword } from './service';
 import { useResetPasswordMutation } from '../../redux/api/Auth'
 import { useState } from 'react';
+import { AuthenticationForm } from '../../components';
 
 export function ResetPassword() {
     let searchParams = useSearchParams()[0];
@@ -31,7 +32,14 @@ export function ResetPassword() {
 
     let formik = FPFormikResetPassword(reset, {token: `${token}`, email: `${email}`})
   return (
-    <>
+    <AuthenticationForm>
+        <div className='flex justify-between items-center w-full px-2 py-6 border-b border-solid border-grey-100'>
+            <Logo />
+            <div className='hidden md:flex gap-5 items-center text-grey-200'>
+                <span>Already have an account?</span>
+                <Link to="/login" className='py-2  px-8 border border-solid border-grey-100 rounded-full'>Login</Link>
+            </div>
+        </div>
         <div className='my-20'>
             <div>
                 <h2 className='text-primary-dark-blue font-bold text-4xl'>Reset Your Password</h2>
@@ -71,7 +79,7 @@ export function ResetPassword() {
                 </div>
             </form>
         </div>
-    </>
+    </AuthenticationForm>
   );
 }
 

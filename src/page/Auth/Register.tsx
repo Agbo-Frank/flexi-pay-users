@@ -1,6 +1,6 @@
 import { Logo, UserIcon, MailIcon, PadLock, PhoneIcon, UserIconPlus, Spinner } from '../../components/icons';
 
-import {Button, FormInput } from '../../components';
+import {AuthenticationForm, Button, FormInput } from '../../components';
 import { useRegisterMutation } from '../../redux/api/Auth'
 
 import { Link, useSearchParams } from 'react-router-dom'
@@ -15,7 +15,14 @@ export function Register() {
     let formik = FPFormikRegister(register, searchParams.get('referee'))
     
   return (
-    <>
+    <AuthenticationForm>
+        <div className='flex justify-between items-center w-full px-2 py-6 border-b border-solid border-grey-100'>
+            <Logo />
+            <div className='hidden md:flex gap-5 items-center text-grey-200'>
+                <span>Already have an account?</span>
+                <Link to="/login" className='py-2  px-8 border border-solid border-grey-100 rounded-full'>Login</Link>
+            </div>
+        </div>
         <div className='mx-auto mt-5 sm:my-20 px-2 flex flex-col sm:items-center md:text-left md:items-start'>
             <div>
                 <h2 className='text-primary-dark-blue font-bold text-2xl sm:text-4xl'>Welcome to FlexiPay</h2>
@@ -105,7 +112,7 @@ export function Register() {
             </div>
             </form>
         </div>
-    </>
+    </AuthenticationForm>
   );
 }
 

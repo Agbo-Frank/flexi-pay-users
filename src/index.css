@@ -131,6 +131,10 @@ html{
   animation:slide-in-right .5s cubic-bezier(.25,.46,.45,.94) both
 }
 
+.product_image {
+  background-image: url("./asset/productImage.png");
+}
+
 @keyframes slide-in-right{
   0%{
     transform:translateX(1000px);

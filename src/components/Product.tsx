@@ -14,7 +14,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 export function ProductCard({product}: {product: IProduct}){
     return(
         <Link to={'/product/' + product.uuid} className="block w-full bg-white rounded-lg h-fit p-2 space-y-4 shadow-sm hover:shadow hover:-translate-y-1 hover:z-30 my-2">
-            <div className='w-[145px] h-[130px] sm:w-full sm:h-44 overflow-hidden rounded-lg'>
+            <div className='w-[145px] h-[130px] sm:w-full sm:h-44 overflow-hidden rounded-lg product_image'>
                 <img src={product.product_images[0].image_link} className="w-full h-full object-cover" alt={product.name}/>
             </div>
             <div className='space-y-1'>

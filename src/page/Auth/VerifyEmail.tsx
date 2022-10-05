@@ -1,13 +1,13 @@
 import { Button, Collapse, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { Link, useSearchParams } from "react-router-dom"
-import { Body, FormInput } from "../../components"
+import { AuthenticationForm, Body, FormInput } from "../../components"
 import { useResendVerificationMutation } from "../../redux/api/Auth"
 
 import {  useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { MailIcon, MarkCircleIcon } from "../../components/icons"
+import { Logo, MailIcon, MarkCircleIcon } from "../../components/icons"
 import { useDispatch } from "react-redux"
 import { toggleSnackBar } from "../../redux/slice/modal"
 import { LoadingButton } from "@mui/lab"
@@ -110,7 +110,14 @@ export function VerifyEmail(){
         }
     })
     return(
-        <>
+        <AuthenticationForm>
+            <div className='flex justify-between items-center w-full px-2 py-6 border-b border-solid border-grey-100'>
+                <Logo />
+                <div className='hidden md:flex gap-5 items-center text-grey-200'>
+                    <span>Already have an account?</span>
+                    <Link to="/login" className='py-2  px-8 border border-solid border-grey-100 rounded-full'>Login</Link>
+                </div>
+            </div>
             <div>
                 <h2 className='text-primary-dark-blue font-bold text-4xl'>{verified ? "Email Verified" : "Verify email"}</h2>
                 <small className='block mt-3 text-lg text-grey-300'>
@@ -168,7 +175,7 @@ export function VerifyEmail(){
                     </form>
                 </DialogContent>
             </Dialog>
-        </>
+        </AuthenticationForm>
     )
 }
 

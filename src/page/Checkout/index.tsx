@@ -27,6 +27,7 @@ import PaymentMethod from "./paymentMethod"
 import { confirmOrder } from "./service"
 import { LoadingButton } from "@mui/lab"
 import { useNavigate } from "react-router-dom"
+import AddressBook from "./Addressbook"
 
 
 export function CheckOut(){
@@ -41,7 +42,7 @@ export function CheckOut(){
     let navigate = useNavigate()
 
     const [open, setOpen] = useState({
-        addressBook: false,
+        addressBook: true,
         createInstallment: false,
     })
 
@@ -132,7 +133,7 @@ export function CheckOut(){
         }
     }, [])
 
-    console.log(checkoutdetails)
+    console.log('checkout details', checkoutdetails)
 
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
@@ -141,7 +142,7 @@ export function CheckOut(){
             <Breadcrumb />
             <AddCreditCard />
             <AddAddressModel />
-            {/* <AddressBook 
+            {/* <AddressBook
                 open={open.addressBook} 
                 close={() => setOpen(state => ({...state, addressBook: false}))}
                 addresses={data?.address_details}/> */}

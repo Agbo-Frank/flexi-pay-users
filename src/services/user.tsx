@@ -170,6 +170,7 @@ export function FPFormikAddDeliveryAddress(createAddress: ITrigger<Omit<IAddAddr
         nearest_bus_stop: "",
         house_address: "",
         postal_code: "",
+        is_default: 1
     }
 
     async function onSubmit(value: Omit<IAddAddress, 'id'> | any, formikHelpers: FormikHelpers<Omit<IAddAddress, 'id'> | any>){
@@ -181,7 +182,8 @@ export function FPFormikAddDeliveryAddress(createAddress: ITrigger<Omit<IAddAddr
             house_address: value.house_address || user?.house_address,
             dob: value.dob || user?.dob,
             nearest_bus_stop: value.nearest_bus_stop || user?.nearest_bus_stop,
-            postal_code: value.postal_code || user?.postal_code
+            postal_code: value.postal_code || user?.postal_code,
+            is_default: 1
         }
         console.log(value)
         try{

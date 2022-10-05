@@ -44,7 +44,7 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
                     <DialogTitle>Cancel Order</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Do you want to cancel your order?
+                            Cancelling this subscription will attract a fee of 25% of your saved up amount.
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
