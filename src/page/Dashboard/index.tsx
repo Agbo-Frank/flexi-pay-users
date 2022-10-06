@@ -18,6 +18,7 @@ import { useGetUserSavedItemsQuery } from "../../redux/api/SavedItems";
 import { useDispatch } from "react-redux";
 import { toggleEditProfile } from "../../redux/slice/modal";
 import { useGetUserOrdersQuery } from "../../redux/api/Order";
+import { useNavigate } from "react-router-dom";
 
 
 export  function Dashboard (): JSX.Element {
@@ -58,8 +59,7 @@ export  function Dashboard (): JSX.Element {
             getUserBalance()
         }
     }, [user])
-
-    console.log(user)
+    const navigate = useNavigate()
     return(
         <DashboardWrapper>
             <div className="bg-white sm:bg-transparent">
@@ -120,7 +120,8 @@ export  function Dashboard (): JSX.Element {
                             type="button" 
                             color="secondary"
                             variant='contained'
-                            size="large">
+                            size="large"
+                            onClick={() => navigate("/support")}>
                                 Contact Us
                         </Button>
                     </div>

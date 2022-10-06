@@ -18,6 +18,7 @@ export * from "./GearIcon";
 export * from './GroupIcon'
 export * from "./HeadPhoneIcon";
 export * from "./HeartIcon";
+export * from "./InstagramIcon"
 export * from "./LoginIcon";
 export * from "./logo";
 export * from "./LogOutIcon";
@@ -51,3 +52,4 @@ export * from "./VisaIcon"
 export * from "./WalletIcon";
 export * from "./WarrantyIcon"
 export * from './WithdrawIcon'
+export * from "./YoutubeIcon"

@@ -65,7 +65,7 @@ export function About(){
                             <TextHeader title="our mission" />
                             <div className="text-[#000541]">
                               <p className="my-3">
-                                To connect Nigerian online vendors and shoppers to each other through Technology & Commerce while ensuring affordability of goods.
+                                To connect Nigerian online vendors and shoppers to each other through Technology & Commerce while ensuring affordability of goods, <span className="font-medium">and flexibility of payment.</span>
                               </p>
                             </div>
                           </div>

@@ -9,6 +9,7 @@ import { useGetUserQuery } from "../../redux/api/User";
 import { Skeleton, Button as MuiButton, useMediaQuery } from "@mui/material";
 import DeliveryAddress from "../Dashboard/DeliceryAddress";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function Profile(){
     const matches = useMediaQuery('(min-width:600px)');
@@ -20,6 +21,7 @@ export function Profile(){
             loading: isLoading
         })
     })
+    const navigate = useNavigate()
     return(
         <>
             <DashboardWrapper>
@@ -77,7 +79,8 @@ export function Profile(){
                                 type="button" 
                                 color="secondary"
                                 variant='contained'
-                                size="large">
+                                size="large"
+                                onClick={() => navigate("/support")}>
                                     Contact Us
                             </MuiButton>
                         </div>
