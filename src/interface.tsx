@@ -214,7 +214,11 @@ export interface IProduct {
     description: string;
     price: string;
     slug: string;
+    sku?: string;
+    material?: string;
     key_features: string;
+    product_code?: string;
+    weight?: string;
     product_images: IProductImage[],
     installments: IInstallment[]
 }

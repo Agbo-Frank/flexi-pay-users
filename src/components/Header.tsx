@@ -63,7 +63,7 @@ export function Header(){
         })
     })
     let isAuth = useSelector((state: RootState) => state.data.isAuth)
-    const matches = useMediaQuery('(min-width:600px)');
+    const matches = useMediaQuery('(min-width:640px)');
 
     useEffect(() => {
         if(isAuth){

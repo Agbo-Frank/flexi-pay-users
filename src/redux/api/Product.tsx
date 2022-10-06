@@ -53,6 +53,11 @@ export const ProductApi = createApi({
                 url: "/guest/product/search?search_param=" + body.search_params + "&page=" + body.page
             }),
             providesTags: ['Category']
+        }),
+        getStore: build.query<IResponse<{data: IProduct[]}>, string>({
+            query: (slug) => ({
+                url: "/guest/shop/" + slug
+            }),
         })
     })
 })
@@ -64,5 +69,6 @@ export const {
     useGetCategoriesQuery,
     useLazyGetProductsQuery,
     useSearchProductQuery,
-    useLazySearchProductQuery
+    useLazySearchProductQuery,
+    useGetStoreQuery
 } = ProductApi

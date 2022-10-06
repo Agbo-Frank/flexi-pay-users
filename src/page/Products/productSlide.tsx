@@ -68,7 +68,7 @@ export function ProductSlide({images}: {images: string[]}){
         <div className="sm:hidden flex whitespace-nowrap overflow-x-auto space-x-2 bordder">
             {
                 images?.map((image, imgIdx) => (
-                    <div className='w-11/12 h-[180px] sm:h-auto flex-shrink-0'>
+                    <div className='w-11/12 h-[260px] xs:h-[380px] sm:h-[420px] md::h-auto flex-shrink-0'>
                         <img src={image} className="object-cover w-[98%] h-full rounded"/>
                     </div>
                 ))

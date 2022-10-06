@@ -37,6 +37,23 @@ function DataDisplay({header, body}: {header: string, body?: string}){
     )
 }
 
+function SpecificationData({product, property, display}: {product: IProduct, property: keyof IProduct, display?: string}){
+    return(
+        <>
+            {
+                product[property] ?
+                <li>
+                    <>
+                        <span className="capitalize font-medium">{ display || property.replace(/_/g, ' ') }: </span> 
+                        { product[property] }
+                    </>
+                </li>:
+                null
+            }
+        </>
+    )
+}
+
 export function ProductDescription({product}: {product: IProduct | undefined}){
     return(
         <div className="space-y-4">
@@ -45,17 +62,27 @@ export function ProductDescription({product}: {product: IProduct | undefined}){
                 body={product?.description}
             />
             <div className="flex flex-col sm:flex-row justify-between gap-2">
-                <div className="w-1/2">
+                <div className="sm:w-1/2">
                     <DataDisplay 
                         header="key features"
                         body={product?.key_features}
                     />
                 </div>
-                <div className="w-1/2">
-                    <DataDisplay 
-                        header="specification"
-                        body={product?.description}
-                    />
+                <div className="sm:w-1/2">
+                    {
+                        product &&
+                        <div className="mx-2 h-full">
+                            <div className="border py-2 px-3 font-medium text-lg capitalize">specification</div>
+                            <div className="border border-t-0 py-2 px-3 whitespace-pre-wrap h-auto">
+                                <ul className="space-y-2">
+                                    <SpecificationData product={product} property="sku" display="SKU"/>
+                                    <SpecificationData product={product} property="product_code"/>
+                                    <SpecificationData product={product} property="material"/>
+                                    <SpecificationData product={product} property="weight" display="weight (kg)"/>
+                                </ul>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

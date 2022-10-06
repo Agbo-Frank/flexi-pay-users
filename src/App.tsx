@@ -8,6 +8,7 @@ import {
   Auth,
   Subscriptions,
   About,
+  Vendor,
   // TermsAndCondition
 } from './page';
 
@@ -44,11 +45,11 @@ function App() {
         <Route path='/support' element={<Contact />} />
         <Route path='/products' element={<Products />} />
         <Route path='/about-us' element={<About />} />
-        <Route path='*' element={<NotFound />} />
         <Route path='/terms-and-condition' element={<TermsAndCondition />} />
         <Route path='/profile' element={<RequireAuth><Profile /></RequireAuth>} />
-        <Route path='*' element={<NotFound />} />
         <Route path='/summary' element={<OrderSummary />} />
+        <Route path='/:id' element={<Vendor />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </AuthProvider>
   );
