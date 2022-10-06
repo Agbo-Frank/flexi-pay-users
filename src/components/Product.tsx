@@ -89,7 +89,7 @@ export function ProductCardSkeleton(){
     )
 }
 
-export function ProductsSlide({products, loading, title, link}: {products: IProduct[] | undefined, loading: boolean, title: string, link?: string}){
+export function ProductsSlide({products, loading, title, link, titleCase}: {products: IProduct[] | undefined, loading: boolean, title: string, link?: string, titleCase?: string}){
     let matches = useMediaQuery("(min-width:600px)")
     let slide: any = useRef()
     const settings = {
@@ -105,7 +105,7 @@ export function ProductsSlide({products, loading, title, link}: {products: IProd
     return(
         <div className="px-2 sm:overflow-hidden rounded-2xl h-fit sm:h-[400px]">
             <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:px-4 sm:py-2">
-                <p className="Capitalize font-medium text-sm  sm:text-lg">{title}</p>
+                <p className={`${titleCase || "capitalize"} font-medium text-sm  sm:text-lg`}>{title}</p>
                 <Button 
                     onClick={() => navigate(`${link}`)} 
                     color="secondary"
