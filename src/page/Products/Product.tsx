@@ -83,7 +83,7 @@ export function Product(){
                                             <s className="text-[13px] font-light text-grey-200">₦ 10,600</s>
                                         </div>
                                         <div className="pt-3">
-                                            <span className="py-2 px-4 bg-[#FF500033] rounded-lg text-[13px] sm:text-base text-[#FF5000] font-medium">Pay ₦ 100 / daily, ₦ 300/week or ₦ 500/month</span>
+                                            <span className="py-2 px-2 sm:px-4 bg-[#FF500033] rounded-lg text-[12px] sm:text-base text-[#FF5000] font-medium">Pay ₦ 100 / daily, ₦ 300/week or ₦ 500/month</span>
                                         </div>
                                     </div>
                                     
@@ -111,7 +111,7 @@ export function Product(){
                                             Add to Cart
                                         </LoadingButton>
                                     </div>
-                                    <div className={`${product && "absolute"} bottom-0 align-bottom`}>
+                                    <div className={`${product && "md:absolute"} bottom-0 align-bottom`}>
                                         <div className="flex items-center space-x-3">
                                             <p className="text-primary-dark-blue font-bold text-2xl">₦ {formatNumber(`${product?.price}`)}</p>
                                             <s className="text-[13px] font-light text-grey-200">₦ 10,600</s>

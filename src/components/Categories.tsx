@@ -7,9 +7,10 @@ interface IMenuItemProps {
     id: string;
     parent: string;
     chidren?: string[];
+    width?: any
 }
 
-function MenuItem({id, parent, chidren}: IMenuItemProps){
+function MenuItem({id, parent, chidren, width}: IMenuItemProps){
     let [open, setOpen] = useState(false)
     let [openSub, setOpenSub] = useState(false)
     function handleOpen(){
@@ -53,7 +54,7 @@ function MenuItem({id, parent, chidren}: IMenuItemProps){
                     <div 
                         onMouseEnter={() => setOpenSub(true)}
                         onMouseLeave={() => setOpenSub(false)}
-                        className={`grid w-[800px] grid-cols-4 bg-white border rounded-md ${openSub && 'rounded-l-none border-l-0 z-50'}`}>
+                        className={`grid [w-[200px]] w-[${width}px] overflow-x-auto grid-cols-4 bg-white border rounded-md ${openSub && 'rounded-l-none border-l-0 z-50'}`}>
                         <ul className="m-4">
                             <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
                             {
@@ -217,11 +218,11 @@ export function Categories (): JSX.Element {
                     <AllCategories />
                     {
                         [
-                            'services', 'real estate',
-                            'house & appartment', 'electronics',
-                            'home & kitchen',
+                            {text: 'services', w: 800}, {text: 'real estate', w: 700},
+                            {text: 'house & appartment', w: 600}, {text: 'electronics', w: 450},
+                            {text: 'home & kitchen', w: 400},
                         ].map((category, idx) => (
-                            <MenuItem id={idx.toString()} parent={category} />
+                            <MenuItem id={idx.toString()} parent={category?.text} width={category?.w} />
                         ))
                     }
                 </div>

@@ -43,7 +43,7 @@ function ProductVendor(){
                         >
                             Vendor Info
                     </Button>  */}
-                    <div className="w-full absolute bottom-5 flex flex-col sm:flex-row sm:w-9/12 sm:space-x-6 space-y-3 sm:space-y-0">
+                    <div className="w-full md:absolute bottom-5 flex flex-col sm:flex-row sm:w-9/12 sm:space-x-6 space-y-3 sm:space-y-0">
                         <LoadingButton
                             startIcon={<UserIconPlus  color="white" size="18" />}
                             variant="contained"
