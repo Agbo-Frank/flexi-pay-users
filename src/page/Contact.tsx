@@ -1,7 +1,8 @@
 import { FormInput } from "../components"
-import { FacebookIcon, MailIcon, MarkCircleIcon, PhoneIcon, PlanIcon, TwitterIcon, UserIcon } from "../components/icons"
+import { FacebookIcon, InstagramIcon, MailIcon, MarkCircleIcon, PhoneIcon, PlanIcon, TwitterIcon, UserIcon, YoutubeIcon } from "../components/icons"
 import DashboardWrapper from "../components/DashboardWrapper"
 import Button from "../components/Button"
+import {FLEXIPAY_FACEBOOK, FLEXIPAY_TWITTER, FLEXIPAY_YOUTUBE} from '../utils/constants'
 
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom'
@@ -93,9 +94,11 @@ export function Contact () {
 
                 <div className="bg-white rounded-xl p-6 mb-5">
                     <h3 className="font-semibold text-primary-dark-blue">Follow us</h3>
-                    <div className="flex space-x-5 items-center mt-8">
+                    <div className="flex space-x-5 items-center mt-4">
                         <TwitterIcon />
                         <FacebookIcon />
+                        <YoutubeIcon  size="70"/>
+                        <InstagramIcon />
                     </div>
                 </div>
             </div>

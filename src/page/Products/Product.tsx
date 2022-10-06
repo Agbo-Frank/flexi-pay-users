@@ -62,18 +62,18 @@ export function Product(){
                                 <div className="w-full sm:w-5/12">
                                     <ProductSlide images={product ? product.product_images.map(image => image.image_link) : []}/>
                                 </div>
-                                <div className="w-full sm:w-6/12 flex flex-col space-y-6 px-2 sm:px-0">
+                                <div className="relative w-full sm:w-6/12 flex flex-col space-y-6 px-2 sm:px-0">
                                     <div>
-                                        <h1 className="text-grey-1200 text-xl sm:text-3xl capitalize">{product?.name}</h1>
-
-                                        <div className="flex space-x-2">
+                                        <h1 className="text-grey-1200 text-xl sm:text-4xl font-medium capitalize">{product?.name}</h1>
+                                        <p className="font-semibold text-[20px] sm:text-sm text-grey-200 my-3">Flexi-9876543210</p>
+                                        <div className="flex space-x-3">
                                             <Rating readOnly
                                                 value={5}
-                                                emptyIcon={<i className="text-primary-gold text-sm sm:text-lg fa-regular fa-star"></i>}
-                                                icon={<i className="text-primary-gold text-sm sm:text-lg fa-solid fa-star"></i>}
+                                                size="small"
+                                                emptyIcon={<i className="text-primary-gold text-sm sm:text-lg fa-regular fa-star" />}
+                                                icon={<i className="text-primary-gold text-sm sm:text-lg fa-solid fa-star" />}
                                             />
-
-                                            <p className="font-light text-[10px] sm:text-sm text-grey-200">219 Total Reviews</p>
+                                            <p className="font-medium text-[10px] sm:text-sm text-grey-200 pt-1">219 Total Reviews</p>
                                         </div>
                                     </div>
 
@@ -82,18 +82,22 @@ export function Product(){
                                             <p className="text-primary-dark-blue font-bold text-2xl">₦ {formatNumber(`${product?.price}`)}</p>
                                             <s className="text-[13px] font-light text-grey-200">₦ 10,600</s>
                                         </div>
-                                        <p className="text-grey-1200 text-[13px] sm:text-base">Pay ₦ 100 / daily, ₦ 300/week or ₦ 500/month</p>
+                                        <div className="pt-3">
+                                            <span className="py-2 px-4 bg-[#FF500033] rounded-lg text-[13px] sm:text-base text-[#FF5000] font-medium">Pay ₦ 100 / daily, ₦ 300/week or ₦ 500/month</span>
+                                        </div>
                                     </div>
                                     
-                                    <div className="flex flex-col sm:flex-row sm:w-9/12 sm:space-x-6 space-y-3 sm:space-y-0">
+                                    <div className="w-full flex flex-col sm:flex-row sm:w-9/12 sm:space-x-6 space-y-3 sm:space-y-0">
                                         <LoadingButton
                                             startIcon={<HeartIcon color="#FF5000" size="18" />}
                                             variant="outlined"
                                             size="large"
                                             loading={savingItem}
                                             color="secondary"
+                                            style={{borderRadius: "100px"}}
+                                            className="w-auto md:w-[900px] text-xs"
                                             onClick={() => handleSaveItemClick(product?.uuid, savedItem, dispatch)}>
-                                            Save item
+                                            Saved Items
                                         </LoadingButton>
                                         <LoadingButton
                                             startIcon={<CartIcon  color="white" size="18" />}
@@ -101,9 +105,18 @@ export function Product(){
                                             size="large"
                                             loading={isLoading}
                                             color="secondary"
+                                            style={{borderRadius: "100px"}}
+                                            className="w-auto md:w-[900px] text-xs"
                                             onClick={() => handleAddToCartClick(product?.uuid, addToCart, dispatch, {cookies, setCookie})}>
                                             Add to Cart
                                         </LoadingButton>
+                                    </div>
+                                    <div className={`${product && "absolute"} bottom-0 align-bottom`}>
+                                        <div className="flex items-center space-x-3">
+                                            <p className="text-primary-dark-blue font-bold text-2xl">₦ {formatNumber(`${product?.price}`)}</p>
+                                            <s className="text-[13px] font-light text-grey-200">₦ 10,600</s>
+                                        </div>
+                                        <p className="text-grey-1200 text-[13px] sm:text-base py-3">Pay ₦ 100 / daily, ₦ 300/week or ₦ 500/month</p>
                                     </div>
                                 </div>
                             </div>
@@ -142,6 +155,28 @@ export function Product(){
                             <ProductVendor />
                         </div>
                         
+                        
+                        <ProductsSlide 
+                            products={[]}
+                            title="other products from this seller" 
+                            link="/products"
+                            titleCase="uppercase"
+                            loading={true}
+                        />
+                        <ProductsSlide 
+                            products={[]}
+                            title="similar products" 
+                            link="/products"
+                            titleCase="uppercase"
+                            loading={true}
+                        />
+                        <ProductsSlide 
+                            products={[]}
+                            title="recently viewed products" 
+                            link="/products"
+                            titleCase="uppercase"
+                            loading={true}
+                        />
                         {/* <ProductsSlideDummy />
                         <ProductsSlideDummy />
                         <ProductsSlideDummy /> */}

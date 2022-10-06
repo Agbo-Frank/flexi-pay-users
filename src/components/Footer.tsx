@@ -120,7 +120,7 @@ const OldFooter = () => {
 
 const NewFooter = () => {
     return(
-        <div className="p-5 md:px-10 md:py-3 text-white w-screen bg-primary-dark-blue">
+        <div className="w-full p-5 md:px-10 md:py-3 text-white bg-primary-dark-blue">
             <div className="fp-screen bg-primary-dark-blue h-full flex flex-col sm:flex-row md:p-2">
                 <div className="my-2 sm:my-5 md:my-auto w-full sm:w-1/2 sm:px-5 border-r-0 sm:border-r border-[#EDEEF0] sm:py-4">
                     <p className="mb-2">Contact us/Follow us:</p>

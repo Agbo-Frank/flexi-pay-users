@@ -39,7 +39,7 @@ export function Landing(){
     ]
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
-            <div className="h-fit bg-white sm:bg-grey-500">
+            <div className="w-full h-fit bg-white sm:bg-grey-500">
                 <Header />
                 <Categories />
                 <div className="block sm:hidden w-11/12 my-2 mx-auto bg-white">
