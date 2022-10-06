@@ -182,6 +182,7 @@ export interface IWalletDetails {
     account_reference: string;
     balance: string;
     status: string;
+    referral_balance: string;
     account_name: string;
     bank_name: string;
 }

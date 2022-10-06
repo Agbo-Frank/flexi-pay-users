@@ -4,10 +4,9 @@ import BagIcon from "./icons/Bag";
 import CartIcon from "./icons/CartIcon";
 import DashboardIcon from "./icons/DashboardIcon";
 import HeadPhoneIcon from "./icons/HeadPhoneIcon";
-import {HeartIcon, Spinner, SubscriptionIcon} from "./icons";
+import {HeartIcon, Spinner, SubscriptionIcon, WalletIcon} from "./icons";
 import LogOutIcon from "./icons/LogOutIcon";
 import ProfilBG from "./icons/ProfilBG";
-import WalletIcon from "./icons/WalletIcon";
 
 import Iicon from "./icons/interface";
 

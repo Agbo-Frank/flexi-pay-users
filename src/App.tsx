@@ -37,13 +37,13 @@ function App() {
         <Route path='/cart' element={<Carts />} />
         <Route path='/order' element={<RequireAuth><Orders /></RequireAuth>} />
         <Route path='/subscription' element={<RequireAuth><Subscriptions /></RequireAuth>} />
+        <Route path='/products' element={<Products />} />
         <Route path='/product/:slug' element={<Product />} />
         <Route path='/category/:id' element={<CategoryPage />} />
         <Route path='/saved-items' element={<RequireAuth><SavedItems /></RequireAuth>} />
         <Route path='/checkout' element={<CheckOut />} />
         <Route path='/wallet' element={<RequireAuth><Wallet/></RequireAuth>} />
         <Route path='/support' element={<Contact />} />
-        <Route path='/products' element={<Products />} />
         <Route path='/about-us' element={<About />} />
         <Route path='/terms-and-condition' element={<TermsAndCondition />} />
         <Route path='/profile' element={<RequireAuth><Profile /></RequireAuth>} />

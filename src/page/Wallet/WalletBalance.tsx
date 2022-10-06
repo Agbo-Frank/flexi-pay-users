@@ -9,7 +9,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { formatNumber } from "../../utils";
 import { CopyText } from "../../components";
 
-interface IWalletBalanceProps {
+export interface IWalletBalanceProps {
     open: {
         createAccForm: boolean;
         fundWallet: boolean;
@@ -45,7 +45,7 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
     console.log(wallet)
     
     return(
-        <div className="w-full sm:w-1/2 sm:border rounded-xl text-center flex flex-col justify-between py-4 px-2 sm:px-4 bg-white sm:bg-transparent">
+        <div className="w-full sm:border rounded-xl text-center flex flex-col justify-between py-4 px-2 sm:px-4 bg-white sm:bg-transparent h-full">
             {
                 loadingUser ? 
                 <>
@@ -97,15 +97,6 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                         }
                         {/* <p className="text-grey-700 text-sm">Click on the button below  to fund or Withdraw from your wallet</p> */}
                         <div className="flex justify-center space-x-4 items-center mx-auto my-3 w-full">
-                            {/* <Button
-                                color="secondary"
-                                variant="outlined"
-                                startIcon={<WithdrawIcon color="#FF5000" size="16"/>}
-                                onClick={() => dispatch(toggleWithdrawalForm())}
-                                size="large"
-                            >
-                                Withdraw
-                            </Button> */}
 
                             <Button
                                 color="secondary"

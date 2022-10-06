@@ -17,6 +17,7 @@ import { useGetUserQuery } from "../../redux/api/User"
 import { WalletBalance } from "./WalletBalance"
 import useMediaQuery from '@mui/material/useMediaQuery';
 import UserTransaction from "./UserTransaction"
+import ReferralBalance from "./ReferralBalnce"
 
 
 export function Wallet (){
@@ -73,9 +74,15 @@ export function Wallet (){
                     <WrapperHeader>Wallet</WrapperHeader>
                     <div className="flex flex-col sm:flex-row items-stretch space-y-3 sm:space-y-0 sm:space-x-3 mt-2 sm:mt-4">
                         
-                        <WalletBalance open={open} setOpen={setOpen}/>
-
-                        <div className="w-full sm:w-1/2 rounded-xl text-center bg-white sm:bg-grey-900 flex flex-col justify-center py-3 px-2 sm:p-6">
+                        <div className="w-1/2 h-full">
+                            <WalletBalance open={open} setOpen={setOpen}/>
+                        </div>
+                        <div className="w-1/2 h-full">
+                            <ReferralBalance open={open} setOpen={setOpen}/>
+                        </div>
+                        
+                        
+                        {/* <div className="w-full sm:w-1/2 rounded-xl text-center bg-white sm:bg-grey-900 flex flex-col justify-center py-3 px-2 sm:p-6">
                             <p className="text-xs text-right text-grey-700 ">Referred (0)</p>
                             <div className="flex justify-center">
                                 <GroupIcon color="#000541" size={matches ? "48" : "35"}/>
@@ -109,7 +116,7 @@ export function Wallet (){
                                     </MuiButton>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </Wrapper>
             </div>
