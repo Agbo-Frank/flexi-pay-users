@@ -11,6 +11,7 @@ interface IMenuItemProps {
 
 function MenuItem({id, parent, chidren}: IMenuItemProps){
     let [open, setOpen] = useState(false)
+    let [openSub, setOpenSub] = useState(false)
     function handleOpen(){
         setOpen(true)
     }
@@ -23,22 +24,83 @@ function MenuItem({id, parent, chidren}: IMenuItemProps){
         onMouseEnter={handleOpen}
         onMouseLeave={handleClose}>
             <div className="text-grey-600 cursor-pointer py-3">{parent}</div>
-            {
-                open &&
-                <ul className="absolute bg-white w-[280px] py-2 h-fit z-50 rounded-md max-h-[350px] overflow-y-auto">
-                    {
-                        [
-                            'commercial for rent', 'Rooms for rent', 'Town house',
-                            'commercial for rent', 'Rooms for rent', 'Town house',
-                            'commercial for rent', 'Rooms for rent', 'Town house',
-                            'commercial for rent', 'Rooms for rent', 'Town house',
-                            'commercial for rent', 'Rooms for rent', 'Town house'
-                        ].map((item, idx) => (
-                            <li key={idx} className="hover:bg-[#C3C3C3]/30 py-1 pl-5 cursor-pointer hover:text-primary-blue">{item}</li>
-                        ))
-                    }
-                </ul>
-            }
+            <div className="absolute flex">
+                {
+                    open &&
+                    <ul className={`bg-white w-[280px] py-2 h-fit z-50 rounded-md ${openSub && 'rounded-r-none border-r-0'} max-h-[350px] overflow-y-auto`}>
+                        {
+                            [
+                                'commercial for rent', 'Rooms for rent', 'Town house',
+                                'commercial for rent', 'Rooms for rent', 'Town house',
+                                'commercial for rent', 'Rooms for rent', 'Town house',
+                                // 'commercial for rent', 'Rooms for rent', 'Town house',
+                                // 'commercial for rent', 'Rooms for rent', 'Town house'
+                            ].map((item, idx) => (
+                                <li 
+                                    key={idx} 
+                                    className="hover:bg-[#C3C3C3]/30 py-1 pl-5 cursor-pointer hover:text-primary-blue"
+                                    onMouseEnter={()=>setOpenSub(true)}
+                                    onMouseLeave={()=>setOpenSub(false)}
+                                >
+                                    {item}
+                                </li>
+                            ))
+                        }
+                    </ul>
+                }
+                {
+                    openSub && 
+                    <div 
+                        onMouseEnter={() => setOpenSub(true)}
+                        onMouseLeave={() => setOpenSub(false)}
+                        className={`grid w-[800px] grid-cols-4 bg-white border rounded-md ${openSub && 'rounded-l-none border-l-0 z-50'}`}>
+                        <ul className="m-4">
+                            <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
+                            {
+                                [
+                                    'rice', 'beans', 'yam',
+                                    'garri', 'eba', 'semo'
+                                ].map(item => (
+                                    <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
+                                ))
+                            }
+                        </ul>
+                        <ul className="m-4">
+                            <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
+                            {
+                                [
+                                    'rice', 'beans', 'yam',
+                                    'garri', 'eba', 'semo'
+                                ].map(item => (
+                                    <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
+                                ))
+                            }
+                        </ul>
+                        <ul className="m-4">
+                            <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
+                            {
+                                [
+                                    'rice', 'beans', 'yam',
+                                    'garri', 'eba', 'semo'
+                                ].map(item => (
+                                    <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
+                                ))
+                            }
+                        </ul>
+                        <ul className="m-4">
+                            <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
+                            {
+                                [
+                                    'rice', 'beans', 'yam',
+                                    'garri', 'eba', 'semo'
+                                ].map(item => (
+                                    <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
         </div>
     )
 }
