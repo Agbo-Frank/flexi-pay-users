@@ -62,10 +62,10 @@ export function Product(){
                                 <div className="w-full sm:w-5/12">
                                     <ProductSlide images={product ? product.product_images.map(image => image.image_link) : []}/>
                                 </div>
-                                <div className="relative w-full sm:w-6/12 flex flex-col space-y-6 px-2 sm:px-0">
+                                <div className="relative w-full sm:w-6/12 flex flex-col space-y-2 px-2 sm:px-0">
                                     <div>
                                         <h1 className="text-grey-1200 text-xl sm:text-4xl font-medium capitalize">{product?.name}</h1>
-                                        <p className="font-semibold text-[20px] sm:text-sm text-grey-200 my-3">Flexi-9876543210</p>
+                                        <p className="font-semibold text-sm text-grey-200 my-[6px]">{product?.product_code}</p>
                                         <div className="flex space-x-3">
                                             <Rating readOnly
                                                 value={5}
@@ -73,17 +73,27 @@ export function Product(){
                                                 emptyIcon={<i className="text-primary-gold text-sm sm:text-lg fa-regular fa-star" />}
                                                 icon={<i className="text-primary-gold text-sm sm:text-lg fa-solid fa-star" />}
                                             />
-                                            <p className="font-medium text-[10px] sm:text-sm text-grey-200 pt-1">219 Total Reviews</p>
+                                            <p className="font-medium text-[10px] sm:text-sm text-grey-200">219 Total Reviews</p>
                                         </div>
                                     </div>
 
-                                    <div className="border-y border-grey-1100 py-3 sm:py-5 my-2 space-y-2">
+                                    <div className="border-y border-grey-1100 py-3 sm:py-5 my-1 space-y-2">
                                         <div className="flex items-center space-x-3">
                                             <p className="text-primary-dark-blue font-bold text-2xl">₦ {formatNumber(`${product?.price}`)}</p>
                                             <s className="text-[13px] font-light text-grey-200">₦ 10,600</s>
                                         </div>
                                         <div className="pt-3">
-                                            <span className="py-2 px-4 bg-[#FF500033] rounded-lg text-[13px] sm:text-base text-[#FF5000] font-medium">Pay ₦ 100 / daily, ₦ 300/week or ₦ 500/month</span>
+                                            <span className="py-2 px-4 bg-[#FF500033] rounded-lg text-[13px] sm:text-base text-[#FF5000] font-medium">
+                                                {
+                                                    (!product?.installments || product.installments.length === 0) ?
+                                                    <>No Installment Plans</> :
+                                                    <>Pay
+                                                        {
+                                                            product.installments.map(installment => <>{installment.amount + " / " + installment.frequency}</>)
+                                                        }
+                                                    </>
+                                                }
+                                            </span>
                                         </div>
                                     </div>
                                     
@@ -94,7 +104,6 @@ export function Product(){
                                             size="large"
                                             loading={savingItem}
                                             color="secondary"
-                                            style={{borderRadius: "100px"}}
                                             className="w-auto md:w-[900px] text-xs"
                                             onClick={() => handleSaveItemClick(product?.uuid, savedItem, dispatch)}>
                                             Saved Items
@@ -105,18 +114,10 @@ export function Product(){
                                             size="large"
                                             loading={isLoading}
                                             color="secondary"
-                                            style={{borderRadius: "100px"}}
                                             className="w-auto md:w-[900px] text-xs"
                                             onClick={() => handleAddToCartClick(product?.uuid, addToCart, dispatch, {cookies, setCookie})}>
                                             Add to Cart
                                         </LoadingButton>
-                                    </div>
-                                    <div className={`${product && "absolute"} bottom-0 align-bottom`}>
-                                        <div className="flex items-center space-x-3">
-                                            <p className="text-primary-dark-blue font-bold text-2xl">₦ {formatNumber(`${product?.price}`)}</p>
-                                            <s className="text-[13px] font-light text-grey-200">₦ 10,600</s>
-                                        </div>
-                                        <p className="text-grey-1200 text-[13px] sm:text-base py-3">Pay ₦ 100 / daily, ₦ 300/week or ₦ 500/month</p>
                                     </div>
                                 </div>
                             </div>

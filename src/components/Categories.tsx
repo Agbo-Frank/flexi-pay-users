@@ -1,5 +1,5 @@
 import { Backdrop, Menu, MenuItem as MuiMenuItem } from "@mui/material"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
 import MenuIcon from "./icons/MenuIcon"
 
@@ -7,38 +7,106 @@ interface IMenuItemProps {
     id: string;
     parent: string;
     chidren?: string[];
+    width?: any
 }
 
-function MenuItem({id, parent, chidren}: IMenuItemProps){
+function MenuItem({id, parent, chidren, width}: IMenuItemProps){
     let [open, setOpen] = useState(false)
+    let [openSub, setOpenSub] = useState(false)
+    let [subWidth, setSubWidth] = useState(width || 800)
     function handleOpen(){
         setOpen(true)
     }
     function handleClose(){
         setOpen(false)
     }
+    useEffect(() => {
+       setSubWidth(width)
+    }, [width])
     return(
         <div 
         className="relative"
         onMouseEnter={handleOpen}
         onMouseLeave={handleClose}>
             <div className="text-grey-600 cursor-pointer py-3">{parent}</div>
-            {
-                open &&
-                <ul className="absolute bg-white w-[280px] py-2 h-fit z-50 rounded-md max-h-[350px] overflow-y-auto">
-                    {
-                        [
-                            'commercial for rent', 'Rooms for rent', 'Town house',
-                            'commercial for rent', 'Rooms for rent', 'Town house',
-                            'commercial for rent', 'Rooms for rent', 'Town house',
-                            'commercial for rent', 'Rooms for rent', 'Town house',
-                            'commercial for rent', 'Rooms for rent', 'Town house'
-                        ].map((item, idx) => (
-                            <li key={idx} className="hover:bg-[#C3C3C3]/30 py-1 pl-5 cursor-pointer hover:text-primary-blue">{item}</li>
-                        ))
-                    }
-                </ul>
-            }
+            <div className="absolute flex">
+                {
+                    open &&
+                    <ul className={`bg-white w-[200px] py-2 h-fit z-50 rounded-md ${openSub && 'rounded-r-none border-r-0'} max-h-[350px] overflow-y-auto`}>
+                        {
+                            [
+                                'commercial for rent', 'Rooms for rent', 'Town house',
+                                'commercial for rent', 'Rooms for rent', 'Town house',
+                                'commercial for rent', 'Rooms for rent', 'Town house',
+                                // 'commercial for rent', 'Rooms for rent', 'Town house',
+                                // 'commercial for rent', 'Rooms for rent', 'Town house'
+                            ].map((item, idx) => (
+                                <li 
+                                    key={idx} 
+                                    className="hover:bg-[#C3C3C3]/30 py-1 pl-5 cursor-pointer hover:text-primary-blue"
+                                    onMouseEnter={()=>setOpenSub(true)}
+                                    onMouseLeave={()=>setOpenSub(false)}
+                                >
+                                    {item}
+                                </li>
+                            ))
+                        }
+                    </ul>
+                }
+                {
+                    openSub && 
+                    <div 
+                        onMouseEnter={() => setOpenSub(true)}
+                        onMouseLeave={() => setOpenSub(false)}
+                        style={{width: `${subWidth}px`}}
+                        className={`grid [w-[500px]] [w-[${subWidth}px]] overflow-x-auto grid-cols-4 bg-white border rounded-md ${openSub && 'rounded-l-none border-l-0 z-50'}`}>
+                        <ul className="m-4">
+                            <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
+                            {
+                                [
+                                    'rice', 'beans', 'yam',
+                                    'garri', 'eba', 'semo'
+                                ].map(item => (
+                                    <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
+                                ))
+                            }
+                        </ul>
+                        <ul className="m-4">
+                            <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
+                            {
+                                [
+                                    'rice', 'beans', 'yam',
+                                    'garri', 'eba', 'semo'
+                                ].map(item => (
+                                    <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
+                                ))
+                            }
+                        </ul>
+                        <ul className="m-4">
+                            <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
+                            {
+                                [
+                                    'rice', 'beans', 'yam',
+                                    'garri', 'eba', 'semo'
+                                ].map(item => (
+                                    <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
+                                ))
+                            }
+                        </ul>
+                        <ul className="m-4">
+                            <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
+                            {
+                                [
+                                    'rice', 'beans', 'yam',
+                                    'garri', 'eba', 'semo'
+                                ].map(item => (
+                                    <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
         </div>
     )
 }
@@ -155,11 +223,11 @@ export function Categories (): JSX.Element {
                     <AllCategories />
                     {
                         [
-                            'services', 'real estate',
-                            'house & appartment', 'electronics',
-                            'home & kitchen',
+                            {text: 'services', w: 800}, {text: 'real estate', w: 700},
+                            {text: 'house & appartment', w: 700}, {text: 'electronics', w: 550},
+                            {text: 'home & kitchen', w: 450},
                         ].map((category, idx) => (
-                            <MenuItem id={idx.toString()} parent={category} />
+                            <MenuItem id={idx.toString()} parent={category?.text} width={category?.w} />
                         ))
                     }
                 </div>

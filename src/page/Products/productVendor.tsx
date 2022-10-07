@@ -34,30 +34,19 @@ function ProductVendor(){
                     </li> */}
                 </ul>
                 <div className="pl-4 pb-5">
-                    {/* <Button 
-                        color="secondary" 
-                        variant="outlined"
-                        size="large"
-                        className=""
-                        // startIcon={<i className="text-[10px] text-white fa-solid fa-user-check"></i>}
-                        >
-                            Vendor Info
-                    </Button>  */}
-                    <div className="w-full absolute bottom-5 flex flex-col sm:flex-row sm:w-9/12 sm:space-x-6 space-y-3 sm:space-y-0">
-                        <LoadingButton
+                    <div className="w-full md:absolute bottom-5 flex flex-col sm:flex-row sm:w-9/12 sm:space-x-6 space-y-3 sm:space-y-0">
+                        {/* <LoadingButton
                             startIcon={<UserIconPlus  color="white" size="18" />}
                             variant="contained"
                             size="large"
-                            color="secondary"
-                            style={{borderRadius: "100px"}}>
+                            color="secondary">
                             Follow this Seller
-                        </LoadingButton>
+                        </LoadingButton> */}
                         <LoadingButton
                             startIcon={<UserIcon color="#FF5000" size="18" />}
                             variant="outlined"
                             size="large"
-                            color="secondary"
-                            style={{borderRadius: "100px"}}>
+                            color="secondary">
                             View Seller’s Profile
                         </LoadingButton>
                     </div>

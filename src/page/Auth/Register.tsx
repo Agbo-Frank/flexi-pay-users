@@ -16,7 +16,7 @@ export function Register() {
     
   return (
     <AuthenticationForm>
-        <div className='flex justify-between items-center w-full px-2 py-6 border-b border-solid border-grey-100'>
+        <div className='flex justify-between items-center w-full px-2 py-3 sm:py-6 border-b border-solid border-grey-100'>
             <Logo />
             <div className='hidden md:flex gap-5 items-center text-grey-200'>
                 <span>Already have an account?</span>
@@ -33,8 +33,8 @@ export function Register() {
                 <Alert severity="info">{data?.message}</Alert>
             </Collapse>
             
-            <form className='my-5 sm:my-10 w-full sm:w-10/12' onSubmit={formik.handleSubmit}>
-                <div className='flex flex-col md:flex-row md:justify-start md:space-x-3'>
+            <form className='my-3 sm:my-10 w-full sm:w-10/12' onSubmit={formik.handleSubmit}>
+                <div className='flex flex-col md:flex-row md:justify-start sm:gap-3'>
                     <FormInput 
                     type='text' 
                     Icon={UserIcon} 
@@ -48,7 +48,7 @@ export function Register() {
                     label="Last name"
                     formik={formik}/>
                 </div>
-                <div className='flex flex-col md:flex-row justify-start gap-3'>
+                <div className='flex flex-col md:flex-row justify-start sm:gap-3'>
                     <FormInput 
                     type='email' 
                     Icon={MailIcon} 
@@ -62,7 +62,7 @@ export function Register() {
                     label="Phone Number"
                     formik={formik}/>
                 </div>
-                <div className='flex flex-col md:flex-row justify-start gap-3'>
+                <div className='flex flex-col md:flex-row justify-start sm:gap-3'>
                     <FormInput 
                     type='password' 
                     Icon={PadLock} 
@@ -98,7 +98,7 @@ export function Register() {
                 </Slide>
             </div>  */}
 
-            <div className='w-full mt-5 sm:mt-0'>
+            <div className='w-full mt-3 sm:mt-0'>
                 <Button type='submit' color="#FF5000">
                     <div className='flex items-center gap-3'>
                         {
