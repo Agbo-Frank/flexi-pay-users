@@ -1,3 +1,4 @@
+import { LoadingButton } from "@mui/lab";
 import { Drawer, Button as MuiButton, IconButton, ClickAwayListener } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -41,6 +42,7 @@ function Item ({ Icon, name, link, handleClick}: Item): JSX.Element {
 
 export function MenuDrawer({ open, close }: {open: boolean, close: () => void | any}){
     let {signout} = useAuth()
+    let isAuth = useSelector((state: RootState) => state.data.isAuth)
     let navigate = useNavigate()
     let [logout, {isLoading: loggingOut}] = useLogoutMutation({
         fixedCacheKey: 'logout',
@@ -76,13 +78,23 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
                         <Item Icon={BagIcon} name="Order" link="order" handleClick={close} />
                         <Item Icon={HeartIcon} name="Saved Item" link="saved-items" handleClick={close} />
                     </ul>
-                    {/* {
-                        isAuth &&
-                        <div className="space-y-5">
+                    {
+                        isAuth ?
+                        <LoadingButton 
+                            variant="outlined" 
+                            color="secondary" 
+                            onClick={signout}
+                            fullWidth
+                            loading={loggingOut}
+                            size="large"
+                            startIcon={<LoginIcon size="14" color="#FF5000"/>}>
+                                Logout
+                        </LoadingButton >:
+                        <div className="space-y-3">
                             <MuiButton 
                                 variant="outlined" 
                                 color="secondary" 
-                                onClick={() => navigate('/auth/login')}
+                                onClick={() => navigate('/login')}
                                 fullWidth
                                 size="large"
                                 startIcon={<LoginIcon size="14" color="#FF5000"/>}>
@@ -93,9 +105,9 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
                                 fullWidth
                                 size="large"
                                 variant="contained"
-                                onClick={() => navigate('/auth/register')}><p className="text-sm font-medium">Register</p></MuiButton>
+                                onClick={() => navigate('/register')}>Register</MuiButton>
                         </div>
-                    } */}
+                    }
                     <div className="border-y border-white my-5 py-5">
                         <h3 className="text-primary-orange-200 font-medium">CATEGORIES</h3>
                         <ul className="my-3">

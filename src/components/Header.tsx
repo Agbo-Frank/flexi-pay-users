@@ -9,7 +9,7 @@ import {
 } from "./icons"
 import React, { useEffect, useState } from "react"
 import Slide from "react-reveal/Slide"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import Iicon from "./interface"
 import { useLogoutMutation } from "../redux/api/Auth"
 import { useLazyGetUserQuery } from "../redux/api/User"
@@ -22,6 +22,7 @@ import { useCookies } from "react-cookie"
 import { FLEXIPAY_COOKIE } from "../utils/constants"
 import MenuIcon from '@mui/icons-material/Menu';
 import { MenuDrawer, SideBarDrawer } from './'
+import WestIcon from '@mui/icons-material/West';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface Item {
@@ -88,6 +89,10 @@ export function Header(){
     let date = new Date()
     let time = date.getHours() > 11 ?  date.getHours() >  17 ? 'evening' : 'afternoon' : 'morning'
 
+    let {pathname} = useLocation()
+
+    let paths = ["/", "/home"]
+
     return(
         <>  
             <MenuDrawer open={openDrawer.menu} close={() => setOpenDrawer(state => ({...state, menu: false}))}/>
@@ -96,12 +101,18 @@ export function Header(){
                 <div className="fp-screen flex justify-between py-2 sm:py-5 bg-white items-center sm:items-end">
                     <div className="flex items-center gap-2">
                         {
-                            !matches && 
+                            !matches && (
+                            paths.includes(pathname) ?
                             <IconButton 
                                 className="sm:hidden"
                                 onClick={() => setOpenDrawer(state => ({...state, menu: true}))}>
                                 <MenuIcon />
-                            </IconButton>
+                            </IconButton> :
+                            <IconButton 
+                                className="sm:hidden"
+                                onClick={() => navigate(-1)}>
+                                <WestIcon />
+                            </IconButton>)
                         }
                         <Logo />
                     </div>
@@ -124,11 +135,11 @@ export function Header(){
                             </div>:
                             <>
                                 <ul className="hidden sm:flex justify-evenly items-center w-3/6">
-                                    <Badge color="secondary" overlap="circular" badgeContent={1}>
+                                    {/* <Badge color="secondary" overlap="circular" badgeContent={1}>
                                         <Avatar sx={{bgcolor: '#000326', width: 44, height: 44}}>
                                             <MessageIcon size="20" color="#F9F8FF"/> 
                                         </Avatar>
-                                    </Badge>
+                                    </Badge> */}
                                     <Badge 
                                         color="secondary" 
                                         overlap="circular" 
@@ -202,20 +213,23 @@ export function Header(){
                         {
                             !loading &&
                             <div className="sm:hidden flex gap-2 justify-end items-center mr-3">
-                                <Badge  
-                                    color="secondary" 
-                                    overlap="circular"
-                                    badgeContent={carts?.length}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'left',
-                                    }}
-                                    onClick={() => navigate("/cart", { replace: true })}>
-                                    <div 
-                                        className="sm:hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF]">
-                                        <CartIcon size={matches ? "20" : "15"} color="#000541"/>
-                                    </div>
-                                </Badge>
+                                {
+                                    isAuth &&
+                                    <Badge  
+                                        color="secondary" 
+                                        overlap="circular"
+                                        badgeContent={carts?.length}
+                                        anchorOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'left',
+                                        }}
+                                        onClick={() => navigate("/cart", { replace: true })}>
+                                        <div 
+                                            className="sm:hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF]">
+                                            <CartIcon size={matches ? "20" : "15"} color="#000541"/>
+                                        </div>
+                                    </Badge>
+                                }
                                 <div 
                                     className="sm:hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF]"
                                     onClick={() => {

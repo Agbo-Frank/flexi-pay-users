@@ -14,7 +14,7 @@ export function ForgetPassword() {
     let formik = FPFormikForgetPassword(sendRequest)
   return (
     <AuthenticationForm>
-        <div className='flex justify-between items-center w-full px-2 py-6 border-b border-solid border-grey-100'>
+        <div className='flex justify-between items-center w-full px-2 py-3 sm:py-6 border-b border-solid border-grey-100'>
             <Logo />
             <div className='hidden md:flex gap-5 items-center text-grey-200'>
                 <span>Already have an account?</span>
