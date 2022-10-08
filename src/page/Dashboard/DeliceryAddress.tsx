@@ -1,7 +1,10 @@
+import { NoLuggageOutlined } from "@mui/icons-material"
 import { Button, Skeleton } from "@mui/material"
+import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { EditIcon } from "../../components/icons"
 import { IUser } from "../../interface"
+import { useGetDeliveryAddressQuery } from "../../redux/api/User"
 import { toggleAddAddress, toggleEditProfile } from "../../redux/slice/modal"
 
 interface IDeliveryAddress{
@@ -10,9 +13,15 @@ interface IDeliveryAddress{
 }
 
 
-export function DeliveryAddress({ user, loading }: IDeliveryAddress){
+export function DeliveryAddress({ user }: IDeliveryAddress){
     let dispatch = useDispatch()
-    console.log(user)
+    const { loading, address } = useGetDeliveryAddressQuery(undefined, {
+        selectFromResult: ({ data, isLoading }) => ({
+            address: data?.result.data,
+            loading: isLoading
+        })
+    })
+    let [deliveryAddress, setDeliveryAddress] = useState(address?.find(address => address.is_default === 1) || null)
     return(
         <div className="rounded-xl border pt-5 sm:pt-10 pb-5 mt-3 sm:mt-5 px-5 sm:px-7 w-full bg-white">
             <div className="text-grey-200 leading-9 capitalize">
@@ -25,14 +34,18 @@ export function DeliveryAddress({ user, loading }: IDeliveryAddress){
                     </> :
                     user?.address ?
                     <div>
-                        <p>{user?.address?.house_address}</p>
-                        <p>{user?.address.nearest_bus_stop + " " + user?.address?.city}</p>
-                        <p>{user?.address?.state}</p>
+                        <p>{deliveryAddress?.house_address}</p>
+                        <p>{deliveryAddress?.nearest_bus_stop + " " + deliveryAddress?.city}</p>
+                        <p>{deliveryAddress?.state}</p>
                         <Button
                             variant="outlined"
                             size="large"
                             color="secondary"
-                            onClick={() => dispatch(toggleAddAddress())}>
+                            onClick={() => dispatch(toggleAddAddress({
+                                open: true,
+                                body: deliveryAddress,
+                                type: "edit"
+                            }))}>
                                 Edit Address
                         </Button>
                     </div>:
@@ -43,7 +56,11 @@ export function DeliveryAddress({ user, loading }: IDeliveryAddress){
                         <Button
                             color="secondary"
                             variant="contained"
-                            onClick={() => dispatch(toggleEditProfile())}
+                            onClick={() => dispatch(toggleAddAddress({
+                                open: true,
+                                body: null,
+                                type: "create"
+                            }))}
                         >
                             Add Address
                         </Button> 

@@ -135,11 +135,11 @@ export function Header(){
                             </div>:
                             <>
                                 <ul className="hidden sm:flex justify-evenly items-center w-3/6">
-                                    {/* <Badge color="secondary" overlap="circular" badgeContent={1}>
+                                    <Badge color="secondary" overlap="circular" badgeContent={1}>
                                         <Avatar sx={{bgcolor: '#000326', width: 44, height: 44}}>
                                             <MessageIcon size="20" color="#F9F8FF"/> 
                                         </Avatar>
-                                    </Badge> */}
+                                    </Badge>
                                     <Badge 
                                         color="secondary" 
                                         overlap="circular" 

@@ -1,4 +1,4 @@
-import { IChangePassword, IResponse, ITrigger, IUser } from "../interface";
+import { IChangePassword, IDeliveryAddress, IResponse, ITrigger, IUser } from "../interface";
 import * as Yup from 'yup';
 import { FormikConfig, FormikHelpers, useFormik } from "formik";
 import { useDispatch } from "react-redux";
@@ -154,13 +154,14 @@ export function FPFormikChangePassword(changePassword: ITrigger<IChangePassword,
     return formik
 }
 
-export function FPFormikAddDeliveryAddress(createAddress: ITrigger<Omit<IAddAddress, 'id'>, IResponse<{data: null}>>, done: () => void | any){
+export function FPFormikAddDeliveryAddress(
+    body: IDeliveryAddress | null,
+    type: "create" | "edit",
+    editAddress: ITrigger<IDeliveryAddress, IResponse<{data: null}>> | any,
+    createAddress: ITrigger<Omit<IAddAddress, 'id'>, IResponse<{data: null}>>,
+    done: () => void | any
+){
     const dispatch = useDispatch()
-    let { user } = useGetUserQuery(undefined, {
-        selectFromResult: ({ data }) => ({
-            user: data?.result.data
-        })
-    })
 
     let initialValues = {
         name: '',
@@ -173,21 +174,29 @@ export function FPFormikAddDeliveryAddress(createAddress: ITrigger<Omit<IAddAddr
         is_default: 1
     }
 
-    async function onSubmit(value: Omit<IAddAddress, 'id'> | any, formikHelpers: FormikHelpers<Omit<IAddAddress, 'id'> | any>){
-        value = {
-            name: value.name || user?.first_name + " " + user?.last_name,
-            phone_number: value.phone_number || user?.phone_number,
-            state: value.state || user?.state,
-            city: value.city || user?.city,
-            house_address: value.house_address || user?.house_address,
-            dob: value.dob || user?.dob,
-            nearest_bus_stop: value.nearest_bus_stop || user?.nearest_bus_stop,
-            postal_code: value.postal_code || user?.postal_code,
-            is_default: 1
-        }
-        console.log(value)
+
+    async function onSubmit(value: IDeliveryAddress | any, formikHelpers: FormikHelpers<IDeliveryAddress | any>){
+        console.log(value, type)
         try{
-            let data = await createAddress(value).unwrap()
+            let data: IResponse<{data: null | any}>
+            if(type === "edit"){
+                value = {
+                    name: body?.name || value.name,
+                    phone_number: body?.phone_number || value.phone_number,
+                    state: body?.state || value.state,
+                    city: body?.city || value.city,
+                    nearest_bus_stop: body?.nearest_bus_stop || value.nearest_bus_stop,
+                    house_address: body?.house_address || value.house_address,
+                    postal_code: body?.postal_code || value.postal_code,
+                    is_default: body?.is_default || value.is_default,
+                    id: body?.id
+                }
+                console.log(value, type)
+                data = await editAddress(value).unwrap()
+            }
+            else{
+                data = await createAddress(value).unwrap()
+            }
             
             if(data){
                 dispatch(toggleSnackBar({
@@ -202,7 +211,6 @@ export function FPFormikAddDeliveryAddress(createAddress: ITrigger<Omit<IAddAddr
             }
         }
         catch(err){
-            console.log(err)
             if(err){
                 let error: any = err
                 formikHelpers.setErrors(error.data.errors)

@@ -8,7 +8,7 @@ import { useLogoutMutation } from "../redux/api/Auth";
 import { useGetCategoriesQuery } from "../redux/api/Product";
 import { RootState } from "../redux/store";
 import Button from "./Button";
-import { BagIcon, CartIcon, DashboardIcon, HeartIcon, LoginIcon, LogOutIcon, Spinner, UserIcon, WhiteLogo } from "./icons";
+import { BagIcon, CartIcon, DashboardIcon, HeartIcon, LoginIcon, LogOutIcon, Spinner, SubscriptionIcon, UserIcon, WhiteLogo } from "./icons";
 import Iicon from "./interface";
 
 
@@ -75,8 +75,9 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
                     <ul className={`text-sm top-full shadow-lg pb-1 mt-4`}>
                         <Item Icon={DashboardIcon} name="Dashboard" link="dashboard" handleClick={close} />
                         <Item Icon={CartIcon} name="Cart" link="cart" handleClick={close} />
-                        <Item Icon={BagIcon} name="Order" link="order" handleClick={close} />
                         <Item Icon={HeartIcon} name="Saved Item" link="saved-items" handleClick={close} />
+                        <Item Icon={BagIcon} name="Order" link="order" handleClick={close} />
+                        <Item Icon={SubscriptionIcon} name="Saved Item" link="saved-items" handleClick={close} />
                     </ul>
                     {
                         isAuth ?

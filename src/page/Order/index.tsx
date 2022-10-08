@@ -60,8 +60,8 @@ export function Orders (){
                                     Start Shopping
                             </Button>
                         }/> :
-                        orders?.map(order => (
-                            <Order order={order}/>
+                        orders?.map((order, idx) => (
+                            <Order order={order} key={idx}/>
                         ))
                     }
                 </Wrapper>

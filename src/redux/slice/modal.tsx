@@ -3,7 +3,12 @@ import { IModalReducer} from '../../interface'
 
 let initialState: IModalReducer = {
   productReview: false,
-  addAddress: false,
+  addAddress: {
+    open: false,
+    type: "create",
+    body: null
+  },
+  addressBook: false,
   addCreditCard: false,
   withdrawalForm: false,
   editProfile: false,
@@ -21,8 +26,13 @@ export const modalSlice = createSlice({
     toggleProductReview: (state) => {
       state.productReview = !state.productReview
     },
-    toggleAddAddress: (state) => {
-      state.addAddress = !state.addAddress
+    toggleAddAddress: (state, action) => {
+      state.addAddress.open = !state.addAddress.open
+      state.addAddress.body = action.payload?.type === "edit" ?  action.payload?.body : null
+      state.addAddress.type = action.payload?.type
+    },
+    toggleAddressBook: (state) => {
+      state.addressBook = !state.addressBook
     },
     toggleAddCreditcard: (state) => {
       state.addCreditCard = !state.addCreditCard
@@ -47,6 +57,7 @@ export const {
   toggleAddCreditcard,
   toggleWithdrawalForm,
   toggleEditProfile,
+  toggleAddressBook,
   toggleSnackBar
 } = modalSlice.actions
 

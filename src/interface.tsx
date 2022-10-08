@@ -15,6 +15,20 @@ export interface AddressDetails {
     updated_at?: string | Date;
 }
 
+export interface IDeliveryAddress {
+    id: string;
+    name: string,
+    phone_number: string,
+    state: string,
+    city: string,
+    nearest_bus_stop: string,
+    house_address: string,
+    postal_code: string,
+    is_default: number,
+    created_at: Date | string,
+    updated_at: string | Date
+}
+
 export interface IUser extends Omit<AddressDetails, 'id'> {
     first_name?: string;
     last_name?: string;
@@ -189,10 +203,15 @@ export interface IWalletDetails {
 
 export interface IModalReducer {
     productReview: boolean,
-    addAddress: boolean,
+    addAddress: {
+        open: boolean;
+        type: "edit" | "create";
+        body: IDeliveryAddress | null
+    },
     addCreditCard: boolean,
     withdrawalForm: boolean,
     editProfile: boolean;
+    addressBook:boolean;
     snackBar: {
         open: boolean;
         message: string;

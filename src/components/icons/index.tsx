@@ -1,3 +1,4 @@
+export * from "./AddressIcon"
 export * from "./Bag";
 export * from "./Bell";
 export * from "./BusIcon"

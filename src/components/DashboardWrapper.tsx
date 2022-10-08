@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Breadcrumb from "./Breadcrum";
 import AddAddressModel from "./Models/AddAddressModel";
+import AddressBook from "./Models/Addressbook";
 
 
 function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
@@ -19,6 +20,7 @@ function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
             <div className="w-full min-h-screen h-fit">
                 <EditProfile />
                 <AddAddressModel />
+                <AddressBook />
                 
                 <Header />
                 <Categories />

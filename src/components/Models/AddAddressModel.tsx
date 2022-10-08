@@ -9,22 +9,17 @@ import ModelWrapper from "./ModelWrapper"
 import { toggleAddAddress } from "../../redux/slice/modal";
 import { RootState } from "../../redux/store";
 import { FPFormikAddDeliveryAddress, FPFormikEditUser } from "../../services/user"
-import { useCreateDeliveryAddressMutation, useEditUserMutation, useGetUserQuery } from "../../redux/api/User"
+import { useCreateDeliveryAddressMutation, useEditUserMutation, useGetUserQuery, useUpdateDeliveryAddressMutation } from "../../redux/api/User"
 import { LoadingButton } from "@mui/lab"
 import { useEffect, useState } from "react"
+import { AddressIcon } from "../icons";
 
 
 function AddAddressModel(){
     let [states, setStates] = useState()
     let [lgas, setLgas] = useState()
-    const addAddress: boolean = useSelector((state: RootState) => state.modal.addAddress)
+    const {open, body: user, type} = useSelector((state: RootState) => state.modal.addAddress)
     const dispatch = useDispatch()
-
-    const { user } = useGetUserQuery(undefined, {
-        selectFromResult: ({ data }) => ({
-            user: data?.result.data
-        })
-    })
 
     useEffect(() => {
         let states = NaijaStates.states()
@@ -42,20 +37,31 @@ function AddAddressModel(){
     }
 
     let [createAddress, { isLoading }] = useCreateDeliveryAddressMutation()
+    let [updateAddress, { isLoading: loading }] = useUpdateDeliveryAddressMutation()
 
-    const formik = FPFormikAddDeliveryAddress(createAddress, () => dispatch(toggleAddAddress()))
+    const formik = FPFormikAddDeliveryAddress(
+        user, 
+        type, 
+        updateAddress, 
+        createAddress, 
+        () => dispatch(
+            toggleAddAddress(
+                {type: "create", body: null}
+            ))
+        )
+    
     return(
         <ModelWrapper 
-            isOpen={addAddress} 
+            isOpen={open} 
             size="medium" 
-            closeModal={() => dispatch(toggleAddAddress())}
+            closeModal={() => dispatch(toggleAddAddress({type: "create"}))}
             title="Add Your Delivery Address">
             <form className="py-5 px-4 h-full" onSubmit={formik.handleSubmit}>  
                 <FormInput 
                     type="text"
                     name="name"
                     Icon={UserIcon}
-                    label={user?.first_name?.toLocaleUpperCase() + " " + user?.last_name?.toLocaleUpperCase() || "First Name"}
+                    label={user?.name.toLocaleUpperCase() || "Full Name"}
                     formik={formik}
                 />
                 <FormInput 
@@ -83,7 +89,7 @@ function AddAddressModel(){
                     type="text" 
                     label={user?.nearest_bus_stop || "Nearest Pick up Station" }
                     name="nearest_bus_stop"
-                    Icon={PhoneIcon}
+                    Icon={AddressIcon}
                     formik={formik}
                 />
 
@@ -91,19 +97,19 @@ function AddAddressModel(){
                     type="text" 
                     name="house_address" 
                     label={ user?.house_address || "House Address"} 
-                    Icon={PhoneIcon}
+                    Icon={AddressIcon}
                     formik={formik}
                 />
                 <FormInput 
                     type="text" 
                     name="postal_code" 
                     label={ user?.postal_code || "Postal Code"} 
-                    Icon={PhoneIcon}
+                    Icon={AddressIcon}
                     formik={formik}
                 />
                 <div className="mx-auto w-1/2">
                     <LoadingButton
-                    loading={isLoading}
+                    loading={isLoading || loading}
                     color="secondary"
                     variant="contained"
                     size="large"

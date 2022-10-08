@@ -9,7 +9,7 @@ import {
     BusIcon,
     CreditCardIcon, WalletIcon,
 } from "../../components/icons"
-import { toggleAddAddress, toggleSnackBar, } from "../../redux/slice/modal"
+import { toggleAddAddress, toggleAddressBook, toggleSnackBar, } from "../../redux/slice/modal"
 
 import { useDispatch } from "react-redux"
 
@@ -27,11 +27,11 @@ import PaymentMethod from "./paymentMethod"
 import { confirmOrder } from "./service"
 import { LoadingButton } from "@mui/lab"
 import { useNavigate } from "react-router-dom"
-import AddressBook from "./Addressbook"
+import AddressBook from "../../components/Models/Addressbook"
 
 
 export function CheckOut(){
-    const matches = useMediaQuery('(min-width:600px)');
+    const matches = useMediaQuery('(min-width:640px)');
     let [checkoutData, setCheckoutData] = useState<{method:TCheckoutMethod, installment_ids: string[]}>({
         method: "",
         installment_ids: [] 
@@ -66,12 +66,14 @@ export function CheckOut(){
 
     let [checkout, { isLoading: checkingout }] = useCheckoutMutation()
 
+    //pricing
     let [price, setPrice] = useState<{sub_total: number, total_delivery_fee: number | null, total: number, vat: number | null}>({
         sub_total: 0,
         total_delivery_fee: 0,
         vat: 0,
         total: 0
     })
+
     let [checkoutdetails, setCheckoutdetails] = useState<Partial<IDetails>[]>()
 
     let dispatch = useDispatch()
@@ -142,13 +144,10 @@ export function CheckOut(){
             <Breadcrumb />
             <AddCreditCard />
             <AddAddressModel />
-            {/* <AddressBook
-                open={open.addressBook} 
-                close={() => setOpen(state => ({...state, addressBook: false}))}
-                addresses={data?.address_details}/> */}
+            <AddressBook />
             <CreateInstallment open={open.createInstallment} close={() => setOpen(state => ({...state, createInstallment: false}))}/>
 
-            <div className="flex flex-col sm:flex-row sm:px-6 gap-5 justify-between xl:px-fp-5 2xl:px-fp-10">
+            <div className="w-fp-desk mx-auto flex flex-col sm:flex-row gap-5 justify-between">
                 <div className="w-full sm:w-8/12 flex flex-col gap-3">
                     <Wrapper>
                         <WrapperHeader>Check Out</WrapperHeader>
@@ -167,7 +166,7 @@ export function CheckOut(){
                                         size={matches ? "medium" : "small"}
                                         onClick={() => {
                                             // setOpen(state => ({...state, addressBook: true}))
-                                            dispatch(toggleAddAddress())
+                                            dispatch(toggleAddressBook())
                                         }}>
                                             {data?.address_details ? "Change Address" :  "Add Address"}
                                     </Button>
@@ -177,9 +176,9 @@ export function CheckOut(){
                             {
                                 isLoading ?
                                 <>
-                                    <Skeleton variant="text" width={"92%"} height={20}/>
-                                    <Skeleton variant="text" width={"75%"}  height={20}/>
-                                    <Skeleton variant="text" width={"58%"}  height={20}/>
+                                    <Skeleton variant="text" width={"62%"} height={20}/>
+                                    <Skeleton variant="text" width={"55%"}  height={20}/>
+                                    <Skeleton variant="text" width={"48%"}  height={20}/>
                                 </> :
                                 data?.address_details ?
                                 <div>

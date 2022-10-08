@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery, SkipToken } from '@reduxjs/toolkit/query/react'
-import { IUser, IResponse, IChangePassword } from '../../interface'
+import { IUser, IResponse, IChangePassword, IDeliveryAddress } from '../../interface'
 import { ILogin, IRegister, IForgetPassword } from '../../interface'
 import { REACT_APP_BASE_URL } from '../../config'
 import { RootState } from '../store'
@@ -21,7 +21,7 @@ export const UserApi = createApi({
         }
     }),
     reducerPath: 'User',
-    tagTypes: ['User', "Checkout"],
+    tagTypes: ['User', "Checkout", "Address"],
     refetchOnReconnect: true,
     endpoints: (build) => ({
         getUser: build.query<IResponse<{data: IUser}>, void>({
@@ -49,21 +49,28 @@ export const UserApi = createApi({
             }),
             transformResponse: (response: IResponse<{data: null}>, meta, arg) => response
         }),
+        getDeliveryAddress: build.query<IResponse<{data: IDeliveryAddress[]}>, void>({
+            query: (body) => ({
+                url: "/user/fetch/delivery_addresses",
+                method: "GET"
+            }),
+            providesTags: ['User', "Checkout", "Address"],
+        }),
         createDeliveryAddress: build.mutation<IResponse<{data: null}>, Omit<IAddAddress, 'id'>>({
             query: (body) => ({
-                url: "/user/create/delivery_address-details",
+                url: "/user/create/delivery_addresses",
                 method: "POST",
                 body
             }),
-            invalidatesTags: ['User', "Checkout"],
+            invalidatesTags: ['User', "Checkout", "Address"],
         }),
-        updateDeliveryAddress: build.mutation<IResponse<{data: null}>, IAddAddress>({
+        updateDeliveryAddress: build.mutation<IResponse<{data: null | any[]}>, IDeliveryAddress>({
             query: (body) => ({
-                url: "/user/create/delivery_address-details",
+                url: "/user/update/delivery_address-details",
                 method: "POST",
                 body
             }),
-            invalidatesTags: ['User', "Checkout"],
+            invalidatesTags: ['User', "Checkout", "Address"],
         })
     })
 })
@@ -73,6 +80,7 @@ export const {
     useEditUserMutation,
     useChangePasswordMutation,
     useLazyGetUserQuery,
+    useGetDeliveryAddressQuery,
     useCreateDeliveryAddressMutation,
     useUpdateDeliveryAddressMutation
 } = UserApi
