@@ -147,7 +147,7 @@ export function CheckOut(){
             <AddressBook />
             <CreateInstallment open={open.createInstallment} close={() => setOpen(state => ({...state, createInstallment: false}))}/>
 
-            <div className="w-fp-desk mx-auto flex flex-col sm:flex-row gap-5 justify-between">
+            <div className="fp-screen flex flex-col sm:flex-row gap-5 justify-between">
                 <div className="w-full sm:w-8/12 flex flex-col gap-3">
                     <Wrapper>
                         <WrapperHeader>Check Out</WrapperHeader>
