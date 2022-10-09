@@ -1,10 +1,13 @@
 import { AccountBalance, Instagram, Send } from "@mui/icons-material";
 import { Button, Divider } from "@mui/material";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FPFormikSubscribe } from "../page/CountDown/service";
 import { FLEXIPAY_VENDOR_URL } from "../utils/constants";
 import { FacebookIcon, Logo, MailIcon, MasterCardIcon, PhoneIcon, TwitterIcon, VisaIcon, WalletIcon } from "./icons";
 import WhatappIcon from "./icons/Whatapp";
 import { FacebookLink, InstagramLink, MailLink, PhoneLink, TiktokLink, TwitterLink, WhatappLink, YoutubeLink } from "./SoicalLinks";
+import SubscribeInput from "./SubscribeInput";
 
 
 const OldFooter = () => {
@@ -119,6 +122,9 @@ const OldFooter = () => {
 }
 
 const NewFooter = () => {
+    let [loading, setLoading] = useState(false)
+    let formik = FPFormikSubscribe(setLoading)
+    
     return(
         <div className="w-full p-5 md:px-10 md:py-3 text-white bg-primary-dark-blue">
             <div className="fp-screen bg-primary-dark-blue h-full flex flex-col sm:flex-row md:p-2">
@@ -166,18 +172,7 @@ const NewFooter = () => {
                         </div>
                         <div className="my-4">
                             <p className="text-sm mb-2 sm:mb-4">Get latest updates in your inbox</p>
-                            <div className="flex items-stretch gap-2 h-fit">
-                                <input type='email' placeholder="Enter email" className="block px-3 py-auto h-auto rounded-md" />
-                                    <Button 
-                                        color="secondary" 
-                                        variant="contained"
-                                        className="h-full"
-                                        size="small"
-                                    >
-                                        <span className="hidden sm:block">Subscribe</span>
-                                        <span className="block sm:hidden"><Send /></span>
-                                    </Button>
-                            </div>
+                            <SubscribeInput formik={formik} name="email" loading={loading} />
                         </div>
                     </div>
                     <ul>
