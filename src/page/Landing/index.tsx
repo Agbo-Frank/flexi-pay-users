@@ -1,4 +1,4 @@
-import { CategorySlide, Body, Categories, Header, LandingSlide, ProductsSlide, Footer, SearchBar, ProductsSlideDummy, ProductCategory } from "../../components"
+import { CategorySlide, Body, Categories, Header, LandingSlide, ProductsSlide, Footer, SearchBar, ProductsSlideDummy, ProductCategory, Empty } from "../../components"
 import banner from '../../asset/banner.png'
 import { useGetProductsQuery } from "../../redux/api/Product"
 import BannerSlides from "./bannerSlide"
@@ -13,6 +13,8 @@ import cat7 from '../../asset/categories7.png'
 import cat8 from '../../asset/categories8.png'
 import cat9 from '../../asset/categories9.png'
 import cat10 from '../../asset/categories10.png'
+import { HourglassEmptyRounded } from "@mui/icons-material"
+import { SubscriptionIcon } from "../../components/icons"
 
 
 export function Landing(){

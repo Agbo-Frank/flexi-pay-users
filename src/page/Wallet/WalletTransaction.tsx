@@ -5,6 +5,8 @@ import { useLazyGetTransactionQuery } from "../../redux/api/wallet"
 import { formatNumber } from "../../utils"
 import moment from "moment"
 import WalletTxnDetails from "./TransactionDetails"
+import { Empty } from "../../components"
+import { SubscriptionIcon } from "../../components/icons"
 
 
 function Row({txn}: {txn: ITransacation}){
@@ -72,7 +74,7 @@ export function WalletTransaction(){
                     <TableBody>
                         {
                             !isLoading &&  
-                            transaction?.length === 0 ?<div>No Transaction</div>:
+                            transaction?.length === 0 ?<div className="w-full"><Empty button={false} Icon={SubscriptionIcon} title="Empty" message="No transaction found!" /></div>:
                             transaction?.map((txn) => (
                                 <Row txn={txn}/>
                             ))
