@@ -11,7 +11,8 @@ import { FPFormikSubscribe } from './service';
 
 function CountDown() {
   let [loading, setLoading] = useState(false)
-  const dateSeconds = new Date('2022-10-10')
+  const dateSeconds = new Date(2022, 9, 10, 15, 0, 0, 0)
+  console.log(dateSeconds)
 
   setInterval(function() {
     const countDownDate = dateSeconds.getTime();
