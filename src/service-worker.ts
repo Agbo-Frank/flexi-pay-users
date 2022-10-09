@@ -20,8 +20,8 @@ clientsClaim();
 
 setCacheNameDetails({
   prefix: 'flexipay',
-  suffix: 'v3',
-  precache: 'precache-v3-https://flexipay.ng/',
+  suffix: 'v0.0.2',
+  precache: 'precache-v3v0.0.2-https://flexipay.ng/',
   runtime: 'runtime-https://flexipay.ng/',
   googleAnalytics: 'ga',
 });
