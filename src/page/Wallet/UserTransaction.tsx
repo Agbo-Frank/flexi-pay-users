@@ -4,8 +4,9 @@ import { IUserTransacation } from "../../interface"
 import { useLazyGetUserTransactionQuery } from "../../redux/api/wallet"
 import moment from "moment"
 import { formatNumber } from "../../utils"
-import { CopyText } from "../../components"
+import { CopyText, Empty } from "../../components"
 import { UserTxnDetails } from "./TransactionDetails"
+import { SubscriptionIcon } from "../../components/icons"
 
 
 function Row({txn}: {txn: IUserTransacation}){
@@ -80,7 +81,7 @@ export function UserTransaction(){
                     <TableBody>
                         {
                             !isLoading &&  
-                            transaction?.length === 0 ?<div>No Transaction</div>:
+                            transaction?.length === 0 ?<div className="w-full"><Empty button={false} Icon={SubscriptionIcon} title="Empty" message="No transaction found!" /></div>:
                             transaction?.map((txn) => (
                                 <Row txn={txn}/>
                             ))
