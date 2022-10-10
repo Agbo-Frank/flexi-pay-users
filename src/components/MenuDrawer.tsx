@@ -115,7 +115,11 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
                             {
                                 !loading && categories?.length && 
                                 categories?.map((category, idx) => 
-                                    <li key={idx} className="text-white mb-2" >
+                                    <li 
+                                        key={idx} 
+                                        className="text-white mb-2" 
+                                        onClick={() => navigate("/category/" + category.uuid)}
+                                    >
                                         {category.name}
                                     </li>
                                 )

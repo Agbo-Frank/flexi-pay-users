@@ -1,53 +1,58 @@
 import { Backdrop, Menu, MenuItem as MuiMenuItem } from "@mui/material"
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
+import { ICategory } from "../interface";
+import { useGetCategoriesQuery, useGetSubCategoriesQuery, useLazyGetCategoriesQuery, useLazyGetSubCategoriesQuery } from "../redux/api/Product";
+import { FLEXIPAY_VENDOR_URL } from "../utils/constants";
 import MenuIcon from "./icons/MenuIcon"
 
 interface IMenuItemProps {
     id: string;
-    parent: string;
+    parent: ICategory;
     chidren?: string[];
     width?: any
 }
 
-function MenuItem({id, parent, chidren, width}: IMenuItemProps){
+function MenuItem({id, parent, chidren,}: IMenuItemProps){
     let [open, setOpen] = useState(false)
     let [openSub, setOpenSub] = useState(false)
-    let [subWidth, setSubWidth] = useState(width || 800)
     function handleOpen(){
         setOpen(true)
     }
     function handleClose(){
         setOpen(false)
     }
+
+    let [getCategories, { categories, loading }] = useLazyGetSubCategoriesQuery({
+        selectFromResult: ({ data, isLoading }) => ({
+            categories: data?.result.sub_categories,
+            loading: isLoading
+        })
+    })
+
     useEffect(() => {
-       setSubWidth(width)
-    }, [width])
+        getCategories({page: 1, id: parent.uuid})
+    }, [])
+    console.log(parent, categories)
     return(
         <div 
         className="relative"
         onMouseEnter={handleOpen}
         onMouseLeave={handleClose}>
-            <div className="text-grey-600 cursor-pointer py-3">{parent}</div>
+            <div className="text-grey-600 cursor-pointer py-3">{parent.name}</div>
             <div className="absolute flex">
                 {
                     open &&
                     <ul className={`bg-white w-[200px] py-2 h-fit z-50 rounded-md ${openSub && 'rounded-r-none border-r-0'} max-h-[350px] overflow-y-auto`}>
                         {
-                            [
-                                'commercial for rent', 'Rooms for rent', 'Town house',
-                                'commercial for rent', 'Rooms for rent', 'Town house',
-                                'commercial for rent', 'Rooms for rent', 'Town house',
-                                // 'commercial for rent', 'Rooms for rent', 'Town house',
-                                // 'commercial for rent', 'Rooms for rent', 'Town house'
-                            ].map((item, idx) => (
+                            categories?.map((item, idx) => (
                                 <li 
                                     key={idx} 
                                     className="hover:bg-[#C3C3C3]/30 py-1 pl-5 cursor-pointer hover:text-primary-blue"
                                     onMouseEnter={()=>setOpenSub(true)}
                                     onMouseLeave={()=>setOpenSub(false)}
                                 >
-                                    {item}
+                                    {item.name}
                                 </li>
                             ))
                         }
@@ -58,8 +63,7 @@ function MenuItem({id, parent, chidren, width}: IMenuItemProps){
                     <div 
                         onMouseEnter={() => setOpenSub(true)}
                         onMouseLeave={() => setOpenSub(false)}
-                        style={{width: `${subWidth}px`}}
-                        className={`grid [w-[500px]] [w-[${subWidth}px]] overflow-x-auto grid-cols-4 bg-white border rounded-md ${openSub && 'rounded-l-none border-l-0 z-50'}`}>
+                        className={`grid w-screen overflow-x-auto grid-cols-4 bg-white border rounded-md ${openSub && 'rounded-l-none border-l-0 z-50'}`}>
                         <ul className="m-4">
                             <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
                             {
@@ -116,12 +120,17 @@ function AllCategories(){
         main: false,
         sub: false
     })
-    function handleOpen(){
-        setOpen(state => ({...state, main: true}))
-    }
-    function handleClose(){
-        setOpen(state => ({...state, main: false}))
-    }
+    let navigate = useNavigate()
+    let [getCategories, { categories, loading }] = useLazyGetCategoriesQuery({
+        selectFromResult: ({ data, isLoading }) => ({
+            categories: data?.result,
+            loading: isLoading
+        })
+    })
+
+    useEffect(() => {
+        getCategories()
+    }, [loading])
     return(
         <div 
         className="relative"
@@ -136,21 +145,15 @@ function AllCategories(){
                 <div className="absolute flex items-stretch">
                     <ul className={`bg-white w-[200px] py-2 h-fit z-50 border rounded-md ${open.sub && 'rounded-r-none border-r-0'}`}>
                         {
-                            [
-                                'services', 'real estate',
-                                'house & appartment', 'electronics',
-                                'home & kitchen',
-                                'services', 'real estate',
-                                'house & appartment', 'electronics',
-                                'home & kitchen',
-                            ].map((item, idx) => (
+                            categories?.map((item, idx) => (
                                 <>
                                     <li 
                                         onMouseEnter={() => setOpen(state => ({...state, sub: true}))}
                                         onMouseLeave={() => setOpen(state => ({...state, sub: false}))} 
+                                        onClick={() => navigate("/category/" + item.uuid)}
                                         key={idx} 
                                         className="hover:bg-[#C3C3C3]/30 py-2 pl-5 cursor-pointer hover:text-primary-blue">
-                                        {item}
+                                        {item.name}
                                     </li>
                                 </>
                             ))
@@ -216,24 +219,39 @@ function AllCategories(){
 
 
 export function Categories (): JSX.Element {
+    let [getCategories, { categories, loading }] = useLazyGetCategoriesQuery({
+        selectFromResult: ({ data, isLoading }) => ({
+            categories: data?.result,
+            loading: isLoading
+        })
+    })
+
+    useEffect(() => {
+        getCategories()
+    }, [])
     return(
         <div className="hidden sm:block relative w-full bg-primary-dark-blue">
             <div className="flex py-2 bg-primary-dark-blue font-medium justify-between fp-screen">
                 <div className="flex justify-start space-x-5 capitalize items-center  text-sm">
                     <AllCategories />
                     {
-                        [
-                            {text: 'services', w: 800}, {text: 'real estate', w: 700},
-                            {text: 'house & appartment', w: 700}, {text: 'electronics', w: 550},
-                            {text: 'home & kitchen', w: 450},
-                        ].map((category, idx) => (
-                            <MenuItem id={idx.toString()} parent={category?.text} width={category?.w} />
+                        // [
+                        //     {text: 'services', w: 800}, {text: 'real estate', w: 700},
+                        //     {text: 'house & appartment', w: 700}, {text: 'electronics', w: 550},
+                        //     {text: 'home & kitchen', w: 450},
+                        // ]
+                        categories?.slice(0, 5).map((category, idx) => (
+                            <MenuItem 
+                                id={idx.toString()} 
+                                parent={category} 
+                                key={idx} 
+                            />
                         ))
                     }
                 </div>
 
                 <a 
-                    href="https://vendor.flexipay.ng"
+                    href={FLEXIPAY_VENDOR_URL}
                     target="_blank"
                     className="w-fit h-fit p-1 overflow-hidden rounded-md">
                     <div className="relative flex w-fit h-fit overflow-hidden rounded-md">
