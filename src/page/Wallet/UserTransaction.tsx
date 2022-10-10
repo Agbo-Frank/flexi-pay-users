@@ -1,12 +1,13 @@
-import { CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material"
+import { Button, CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { IUserTransacation } from "../../interface"
 import { useLazyGetUserTransactionQuery } from "../../redux/api/wallet"
 import moment from "moment"
 import { formatNumber } from "../../utils"
-import { CopyText, Empty } from "../../components"
+import { CopyText, Empty, Wrapper } from "../../components"
 import { UserTxnDetails } from "./TransactionDetails"
-import { SubscriptionIcon } from "../../components/icons"
+import { EditSqaureIcon, SubscriptionIcon, WalletIcon } from "../../components/icons"
+import { IWalletBalanceProps } from "./WalletBalance"
 
 
 function Row({txn}: {txn: IUserTransacation}){
@@ -47,7 +48,7 @@ function Row({txn}: {txn: IUserTransacation}){
     )
 }
 
-export function UserTransaction(){
+export function UserTransaction({ open, setOpen}: IWalletBalanceProps){
     let [page, setPage] = useState(1)
     let [getUserTransaction, {transaction, pagination, isLoading}] = useLazyGetUserTransactionQuery({
         selectFromResult: ({ data, isLoading }) => ({
@@ -65,8 +66,10 @@ export function UserTransaction(){
     console.log(transaction)
     return(
         <div className="w-full">
-            <TableContainer className="bg-white rounded-lg" sx={{ maxHeight: 340 }}>
-                {!isLoading && transaction?.length ? (
+            {
+                isLoading || (transaction && transaction.length > 0) ?
+                <div>
+                <TableContainer className="bg-white rounded-lg" sx={{ maxHeight: 340 }}>
                     <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">
                         <TableHead sx={{bgcolor: '#F9F8FF'}}>
                             <TableRow className="text-[#545362]" sx={{bgcolor: '#F9F8FF'}}>
@@ -85,33 +88,49 @@ export function UserTransaction(){
                             }
                         </TableBody>
                     </Table>
-                ):(
-                    <div className="w-full"><Empty button={false} Icon={SubscriptionIcon} title="Empty" message="No transaction found!" /></div>
-                )}
 
-                <div>
-                    {   
-                        isLoading && 
-                        <div className="flex justify-center w-full p-7 border mx-auto">
-                            <CircularProgress /> 
-                        </div>
-                    }
-                </div>
-            </TableContainer>
-            {
-                pagination &&
-                <TablePagination
-                    rowsPerPageOptions={[pagination.per_page]}
-                    component="div"
-                    count={pagination.total}
-                    rowsPerPage={pagination.per_page}
-                    page={pagination.current_page}
-                    onPageChange={(e, page) => setPage(page)}
-                    // onRowsPerPageChange={handleChangeRowsPerPage}
-                    className="bg-white"
-                />
+                    <div>
+                        {   
+                            isLoading &&
+                            <div className="flex justify-center w-full p-7 border mx-auto">
+                                <CircularProgress /> 
+                            </div>
+                        }
+                    </div>
+                </TableContainer>
+                {
+                    pagination &&
+                    <TablePagination
+                        // rowsPerPageOptions={[pagination.per_page]}
+                        component="div"
+                        count={pagination?.total || 0}
+                        rowsPerPage={pagination?.per_page || 0}
+                        page={pagination?.current_page || 0}
+                        onPageChange={(e, page) => setPage(page)}
+                        // onRowsPerPageChange={handleChangeRowsPerPage}
+                        className="bg-white"
+                    />
+                }
+                </div>:
+                <Wrapper styles="grid place-items-center">
+                    <Empty 
+                        button={
+                            <Button
+                                color="secondary"
+                                variant="contained"
+                                startIcon={<EditSqaureIcon color="white" size="16"/>}
+                                onClick={() => setOpen(state => ({...state, fundWallet: true}))}
+                                size="large"
+                            >
+                                Fund Wallet
+                            </Button>
+                        } 
+                        Icon={WalletIcon} 
+                        title="No Transaction Yet" 
+                        message="You currently don’t have any Trasaction at the moment, kindly fund your wallet" 
+                    />
+                </Wrapper>
             }
-            
         </div>
     )
 }

@@ -64,10 +64,6 @@ function MenuItem({id, parent, chidren,}: IMenuItemProps){
                         }
                     </ul>
                 }
-                {
-                    open.sub && 
-                    <SubCategories category={open.category} open={open} setOpen={setOpen}/>
-                }
             </div>
         </div>
     )
@@ -221,15 +217,15 @@ export function Categories (): JSX.Element {
             <div className="flex py-2 bg-primary-dark-blue font-medium justify-between fp-screen">
                 <div className="flex justify-start space-x-5 capitalize items-center  text-sm">
                     <AllCategories />
-                    {/* {
-                        categories?.slice(0, 5).map((category, idx) => (
+                    {
+                        categories?.slice(0, 4).map((category, idx) => (
                             <MenuItem 
                                 id={idx.toString()} 
                                 parent={category} 
                                 key={idx} 
                             />
                         ))
-                    } */}
+                    }
                 </div>
 
                 <a 
