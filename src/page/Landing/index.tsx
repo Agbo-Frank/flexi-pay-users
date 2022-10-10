@@ -1,4 +1,4 @@
-import { CategorySlide, Body, Categories, Header, LandingSlide, ProductsSlide, Footer, SearchBar, ProductsSlideDummy, ProductCategory, Empty } from "../../components"
+import { CategorySlide, Body, Categories, Header, LandingSlide, ProductsSlide, Footer, SearchBar, ProductCategory, Empty } from "../../components"
 import banner from '../../asset/banner.png'
 import { useGetProductsQuery } from "../../redux/api/Product"
 import BannerSlides from "./bannerSlide"
@@ -42,8 +42,6 @@ export function Landing(){
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
             <div className="w-full h-fit bg-white sm:bg-grey-500">
-                <Header />
-                <Categories />
                 <div className="block sm:hidden w-11/12 my-2 mx-auto bg-white">
                     <SearchBar />
                 </div>

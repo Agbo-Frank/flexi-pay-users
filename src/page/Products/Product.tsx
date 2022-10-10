@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import { Body, Header, Categories, Footer, Breadcrumb, ProductsSlide, ProductsSlideDummy,  } from "../../components"
+import { Body, Header, Categories, Footer, Breadcrumb, ProductsSlide } from "../../components"
 import { CartIcon, HeartIcon,  } from "../../components/icons"
 import { useGetProductQuery } from "../../redux/api/Product";
 import { LoadingButton } from "@mui/lab";
@@ -17,6 +17,7 @@ import { useCookies } from "react-cookie";
 import { FLEXIPAY_COOKIE, FLEXIPAY_REDIRECT, FLEXIPAY_URL } from "../../utils/constants";
 import { useDispatch } from "react-redux";
 import ProductSlide from "./productSlide";
+import { useGetReviewsQuery } from "../../redux/api/Reviews";
 
 export function Product(){
     let { slug } = useParams()
@@ -28,6 +29,18 @@ export function Product(){
             loading: isLoading
         })
     })
+
+    let { reviews } = useGetReviewsQuery({slug: product?.slug || "", page: "1"}, {
+        selectFromResult: ({ data, isLoading}) => ({
+            reviews: data?.result.data.data,
+            pagination: data?.result.data,
+            isLoading
+        })
+    })
+
+    const average_rating = reviews?.reduce((total, review) => {
+        return total + (typeof review.rate === 'string' ? parseFloat(`${review.rate}`) : review.rate)
+    }, 0) || 0
 
     const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
     const dispatch = useDispatch()
@@ -53,8 +66,6 @@ export function Product(){
             </Helmet>
             <Body bgColor="bg-white sm:bg-grey-500">
                 <div className="w-full h-fit bg-white sm:bg-grey-500">
-                    <Header />
-                    <Categories />
                     <Breadcrumb />
                     <div className="fp-screen space-y-5 bg-white sm:bg-grey-500">
                         <div className="bg-white sm:p-7 sm:space-y-10">
@@ -64,23 +75,32 @@ export function Product(){
                                 </div>
                                 <div className="relative w-full sm:w-6/12 flex flex-col space-y-2 px-2 sm:px-0">
                                     <div>
-                                        <h1 className="text-grey-1200 text-xl sm:text-4xl font-medium capitalize">{product?.name}</h1>
+                                        <h1 className="text-grey-1200 text-xl sm:text-4xl font-medium capitalize truncate">{product?.name}</h1>
                                         <p className="font-semibold text-sm text-grey-200 my-[6px]">{product?.product_code}</p>
                                         <div className="flex space-x-3">
                                             <Rating readOnly
-                                                value={5}
+                                                value={parseInt((average_rating / (reviews?.length || 1)).toString())}
                                                 size="small"
                                                 emptyIcon={<i className="text-primary-gold text-sm sm:text-lg fa-regular fa-star" />}
                                                 icon={<i className="text-primary-gold text-sm sm:text-lg fa-solid fa-star" />}
                                             />
-                                            <p className="font-medium text-[10px] sm:text-sm text-grey-200">219 Total Reviews</p>
+                                            <p className="font-medium text-[10px] sm:text-sm text-grey-200">{
+                                                !reviews || reviews?.length === 0  ? 
+                                                "No Review yet":
+                                                reviews?.length.toString() + "Total Review" + (reviews?.length > 1 ? "s" : "")
+                                                
+                                            }</p>
                                         </div>
                                     </div>
 
                                     <div className="border-y border-grey-1100 py-3 sm:py-5 my-1 space-y-2">
                                         <div className="flex items-center space-x-3">
-                                            <p className="text-primary-dark-blue font-bold text-2xl">₦ {formatNumber(`${product?.price}`)}</p>
-                                            <s className="text-[13px] font-light text-grey-200">₦ 10,600</s>
+                                            <p className="text-primary-dark-blue font-bold text-2xl">₦ {formatNumber(product?.price || 0)}</p>
+                                            {
+                                                product?.discounted_price ?
+                                                <s className="text-[13px] font-light text-grey-200">₦ {formatNumber(product?.discounted_price || 0)}</s>:
+                                                null
+                                            }
                                         </div>
                                         <div className="pt-3">
                                             <span className="py-2 px-4 bg-[#FF500033] rounded-lg text-[13px] sm:text-base text-[#FF5000] font-medium">

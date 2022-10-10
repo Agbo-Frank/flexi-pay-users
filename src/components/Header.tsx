@@ -91,7 +91,7 @@ export function Header(){
 
     let {pathname} = useLocation()
 
-    let paths = ["/", "/home"]
+    let paths = ["/", "/home", "/profile", "/dashboard", "/wallet"]
 
     return(
         <>  

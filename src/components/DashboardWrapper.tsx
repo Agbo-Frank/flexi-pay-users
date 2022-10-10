@@ -21,9 +21,6 @@ function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
                 <EditProfile />
                 <AddAddressModel />
                 <AddressBook />
-                
-                <Header />
-                <Categories />
                 <Breadcrumb />
                 <div 
                 className="px-6 fp-screen sm:space-x-5 flex justify-between overflow-y-hidden">

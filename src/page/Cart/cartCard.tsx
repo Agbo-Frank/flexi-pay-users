@@ -24,6 +24,7 @@ export function Cart({cart}: {cart: ICart}){
     let [updateCart, {isLoading }] = useUpdateCartMutation()
 
     let [savedItem, { isLoading: savingItem,}] = useSavedItemMutation()
+    console.log("cart",cart)
 
     return(
         <>
@@ -59,7 +60,7 @@ export function Cart({cart}: {cart: ICart}){
             className="flex flex-col sm:flex-row justify-between shadow hover:shadow-lg sm:p-2 w-[98%] rounded-xl bg-white">
                 <div className="p-2 pb-3 sm:pb-0">
                     <div className="flex space-x-2 sm:space-x-3 items-stretch">
-                        <Link to={"/product/" + cart.product.slug} className="block w-fit">
+                        <Link to={"/product/" + cart?.product?.uuid} className="block w-fit">
                             <img src={cart.product.product_images[0].image_link} className="w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] object-cover rounded sm:rounded-xl"/>
                         </Link>
                         <div className="sm:w-7/12 flex flex-col justify-around">

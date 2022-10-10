@@ -50,7 +50,7 @@ export const ProductApi = createApi({
         }),
         getSubCategories: build.query<IResponse<ICategory>, {page: number, id: string}>({
             query: (body) => ({
-                url: "/category/sub/" + body.id
+                url: "/category/fetch/sub/" + body.id
             }),
             providesTags: ['Category']
         }),
