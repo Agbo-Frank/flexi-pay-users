@@ -300,7 +300,8 @@ export interface ICategory {
     name: string;
     slug: null | string;
     sub_categories: ISubCategory[]
-    attributes: IAttributes[]
+    attributes: IAttributes[];
+    products: IProduct[]
 }
 
 export interface ISubCategory extends ICategory {

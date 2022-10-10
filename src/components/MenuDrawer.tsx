@@ -25,7 +25,7 @@ function Item ({ Icon, name, link, handleClick}: Item): JSX.Element {
     
     return(
         <li 
-        className="flex items-center space-x-3 py-4 cursor-pointer text-white hover:text-primary-blue" 
+        className="flex items-center space-x-3 py-4 cursor-pointer text-white hover:text-primary-orange-200" 
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
         onClick={() => {

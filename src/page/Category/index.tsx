@@ -1,19 +1,21 @@
 import { Button, Checkbox, MenuItem, Pagination, Skeleton } from "@mui/material"
 import { useEffect, useState } from "react"
-import { useSearchParams, useNavigate } from "react-router-dom"
+import { useSearchParams, useNavigate, useParams } from "react-router-dom"
 import { 
     Body, Categories, 
     DropDown, Header, 
     ProductCard, Empty,
     ProductCardSkeleton, 
     Breadcrumb,
-    SearchBar} from "../../components"
+    SearchBar
+} from "../../components"
 import { SearchIcon } from "../../components/icons"
 import { IFilter, IPagination, IProduct } from "../../interface"
 import { 
     useLazyGetProductsQuery, 
     useLazyFilterProductQuery, 
-    useLazySearchProductQuery 
+    useLazySearchProductQuery, 
+    useGetSubCategoriesQuery
 } from "../../redux/api/Product"
 import { hasQueryString, serializeFormQuery } from "../../utils"
 import CategoryFilter from "./filter"
@@ -24,8 +26,15 @@ export function CategoryPage(){
     let [products, setProducts] = useState<IProduct[]>([])
     let [loading, setLoading] = useState(false)
     let [pagination, setPagination] = useState<IPagination<IProduct[]>>()
+    let { id } = useParams()
 
     let [searchParams, setSearchParams] = useSearchParams()
+
+    let {isLoading, } = useGetSubCategoriesQuery({page, id:`${id}`}, {
+        selectFromResult: ({ data }) => ({
+            categories: data?.result.
+        })
+    })
     
     let [filters, setFilters] = useState<IFilter>({
         parent_category: searchParams.get('parent_category') || "",

@@ -46,4 +46,10 @@ export function CategoryFilter({category}: IFiltersProps){
     )
 }
 
+// export function PriceFilter(){
+//   return(
+
+//   )
+// }
+
 export default CategoryFilter

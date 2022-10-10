@@ -48,6 +48,12 @@ export const ProductApi = createApi({
             }),
             providesTags: ['Category']
         }),
+        getSubCategories: build.query<IResponse<ICategory>, {page: number, id: string}>({
+            query: (body) => ({
+                url: "/category/sub/" + body.id + "?page=" + body.page.toString() || "1"
+            }),
+            providesTags: ['Category']
+        }),
         searchProduct: build.query<IResponse<{data: IPagination<IProduct[]>}>, {page?: string; search_params: string;}>({
             query: (body) => ({
                 url: "/guest/product/search?search_param=" + body.search_params + "&page=" + body.page
@@ -70,5 +76,7 @@ export const {
     useLazyGetProductsQuery,
     useSearchProductQuery,
     useLazySearchProductQuery,
-    useGetStoreQuery
+    useGetStoreQuery,
+    useGetSubCategoriesQuery,
+    useLazyGetSubCategoriesQuery
 } = ProductApi
