@@ -1,12 +1,13 @@
-import { CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material"
+import { Button, CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { ITransacation } from "../../interface"
 import { useLazyGetTransactionQuery } from "../../redux/api/wallet"
 import { formatNumber } from "../../utils"
 import moment from "moment"
 import WalletTxnDetails from "./TransactionDetails"
-import { Empty } from "../../components"
-import { SubscriptionIcon, WalletIcon } from "../../components/icons"
+import { Empty, Wrapper } from "../../components"
+import { EditSqaureIcon, SubscriptionIcon, WalletIcon } from "../../components/icons"
+import { IWalletBalanceProps } from "./WalletBalance"
 
 
 function Row({txn}: {txn: ITransacation}){
@@ -39,7 +40,7 @@ function Row({txn}: {txn: ITransacation}){
     )
 }
 
-export function WalletTransaction(){
+export function WalletTransaction({ open, setOpen}: IWalletBalanceProps){
     let [page, setPage] = useState(1)
     let [getTransaction, {transaction, pagination, isLoading}] = useLazyGetTransactionQuery({
         selectFromResult: ({ data, isLoading }) => ({
@@ -59,50 +60,69 @@ export function WalletTransaction(){
     }
     return(
         <div className="w-full">
-            <TableContainer className="bg-white rounded-lg" sx={{ maxHeight: 340 }}>
-                {!isLoading && transaction?.length === 0 ? (
-                    <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">
-                        <TableHead sx={{bgcolor: '#F9F8FF'}}>
-                            <TableRow className="text-[#545362]" sx={{bgcolor: '#F9F8FF'}}>
-                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Type</TableCell>
-                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Amount</TableCell>
-                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Description</TableCell>
-                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Status</TableCell>
-                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Date</TableCell>
-                                {/* <TableCell sx={{color: '#545362', fontSize: 15.5}}>Actions</TableCell> */}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {
-                                transaction?.map((txn) => (<Row txn={txn}/>))
-                            }
-                        </TableBody>
-                    </Table>
-                ):(
-                    <div className="w-full"><Empty button={false} Icon={WalletIcon} title="Empty" message="No transaction found!" /></div>
-                )
-                }
-                <div>
-                    {   
-                        isLoading && 
-                        <div className="flex justify-center w-full p-7 border mx-auto">
-                            <CircularProgress /> 
-                        </div>
-                    }
-                </div>
-            </TableContainer>
             {
-                pagination &&
-                <TablePagination
-                    rowsPerPageOptions={[pagination.per_page]}
-                    component="div"
-                    count={pagination.total}
-                    rowsPerPage={pagination.per_page}
-                    page={pagination.current_page}
-                    onPageChange={onChangePage}
-                    // onRowsPerPageChange={handleChangeRowsPerPage}
-                    className="bg-white"
-                />
+                isLoading || (transaction && transaction.length > 0) ? 
+                <div>
+                    <TableContainer className="bg-white rounded-lg" sx={{ maxHeight: 340 }}>
+                        <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">
+                            <TableHead sx={{bgcolor: '#F9F8FF'}}>
+                                <TableRow className="text-[#545362]" sx={{bgcolor: '#F9F8FF'}}>
+                                    <TableCell sx={{color: '#545362', fontSize: 15.5}}>Type</TableCell>
+                                    <TableCell sx={{color: '#545362', fontSize: 15.5}}>Amount</TableCell>
+                                    <TableCell sx={{color: '#545362', fontSize: 15.5}}>Description</TableCell>
+                                    <TableCell sx={{color: '#545362', fontSize: 15.5}}>Status</TableCell>
+                                    <TableCell sx={{color: '#545362', fontSize: 15.5}}>Date</TableCell>
+                                    {/* <TableCell sx={{color: '#545362', fontSize: 15.5}}>Actions</TableCell> */}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {
+                                    transaction?.map((txn) => (<Row txn={txn}/>)) 
+                                }
+                            </TableBody>
+                        </Table>
+                        <div>
+                            {   
+                                isLoading &&
+                                <div className="flex justify-center w-full p-7 border mx-auto">
+                                    <CircularProgress /> 
+                                </div>
+                            }
+                        </div>
+                    </TableContainer>
+                    {
+                        pagination &&
+                        <TablePagination
+                            // rowsPerPageOptions={[pagination.per_page]}
+                            component="div"
+                            count={pagination.total}
+                            rowsPerPage={pagination.per_page}
+                            page={pagination.current_page}
+                            onPageChange={onChangePage}
+                            // onRowsPerPageChange={handleChangeRowsPerPage}
+                            className="bg-white"
+                        />
+                    }
+                </div> :
+
+                <Wrapper styles="grid place-items-center">
+                    <Empty 
+                        button={
+                            <Button
+                                color="secondary"
+                                variant="contained"
+                                startIcon={<EditSqaureIcon color="white" size="16"/>}
+                                onClick={() => setOpen(state => ({...state, fundWallet: true}))}
+                                size="large"
+                            >
+                                Fund Wallet
+                            </Button>
+                        } 
+                        Icon={WalletIcon} 
+                        title="No Transaction Yet" 
+                        message="You currently don’t have any Trasaction at the moment, kindly fund your wallet" 
+                    />
+                </Wrapper>
             }
             
         </div>

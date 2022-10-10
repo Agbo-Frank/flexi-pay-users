@@ -69,7 +69,7 @@ export const WalletApi = createApi({
         }),
         getWalletDetails: build.query<IResponse<{data: IWalletDetails}>, void>({
             query: () => ({
-                url: '/wallet/details',
+                url: '/wallet/transactions',
                 method: 'GET'
             }),
             providesTags: ['Wallet']

@@ -132,8 +132,8 @@ export function Wallet (){
                 </div>
                 {
                     tab === 0 ?
-                    <WalletTransaction />:
-                    <UserTransaction />
+                    <WalletTransaction open={open} setOpen={setOpen}/>:
+                    <UserTransaction open={open} setOpen={setOpen}/>
                 }
                 
             </div>
