@@ -24,7 +24,7 @@ export function DeliveryAddress(){
             .then(data => {
                 if(data?.status === "success"){
                     let defaultDeliveryAddress = data?.result?.data.find(address => address.is_default === 1)
-                    setDeliveryAddress(defaultDeliveryAddress)
+                    setDeliveryAddress(defaultDeliveryAddress || null)
                 }
                 else{
                     setDeliveryAddress(null)
