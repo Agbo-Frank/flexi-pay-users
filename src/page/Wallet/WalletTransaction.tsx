@@ -6,7 +6,7 @@ import { formatNumber } from "../../utils"
 import moment from "moment"
 import WalletTxnDetails from "./TransactionDetails"
 import { Empty } from "../../components"
-import { SubscriptionIcon } from "../../components/icons"
+import { SubscriptionIcon, WalletIcon } from "../../components/icons"
 
 
 function Row({txn}: {txn: ITransacation}){
@@ -60,28 +60,28 @@ export function WalletTransaction(){
     return(
         <div className="w-full">
             <TableContainer className="bg-white rounded-lg" sx={{ maxHeight: 340 }}>
-                <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">
-                    <TableHead sx={{bgcolor: '#F9F8FF'}}>
-                        <TableRow className="text-[#545362]" sx={{bgcolor: '#F9F8FF'}}>
-                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Type</TableCell>
-                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Amount</TableCell>
-                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Description</TableCell>
-                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Status</TableCell>
-                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Date</TableCell>
-                            {/* <TableCell sx={{color: '#545362', fontSize: 15.5}}>Actions</TableCell> */}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {
-                            !isLoading &&  
-                            transaction?.length === 0 ?<div className="w-full"><Empty button={false} Icon={SubscriptionIcon} title="Empty" message="No transaction found!" /></div>:
-                            transaction?.map((txn) => (
-                                <Row txn={txn}/>
-                            ))
-                        }
-                    </TableBody>
-                    
-                </Table>
+                {!isLoading && transaction?.length === 0 ? (
+                    <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">
+                        <TableHead sx={{bgcolor: '#F9F8FF'}}>
+                            <TableRow className="text-[#545362]" sx={{bgcolor: '#F9F8FF'}}>
+                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Type</TableCell>
+                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Amount</TableCell>
+                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Description</TableCell>
+                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Status</TableCell>
+                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Date</TableCell>
+                                {/* <TableCell sx={{color: '#545362', fontSize: 15.5}}>Actions</TableCell> */}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {
+                                transaction?.map((txn) => (<Row txn={txn}/>))
+                            }
+                        </TableBody>
+                    </Table>
+                ):(
+                    <div className="w-full"><Empty button={false} Icon={WalletIcon} title="Empty" message="No transaction found!" /></div>
+                )
+                }
                 <div>
                     {   
                         isLoading && 

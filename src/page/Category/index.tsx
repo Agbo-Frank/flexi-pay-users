@@ -30,11 +30,13 @@ export function CategoryPage(){
 
     let [searchParams, setSearchParams] = useSearchParams()
 
-    let {isLoading, } = useGetSubCategoriesQuery({page, id:`${id}`}, {
-        selectFromResult: ({ data }) => ({
-            categories: data?.result.
-        })
-    })
+    // let {data, isLoading} = useGetSubCategoriesQuery({page, id:`${id}`}, {
+    //     selectFromResult: ({ data }) => ({
+    //         categories: data?.result
+    //     })
+    // })
+
+    console.log(data, isLoading)
     
     let [filters, setFilters] = useState<IFilter>({
         parent_category: searchParams.get('parent_category') || "",
