@@ -66,29 +66,29 @@ export function UserTransaction(){
     return(
         <div className="w-full">
             <TableContainer className="bg-white rounded-lg" sx={{ maxHeight: 340 }}>
-                <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">
-                    <TableHead sx={{bgcolor: '#F9F8FF'}}>
-                        <TableRow className="text-[#545362]" sx={{bgcolor: '#F9F8FF'}}>
-                            <TableCell sx={{color: '#545362', fontSize: 15.5}} width='50px'>Ref</TableCell>
-                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Amount</TableCell>
-                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Type</TableCell>
-                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Provider</TableCell>
-                            <TableCell sx={{color: '#545362', fontSize: 15.5}} width={100}>Description</TableCell>
-                            <TableCell sx={{color: '#545362', fontSize: 15.5}}>Status</TableCell>
-                            {/* <TableCell sx={{color: '#545362', fontSize: 15.5}}>Date</TableCell> */}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {
-                            !isLoading &&  
-                            transaction?.length === 0 ?<div className="w-full"><Empty button={false} Icon={SubscriptionIcon} title="Empty" message="No transaction found!" /></div>:
-                            transaction?.map((txn) => (
-                                <Row txn={txn}/>
-                            ))
-                        }
-                    </TableBody>
-                    
-                </Table>
+                {!isLoading && transaction?.length ? (
+                    <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">
+                        <TableHead sx={{bgcolor: '#F9F8FF'}}>
+                            <TableRow className="text-[#545362]" sx={{bgcolor: '#F9F8FF'}}>
+                                <TableCell sx={{color: '#545362', fontSize: 15.5}} width='50px'>Ref</TableCell>
+                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Amount</TableCell>
+                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Type</TableCell>
+                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Provider</TableCell>
+                                <TableCell sx={{color: '#545362', fontSize: 15.5}} width={100}>Description</TableCell>
+                                <TableCell sx={{color: '#545362', fontSize: 15.5}}>Status</TableCell>
+                                {/* <TableCell sx={{color: '#545362', fontSize: 15.5}}>Date</TableCell> */}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {
+                                transaction?.map((txn) => (<Row txn={txn}/>))
+                            }
+                        </TableBody>
+                    </Table>
+                ):(
+                    <div className="w-full"><Empty button={false} Icon={SubscriptionIcon} title="Empty" message="No transaction found!" /></div>
+                )}
+
                 <div>
                     {   
                         isLoading && 

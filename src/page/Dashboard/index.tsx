@@ -102,7 +102,7 @@ export  function Dashboard (): JSX.Element {
                     </Wrapper>
                     <Wrapper styles="rounded-xl p-3 sm:p-5 w-full sm:w-1/2 bg-[#F4F4F4] sm:bg-white">
                         <WrapperHeader>Address</WrapperHeader>
-                        <DeliveryAddress user={user} loading={loading}/>
+                        <DeliveryAddress />
                     </Wrapper>
                 </div>
 

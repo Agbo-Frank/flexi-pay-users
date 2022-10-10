@@ -1,27 +1,42 @@
 import { NoLuggageOutlined } from "@mui/icons-material"
 import { Button, Skeleton } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { EditIcon } from "../../components/icons"
-import { IUser } from "../../interface"
-import { useGetDeliveryAddressQuery } from "../../redux/api/User"
+import { IDeliveryAddress, IUser } from "../../interface"
+import { useGetDeliveryAddressQuery, useLazyGetDeliveryAddressQuery } from "../../redux/api/User"
 import { toggleAddAddress, toggleEditProfile } from "../../redux/slice/modal"
 
-interface IDeliveryAddress{
-    user?: IUser,
-    loading: boolean
-}
 
-
-export function DeliveryAddress({ user }: IDeliveryAddress){
+export function DeliveryAddress(){
     let dispatch = useDispatch()
-    const { loading, address } = useGetDeliveryAddressQuery(undefined, {
+    const [getDelivery, { loading, address }] = useLazyGetDeliveryAddressQuery({
         selectFromResult: ({ data, isLoading }) => ({
             address: data?.result.data,
             loading: isLoading
         })
     })
-    let [deliveryAddress, setDeliveryAddress] = useState(address?.find(address => address.is_default === 1) || null)
+    let [deliveryAddress, setDeliveryAddress] = useState<IDeliveryAddress | null>(null)
+
+    useEffect(() => {
+        getDelivery()
+            .unwrap()
+            .then(data => {
+                if(data?.status === "success"){
+                    let defaultDeliveryAddress = data?.result?.data.find(address => address.is_default === 1)
+                    setDeliveryAddress(defaultDeliveryAddress || null)
+                }
+                else{
+                    setDeliveryAddress(null)
+                }
+            })
+            .catch(err => {
+                if (err){
+                    setDeliveryAddress(null)
+                }
+            })
+    }, [])
+
     return(
         <div className="rounded-xl border pt-5 sm:pt-10 pb-5 mt-3 sm:mt-5 px-5 sm:px-7 w-full bg-white">
             <div className="text-grey-200 leading-9 capitalize">
@@ -32,9 +47,9 @@ export function DeliveryAddress({ user }: IDeliveryAddress){
                         <Skeleton variant="text" sx={{fontSize: 16}} width={'80%'}/>
                         <Skeleton variant="text" sx={{fontSize: 16}} width={'80%'}/>
                     </> :
-                    user?.address ?
+                    deliveryAddress ?
                     <div>
-                        <p>{deliveryAddress?.house_address}</p>
+                        <p>{deliveryAddress.house_address}</p>
                         <p>{deliveryAddress?.nearest_bus_stop + " " + deliveryAddress?.city}</p>
                         <p>{deliveryAddress?.state}</p>
                         <Button

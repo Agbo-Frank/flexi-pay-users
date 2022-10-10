@@ -74,10 +74,10 @@ export function Wallet (){
                     <WrapperHeader>Wallet</WrapperHeader>
                     <div className="flex flex-col sm:flex-row items-stretch space-y-3 sm:space-y-0 sm:space-x-3 mt-2 sm:mt-4">
                         
-                        <div className="w-1/2 h-full">
+                        <div className="sm:w-1/2 h-full">
                             <WalletBalance open={open} setOpen={setOpen}/>
                         </div>
-                        <div className="w-1/2 h-full">
+                        <div className="sm:only:w-1/2 h-full">
                             <ReferralBalance open={open} setOpen={setOpen}/>
                         </div>
                         

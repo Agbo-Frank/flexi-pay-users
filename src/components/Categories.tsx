@@ -1,5 +1,5 @@
 import { Backdrop, Menu, MenuItem as MuiMenuItem } from "@mui/material"
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom"
 import { ICategory } from "../interface";
 import { useGetCategoriesQuery, useGetSubCategoriesQuery, useLazyGetCategoriesQuery, useLazyGetSubCategoriesQuery } from "../redux/api/Product";
@@ -14,43 +14,49 @@ interface IMenuItemProps {
 }
 
 function MenuItem({id, parent, chidren,}: IMenuItemProps){
-    let [open, setOpen] = useState(false)
-    let [openSub, setOpenSub] = useState(false)
+    let [open, setOpen] = useState<{
+        main: boolean,
+        sub: boolean,
+        category: ICategory | null
+    }>({
+        main: false,
+        sub: false,
+        category: null
+    })
     function handleOpen(){
-        setOpen(true)
+        setOpen(state => ({...state, main: true}))
     }
     function handleClose(){
-        setOpen(false)
+        setOpen(state => ({...state, main: false}))
     }
 
-    let [getCategories, { categories, loading }] = useLazyGetSubCategoriesQuery({
+    let [getCategories, { categories, loading, data }] = useLazyGetSubCategoriesQuery({
         selectFromResult: ({ data, isLoading }) => ({
             categories: data?.result.sub_categories,
-            loading: isLoading
+            loading: isLoading, data
         })
     })
 
     useEffect(() => {
         getCategories({page: 1, id: parent.uuid})
     }, [])
-    console.log(parent, categories)
     return(
         <div 
         className="relative"
         onMouseEnter={handleOpen}
         onMouseLeave={handleClose}>
-            <div className="text-grey-600 cursor-pointer py-3">{parent.name}</div>
+            <div className="text-grey-600 cursor-pointer py-3 capitalize">{parent.name.toLowerCase()}</div>
             <div className="absolute flex">
                 {
-                    open &&
-                    <ul className={`bg-white w-[200px] py-2 h-fit z-50 rounded-md ${openSub && 'rounded-r-none border-r-0'} max-h-[350px] overflow-y-auto`}>
+                    open.main &&
+                    <ul className={`bg-white w-[200px] py-2 h-fit z-50 rounded-md ${open.sub && 'rounded-r-none border-r-0'} max-h-[350px] overflow-y-auto`}>
                         {
                             categories?.map((item, idx) => (
                                 <li 
                                     key={idx} 
                                     className="hover:bg-[#C3C3C3]/30 py-1 pl-5 cursor-pointer hover:text-primary-blue"
-                                    onMouseEnter={()=>setOpenSub(true)}
-                                    onMouseLeave={()=>setOpenSub(false)}
+                                    onMouseEnter={()=> setOpen(state => ({...state, sub: true, category: item}))}
+                                    onMouseLeave={()=> setOpen(state => ({...state, sub: false, category: null}))}
                                 >
                                     {item.name}
                                 </li>
@@ -59,56 +65,8 @@ function MenuItem({id, parent, chidren,}: IMenuItemProps){
                     </ul>
                 }
                 {
-                    openSub && 
-                    <div 
-                        onMouseEnter={() => setOpenSub(true)}
-                        onMouseLeave={() => setOpenSub(false)}
-                        className={`grid w-screen overflow-x-auto grid-cols-4 bg-white border rounded-md ${openSub && 'rounded-l-none border-l-0 z-50'}`}>
-                        <ul className="m-4">
-                            <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
-                            {
-                                [
-                                    'rice', 'beans', 'yam',
-                                    'garri', 'eba', 'semo'
-                                ].map(item => (
-                                    <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
-                                ))
-                            }
-                        </ul>
-                        <ul className="m-4">
-                            <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
-                            {
-                                [
-                                    'rice', 'beans', 'yam',
-                                    'garri', 'eba', 'semo'
-                                ].map(item => (
-                                    <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
-                                ))
-                            }
-                        </ul>
-                        <ul className="m-4">
-                            <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
-                            {
-                                [
-                                    'rice', 'beans', 'yam',
-                                    'garri', 'eba', 'semo'
-                                ].map(item => (
-                                    <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
-                                ))
-                            }
-                        </ul>
-                        <ul className="m-4">
-                            <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
-                            {
-                                [
-                                    'rice', 'beans', 'yam',
-                                    'garri', 'eba', 'semo'
-                                ].map(item => (
-                                    <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
-                                ))
-                            }
-                        </ul>
-                    </div>
+                    open.sub && 
+                    <SubCategories category={open.category} open={open} setOpen={setOpen}/>
                 }
             </div>
         </div>
@@ -116,9 +74,14 @@ function MenuItem({id, parent, chidren,}: IMenuItemProps){
 }
 
 function AllCategories(){
-    let [open, setOpen] = useState({
+    let [open, setOpen] = useState<{
+        main: boolean,
+        sub: boolean,
+        category: ICategory | null
+    }>({
         main: false,
-        sub: false
+        sub: false,
+        category: null
     })
     let navigate = useNavigate()
     let [getCategories, { categories, loading }] = useLazyGetCategoriesQuery({
@@ -143,73 +106,23 @@ function AllCategories(){
             {
                 open.main &&
                 <div className="absolute flex items-stretch">
-                    <ul className={`bg-white w-[200px] py-2 h-fit z-50 border rounded-md ${open.sub && 'rounded-r-none border-r-0'}`}>
+                    <ul className={`bg-white w-[200px] py-2 h-auto z-50 border rounded-md ${open.sub && 'rounded-r-none border-r-0'}`}>
                         {
                             categories?.map((item, idx) => (
-                                <>
-                                    <li 
-                                        onMouseEnter={() => setOpen(state => ({...state, sub: true}))}
-                                        onMouseLeave={() => setOpen(state => ({...state, sub: false}))} 
-                                        onClick={() => navigate("/category/" + item.uuid)}
-                                        key={idx} 
-                                        className="hover:bg-[#C3C3C3]/30 py-2 pl-5 cursor-pointer hover:text-primary-blue">
-                                        {item.name}
-                                    </li>
-                                </>
+                                <li 
+                                    onMouseEnter={() => setOpen(state => ({...state, sub: true, category: item}))}
+                                    onMouseLeave={() => setOpen(state => ({...state, sub: false, category: null}))} 
+                                    onClick={() => navigate("/category/" + item.uuid)}
+                                    key={idx} 
+                                    className="hover:bg-[#C3C3C3]/30 py-2 pl-5 cursor-pointer hover:text-primary-blue whitespace-nowrap truncate">
+                                    {item.name}
+                                </li>
                             ))
                         }
                     </ul>
                     {
-                        open.sub && 
-                        <div 
-                            onMouseEnter={() => setOpen(state => ({...state, sub: true}))}
-                            className={`grid w-[800px] grid-cols-4 bg-white border rounded-md ${open.sub && 'rounded-l-none border-l-0 z-50'}`}>
-                            <ul className="m-4">
-                                <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
-                                {
-                                    [
-                                        'rice', 'beans', 'yam',
-                                        'garri', 'eba', 'semo'
-                                    ].map(item => (
-                                        <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
-                                    ))
-                                }
-                            </ul>
-                            <ul className="m-4">
-                                <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
-                                {
-                                    [
-                                        'rice', 'beans', 'yam',
-                                        'garri', 'eba', 'semo'
-                                    ].map(item => (
-                                        <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
-                                    ))
-                                }
-                            </ul>
-                            <ul className="m-4">
-                                <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
-                                {
-                                    [
-                                        'rice', 'beans', 'yam',
-                                        'garri', 'eba', 'semo'
-                                    ].map(item => (
-                                        <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
-                                    ))
-                                }
-                            </ul>
-                            <ul className="m-4">
-                                <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue">Food Cupboard</li>
-                                {
-                                    [
-                                        'rice', 'beans', 'yam',
-                                        'garri', 'eba', 'semo'
-                                    ].map(item => (
-                                        <li className="capitalize text-[13px] hover:text-sm text-[#222] hover:text-black cursor-pointer">{item}</li>
-                                    ))
-                                }
-                            </ul>
-                        </div>
-
+                        open.sub &&
+                        <SubCategories category={open.category} open={open} setOpen={setOpen}/>
                     }
                 </div>
             }
@@ -217,6 +130,80 @@ function AllCategories(){
     )
 }
 
+
+export function SubCategories({setOpen, category, open}: {
+    open: {
+        main: boolean;
+        sub: boolean;
+        category: ICategory | null;
+    }
+    setOpen: React.Dispatch<React.SetStateAction<{
+        main: boolean;
+        sub: boolean;
+        category: ICategory | null;
+    }>>,
+    category: ICategory | null
+}){
+    let [getSubCategories, { sub_categories }] = useLazyGetSubCategoriesQuery({
+        selectFromResult: ({ data }) => ({
+            sub_categories: data?.result
+        })
+    })
+
+    const navigate= useNavigate()
+
+    useEffect(() => {
+        if(category){
+            getSubCategories({id: category?.uuid, page: 1})
+        }
+    }, [category])
+    return(
+        <div 
+            onMouseEnter={() => setOpen(state => ({...state, sub: true}))}
+            className={`grid w-[800px] grid-cols-4 bg-white border rounded-md ${open.sub && 'rounded-l-none border-l-0 z-50'}`}>  
+            {
+                sub_categories?.sub_categories?.map(sub_category => (
+                    <ul className="m-4">
+                        <li className="uppercase pb-2 border-b cursor-pointer text-[14px] hover:text-primary-dark-blue whitespace-nowrap truncate"
+                            onClick={() => navigate("/category/" + sub_category?.uuid)}
+                        >{ sub_category?.name}</li>
+                        <SubSubCategories sub_category={sub_category} />
+                    </ul>
+                ))
+            }                      
+            
+        </div>
+    )
+}
+
+export function SubSubCategories({ sub_category}: {sub_category: ICategory}){
+    let [getSubCategories, { sub_categories }] = useLazyGetSubCategoriesQuery({
+        selectFromResult: ({ data }) => ({
+            sub_categories: data?.result
+        })
+    })
+
+    const navigate= useNavigate()
+
+    useEffect(() => {
+        if(sub_category){
+            getSubCategories({id: sub_category?.uuid, page: 1})
+        }
+    }, [])
+    return(
+        <>
+            {
+                sub_categories?.sub_categories?.map(sub_category => (
+                    <li     
+                        key={sub_category?.uuid}
+                        className="capitalize text-[12px] hover:text-[13px] text-[#222] hover:text-black cursor-pointer "
+                        onClick={() => navigate("/category/" + sub_category.uuid)}
+                    >{sub_category.name}</li>
+                ))
+            }
+        </>
+    )
+}
 
 export function Categories (): JSX.Element {
     let [getCategories, { categories, loading }] = useLazyGetCategoriesQuery({
@@ -234,12 +221,7 @@ export function Categories (): JSX.Element {
             <div className="flex py-2 bg-primary-dark-blue font-medium justify-between fp-screen">
                 <div className="flex justify-start space-x-5 capitalize items-center  text-sm">
                     <AllCategories />
-                    {
-                        // [
-                        //     {text: 'services', w: 800}, {text: 'real estate', w: 700},
-                        //     {text: 'house & appartment', w: 700}, {text: 'electronics', w: 550},
-                        //     {text: 'home & kitchen', w: 450},
-                        // ]
+                    {/* {
                         categories?.slice(0, 5).map((category, idx) => (
                             <MenuItem 
                                 id={idx.toString()} 
@@ -247,7 +229,7 @@ export function Categories (): JSX.Element {
                                 key={idx} 
                             />
                         ))
-                    }
+                    } */}
                 </div>
 
                 <a 
@@ -264,4 +246,4 @@ export function Categories (): JSX.Element {
     )
 }
 
-export default Categories
+export default memo(Categories)

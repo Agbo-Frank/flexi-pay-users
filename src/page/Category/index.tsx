@@ -30,11 +30,13 @@ export function CategoryPage(){
 
     let [searchParams, setSearchParams] = useSearchParams()
 
-    // let {isLoading, } = useGetSubCategoriesQuery({page, id:`${id}`}, {
+    // let {data, isLoading} = useGetSubCategoriesQuery({page, id:`${id}`}, {
     //     selectFromResult: ({ data }) => ({
     //         categories: data?.result
     //     })
     // })
+
+    // console.log(data, isLoading)
     
     let [filters, setFilters] = useState<IFilter>({
         parent_category: searchParams.get('parent_category') || "",
@@ -162,8 +164,6 @@ export function CategoryPage(){
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
             <div className="w-full h-fit bg-white sm:bg-grey-500">
-                <Header />
-                <Categories />
                 <Breadcrumb />
                 <div className="block sm:hidden w-11/12 my-2 mx-auto bg-white">
                     <SearchBar />

@@ -61,7 +61,7 @@ export function Profile(){
 
                         <Wrapper styles="rounded-xl p-5 w-[97%] mx-auto sm:w-1/2">
                             <WrapperHeader>Address</WrapperHeader>
-                            <DeliveryAddress user={user} loading={loading}/>
+                            <DeliveryAddress />
                         </Wrapper>
                     </div>
 

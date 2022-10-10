@@ -139,8 +139,6 @@ export function CheckOut(){
 
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
-            <Header />
-            <Categories />
             <Breadcrumb />
             <AddCreditCard />
             <AddAddressModel />

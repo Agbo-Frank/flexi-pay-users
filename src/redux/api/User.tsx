@@ -58,7 +58,7 @@ export const UserApi = createApi({
         }),
         createDeliveryAddress: build.mutation<IResponse<{data: null}>, Omit<IAddAddress, 'id'>>({
             query: (body) => ({
-                url: "/user/create/delivery_addresses",
+                url: "/user/create/delivery_address-details",
                 method: "POST",
                 body
             }),
@@ -82,5 +82,6 @@ export const {
     useLazyGetUserQuery,
     useGetDeliveryAddressQuery,
     useCreateDeliveryAddressMutation,
-    useUpdateDeliveryAddressMutation
+    useUpdateDeliveryAddressMutation,
+    useLazyGetDeliveryAddressQuery
 } = UserApi

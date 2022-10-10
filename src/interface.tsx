@@ -238,8 +238,9 @@ export interface IProduct {
     material?: string;
     key_features: string;
     product_code?: string;
+    discounted_price?:string;
     weight?: string;
-    product_images: IProductImage[],
+    product_images: IProductImage[];
     installments: IInstallment[]
 }
 

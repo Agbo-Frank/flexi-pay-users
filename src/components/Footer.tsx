@@ -70,7 +70,7 @@ const OldFooter = () => {
                         <ul>
                             <li className="font-semibold mb-2 sm:mb-4">More Info</li>
                             <li className="font-light text-sm cursor-pointer my-2"><Link to="/return-policy">Return Policy</Link></li>
-                            <li className="font-light text-sm cursor-pointer my-2"><Link to="/privacy-policy">Privacy Policy</Link></li>
+                            {/* <li className="font-light text-sm cursor-pointer my-2"><Link to="/privacy-policy">Privacy Policy</Link></li> */}
                             <li className="font-light text-sm cursor-pointer my-2"><Link to="/affiliate">Become an affiliate partner</Link></li>
                         </ul>
 
@@ -180,7 +180,7 @@ const NewFooter = () => {
                         <li className="font-light text-sm cursor-pointer my-2"><Link to="/about-us">About us</Link></li>
                         <li className="font-light text-sm cursor-pointer my-2"><Link to="/support">Contact us</Link></li>
                     <li className="font-light text-sm cursor-pointer my-2"><Link to="/privacy-policy">Privacy Policy</Link></li>
-                    <li className="font-light text-sm cursor-pointer my-2"><Link to="/shipping-policy">Shipping Policy</Link></li>
+                    {/* <li className="font-light text-sm cursor-pointer my-2"><Link to="/shipping-policy">Shipping Policy</Link></li> */}
                         <li className="font-light text-sm cursor-pointer my-2"><Link to="/terms-and-condition">Terms & Conditions</Link></li>
                     </ul>
 
