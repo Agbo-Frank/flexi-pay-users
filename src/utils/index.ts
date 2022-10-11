@@ -25,8 +25,8 @@ export async function verifyLink(url: string){
   }
 }
 
-export const formatNumber = (number: number | string) => {
-  number = typeof number === 'number' ? number : number === 'undefined' ? 0 : parseFloat(number)
+export const formatNumber = (number: number | string | undefined) => {
+  number = number ? typeof number === 'number' ? number : parseFloat(number) : 0
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 

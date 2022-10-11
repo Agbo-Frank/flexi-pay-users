@@ -82,7 +82,7 @@ export function WalletBalance({ open, setOpen}: IWalletBalanceProps){
                         {
                             isLoading ? 
                             <Skeleton height={25} width="35%" className="mx-auto"/> :
-                            <p className="text-primary-dark-blue font-semibold text-xl">₦ {formatNumber(`${wallet?.result.data?.balance}`)} </p>
+                            <p className="text-primary-dark-blue font-semibold text-xl">₦ {formatNumber(wallet?.result.data?.balance || 0.00)} </p>
                         }
                         {
                             isLoading ? 
