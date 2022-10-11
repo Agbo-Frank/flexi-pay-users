@@ -67,7 +67,7 @@ export function UserTransaction({ open, setOpen}: IWalletBalanceProps){
     return(
         <div className="w-full">
             {
-                isLoading || (transaction && transaction.length > 0) ?
+                isLoading || (transaction && transaction.length === 0) ?
                 <div>
                 <TableContainer className="bg-white rounded-lg" sx={{ maxHeight: 340 }}>
                     <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">

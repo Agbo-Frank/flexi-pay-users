@@ -5,7 +5,7 @@ import {
     CartIcon, BellIcon, 
     BagIcon, HeartIcon, 
     LoginIcon, LogOutIcon, 
-    Spinner, UserIcon, Logo 
+    Spinner, UserIcon, Logo, WalletIcon 
 } from "./icons"
 import React, { useEffect, useState } from "react"
 import Slide from "react-reveal/Slide"
@@ -187,6 +187,7 @@ export function Header(){
                                         <Slide top when={toggle} duration={300}>
                                             <ul className={`${toggle ? 'block' : 'hidden'} translate-y-2 text-sm top-full rounded-xl z-50 bg-white shadow-lg pb-1`}>
                                                 <Item Icon={UserIcon} name="Profile" link="profile" handleClick={() => setToggle(false)} />
+                                                <Item Icon={WalletIcon} name="Wallet" link="wallet" handleClick={() => setToggle(false)} />
                                                 <Item Icon={BagIcon} name="Order" link="order" handleClick={() => setToggle(false)} />
                                                 <Item Icon={HeartIcon} name="Saved Item" link="saved-items" handleClick={() => setToggle(false)} />
 

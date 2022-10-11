@@ -9,13 +9,13 @@ interface IBodyProps extends  React.PropsWithChildren{
 
 export function Body({ children, bgColor }: IBodyProps): JSX.Element {
   const { pathname } = useLocation()
-  let paths = ["/login", /auth/i, "/register", ]
+  let paths = ["/login", /auth/i, "/register", "/auth/verify/email"]
   return (
     <div className={`${bgColor} relative`}>
       <div className={`w-full`}>
         {/* <div className="w-full h-fit bg-white sm:bg-grey-500"> */}
           {
-            paths.includes(pathname) || /auth/i.test(pathname) ?
+            paths.includes(pathname) || /auth/img.test(pathname) ?
             null:
             <>
               <Header />
