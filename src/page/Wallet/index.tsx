@@ -77,7 +77,7 @@ export function Wallet (){
                         <div className="sm:w-1/2 h-full">
                             <WalletBalance open={open} setOpen={setOpen}/>
                         </div>
-                        <div className="sm:only:w-1/2 h-full">
+                        <div className="sm:w-1/2 h-full">
                             <ReferralBalance open={open} setOpen={setOpen}/>
                         </div>
                         
