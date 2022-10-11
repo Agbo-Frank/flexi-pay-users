@@ -24,19 +24,42 @@ import CategoryFilter from "./filter"
 export function CategoryPage(){
     let [page, setPage] = useState(1)
     let [products, setProducts] = useState<IProduct[]>([])
+    let [categoryProducts, setCategoryProducts] = useState<IProduct[]>([])
+    let [filterSubProduct, setFilterSubProduct] = useState({
+        "parent_category" : "",
+        "sub_category" : "",
+        "price" : "",
+        "product_name" : "testing",
+        "latest" : true,
+        "price_range" : [{
+            "from" : 1200,
+            "to" : 390000
+        }]
+    })
     let [loading, setLoading] = useState(false)
     let [pagination, setPagination] = useState<IPagination<IProduct[]>>()
     let { id } = useParams()
+    
 
     let [searchParams, setSearchParams] = useSearchParams()
 
-    // let {data, isLoading} = useGetSubCategoriesQuery({page, id:`${id}`}, {
-    //     selectFromResult: ({ data }) => ({
-    //         categories: data?.result
+    let {categories, refetch} = useGetSubCategoriesQuery({page, id:`${id}`}, {
+        selectFromResult: ({ data }) => ({
+            categories: data?.result
+        })
+    })
+
+
+    // let filter = useLazyFilterProductQuery({filterSubProduct}, {
+    //     selectFromResult: ({data}) => ({
+    //         data: data?.result
     //     })
     // })
+    // console.log(filter)
 
-    // console.log(data, isLoading)
+    useEffect(() => {
+        setCategoryProducts(categories?.products || [])
+    }, [categories])
     
     let [filters, setFilters] = useState<IFilter>({
         parent_category: searchParams.get('parent_category') || "",
@@ -57,7 +80,7 @@ export function CategoryPage(){
             filterProduct(filters)
                 .unwrap()
                 .then(result => {
-                    console.log(result)
+                    // console.log(result)
                     setProducts(result.result.data.data)
                     setPagination(result.result.data)
                     setLoading(false)
@@ -171,9 +194,48 @@ export function CategoryPage(){
                 <div className="fp-screen flex flex-col sm:flex-row sm:space-x-6 bg-white sm:bg-grey-500 justify- items-stretch">
                     <CategoryFilter 
                       category={category}
+                    //   category={categories}
                     />
-                    <div className="w-full sm:w-9/12">
+                    <div className="w-full sm:w-9/12 space-y-10">
                         <div className="rounded-lg bg-white">
+                            <div className="flex justify-between items-center py-3 px-2 sm:px-6 border-b border-grey-100">
+                                <p>Result for <>{categories?.name}</></p>
+                                <p>{
+                                    loading ?
+                                    <Skeleton width={150} sx={{fontSize: 16}}/>: 
+                                    `${categoryProducts.length || 0} Results Found`
+                                }</p>
+                            </div>
+                            <div className={`${categoryProducts?.length > 0 || loading ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4' : ""} grid gap-2 px-2 sm:px-6 py-1`}>
+                                {
+                                    loading ?
+                                    [1, 2, 3, 4].map((product, idx) => <ProductCardSkeleton key={idx}/>) :
+                                    categoryProducts?.length > 0 ? 
+                                    categoryProducts?.map((product, idx) => <ProductCard product={product} key={idx}/>) :
+                                    <div className="grid place-items-center w-full">
+                                        <Empty 
+                                            title="No Category Result"
+                                            Icon={SearchIcon}
+                                            message="There are no results for the selected category yet. Kindly select another category or you can return to the shopping page."
+                                            button={
+                                                <Button
+                                                    startIcon={<i className="fa-solid fa-bag-shopping"></i>}
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={() => navigate('/')}
+                                                >
+                                                    Go to Shopping
+                                                </Button>
+                                            }/>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div className="rounded-lg bg-white">
+                            <div className="flex justify-between items-center py-3 px-2 sm:px-6 border-b border-grey-100">
+                                <p className="uppercase text-lg">PRODUCT OF INTEREST</p>
+                            </div>
                             <div className="flex justify-between items-center py-3 px-2 sm:px-6 border-b border-grey-100">
                                 <p>{
                                     loading ?

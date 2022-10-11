@@ -1,5 +1,6 @@
 import { Search } from "@mui/icons-material";
 import { Checkbox, Divider, Rating } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { IFilter } from "../../interface";
 
 
@@ -9,9 +10,17 @@ interface IFiltersProps {
 
 
 export function CategoryFilter({category}: IFiltersProps){
-    
+    const navigate = useNavigate()
     return(
         <div className="hidden sm:block sm:w-3/12 h-full border bg-white rounded-lg">
+          {/* <div className="flex justify-between">
+            <h3 className="text-[#222222] font-medium text-lg">{category.name}</h3>
+          </div>
+          {category && category?.sub_categories && category?.sub_categories?.map((val: any) => (
+            <div className="w-full p-5">
+              <p onClick={()=>navigate("/category/" + sub_category?.uuid)}></p>
+            </div>
+          ))} */}
           {category?.length && category.map((val: any, index: any)=>(
             <div className="w-full">
               <div className="w-full p-5">
