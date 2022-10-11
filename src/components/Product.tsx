@@ -29,7 +29,11 @@ export function ProductCard({product}: {product: IProduct}){
                     }
                     
                 </div>
-                <p className='text-xs text-primary-orange-200 font-medium'>Pay ₦ 120 / daily</p>
+                {
+                    product.installments.length > 0 ?
+                    <p className='text-xs text-primary-orange-200 font-medium'>Pay ₦ 120 daily</p>:
+                    null
+                }
             </div>
         </Link>
     )
