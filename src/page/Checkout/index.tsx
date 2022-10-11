@@ -22,12 +22,13 @@ import { useCookies } from "react-cookie"
 import { FLEXIPAY_COOKIE } from "../../utils/constants"
 import { useCheckoutMutation, useProcessCheckoutMutation } from "../../redux/api/Order"
 import { formatNumber } from "../../utils"
-import { IDetails, TCheckoutMethod } from "../../interface"
+import { IDeliveryAddress, IDetails, TCheckoutMethod } from "../../interface"
 import PaymentMethod from "./paymentMethod"
 import { confirmOrder } from "./service"
 import { LoadingButton } from "@mui/lab"
 import { useNavigate } from "react-router-dom"
 import AddressBook from "../../components/Models/Addressbook"
+import { useLazyGetDeliveryAddressQuery } from "../../redux/api/User"
 
 
 export function CheckOut(){
@@ -36,7 +37,6 @@ export function CheckOut(){
         method: "",
         installment_ids: [] 
     })
-    console.log(checkoutData)
 
     const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
     let navigate = useNavigate()
@@ -77,8 +77,6 @@ export function CheckOut(){
     let [checkoutdetails, setCheckoutdetails] = useState<Partial<IDetails>[]>()
 
     let dispatch = useDispatch()
-    console.log('process', data, response)
-    console.log('cart', carts)
     
 
     useEffect(() => {
@@ -86,13 +84,11 @@ export function CheckOut(){
             .unwrap()
             .then(res => {
                 let data = res.result.data
-                // if(res.status === 'failed'){
-                //     dispatch(toggleSnackBar({
-                //         open: true,
-                //         message: res.message,
-                //         severity: 'error'
-                //     }))
-                // }
+
+                // setting up the checkout details
+                // if there is no delivery address it's returns null, getting the checkout 
+                // details from the cart api to fill up the checkout components
+                // else it uses the data form the process checkout api
                 if(!data){
                     getUserCart({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""})
                         .unwrap()
@@ -125,17 +121,46 @@ export function CheckOut(){
                     setCheckoutdetails(data.details)
                 }
             })
-            .catch(err => console.log(err))
-        if(response?.status === "failed"){
-            dispatch(toggleSnackBar({
-                open: true,
-                message: response.message,
-                severity: 'error'
-            }))
-        }
+            .catch(err => {
+                console.log(err)
+                if(err){
+                    dispatch(toggleSnackBar({
+                        open: true,
+                        message: err.data.message || "An error just occured",
+                        severity: 'error'
+                    }))
+                }
+            })
+        
     }, [])
 
-    console.log('checkout details', checkoutdetails)
+    // Setting up delivery address
+    const [getDelivery, { loading, address }] = useLazyGetDeliveryAddressQuery({
+        selectFromResult: ({ data, isLoading }) => ({
+            address: data?.result.data,
+            loading: isLoading
+        })
+    })
+    let [deliveryAddress, setDeliveryAddress] = useState<IDeliveryAddress | null>(null)
+
+    useEffect(() => {
+        getDelivery()
+            .unwrap()
+            .then(data => {
+                if(data?.status === "success"){
+                    let defaultDeliveryAddress = data?.result?.data.find(address => address.is_default === 1)
+                    setDeliveryAddress(defaultDeliveryAddress || null)
+                }
+                else{
+                    setDeliveryAddress(null)
+                }
+            })
+            .catch(err => {
+                if (err){
+                    setDeliveryAddress(null)
+                }
+            })
+    }, [])
 
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
@@ -166,7 +191,7 @@ export function CheckOut(){
                                             // setOpen(state => ({...state, addressBook: true}))
                                             dispatch(toggleAddressBook())
                                         }}>
-                                            {data?.address_details ? "Change Address" :  "Add Address"}
+                                            {deliveryAddress ? "Change Address" :  "Add Address"}
                                     </Button>
                                 </div>
                             </div>
@@ -178,13 +203,13 @@ export function CheckOut(){
                                     <Skeleton variant="text" width={"55%"}  height={20}/>
                                     <Skeleton variant="text" width={"48%"}  height={20}/>
                                 </> :
-                                data?.address_details ?
+                                deliveryAddress ?
                                 <div>
-                                    <h3 className="text-grey-200 font-medium mb-2 text-sm">{data?.address_details.name}</h3>
+                                    <h3 className="text-grey-200 font-medium mb-2 text-sm">{deliveryAddress?.name}</h3>
                                     <div className="text-grey-200 font-light text-sm">
-                                        <p>{data?.address_details.house_address + ", " +  data?.address_details.nearest_bus_stop }</p>
-                                        <p>{data?.address_details.city + ", " + data?.address_details.state}</p>
-                                        <p>{data.address_details.phone_number}</p>
+                                        <p>{deliveryAddress?.house_address + ", " +  deliveryAddress?.nearest_bus_stop }</p>
+                                        <p>{deliveryAddress?.city + ", " + deliveryAddress?.state}</p>
+                                        <p>{deliveryAddress?.phone_number}</p>
                                         {/* <p>{Nigeria.}</p> */}
                                     </div>
                                 </div>:
@@ -200,20 +225,20 @@ export function CheckOut(){
                         </div>
 
                         {
-                            data?.address_details &&
+                            deliveryAddress &&
                             <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
                                 <div className="">
                                     <p className="text-sm text-grey-200 font-light mb-3 mt-1">
-                                        Your item(s) will be delivered on <span className="font-medium">{ data.details[0].delivery_period } </span>
+                                        Your item(s) will be delivered on <span className="font-medium">{ data?.details[0].delivery_period } </span>
                                     </p>
-                                    <p className="font-medium mb-3 text-[15px]">Delivery Cost:  <span>₦ {formatNumber(data.total_delivery_fee)}</span></p>
+                                    <p className="font-medium mb-3 text-[15px]">Delivery Cost:  <span>₦ {formatNumber(data?.total_delivery_fee || 0)}</span></p>
                                 </div>
                             </div>
                         }
                     </Wrapper>
 
                     {
-                        data?.address_details &&
+                        deliveryAddress &&
                         <Wrapper>
                             <>
                                 <div className="shadow sm:shadow-none sm:border rounded-lg p-3 mt-2 sm:mt-4 bg-white">
@@ -234,7 +259,7 @@ export function CheckOut(){
                                     </ul>
                                     
                                     {
-                                        data?.address_details && 
+                                        deliveryAddress && 
                                         <p className="text-grey-200 font-light text-sm">To be Delivered on <span className="font-medium">{data?.details[0].delivery_period}</span> </p>
                                     }
                                     
@@ -275,7 +300,7 @@ export function CheckOut(){
                                         
                                         <li className="flex justify-between items-center font-medium py-3 border-t mt-2">
                                             <span>Total</span>
-                                            <span className={`text-[18px] font-semibold ${data?.address_details ? "text-primary-orange-200" : "text-grey-700"} `}>₦ {formatNumber(`${price?.total}`)}</span>
+                                            <span className={`text-[18px] font-semibold ${deliveryAddress ? "text-primary-orange-200" : "text-grey-700"} `}>₦ {formatNumber(`${price?.total}`)}</span>
                                         </li>
                                     </ul>
 
@@ -284,7 +309,7 @@ export function CheckOut(){
                                         variant="contained"
                                         color="secondary"
                                         loading={checkingout}
-                                        disabled={data?.address_details ? false : true}
+                                        disabled={deliveryAddress ? false : true}
                                         onClick={() => confirmOrder(checkoutData.method, dispatch, checkout, checkoutData.installment_ids)}>
                                             confirm order
                                     </LoadingButton>

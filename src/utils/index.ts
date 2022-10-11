@@ -54,3 +54,7 @@ export function hasQueryString(search: URLSearchParams){
   }
   return keys.length > 0 ? true : false
 }
+
+export function sliceString(str: string | undefined, length: number | undefined= 40): string{
+  return str?.slice(0, length) + (str && str.length > length ? "..." : "")
+}
