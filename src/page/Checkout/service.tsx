@@ -95,14 +95,25 @@ export async function confirmOrder(
             let data = await checkout({ checkout_method, install_mental_ids }).unwrap()
 
             if(data.status === "success"){
-                if(validURL(data.result.data.link)){
-                    window.location.replace(data.result.data.link)
+                // checks if the checkout method is by card
+                // if it is by card it redirects you to the payment gate way
+                if(/card/.test(checkout_method)){
+                    if(validURL(data.result.data.link)){
+                        window.location.replace(data.result.data.link)
+                    }
+                    else{
+                        dispatch(toggleSnackBar({
+                            message: "Invalid URL, Try again",
+                            open: true,
+                            severity: 'error'
+                        }))
+                    }
                 }
                 else{
                     dispatch(toggleSnackBar({
-                        message: "Invalid URL, Try again",
+                        message: data.message,
                         open: true,
-                        severity: 'error'
+                        severity: data.status === 'success' ? 'success' : 'error'
                     }))
                 }
             }

@@ -1,8 +1,10 @@
 import { Button, Skeleton, useMediaQuery } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { CopyIcon, GroupIcon, MarkCircleIcon, WalletIcon, WithdrawIcon } from "../../components/icons"
 import { useGetUserQuery } from "../../redux/api/User";
 import { useLazyGetWalletDetailsQuery } from "../../redux/api/wallet";
+import { toggleWithdrawalForm } from "../../redux/slice/modal";
 import { formatNumber } from "../../utils";
 import { IWalletBalanceProps } from "./WalletBalance";
 
@@ -10,6 +12,7 @@ import { IWalletBalanceProps } from "./WalletBalance";
 
 export function ReferralBalance({ open, setOpen}: IWalletBalanceProps){
     const matches = useMediaQuery('(min-width:640px)'); 
+    const dispatch = useDispatch()
     let code = useRef<HTMLDivElement>(null)
     let [copied, setCopied] = useState(false)
     async function copy(){
@@ -94,7 +97,7 @@ export function ReferralBalance({ open, setOpen}: IWalletBalanceProps){
                         <div className="w-1/2">
                             <Button
                                 color="secondary"
-                                onClick={() => setOpen(state => ({...state, withdraw: true}))}
+                                onClick={() => dispatch(toggleWithdrawalForm())}
                                 variant="contained"
                                 fullWidth
                                 startIcon={<WithdrawIcon color="white" size="16"/>}>

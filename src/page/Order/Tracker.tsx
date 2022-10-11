@@ -46,13 +46,13 @@ function Tracker({order, open, close}: IOrderModel){
                         styles="rounded my-0"
                         >
                             <div className="flex w-full sm:w-full space-x-2 sm:space-x-4 items-stretch sm:pb-0">
-                                <img src={order.order_detail.product.product_images[0].image_link} alt="" className="w-[108px] h-[108px]  object-cover rounded sm:rounded-md"/>
+                                <img src={order.order_detail[0].product.product_images[0].image_link} alt="" className="w-[108px] h-[108px]  object-cover rounded sm:rounded-md"/>
                                 <div className="flex flex-col w-full">
-                                    <CardText>{ order.order_detail.product.name }</CardText>
-                                    <small className="text-grey-200 text-xs sm:text-sm">Placed on  {moment(order.order_detail.created_at).format('L')}</small>
+                                    <CardText>{ order.order_detail[0].product.name }</CardText>
+                                    <small className="text-grey-200 text-xs sm:text-sm">Placed on  {moment(order.order_detail[0].created_at).format('L')}</small>
                                     <small className="text-grey-200 text-xs sm:text-sm">orderId: {345679}</small>
                                     <p className={`${ order.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ order.status }</p>
-                                    <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(order.order_detail.price)}</p>
+                                    <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(order.order_detail[0].price)}</p>
                                 </div>
                             </div>
                         </CardWrapper>
@@ -69,6 +69,7 @@ function Tracker({order, open, close}: IOrderModel){
                                     active={orderStatus.indexOf(order.status) + 1 > orderStatus.indexOf(status)}
                                     date={moment(order?.updated_at).format('L')} 
                                     line={orderStatus.indexOf(status) !== orderStatus.length - 1}
+                                    key={idx}
                                 />
                             ))
                         }

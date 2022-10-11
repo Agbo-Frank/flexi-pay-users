@@ -8,6 +8,8 @@ import { CopyText, Empty, Wrapper } from "../../components"
 import { UserTxnDetails } from "./TransactionDetails"
 import { EditSqaureIcon, SubscriptionIcon, WalletIcon } from "../../components/icons"
 import { IWalletBalanceProps } from "./WalletBalance"
+import { useDispatch } from "react-redux"
+import { AppDispatch } from "../../redux/store"
 
 
 function Row({txn}: {txn: IUserTransacation}){
@@ -49,6 +51,7 @@ function Row({txn}: {txn: IUserTransacation}){
 }
 
 export function UserTransaction({ open, setOpen}: IWalletBalanceProps){
+    let dispatch = useDispatch<AppDispatch>()
     let [page, setPage] = useState(1)
     let [getUserTransaction, {transaction, pagination, isLoading}] = useLazyGetUserTransactionQuery({
         selectFromResult: ({ data, isLoading }) => ({
@@ -67,7 +70,7 @@ export function UserTransaction({ open, setOpen}: IWalletBalanceProps){
     return(
         <div className="w-full">
             {
-                isLoading || (transaction && transaction.length === 0) ?
+                isLoading || (transaction && transaction.length > 0) ?
                 <div>
                 <TableContainer className="bg-white rounded-lg" sx={{ maxHeight: 340 }}>
                     <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">

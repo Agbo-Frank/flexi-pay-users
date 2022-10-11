@@ -11,7 +11,7 @@ import {
 } from "../../components/icons"
 import { toggleAddAddress, toggleAddressBook, toggleSnackBar, } from "../../redux/slice/modal"
 
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 import AddCreditCard from "../../components/Models/AddCreditcard"
 import { Button, Skeleton, useMediaQuery } from "@mui/material"
@@ -29,6 +29,7 @@ import { LoadingButton } from "@mui/lab"
 import { useNavigate } from "react-router-dom"
 import AddressBook from "../../components/Models/Addressbook"
 import { useLazyGetDeliveryAddressQuery } from "../../redux/api/User"
+import { RootState } from "../../redux/store"
 
 
 export function CheckOut(){
@@ -162,12 +163,16 @@ export function CheckOut(){
             })
     }, [loading, address])
 
+    let isAddressbookOpen = useSelector((state: RootState) => state.modal.addressBook)
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
             <Breadcrumb />
             <AddCreditCard />
             <AddAddressModel />
-            <AddressBook />
+            {/* {
+                isAddressbookOpen */}
+                <AddressBook />
+            {/* } */}
             <CreateInstallment open={open.createInstallment} close={() => setOpen(state => ({...state, createInstallment: false}))}/>
 
             <div className="fp-screen flex flex-col sm:flex-row gap-5 justify-between">
@@ -308,6 +313,7 @@ export function CheckOut(){
                                         fullWidth
                                         variant="contained"
                                         color="secondary"
+                                        type="button"
                                         loading={checkingout}
                                         disabled={deliveryAddress ? false : true}
                                         onClick={() => confirmOrder(checkoutData.method, dispatch, checkout, checkoutData.installment_ids)}>

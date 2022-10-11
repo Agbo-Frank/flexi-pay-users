@@ -23,7 +23,7 @@ export function Orders (){
             loading: isLoading
         })
     })
-    console.log(orders)
+    console.log(orders, pagination)
     return(
         <>
             <DashboardWrapper>
@@ -59,7 +59,8 @@ export function Orders (){
                                 onClick={() => navigate("/")}>
                                     Start Shopping
                             </Button>
-                        }/> :
+                        }/> 
+                        :
                         orders?.map((order, idx) => (
                             <Order order={order} key={idx}/>
                         ))

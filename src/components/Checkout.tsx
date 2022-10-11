@@ -71,7 +71,7 @@ export function CheckoutSummary ({checkoutdetails, price}: ICheckoutSummaryProps
             <div className="my-2">
                 {
                     loadingCart?
-                    [1, 2].map((cart, idx) => <CheckoutCardSkeleton /> ):
+                    [1, 2].map((cart, idx) => <CheckoutCardSkeleton key={idx}/> ):
                     checkoutdetails?.map((checkoutdetail, idx) => <CheckoutCard checkoutdetail={checkoutdetail} key={idx}/> )
                 }
             </div>

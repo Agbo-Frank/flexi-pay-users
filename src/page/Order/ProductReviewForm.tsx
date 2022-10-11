@@ -1,15 +1,13 @@
 import ModelWrapper from "../../components/Models/ModelWrapper"
-import TV from '../../asset/monitor.png'
 import StarIcon from "../../components/icons/StarIcon"
 import { useState } from "react"
-import { Button, Rating } from "@mui/material"
-import { CardImg, CardText, CardWrapper } from "../../components/StyledComponent"
+import { Rating } from "@mui/material"
+import { CardText, CardWrapper } from "../../components/StyledComponent"
 import { IOrderModel } from "./orderItem"
 import { formatNumber } from "../../utils"
 import FPFormikProductReview from "./service"
 import { useCommentOnAProductMutation, useRateAProductMutation } from "../../redux/api/Reviews"
 import { LoadingButton } from "@mui/lab"
-import { RollerSkatingRounded } from "@mui/icons-material"
 
 
 function ProductReviewForm({order, open, close}: IOrderModel){
@@ -37,10 +35,10 @@ function ProductReviewForm({order, open, close}: IOrderModel){
                 <CardWrapper 
                 styles="rounded-sm">
                     <div className="flex w-full sm:w-full space-x-2 sm:space-x-4 items-stretch sm:pb-0">
-                        <img src={order.order_detail.product.product_images[0].image_link} alt="" className="w-[108px] h-[108px]  object-cover rounded sm:rounded-md"/>
+                        <img src={order.order_detail[0].product.product_images[0].image_link} alt="" className="w-[108px] h-[108px]  object-cover rounded sm:rounded-md"/>
                         <div className="flex flex-col w-full">
-                            <CardText>{ order.order_detail.product.name }</CardText>
-                            <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(order.order_detail.price)}</p>
+                            <CardText>{ order.order_detail[0].product.name }</CardText>
+                            <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(order.order_detail[0].price)}</p>
                         </div>
                     </div>
                 </CardWrapper>
@@ -52,7 +50,7 @@ function ProductReviewForm({order, open, close}: IOrderModel){
                    }
                 </p>
                 <form onSubmit={(e) => {
-                    formik.setFieldValue('slug', order.order_detail.product.slug)
+                    formik.setFieldValue('slug', order.order_detail[0].product.slug)
                     formik.handleSubmit(e)
                 }}>
                     <textarea 

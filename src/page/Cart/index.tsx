@@ -122,7 +122,7 @@ export function Carts (){
                     <Empty 
                         title="your cart is empty " 
                         Icon={CartIcon}
-                        message="You currently don’t have any item in your cart, kindly to go shop and add item to your cart"
+                        message="You currently don’t have any item in your cart, kindly add an item to your cart"
                         button={
                         <Button
                             startIcon={<CartIcon color="white" size="20"/>}

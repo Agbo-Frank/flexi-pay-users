@@ -15,12 +15,16 @@ import AddressBook from "./Models/Addressbook";
 
 function DashboardWrapper ({children}: React.PropsWithChildren): JSX.Element {
     let isAuth = useSelector((state: RootState) => state.data.isAuth)
+    let isAddressbookOpen = useSelector((state: RootState) => state.modal.addressBook)
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
             <div className="w-full min-h-screen h-fit">
                 <EditProfile />
                 <AddAddressModel />
-                <AddressBook />
+                {
+                    isAddressbookOpen &&
+                    <AddressBook />
+                }
                 <Breadcrumb />
                 <div 
                 className="px-6 fp-screen sm:space-x-5 flex justify-between overflow-y-hidden">

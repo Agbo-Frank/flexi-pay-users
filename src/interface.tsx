@@ -375,12 +375,13 @@ export interface IOrder {
     created_at: string | Date;
     updated_at: string | Date;
     customer: Pick<IUser, 'first_name' | 'last_name'>,
-    order_detail: IOrderDetails
+    order_detail: IOrderDetails[]
 }
 
 export interface IOrderDetails {
     quantity: number;
     price: string;
+    delivery_address: IDeliveryAddress,
     product: IProduct;
     created_at: string | Date;
     updated_at: string | Date;
