@@ -12,8 +12,9 @@ import { GreyLogo } from './icons';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export function ProductCard({product}: {product: IProduct}){
+    console.log(product)
     return(
-        <Link to={'/product/' + product.uuid} className="block w-full bg-white rounded-lg h-fit p-2 space-y-4 shadow-sm hover:shadow hover:-translate-y-1 hover:z-30 my-2">
+        <Link to={'/product/' + product.uuid} className="block w-full bg-white rounded-lg h-fit p-2 space-y-4 shadow-sm hover:shadow hover:-translate-y-1 hover:z-30 my-2 overflow-hidden">
             <div className='w-[145px] h-[130px] sm:w-full sm:h-44 overflow-hidden rounded-lg product_image'>
                 <img src={product.product_images[0].image_link} className="w-full h-full object-cover" alt={product.name}/>
             </div>
@@ -133,8 +134,7 @@ export function ProductsSlide({products, loading, title, link, titleCase}: {prod
                         <Slider ref={slide} {...settings} className="h-full">
                             {
                                 products?.map((product, idx) => (
-                                    <div className="w-64 h-fit px-1">
-                                        {/* <ProductCardFaded product={product} key={idx}/> */}
+                                    <div className="w-64 h-fit px-1" key={idx}>
                                         <ProductCard product={product} key={idx}/>
                                     </div>
                                 ))
@@ -154,7 +154,7 @@ export function ProductsSlide({products, loading, title, link, titleCase}: {prod
                     <div className='flex space-x-2 sm:hidden whitespace-nowrap overflow-x-auto'>
                         {
                             products?.map((product, idx) => (
-                                <div className="h-fit w">
+                                <div className="h-fit max-w-[160px] w-fit" key={idx}>
                                     <ProductCard product={product} key={idx}/>
                                 </div>
                             ))

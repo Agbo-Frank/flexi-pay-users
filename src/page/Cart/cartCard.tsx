@@ -64,7 +64,7 @@ export function Cart({cart}: {cart: ICart}){
                             <img src={cart.product.product_images[0].image_link} className="w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] object-cover rounded sm:rounded-xl"/>
                         </Link>
                         <div className="sm:w-7/12 flex flex-col justify-around">
-                            <CardText>{cart.product.name}</CardText>
+                            <CardText>{cart?.product?.name.slice(0, 42) + (cart?.product?.name && cart?.product?.name?.length > 42 ? "..." : "")}</CardText>
                             <p className="font-semibold text-primary-dark-blue sm:hidden">₦ {formatNumber(cart.price)}</p>
                             <small className="text-grey-200 text-xs sm:text-sm font-medium">Qty: {cart.quantity}</small>
                             <div className="hidden sm:block">

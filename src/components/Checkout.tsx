@@ -19,7 +19,7 @@ function CheckoutCard({checkoutdetail}: {checkoutdetail: Partial<IDetails>}){
         <div className="w-full flex justify-between mb-5 p-1 shadow-sm hover:shadow rounded-lg">
             <div className="flex w-9/12 gap-3">
                 <img src={checkoutdetail?.product?.product_images[0].image_link} className="w-[80px] h-[80px] object-cover rounded-lg" />
-                <p className="text-sm text-grey-200 capitalize">{checkoutdetail?.product?.name}</p>
+                <p className="text-sm text-grey-200 capitalize">{checkoutdetail?.product?.name.slice(0, 40) + (checkoutdetail?.product?.name && checkoutdetail?.product?.name?.length > 40 ? "..." : "")}</p>
             </div>
 
             <div className='flex flex-col'>
