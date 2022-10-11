@@ -20,7 +20,7 @@ export function Cart({cart}: {cart: ICart}){
     let dispatch = useDispatch()
     let [open, setOpen] = useState(false)
     let [delCart, {isLoading: removing, data}] = useDelCartMutation()
-    const matches = useMediaQuery('(min-width:600px)');
+    const matches = useMediaQuery('(min-width:640px)');
     let [updateCart, {isLoading }] = useUpdateCartMutation()
 
     let [savedItem, { isLoading: savingItem,}] = useSavedItemMutation()
@@ -86,7 +86,7 @@ export function Cart({cart}: {cart: ICart}){
                         startIcon={<DeleteIcon />}>Remove</Button>
                     </div>
                     <div className="flex flex-col justify-end">
-                        <p className="hidden sm:block font-semibold ml-auto text-primary-dark-blue text-lg mb-4">₦ {formatNumber(cart.price)}</p>
+                        <p className="hidden sm:block font-semibold ml-auto text-primary-dark-blue text-lg mb-4 whitespace-nowrap">₦ {formatNumber(cart.price)}</p>
                         <div className="flex justify-between items-center space-x-3">
                             <div 
                                 className={`rounded-full cursor-pointer font-bold text-white bg-primary-orange-200 w-5 ${(isLoading ||  parseInt(cart.quantity) === 1) && "opacity-50"} h-5 flex justify-center items-center text-xl`}

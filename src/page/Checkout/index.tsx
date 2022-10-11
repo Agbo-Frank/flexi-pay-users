@@ -160,7 +160,7 @@ export function CheckOut(){
                     setDeliveryAddress(null)
                 }
             })
-    }, [])
+    }, [loading, address])
 
     return(
         <Body bgColor="bg-white sm:bg-grey-500">

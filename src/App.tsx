@@ -41,7 +41,7 @@ function App() {
         <Route path='/product/:slug' element={<Product />} />
         <Route path='/category/:id' element={<CategoryPage />} />
         <Route path='/saved-items' element={<RequireAuth><SavedItems /></RequireAuth>} />
-        <Route path='/checkout' element={<CheckOut />} />
+        <Route path='/checkout' element={<RequireAuth><CheckOut /></RequireAuth>} />
         <Route path='/wallet' element={<RequireAuth><Wallet/></RequireAuth>} />
         <Route path='/support' element={<Contact />} />
         <Route path='/about-us' element={<About />} />

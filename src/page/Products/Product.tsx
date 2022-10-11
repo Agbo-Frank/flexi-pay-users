@@ -11,7 +11,7 @@ import { handleAddToCartClick } from "../Cart/service";
 import { useSavedItemMutation } from "../../redux/api/SavedItems";
 import ProductVendor from "./productVendor";
 import ProductDetails from "./productDetails";
-import { formatNumber } from "../../utils";
+import { formatNumber, sliceString } from "../../utils";
 import { Helmet } from 'react-helmet-async';
 import { useCookies } from "react-cookie";
 import { FLEXIPAY_COOKIE, FLEXIPAY_REDIRECT, FLEXIPAY_URL } from "../../utils/constants";
@@ -75,7 +75,7 @@ export function Product(){
                                 </div>
                                 <div className="relative w-full sm:w-6/12 flex flex-col space-y-2 px-2 sm:px-0">
                                     <div>
-                                        <h1 className="text-grey-1200 text-xl sm:text-4xl font-medium capitalize truncate">{product?.name}</h1>
+                                        <h1 className="text-grey-1200 text-xl sm:text-4xl font-medium capitalize">{sliceString(product?.name)}</h1>
                                         <p className="font-semibold text-sm text-grey-200 my-[6px]">{product?.product_code}</p>
                                         <div className="flex space-x-3">
                                             <Rating readOnly

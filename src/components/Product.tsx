@@ -6,7 +6,7 @@ import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Grid, Skeleton, useMediaQuery } from '@mui/material';
 import { IProduct } from '../interface';
-import { formatNumber } from '../utils';
+import { formatNumber, sliceString } from '../utils';
 import { GreyLogo } from './icons';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -19,7 +19,7 @@ export function ProductCard({product}: {product: IProduct}){
                 <img src={product.product_images[0].image_link} className="w-full h-full object-cover" alt={product.name}/>
             </div>
             <div className='space-y-1'>
-                <p className='truncate text-grey-1200 text-sm capitalize font-light w-full'>{product.name}</p>
+                <p className='text-grey-1200 text-sm capitalize font-light w-full truncate'>{ sliceString(product.name) }</p>
                 <div className="flex items-center space-x-3">
                     <p className="text-primary-dark-blue font-medium text-md whitespace-nowrap truncate">₦ {formatNumber(product.price)}</p>
                     {
@@ -31,7 +31,13 @@ export function ProductCard({product}: {product: IProduct}){
                 </div>
                 {
                     product.installments.length > 0 ?
-                    <p className='text-xs text-primary-orange-200 font-medium'>Pay ₦ 120 daily</p>:
+                    <p className='text-xs text-primary-orange-200 font-medium'>Pay 
+                        {
+                            product.installments?.map(installment => (
+                                <span>₦ {installment.amount} <span className='capitalize'>{installment.frequency}</span></span>
+                            ))
+                        }
+                    </p>:
                     null
                 }
             </div>

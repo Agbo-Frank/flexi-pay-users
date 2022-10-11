@@ -5,6 +5,9 @@ import { useDispatch } from "react-redux";
 import { toggleEditProfile, toggleSnackBar } from "../redux/slice/modal";
 import { useGetUserQuery } from "../redux/api/User";
 import { IAddAddress } from "../components/interface";
+import { Dispatch } from "react";
+import { AnyAction } from "@reduxjs/toolkit";
+import { editField } from "../utils";
 
 
 export function FPFormikEditUser(edit: ITrigger<Partial<IUser>, IResponse<null | any>>, done: () => void | any){
@@ -181,15 +184,15 @@ export function FPFormikAddDeliveryAddress(
             let data: IResponse<{data: null | any}>
             if(type === "edit"){
                 value = {
-                    name: body?.name || value.name,
-                    phone_number: body?.phone_number || value.phone_number,
-                    state: body?.state || value.state,
-                    city: body?.city || value.city,
-                    nearest_bus_stop: body?.nearest_bus_stop || value.nearest_bus_stop,
-                    house_address: body?.house_address || value.house_address,
-                    postal_code: body?.postal_code || value.postal_code,
-                    is_default: body?.is_default || value.is_default,
-                    id: body?.id
+                    name: editField(body, value, 'name'),
+                    phone_number: editField(body, value, 'phone_number'),
+                    state: editField(body, value, 'state') ,
+                    city: editField(body, value, 'city'),
+                    nearest_bus_stop: editField(body, value, 'nearest_bus_stop'),
+                    house_address: editField(body, value, 'house_address'),
+                    postal_code: editField(body, value, 'postal_code'),
+                    is_default: editField(body, value, 'is_default'),
+                    id:  body?.id
                 }
                 console.log(value, type)
                 data = await editAddress(value).unwrap()
@@ -207,6 +210,7 @@ export function FPFormikAddDeliveryAddress(
 
                 if(data.status === 'success'){
                     done()
+                    formikHelpers.resetForm()
                 }
             }
         }
@@ -241,4 +245,74 @@ export function FPFormikAddDeliveryAddress(
         validationSchema,
         initialValues
     })
+}
+
+export async function removeDeliveryAddress(
+    body: { id: number | string | null}, 
+    rmDeliveryAddress: ITrigger<{ id: string | number | null}, IResponse<{data: null | any}>>,
+    dispatch: Dispatch<AnyAction>,
+    done: () => void | any
+){
+    try{
+        let data = await rmDeliveryAddress(body).unwrap()
+        if(data){
+            dispatch(toggleSnackBar({
+                open: true,
+                message: data.message,
+                severity: data.status === 'success' ? 'success' : 'error'
+            }))
+
+            if(data.status === 'success'){
+                done()
+            }
+        }
+    }
+    catch(err){
+        let error: any = err
+        if(error?.data){
+            dispatch(toggleSnackBar({
+                open: true,
+                severity: 'error',
+                message: error?.data?.message || "an error just occured"
+            }))
+        }
+    }
+}
+
+export async function toggleDeliveryAddressDefault(
+    body: any | IDeliveryAddress, 
+    editAddress: ITrigger<IDeliveryAddress, IResponse<{data: null | any}>> ,
+    dispatch: Dispatch<AnyAction>,
+    done?: () => void | any
+){
+    console.log(body)
+    body={
+        ...body,
+        is_default: 1
+    }
+    console.log(body)
+    try{
+        let data = await editAddress(body).unwrap()
+        if(data){
+            dispatch(toggleSnackBar({
+                open: true,
+                message: data.message,
+                severity: data.status === 'success' ? 'success' : 'error'
+            }))
+
+            if(data.status === 'success' && done){
+                done()
+            }
+        }
+    }
+    catch(err){
+        let error: any = err
+        if(error?.data){
+            dispatch(toggleSnackBar({
+                open: true,
+                severity: 'error',
+                message: error?.data?.message || "an error just occured"
+            }))
+        }
+    }
 }

@@ -58,3 +58,7 @@ export function hasQueryString(search: URLSearchParams){
 export function sliceString(str: string | undefined, length: number | undefined= 40): string{
   return str?.slice(0, length) + (str && str.length > length ? "..." : "")
 }
+
+export function editField(current: any, update: any, field: string) {
+  return update[field]=== "" || !update[field]  ? current[field] : update[field]
+}

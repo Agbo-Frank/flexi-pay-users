@@ -41,11 +41,15 @@ export function ForgetPassword() {
                         <Button
                             variant='outlined'
                             color="secondary"
+                            size="large"
+                            fullWidth
                             onClick={() => navigate(-1)}>
                                 Cancel
                         </Button>
                         <Button 
                             type='submit' 
+                            fullWidth
+                            size="large"
                             variant='contained'
                             color="secondary">
                                 Send Code

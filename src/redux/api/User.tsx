@@ -71,6 +71,14 @@ export const UserApi = createApi({
                 body
             }),
             invalidatesTags: ['User', "Checkout", "Address"],
+        }),
+        removeDeliveryAddress: build.mutation<IResponse<{data: null | any[]}>, {id: number | string | null}>({
+            query: (body) => ({
+                url: "/user/delete/delivery_address-detail",
+                method: "DELETE",
+                body
+            }),
+            invalidatesTags: ['User', "Checkout", "Address"],
         })
     })
 })
@@ -83,5 +91,6 @@ export const {
     useGetDeliveryAddressQuery,
     useCreateDeliveryAddressMutation,
     useUpdateDeliveryAddressMutation,
-    useLazyGetDeliveryAddressQuery
+    useLazyGetDeliveryAddressQuery,
+    useRemoveDeliveryAddressMutation
 } = UserApi
