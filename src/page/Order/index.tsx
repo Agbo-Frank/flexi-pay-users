@@ -23,7 +23,6 @@ export function Orders (){
             loading: isLoading
         })
     })
-    console.log(orders, pagination)
     return(
         <>
             <DashboardWrapper>

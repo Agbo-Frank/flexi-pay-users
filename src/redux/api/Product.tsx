@@ -28,11 +28,37 @@ export const ProductApi = createApi({
             }),
             providesTags: ['Product']
         }),
+        getSimilarProducts: build.query<IResponse<{data: IPagination<IProduct[]>}>, {product_uuid?: string, category_uuid?: string}>({
+            query: (body) => ({
+                url: "/guest/product/fetch/similar",
+                params: body
+            }),
+            providesTags: (result, error, arg) => {
+                return result ? [{type: 'Product', product: arg.product_uuid, category: arg.category_uuid}] : ['Product']
+            }
+        }),
+        getOtherProductsFromVendor: build.query<IResponse<{data: IPagination<IProduct[]>}>, {product_uuid?: string, vendor_uuid?: string}>({
+            query: (body) => ({
+                url: "/guest/product/vendor/fetch-other",
+                params: body
+            }),
+            providesTags: (result, error, arg) => {
+                return result ? [{type: 'Product', product: arg.product_uuid, category: arg.vendor_uuid}] : ['Product']
+            }
+        }),
+        getRecentlyViewed: build.query<IResponse<{data: IProduct[]}>, void>({
+            query: () => ({
+                url: "/guest/product/vendor/fetch/recently-viewed",
+            }),
+            providesTags: ['Product']
+        }),
         getProduct: build.query<IResponse<{data: IProduct }>, string>({
             query: (id) => ({
                 url: "/guest/product/view/" + id
             }),
-            providesTags:['Product']
+            providesTags: (result, error, arg) => {
+                return result ? [{type: 'Product', id: arg}] : ['Product']
+            }
         }),
         filterProduct: build.query<IResponse<{data: IPagination<IProduct[]>}>, Partial<IFilter> | any>({
             query: (body) => ({
@@ -52,7 +78,9 @@ export const ProductApi = createApi({
             query: (body) => ({
                 url: "/category/fetch/sub/" + body.id
             }),
-            providesTags: ['Category']
+            providesTags: (result, error, arg) => {
+                return result ? [{type: 'Category', category: arg.id}] : ['Category']
+            }
         }),
         searchProduct: build.query<IResponse<{data: IPagination<IProduct[]>}>, {page?: string; search_params: string;}>({
             query: (body) => ({
@@ -79,5 +107,10 @@ export const {
     useLazySearchProductQuery,
     useGetStoreQuery,
     useGetSubCategoriesQuery,
-    useLazyGetSubCategoriesQuery
+    useLazyGetSubCategoriesQuery,
+    useGetSimilarProductsQuery,
+    useLazyGetSimilarProductsQuery,
+    useGetRecentlyViewedQuery,
+    useLazyGetRecentlyViewedQuery,
+    useLazyGetOtherProductsFromVendorQuery
 } = ProductApi

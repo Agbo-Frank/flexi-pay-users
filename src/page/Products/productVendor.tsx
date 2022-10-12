@@ -4,9 +4,10 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { QuestionIcon, UserIcon, UserIconPlus } from "../../components/icons"
 import StoreIcon from "../../components/icons/StoreIcon";
+import { IStoreDetails } from "../../interface";
 import { FLEXIPAY_VENDOR_URL} from '../../utils/constants'
 
-function ProductVendor(){
+function ProductVendor({vendor}: {vendor: IStoreDetails | undefined}){
     let navigate = useNavigate()
     return(
         <div className="gap-3 sm:gap-5 flex flex-col sm:flex-row justify-between items-stretch bg-white sm:bg-transparent my-3 sm:my-0">
@@ -18,7 +19,7 @@ function ProductVendor(){
                             <StoreIcon color="#222222" size="15"/>
                             <p>Store Name:</p>
                         </div>
-                        <p>Duchess Store</p>
+                        <p>{vendor?.name}</p>
                     </li>
                     <li className="flex text-sm space-x-3 items-center">
                         <p>Verified Customer’s Reivews</p>
@@ -46,7 +47,8 @@ function ProductVendor(){
                             startIcon={<UserIcon color="#FF5000" size="18" />}
                             variant="outlined"
                             size="large"
-                            color="secondary">
+                            color="secondary"
+                            onClick={() => navigate("/" + vendor?.name_slug)}>
                             View Seller’s Profile
                         </LoadingButton>
                     </div>

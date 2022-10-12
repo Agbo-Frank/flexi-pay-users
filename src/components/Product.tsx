@@ -33,9 +33,13 @@ export function ProductCard({product}: {product: IProduct}){
                     product.installments.length > 0 ?
                     <p className='text-xs text-primary-orange-200 font-medium'>Pay 
                         {
-                            product.installments?.map(installment => (
-                                <span>₦ {installment.amount} <span className='capitalize'>{installment.frequency}</span></span>
-                            ))
+                            // product.installments?.map(installment => (
+                                <span>₦ {product.installments[0].amount} 
+                                    <span className='capitalize'>
+                                        {" " + product.installments[0].frequency}
+                                    </span>
+                                </span>
+                            // ))
                         }
                     </p>:
                     null

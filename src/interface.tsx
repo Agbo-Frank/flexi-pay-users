@@ -123,6 +123,22 @@ export interface IWithdraw {
     full_name: string;
 }
 
+export interface IStoreDetails {
+    name: string;
+    description: string;
+    address_street_number: string;
+    address_city: string;
+    address_state: string;
+    company_code : string,
+    address_country_code : string,
+    address_postal_code : string,
+    address_street_alt?: string,
+    name_slug?: string;
+    shop_link?: string;
+    user_id?: string;
+    uuid?: string
+}
+
 export interface IFundWalletByCard {
     full_name: string;
     email: string;
@@ -240,6 +256,10 @@ export interface IProduct {
     product_code?: string;
     discounted_price?:string;
     weight?: string;
+    category?: {
+        uuid: string
+    };
+    vendor?: IStoreDetails;
     product_images: IProductImage[];
     installments: IInstallment[]
 }

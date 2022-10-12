@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 
 import { Body, Header, Categories, Footer, Breadcrumb, ProductsSlide } from "../../components"
 import { CartIcon, HeartIcon,  } from "../../components/icons"
-import { useGetProductQuery } from "../../redux/api/Product";
+import { useGetProductQuery, useLazyGetOtherProductsFromVendorQuery, useLazyGetRecentlyViewedQuery, useLazyGetSimilarProductsQuery } from "../../redux/api/Product";
 import { LoadingButton } from "@mui/lab";
 import { Rating } from "@mui/material"
 import { useAddToCartMutation } from "../../redux/api/Cart";
@@ -18,6 +18,7 @@ import { FLEXIPAY_COOKIE, FLEXIPAY_REDIRECT, FLEXIPAY_URL } from "../../utils/co
 import { useDispatch } from "react-redux";
 import ProductSlide from "./productSlide";
 import { useGetReviewsQuery } from "../../redux/api/Reviews";
+import { useEffect } from "react";
 
 export function Product(){
     let { slug } = useParams()
@@ -25,8 +26,32 @@ export function Product(){
     let { product, loading } = useGetProductQuery(`${slug}`, {
         refetchOnReconnect: true,
         selectFromResult: ({data, isLoading}) => ({
-            product: data && data?.result.data,
+            product: data && data?.result?.data,
             loading: isLoading
+        })
+    })
+
+    // the get other product by vendor api 
+    const [getOtherProducts, {other_product, loading_other_product} ]= useLazyGetOtherProductsFromVendorQuery({
+        selectFromResult: ({ data, isLoading }) => ({
+            other_product: data?.result?.data?.data,
+            loading_other_product: isLoading
+        })
+    })
+
+    // get similar product api
+    const [getSimilarProducts, {similar_product, loading_similar_product} ]= useLazyGetSimilarProductsQuery({
+        selectFromResult: ({ data, isLoading }) => ({
+            similar_product: data?.result?.data?.data,
+            loading_similar_product: isLoading
+        })
+    })
+
+    //get recently viewed api
+    const [getRecentlyViewed, {recently_viewed, loading_recently_viewed} ]= useLazyGetRecentlyViewedQuery({
+        selectFromResult: ({ data, isLoading }) => ({
+            recently_viewed: data?.result.data,
+            loading_recently_viewed: isLoading
         })
     })
 
@@ -48,7 +73,29 @@ export function Product(){
     let [addToCart, {data, isLoading, error}] = useAddToCartMutation()
     let [savedItem, { isLoading: savingItem,}] = useSavedItemMutation()
 
-    console.log(product)
+    // console.log(product)
+
+    useEffect(() => {
+        if(product?.category?.uuid){
+            getSimilarProducts({product_uuid: slug, category_uuid: product?.category?.uuid})
+        }
+    }, [loading, loading_similar_product])
+
+    useEffect(() => {
+        if(product?.vendor?.uuid){
+            getOtherProducts({product_uuid: slug, vendor_uuid: product?.vendor?.uuid})
+        }
+    }, [loading, loading_other_product])
+
+    useEffect(() => {
+        if(product?.vendor?.uuid){
+            getRecentlyViewed()
+        }
+    }, [loading])
+
+    console.log("similar product", similar_product)
+    console.log("other product", other_product)
+    console.log("recent product", recently_viewed)
 
     return(
         <>
@@ -107,9 +154,9 @@ export function Product(){
                                                 {
                                                     (!product?.installments || product.installments.length === 0) ?
                                                     <>No Installment Plans</> :
-                                                    <>Pay
+                                                    <>Pay 
                                                         {
-                                                            product.installments.map(installment => <>{installment.amount + " / " + installment.frequency}</>)
+                                                            product.installments.map(installment => <>{" " + installment.amount + " " + installment.frequency}</>)
                                                         }
                                                     </>
                                                 }
@@ -173,34 +220,40 @@ export function Product(){
                         </div>
                         <div className="flex flex-col gap-5 sm:flex-col-reverse">
                             <ProductDetails product={product}/>
-                            <ProductVendor />
+                            <ProductVendor vendor={product?.vendor}/>
                         </div>
-                        
-                        
-                        <ProductsSlide 
-                            products={[]}
-                            title="other products from this seller" 
-                            link="/products"
-                            titleCase="uppercase"
-                            loading={true}
-                        />
-                        <ProductsSlide 
-                            products={[]}
-                            title="similar products" 
-                            link="/products"
-                            titleCase="uppercase"
-                            loading={true}
-                        />
-                        <ProductsSlide 
-                            products={[]}
-                            title="recently viewed products" 
-                            link="/products"
-                            titleCase="uppercase"
-                            loading={true}
-                        />
-                        {/* <ProductsSlideDummy />
-                        <ProductsSlideDummy />
-                        <ProductsSlideDummy /> */}
+                        {
+                            (loading_other_product || (other_product && other_product?.length > 0)) &&
+                            <ProductsSlide 
+                                products={other_product}
+                                title="other products from this seller" 
+                                link="/products"
+                                titleCase="uppercase"
+                                loading={loading_other_product}
+                            />
+                        }
+
+                        {
+                            (loading_similar_product || (similar_product && similar_product?.length > 0)) &&
+                            <ProductsSlide 
+                                products={similar_product}
+                                title="similar products" 
+                                link="/products"
+                                titleCase="uppercase"
+                                loading={loading_similar_product}
+                            />
+                        }
+
+                        {
+                            (loading_recently_viewed || (recently_viewed && recently_viewed?.length > 0)) &&
+                            <ProductsSlide 
+                                products={recently_viewed}
+                                title="recently viewed product" 
+                                link="/products"
+                                titleCase="uppercase"
+                                loading={loading_recently_viewed}
+                            />
+                        }
                     </div>
 
                     <Footer />

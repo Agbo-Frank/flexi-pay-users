@@ -6,7 +6,7 @@ import { formatNumber } from "../../utils"
 import moment from "moment"
 import WalletTxnDetails from "./TransactionDetails"
 import { Empty, Wrapper } from "../../components"
-import { EditSqaureIcon, SubscriptionIcon, WalletIcon } from "../../components/icons"
+import { EditSqaureIcon, WalletIcon } from "../../components/icons"
 import { IWalletBalanceProps } from "./WalletBalance"
 
 

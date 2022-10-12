@@ -9,6 +9,7 @@ import { formatNumber, sliceString } from '../../utils';
 import { useState } from 'react';
 import { Empty } from '../../components';
 import { SubscriptionIcon } from '../../components/icons'
+import { toggleSnackBar } from '../../redux/slice/modal';
 
 
 
@@ -80,10 +81,22 @@ function SelectInstallmentPlan(
                                 <Button  
                                     variant='contained' 
                                     color="secondary"
-                                    onClick={() => setCheckoutData(state => ({
-                                        ...state,
-                                        installment_ids: [...state.installment_ids, value]
-                                    }))}
+                                    onClick={() => {
+                                        if(value === ""){
+                                            dispatch(toggleSnackBar({
+                                                open: true,
+                                                message: "Please select a plan method",
+                                                severity: 'error'
+                                            }))
+                                        }
+                                        else{
+                                            setCheckoutData(state => ({
+                                                ...state,
+                                                installment_ids: [...state.installment_ids, value]
+                                            }))
+                                            close()
+                                        }
+                                    }}
                                     fullWidth
                                 >Submit</Button>
                             </div>
