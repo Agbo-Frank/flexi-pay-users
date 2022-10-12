@@ -34,7 +34,7 @@ function TrackRec({ name, color, date, style, line = false, active}: ITrackRec){
 }
 
 function Tracker({order, open, close}: IOrderModel){
-    let orderStatus = ['placed', 'pending', 'processed', 'shipped', 'delivered']
+    let orderStatus = ['placed', 'pending', 'processed', 'delivered', "failed"]
     return(
         <ModelWrapper 
             isOpen={open} 
@@ -78,8 +78,11 @@ function Tracker({order, open, close}: IOrderModel){
                         <TrackRec name="out for delivery" style="pending" color="#FF5000" date="12-05-2021" line/>
                         <TrackRec name="delivered" style="delivered" color="#91CD5E" date="12-05-2021"/> */}
                     </div>
-
-                    <p className="mt-20">Your order has been successfully delivered</p>
+                        {/* {
+                            order.status === 'pending' ?
+                            <p className="mt-20">Your order has been successfully delivered</p>
+                        } */}
+                    
                 </div>
             </div>
         </ModelWrapper>

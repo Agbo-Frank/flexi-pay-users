@@ -93,7 +93,7 @@ export async function confirmOrder(
     else {
         try{
             let data = await checkout({ checkout_method, install_mental_ids }).unwrap()
-
+            console.log(checkout_method)
             if(data.status === "success"){
                 // checks if the checkout method is by card
                 // if it is by card it redirects you to the payment gate way
@@ -111,7 +111,7 @@ export async function confirmOrder(
                 }
                 else{
                     dispatch(toggleSnackBar({
-                        message: data.message,
+                        message: data.message || "An error just occured Please try again",
                         open: true,
                         severity: data.status === 'success' ? 'success' : 'error'
                     }))
@@ -119,7 +119,7 @@ export async function confirmOrder(
             }
             else{
                 dispatch(toggleSnackBar({
-                    message: data.message,
+                    message: data.message || "An error just occured Please try again",
                     open: true,
                     severity: 'error'
                 }))
@@ -132,7 +132,7 @@ export async function confirmOrder(
                 dispatch(toggleSnackBar({
                     open: true,
                     severity: 'error',
-                    message: error?.data?.message
+                    message: error?.data?.message || "An error just occured Please try again"
                 }))
             }
         }

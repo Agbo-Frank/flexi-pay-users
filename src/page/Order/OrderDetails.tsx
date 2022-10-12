@@ -36,7 +36,7 @@ function OrderDetails({order, open, close}: IOrderModel){
                                 <p>{moment(order.order_detail[0].created_at).format('l')}</p>
                             </p>
                         </div>
-                        <p>Order No: <CopyText text={`${345679}`}/></p>
+                        {/* <p>Order No: <CopyText text={`${345679}`}/></p> */}
                         <p>Quantity: {order.order_detail[0].quantity}</p>
                         <p>Total: ₦ {formatNumber(`${order.order_detail[0].price}`)}</p>
                         <p>Order Placed: {moment(order.order_detail[0].created_at).format('l')}</p>

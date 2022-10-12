@@ -74,8 +74,9 @@ html{
   background-color: #1900FE;
   color: white;
 }
-.icon.processed, .icon.paid{
+.processed.icon, .paid.icon{
   color: #1900FE;
+  background-color: transparent;
 }
 
 .pending{
@@ -86,8 +87,22 @@ html{
   background-color: #FF5000;
   color: white;
 }
-.icon.pending{
+.pending.icon{
   color: #FF5000;
+  background-color: transparent;
+}
+
+.failed{
+  background-color: rgba(255, 0, 0, 0.1);
+  color: rgba(255, 15, 0, 1);
+}
+.solid.failed{
+  background-color: rgba(255, 15, 0, 1);
+  color: white;
+}
+.failed.icon{
+  color: rgba(255, 15, 0, 1);
+  background-color: transparent;
 }
 
 .placed{
@@ -98,14 +113,24 @@ html{
   background-color: #A0A0A1;
   color: white;
 }
-.icon.placed{
+.placed.icon{
   color: #A0A0A1;
+  background-color: transparent;
 }
 
-
-.delivered{
+.delivered, .success{
+  background-color: #FFF9F7;
+  color: #91CD5E;
+}
+.solid.delivered{
   background-color: #91CD5E;
+  color: white;
 }
+.delivered.icon{
+  color: #91CD5E;
+  background-color: transparent;
+}
+
 
 .line{
   animation: line-animate 0.3s linear;
@@ -176,14 +201,6 @@ html{
     stroke-dashoffset: -124;
   }
 }
-
-
-
-
-
-
-
-
 
 /* 404 page styling  */
 .sliderContainer {

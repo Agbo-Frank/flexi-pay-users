@@ -12,7 +12,7 @@ import {
     DocIcon, StarIcon
 } from "../../components/icons"
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery } from '@mui/material'
-import { IOrder } from '../../interface'
+import { IOrder, ISubscription } from '../../interface'
 import moment from 'moment'
 import Tracker from './Tracker'
 import { formatNumber, sliceString } from '../../utils'
@@ -21,7 +21,7 @@ import { LoadingButton } from '@mui/lab'
 
 
 export interface IOrderModel {
-    order: IOrder,
+    order: IOrder;
     open: boolean;
     close: () => void | any
 }
@@ -79,6 +79,18 @@ function Buttons ( { order, setOpen }: IOrderButtons): JSX.Element{
         </>
         )
     }
+    else if(order.status === 'failed'){
+        return (
+            <Button 
+                color="secondary"
+                size={matches ? "large" : "medium"} 
+                variant='contained'
+                onClick={() => setOpen(state => ({...state, details: true}))}
+                startIcon={<DocIcon color='white' size="17" />}>
+                    See Details
+            </Button>
+        )
+    }
     else{
         return(<>
             <Button 
@@ -108,10 +120,22 @@ function Order ({ order}: IOrderDetails) {
         cancel: false
     })
     return(
-        <>  <>
-                <Tracker order={order} open={open.track} close={() => setOpen(state => ({...state, track: false}))}/>
-                <OrderDetails order={order} open={open.details} close={() => setOpen(state => ({...state, details: false}))}/>
-                <ProductReviewForm order={order} open={open.review} close={() => setOpen(state => ({...state, review: false}))}/>
+        <>  
+            <>
+                {
+                    open.track &&
+                    <Tracker order={order} open={open.track} close={() => setOpen(state => ({...state, track: false}))}/>
+                }
+
+                {
+                    open.details &&
+                    <OrderDetails order={order} open={open.details} close={() => setOpen(state => ({...state, details: false}))}/>
+                }
+
+                {
+                    open.review &&
+                    <ProductReviewForm order={order} open={open.review} close={() => setOpen(state => ({...state, review: false}))}/>
+                }
                 <Dialog open={open.cancel} onClose={() => setOpen(state => ({...state, cancel: false}))}>
                     <DialogTitle>Cancel Order</DialogTitle>
                     <DialogContent>

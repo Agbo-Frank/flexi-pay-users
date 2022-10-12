@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { FPFormikCreateInstallment } from './service';
-import { Button } from '@mui/material';
+import { Alert, AlertColor, Button, Collapse } from '@mui/material';
 import ModelWrapper from '../../components/Models/ModelWrapper';
 import { useCreateInstallmentMutation } from '../../redux/api/Installment';
 import product1 from '../../asset/product1.png'
@@ -27,6 +27,15 @@ function SelectInstallmentPlan(
     }
 ) {
     let [value, setValue] = useState<string>("")
+    let [response, setResponse] = useState<{
+        message: string;
+        severity: AlertColor;
+        open: boolean
+    }>({
+        message: "",
+        severity: "error",
+        open: false
+    })
     let [createInstallment, { isLoading }] = useCreateInstallmentMutation()
     let dispatch = useDispatch()
 
@@ -52,6 +61,9 @@ function SelectInstallmentPlan(
                 <div className="px-2 sm:px-5 pb-5">
                     <p className="text-grey-200 font-medium">Available Plans</p>
                     <small>Kindly select your preferred installment plan</small>
+                    <Collapse in={response.open} className='w-full'>
+                        <Alert className='w-full' severity={response.severity}>{response.message}</Alert>
+                    </Collapse>
                     {
                         installments?.length  === 0 ?
                         <Empty 
@@ -72,7 +84,7 @@ function SelectInstallmentPlan(
                                 installments?.map((installment, idx) => (
                                     <span 
                                         onClick={() => setValue(installment.uuid)}
-                                        className={`border hover:border-primary-blue rounded-md py-2 w-full text-center cursor-pointer text-sm block my-2 ${value === installment.uuid ? "border-primary-blue" : "border-black"}`}>
+                                        className={`border hover:border-primary-blue rounded-md py-2 w-full text-center cursor-pointer text-sm block my-2 ${value === installment.uuid ? "border-primary-blue border-2" : "border-black"}`}>
                                         Pay N{formatNumber(`${installment.amount}`)} Per {installment.frequency}
                                     </span>
                                 ))
@@ -83,17 +95,31 @@ function SelectInstallmentPlan(
                                     color="secondary"
                                     onClick={() => {
                                         if(value === ""){
-                                            dispatch(toggleSnackBar({
+                                            setResponse({
                                                 open: true,
                                                 message: "Please select a plan method",
                                                 severity: 'error'
-                                            }))
+                                            })
                                         }
                                         else{
-                                            setCheckoutData(state => ({
-                                                ...state,
-                                                installment_ids: [...state.installment_ids, value]
-                                            }))
+                                            setCheckoutData(state => {
+                                                if(state.installment_ids.includes(value)){
+                                                    return state
+                                                }
+                                                else{
+                                                    return {
+                                                        ...state,
+                                                        installment_ids: [...state.installment_ids, value]
+                                                    }
+                                                }
+                                            })
+                                            if(response.open){
+                                                setResponse({
+                                                    open: false,
+                                                    message: "",
+                                                    severity: 'error'
+                                                })
+                                            }
                                             close()
                                         }
                                     }}

@@ -417,6 +417,7 @@ export interface ISubscription {
     amount_to_be_paid: string;
     amount: string;
     amount_left: string;
+    amount_paid: string;
     is_completed: number;
     method: string;
     created_at: string | Date;

@@ -77,7 +77,7 @@ export function WalletTransaction({ open, setOpen}: IWalletBalanceProps){
                             </TableHead>
                             <TableBody>
                                 {
-                                    transaction?.map((txn) => (<Row txn={txn}/>)) 
+                                    transaction?.map((txn, idx) => (<Row txn={txn} key={idx}/>)) 
                                 }
                             </TableBody>
                         </Table>
