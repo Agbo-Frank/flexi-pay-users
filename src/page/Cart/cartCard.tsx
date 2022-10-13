@@ -14,6 +14,7 @@ import { handleSaveItemClick } from "../../services"
 import { useSavedItemMutation } from "../../redux/api/SavedItems"
 import { deleteCart, handleQuantityControlClick } from "./service"
 import { toggleSnackBar } from "../../redux/slice/modal"
+import backgroundImage from "../../asset/backgroundImage.png"
 
 
 
@@ -25,7 +26,9 @@ export function Cart({cart}: {cart: ICart}){
     let [updateCart, {isLoading }] = useUpdateCartMutation()
 
     let [savedItem, { isLoading: savingItem,}] = useSavedItemMutation()
-    console.log("cart",cart)
+
+    let [disabled] = useState(cart?.product)
+        
 
     return(
         <>
@@ -68,14 +71,14 @@ export function Cart({cart}: {cart: ICart}){
             </Dialog>
             <div 
             className="flex flex-col sm:flex-row justify-between shadow hover:shadow-lg sm:p-2 w-[98%] rounded-xl bg-white">
-                <div className="p-2 pb-3 sm:pb-0">
+                <div className={`p-2 pb-3 sm:pb-0 ${disabled === null && "opacity-40"}`}>
                     <div className="flex space-x-2 sm:space-x-3 items-stretch">
-                        <Link to={cart?.product ? "/product/" + cart?.product?.uuid : "*"} className="block w-fit">
-                            <img src={cart?.product?.product_images[0]?.image_link} className="w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] object-cover rounded sm:rounded-xl"/>
+                        <Link to={disabled !== null && cart?.product ? "/product/" + cart?.product?.uuid : "*"} className="block w-fit">
+                            <img src={disabled === null ? backgroundImage : cart?.product?.product_images[0]?.image_link} className="w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] object-cover rounded sm:rounded-xl"/>
                         </Link>
                         <div className="sm:w-7/12 flex flex-col justify-around">
                             <CardText>{
-                                cart?.product ?
+                                disabled !== null  ?
                                 cart?.product?.name.slice(0, 42) + (cart?.product?.name && cart?.product?.name?.length > 42 ? "..." : ""):
                                 "Product Doesn't exist"
                             }</CardText>
@@ -85,6 +88,7 @@ export function Cart({cart}: {cart: ICart}){
                                 <Button
                                 color="secondary"
                                 size="small"
+                                // disabled={disabled === null}
                                 onClick={() => setOpen(true)}
                                 startIcon={<DeleteIcon />}>Remove</Button>
                             </div>
@@ -96,35 +100,40 @@ export function Cart({cart}: {cart: ICart}){
                         <Button
                         color="secondary"
                         size="small"
+                        // disabled={disabled === null }
                         onClick={() => setOpen(true)}
                         startIcon={<DeleteIcon />}>Remove</Button>
                     </div>
-                    <div className="flex flex-col justify-end">
-                        <p className="hidden sm:block font-semibold ml-auto text-primary-dark-blue text-lg mb-4 whitespace-nowrap">₦ {formatNumber(cart.price)}</p>
+                    <div className={`flex flex-col justify-end ${disabled === null && "opacity-40"}`}>
+                        <p className={`hidden sm:block font-semibold ml-auto text-primary-dark-blue text-lg mb-4 whitespace-nowrap`}>₦ {formatNumber(cart.price)}</p>
                         <div className="flex justify-between items-center space-x-3">
                             <div 
-                                className={`rounded-full cursor-pointer font-bold text-white bg-primary-orange-200 w-5 ${(isLoading ||  parseInt(cart.quantity) === 1) && "opacity-50"} h-5 flex justify-center items-center text-xl`}
+                                className={`rounded-full cursor-pointer font-bold text-white bg-primary-orange-200 w-5 ${(isLoading ||  parseInt(cart.quantity) === 1 || disabled === null ) && "opacity-50"} h-5 flex justify-center items-center text-xl`}
                                 onClick={() => {
-                                    if(!isLoading && parseInt(cart.quantity) > 1){
-                                        handleQuantityControlClick(
-                                            {quantity: (parseInt(cart.quantity) - 1).toString(), cart_uuid: cart.uuid},
-                                            updateCart,
-                                            dispatch
-                                        )
+                                    if(disabled !== null){
+                                        if((!isLoading)  && parseInt(cart.quantity) > 1){
+                                            handleQuantityControlClick(
+                                                {quantity: (parseInt(cart.quantity) - 1).toString(), cart_uuid: cart.uuid},
+                                                updateCart,
+                                                dispatch
+                                            )
+                                        }
                                     }
                                 }}>
                                 <MinusIcon color="white" size="14" />
                             </div>
                             <div className="font-medium text-lg">{cart.quantity}</div>
                             <div 
-                            className={`rounded-full cursor-pointer font-bold text-white bg-primary-orange-200 w-5 h-5 flex ${isLoading && "opacity-50"} justify-center items-center text-xl`}
+                            className={`rounded-full cursor-pointer font-bold text-white bg-primary-orange-200 w-5 h-5 flex ${isLoading || disabled === null  && "opacity-50"} justify-center items-center text-xl`}
                             onClick={() => {
-                                if(!isLoading){
-                                    handleQuantityControlClick(
-                                        {quantity: (parseInt(cart.quantity) + 1).toString(), cart_uuid: cart.uuid},
-                                        updateCart,
-                                        dispatch
-                                    )
+                                if(disabled !== null){
+                                    if(!isLoading){
+                                        handleQuantityControlClick(
+                                            {quantity: (parseInt(cart.quantity) + 1).toString(), cart_uuid: cart.uuid},
+                                            updateCart,
+                                            dispatch
+                                        )
+                                    }
                                 }
                             }}>
                                 <PlusIcon size="14" color="white" />

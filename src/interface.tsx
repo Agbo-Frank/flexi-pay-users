@@ -304,7 +304,7 @@ export interface ISavedItems{
     uuid: string;
     created_at: string;
     updated_at: string;
-    product: IProduct
+    product: IProduct | null
 }
 
 export interface IFilter {

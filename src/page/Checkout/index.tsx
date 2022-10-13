@@ -315,7 +315,7 @@ export function CheckOut(){
                                         type="button"
                                         loading={checkingout}
                                         disabled={deliveryAddress ? false : true}
-                                        onClick={() => confirmOrder(checkoutData.method, dispatch, checkout, checkoutData.installment_ids)}>
+                                        onClick={() => confirmOrder(checkoutData.method, dispatch, checkout, checkoutData.installment_ids, () => navigate("/order"))}>
                                             confirm order
                                     </LoadingButton>
                                 </div>

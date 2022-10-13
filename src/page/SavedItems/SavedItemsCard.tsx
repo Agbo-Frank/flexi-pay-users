@@ -8,12 +8,14 @@ import { useAddToCartMutation } from "../../redux/api/Cart";
 import { toggleSnackBar } from "../../redux/slice/modal";
 import { useRemoveItemMutation } from "../../redux/api/SavedItems";
 import { handleAddToCartClick } from "../Cart/service";
-import { formatNumber } from "../../utils";
+import { formatNumber, sliceString } from "../../utils";
 import TV from '../../asset/Product2.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { CardActions, CardImg, CardText, CardWrapper } from "../../components";
 import { FLEXIPAY_COOKIE } from "../../utils/constants";
 import { useCookies } from "react-cookie";
+import backgroundImage from "../../asset/backgroundImage.png"
+import { useState } from "react";
 
 
 
@@ -25,6 +27,7 @@ export function SavedItem ({savedItem}: {savedItem: ISavedItems}) {
     const dispatch = useDispatch()
 
     const matches = useMediaQuery('(min-width:600px)');
+    let [disabled] = useState(savedItem?.product)
 
     async function removeItem(){
         try{
@@ -51,12 +54,12 @@ export function SavedItem ({savedItem}: {savedItem: ISavedItems}) {
     return(
         <CardWrapper>
             <Link 
-                to={"/product/" + savedItem.product.slug}
+                to={disabled === null ? "null" : "/product/" + savedItem?.product?.slug}
                 className="flex w-full sm:w-9/12 space-x-2 sm:space-x-4 items-stretch pb-4 sm:pb-0">
-                <CardImg src={savedItem.product.product_images[0].image_link} />
+                <CardImg src={disabled === null ? backgroundImage : savedItem?.product?.product_images[0]?.image_link} />
                 <div className="flex flex-col sm:w-6/12 sm:h-full items-stretch sm:justify-evenly ">
-                    <CardText>{ savedItem.product.name }</CardText>
-                    <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(savedItem.product.price)}</p>
+                    <CardText>{disabled === null ? "Product Not Found" : sliceString(savedItem?.product?.name) }</CardText>
+                    <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(savedItem?.product?.price)}</p>
                 </div>
             </Link>
             <CardActions>
@@ -64,8 +67,9 @@ export function SavedItem ({savedItem}: {savedItem: ISavedItems}) {
                     color="secondary"
                     variant="contained"
                     loading={isLoading}
+                    disabled={disabled === null}
                     onClick={() => {
-                        handleAddToCartClick(savedItem.product.uuid, addToCart, dispatch, {cookies, setCookie})
+                        handleAddToCartClick(savedItem?.product?.uuid, addToCart, dispatch, {cookies, setCookie})
                             .then(() => removeItem())
                     }}
                     startIcon={<CartIcon color='white' size="17" />}

@@ -73,7 +73,8 @@ export async function confirmOrder(
     checkout_method: TCheckoutMethod | "", 
     dispatch: Dispatch<AnyAction>, 
     checkout: ITrigger<{checkout_method: TCheckoutMethod, install_mental_ids: string[] | undefined}, IResponse<{data: {link: string}}>>, 
-    install_mental_ids: string[] | undefined = []
+    install_mental_ids: string[] | undefined = [],
+    done: () => void | null
 ){
     let methods = ["directly_via_wallet", "install_mental_via_card", "install_mental_via_wallet", "directly_via_card"]
     if(checkout_method == ""){
@@ -115,6 +116,8 @@ export async function confirmOrder(
                         open: true,
                         severity: data.status === 'success' ? 'success' : 'error'
                     }))
+
+                    done()
                 }
             }
             else{

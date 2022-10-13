@@ -167,21 +167,21 @@ export function CategoryPage(){
         range: false,
         search: false,
       },
-      {
-        id: 5,
-        title: "Ratings",
-        subTitle: "",
-        rating: true,
-        list: [
-          {id: 5.1, text: 5, value: 5},
-          {id: 5.2, text: 4, value: 4},
-          {id: 5.3, text: 3, value: 3},
-          {id: 5.4, text: 2, value: 2},
-          {id: 5.5, text: 1, value: 1},
-        ],
-        range: false,
-        search: false,
-      },
+    //   {
+    //     id: 5,
+    //     title: "Ratings",
+    //     subTitle: "",
+    //     rating: true,
+    //     list: [
+    //       {id: 5.1, text: 5, value: 5},
+    //       {id: 5.2, text: 4, value: 4},
+    //       {id: 5.3, text: 3, value: 3},
+    //       {id: 5.4, text: 2, value: 2},
+    //       {id: 5.5, text: 1, value: 1},
+    //     ],
+    //     range: false,
+    //     search: false,
+    //   },
     ]
 
     return(

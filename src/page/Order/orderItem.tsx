@@ -7,8 +7,7 @@ import { useState, Dispatch, SetStateAction } from "react"
 import TV from '../../asset/monitor.png'
 import BagIcon from "../../components/icons/Bag"
 import {
-    HeartIcon, CartIcon, 
-    TrashIcon, TrackIcon, 
+    TrackIcon, 
     DocIcon, StarIcon
 } from "../../components/icons"
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery } from '@mui/material'
@@ -18,6 +17,7 @@ import Tracker from './Tracker'
 import { formatNumber, sliceString } from '../../utils'
 import ProductReviewForm from './ProductReviewForm'
 import { LoadingButton } from '@mui/lab'
+import backgroundImage from "../../asset/backgroundImage.png"
 
 
 export interface IOrderModel {
@@ -37,10 +37,11 @@ interface IOrderButtons {
         details:boolean;
         review: boolean;
         cancel: boolean
-    }>>
+    }>>,
+    disabled: any
 }
 
-function Buttons ( { order, setOpen }: IOrderButtons): JSX.Element{
+function Buttons ( { order, setOpen, disabled }: IOrderButtons): JSX.Element{
     const matches = useMediaQuery('(min-width:600px)');
     const dispatch = useDispatch()
 
@@ -52,6 +53,7 @@ function Buttons ( { order, setOpen }: IOrderButtons): JSX.Element{
                 variant='contained'
                 startIcon={<TrackIcon color="white" size="17"/>}
                 onClick={() => setOpen(state => ({...state, track: true}))}
+                disabled={disabled === null}
                 >
                     Track Item
             </Button>
@@ -65,7 +67,8 @@ function Buttons ( { order, setOpen }: IOrderButtons): JSX.Element{
                 size={matches ? "large" : "medium"} 
                 variant='contained'
                 onClick={() => setOpen(state => ({...state, details: true}))}
-                startIcon={<DocIcon color='white' size="17" />}>
+                startIcon={<DocIcon color='white' size="17" />}
+                disabled={disabled === null}>
                     See Details
             </Button>
             <Button 
@@ -73,42 +76,47 @@ function Buttons ( { order, setOpen }: IOrderButtons): JSX.Element{
                 size={matches ? "large" : "medium"}  
                 variant="outlined" 
                 startIcon={<StarIcon color="#ff5000" size="17"/>}
-                onClick={() => setOpen(state => ({...state, review: true}))}>
+                onClick={() => setOpen(state => ({...state, review: true}))}
+                disabled={disabled === null}>
                     Review Item
             </Button>
         </>
         )
     }
-    else if(order.status === 'failed'){
-        return (
-            <Button 
-                color="secondary"
-                size={matches ? "large" : "medium"} 
-                variant='contained'
-                onClick={() => setOpen(state => ({...state, details: true}))}
-                startIcon={<DocIcon color='white' size="17" />}>
-                    See Details
-            </Button>
-        )
-    }
-    else{
+    
+    else if(order.status === 'pending'){
         return(<>
             <Button 
                 color="secondary"
                 size={matches ? "large" : "medium"}  
                 onClick={() => setOpen(state => ({...state, track: true}))}
                 startIcon={<TrackIcon color='white' size="17" />}
-                variant="contained">
+                variant="contained"
+                disabled={disabled === null}>
                     Track Items
             </Button>
             <Button 
                 color="secondary"
                 size={matches ? "large" : "medium"}  
                 variant="outlined"
-                onClick={() => setOpen(state => ({...state, cancel: true}))}>
+                onClick={() => setOpen(state => ({...state, cancel: true}))}
+                disabled={disabled === null}>
                     Cancel
             </Button>
         </>)
+    }
+    else{
+        return (
+            <Button 
+                color="secondary"
+                size={matches ? "large" : "medium"} 
+                variant='contained'
+                onClick={() => setOpen(state => ({...state, details: true}))}
+                startIcon={<DocIcon color='white' size="17" />}
+                disabled={disabled === null}>
+                    See Details
+            </Button>
+        )
     }
 }
 
@@ -119,6 +127,7 @@ function Order ({ order}: IOrderDetails) {
         review: false,
         cancel: false
     })
+    let [disabled] = useState(order.order_detail[0]?.product)
     return(
         <>  
             <>
@@ -162,12 +171,13 @@ function Order ({ order}: IOrderDetails) {
                 </Dialog>
             </>
             <CardWrapper>
-                <div className="flex w-full sm:w-9/12 space-x-2 sm:space-x-4 items-stretch pb-4 sm:pb-0"
+                <div 
+                className={`flex w-full sm:w-9/12 space-x-2 sm:space-x-4 items-stretch pb-4 sm:pb-0 ${!order.order_detail[0]?.product && "opacity-40"}`}
                 onClick={() => setOpen(state => ({...state, details: true}))}>
-                    <CardImg src={order.order_detail[0]?.product?.product_images[0]?.image_link} />
+                    <CardImg src={disabled === null ? backgroundImage : order.order_detail[0]?.product?.product_images[0]?.image_link} />
                     <div>
                         <div className="flex flex-col sm:h-full items-stretch">
-                            <CardText>{ sliceString(order.order_detail[0]?.product.name) }</CardText>
+                            <CardText>{ disabled === null ? "Product Doesn't exist" : sliceString(order.order_detail[0]?.product?.name) }</CardText>
                             <small className="text-grey-200 text-xs sm:text-sm">Placed on  {moment(order.order_detail[0].created_at).format("MMM Do YY")}</small>
                             <small className="text-grey-200 text-xs sm:text-sm my-1">orderId: <CopyText text={order.id}/></small>
                             <p className={`${ order.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ order.status }</p>
@@ -178,7 +188,8 @@ function Order ({ order}: IOrderDetails) {
                 <CardActions>
                     <Buttons 
                         order={order}
-                        setOpen={setOpen}/>
+                        setOpen={setOpen}
+                        disabled={disabled}/>
                 </CardActions>
             </CardWrapper> 
         </>  

@@ -6,20 +6,22 @@ import { useCookies } from "react-cookie"
 import { FLEXIPAY_COOKIE } from "../utils/constants"
 import { useGetUserCartQuery } from '../redux/api/Cart'
 import { Button, Skeleton } from '@mui/material'
-import { formatNumber } from '../utils'
+import { formatNumber, sliceString } from '../utils'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CartIcon } from './icons'
 import { WrapperHeader } from './StyledComponent'
 import { ICheckoutSummaryProps } from './interface'
+import { useState } from 'react'
+import backgroundImage from "../asset/backgroundImage.png"
 
 
 function CheckoutCard({checkoutdetail}: {checkoutdetail: Partial<IDetails>}){
-    
+    let [disabled] = useState(checkoutdetail?.product)
     return(
-        <div className="w-full flex justify-between mb-5 p-1 shadow-sm hover:shadow rounded-lg">
+        <div className={`w-full flex justify-between mb-5 p-1 shadow-sm hover:shadow rounded-lg ${disabled === null && "opacity-40"}`}>
             <div className="flex w-9/12 gap-3">
-                <img src={checkoutdetail?.product?.product_images[0].image_link} className="w-[80px] h-[80px] object-cover rounded-lg" />
-                <p className="text-sm text-grey-200 capitalize">{checkoutdetail?.product?.name.slice(0, 40) + (checkoutdetail?.product?.name && checkoutdetail?.product?.name?.length > 40 ? "..." : "")}</p>
+                <img src={disabled === null ? backgroundImage : (checkoutdetail?.product?.product_images[0].image_link || backgroundImage)} className="w-[80px] h-[80px] object-cover rounded-lg" />
+                <p className="text-sm text-grey-200 capitalize">{disabled === null ? "Product not found" : sliceString(checkoutdetail?.product?.name)}</p>
             </div>
 
             <div className='flex flex-col'>
