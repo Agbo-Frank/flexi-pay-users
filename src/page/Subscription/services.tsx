@@ -5,8 +5,8 @@ import { IResponse, ITrigger } from "../../interface";
 
 
 export async function cancelSubscription(
-    body: {id: string }, 
-    cancelSub: ITrigger<{id: string}, IResponse<{data: any[] | null}>>, 
+    body: {id: string | number }, 
+    cancelSub: ITrigger<{id: string | number}, IResponse<{data: any[] | null}>>, 
     dispatch: Dispatch<AnyAction>
 ){
     try{

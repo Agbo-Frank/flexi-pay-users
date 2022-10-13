@@ -49,7 +49,7 @@ export const OrderApi = createApi({
             }),
             providesTags: (result, error, arg) => result ? [{type: "Subscription", id: arg}] : ["Subscription"]
         }),
-        cancelSubscription: build.mutation<IResponse<{data: any[] | null}>, {id: string}>({
+        cancelSubscription: build.mutation<IResponse<{data: any[] | null}>, {id: string | number}>({
             query: (body) => ({
                 url: "/user/cancel/subscription",
                 method: "POST",

@@ -86,6 +86,7 @@ function AllCategories(){
             loading: isLoading
         })
     })
+    // console.log(open.category)
 
     useEffect(() => {
         getCategories()
@@ -148,6 +149,8 @@ export function SubCategories({setOpen, category, open}: {
 
     const navigate= useNavigate()
 
+    // console.log(sub_categories)
+
     useEffect(() => {
         if(category){
             getSubCategories({id: category?.uuid, page: 1})
@@ -185,7 +188,7 @@ export function SubSubCategories({ sub_category}: {sub_category: ICategory}){
         if(sub_category){
             getSubCategories({id: sub_category?.uuid, page: 1})
         }
-    }, [])
+    }, [sub_category])
     return(
         <>
             {

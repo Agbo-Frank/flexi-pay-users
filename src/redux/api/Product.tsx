@@ -72,7 +72,9 @@ export const ProductApi = createApi({
             query: () => ({
                 url: "/category/fetch/parent"
             }),
-            providesTags: ['Category']
+            providesTags: (result, error, arg) => {
+                return result ? [{type: 'Category', category: 'parent'}] : ['Category']
+            }
         }),
         getSubCategories: build.query<IResponse<ICategory>, {page: number, id: string}>({
             query: (body) => ({

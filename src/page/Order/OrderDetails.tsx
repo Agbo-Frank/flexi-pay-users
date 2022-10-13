@@ -53,14 +53,19 @@ function OrderDetails({order, open, close}: IOrderModel){
                                 <h2 className="font-semibold">Delivery Address</h2>
                                 <p className="capitalize text-grey-200 text-sm mb-2">{order.customer?.first_name + " " + order.customer?.last_name}</p>
 
-                                <p className="capitalize text-grey-200 text-sm w-9/12">
-                                    {
-                                        order.order_detail[0]?.delivery_address?.house_address + ", " +
-                                        order.order_detail[0]?.delivery_address?.nearest_bus_stop + ", " +
-                                        order.order_detail[0]?.delivery_address?.city + ", " +
-                                        order.order_detail[0]?.delivery_address?.state
-                                    }
-                                </p>
+                                {
+                                    order.order_detail.length > 0 &&
+                                
+                                    <p className="capitalize text-grey-200 text-sm w-9/12">
+
+                                        {
+                                            order.order_detail[0]?.delivery_address?.house_address + ", " +
+                                            order.order_detail[0]?.delivery_address?.nearest_bus_stop + ", " +
+                                            order.order_detail[0]?.delivery_address?.city + ", " +
+                                            order.order_detail[0]?.delivery_address?.state
+                                        }
+                                    </p>
+                                }
                             </div>
                         </div>
                         {/* <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-lg w-full sm:w-1/2">

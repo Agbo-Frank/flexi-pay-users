@@ -4,7 +4,7 @@ import { Body, Header, Categories, Footer, Breadcrumb, ProductsSlide } from "../
 import { CartIcon, HeartIcon,  } from "../../components/icons"
 import { useGetProductQuery, useLazyGetOtherProductsFromVendorQuery, useLazyGetRecentlyViewedQuery, useLazyGetSimilarProductsQuery } from "../../redux/api/Product";
 import { LoadingButton } from "@mui/lab";
-import { Rating } from "@mui/material"
+import { Backdrop, Chip, CircularProgress, Rating } from "@mui/material"
 import { useAddToCartMutation } from "../../redux/api/Cart";
 import { handleSaveItemClick } from "../../services";
 import { handleAddToCartClick } from "../Cart/service";
@@ -112,6 +112,12 @@ export function Product(){
                 <meta property="og:url" content={FLEXIPAY_REDIRECT + "/product/" + product?.slug} />
             </Helmet>
             <Body bgColor="bg-white sm:bg-grey-500">
+                <Backdrop
+                    className="text-[#fff] backdrop-blur z-50"
+                    open={loading}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
                 <div className="w-full h-fit bg-white sm:bg-grey-500">
                     <Breadcrumb />
                     <div className="fp-screen space-y-5 bg-white sm:bg-grey-500">
@@ -161,6 +167,17 @@ export function Product(){
                                                     </>
                                                 }
                                             </span>
+                                            {/* <div>
+                                                <div>Installment Plans</div>
+                                                <div className="flex flex-wrap space-x-1">
+                                                    <Chip label="N 200 Daily" variant="outlined" color="secondary" size="small"/>
+                                                    <Chip label="N 200 Daily" variant="outlined" color="secondary" size="small"/>
+                                                    <Chip label="N 200 Daily" variant="outlined" color="secondary" size="small"/>
+                                                    <Chip label="N 200 Daily" variant="outlined" color="secondary" size="small"/>
+                                                    <Chip label="N 200 Daily" variant="outlined" color="secondary" size="small"/>
+                                                </div>
+                                            </div> */}
+                                            
                                         </div>
                                     </div>
                                     

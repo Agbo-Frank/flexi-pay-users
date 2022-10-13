@@ -414,6 +414,7 @@ export interface IReview {
 }
 
 export interface ISubscription {
+    id: number;
     amount_to_be_paid: string;
     amount_left: string;
     amount_paid: string;

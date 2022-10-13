@@ -32,7 +32,7 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
         details: false,
         cancel: false
     })
-    console.log(subscription)
+    const dispatch = useDispatch()
     let [cancelSub, {isLoading}] = useCancelSubscriptionMutation()
 
     function getProgress(){
@@ -62,10 +62,10 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
                         variant="outlined"
                         color="secondary"
                         onClick={() => setOpen(state => ({...state,  cancel: false}))}
-                        >Cancel</Button>
+                        >Abort</Button>
 
                         <LoadingButton
-                        // onClick={() => cancelSubscription({id: subscription.})}
+                        onClick={() => cancelSubscription({id: subscription?.id}, cancelSub, dispatch)}
                         loading={isLoading}
                         color="secondary"
                         variant="contained"
