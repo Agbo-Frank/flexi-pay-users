@@ -1,8 +1,8 @@
 import DashboardWrapper from "../../components/DashboardWrapper"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Order from "./orderItem"
 import { Empty, Wrapper, WrapperHeader } from "../../components"
-import { useGetUserOrdersQuery } from "../../redux/api/Order"
+import { useLazyGetUserOrdersQuery } from "../../redux/api/Order"
 import { BagIcon } from '../../components/icons'
 import { Button, Pagination, Skeleton } from "@mui/material"
 import { useNavigate } from "react-router-dom"
@@ -16,13 +16,16 @@ interface IOrderModel {
 export function Orders (){
     let navigate = useNavigate()
     let [page, setPage] = useState(1)
-    let { orders, pagination, loading } = useGetUserOrdersQuery(undefined, {
+    let [getOrder, { orders, pagination, loading }] = useLazyGetUserOrdersQuery({
         selectFromResult: ({ data, isLoading }) => ({
             orders: data?.result?.data?.data,
             pagination: data?.result?.data,
             loading: isLoading
         })
     })
+    useEffect(() => {
+        getOrder(page)
+    }, [loading, page])
     console.log(orders)
     return(
         <>
@@ -68,7 +71,7 @@ export function Orders (){
                 </Wrapper>
                 <div className="ml-auto float-right my-5">
                     {
-                        !orders || orders?.length === 0 &&
+                        orders &&
                         <Pagination
                             count={pagination?.last_page} 
                             variant="outlined" 

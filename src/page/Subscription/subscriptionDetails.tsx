@@ -64,7 +64,7 @@ function SubscriptionDetails({subscription, open, close}: ISubscriptionModal){
                                 </p>
                             </div>
                         </div> */}
-                        <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-lg w-full sm:w-1/2">
+                        <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-lg w-full">
                             <div className="leading-7">
                                 <h2 className="font-semibold">Payment Method</h2>
                                 <p className="text-grey-200 text-sm">{ / wallet /.test(subscription.method) ? "Wallet" : "Card"}</p>
@@ -88,7 +88,7 @@ function SubscriptionDetails({subscription, open, close}: ISubscriptionModal){
 
                                     <p>
                                         <span className="font-medium">Total: </span>
-                                        <span>Weekly ₦ {formatNumber(subscription.amount_to_be_paid)}</span>
+                                        <span>₦ {formatNumber(subscription.amount_to_be_paid)}</span>
                                     </p>
                                 </p>
                             </div>

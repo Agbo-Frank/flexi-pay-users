@@ -13,6 +13,7 @@ import { LoadingButton } from "@mui/lab"
 import { handleSaveItemClick } from "../../services"
 import { useSavedItemMutation } from "../../redux/api/SavedItems"
 import { deleteCart, handleQuantityControlClick } from "./service"
+import { toggleSnackBar } from "../../redux/slice/modal"
 
 
 
@@ -42,8 +43,17 @@ export function Cart({cart}: {cart: ICart}){
                     color="secondary"
                     loading={savingItem}
                     onClick={() => {
-                        handleSaveItemClick(cart.product.uuid, savedItem, dispatch, () => setOpen(false))
-                            .then(() => deleteCart({uuid: cart.uuid}, delCart, dispatch, () => setOpen(false)))
+                        if(cart?.product){
+                            handleSaveItemClick(cart?.product.uuid, savedItem, dispatch, () => setOpen(false))
+                                .then(() => deleteCart({uuid: cart.uuid}, delCart, dispatch, () => setOpen(false)))
+                        }
+                        else{
+                            dispatch(dispatch(toggleSnackBar({
+                                open: true,
+                                message: "This Product Doesn't exist",
+                                severity: 'error'
+                            })))
+                        }
                     }}>Save {matches && "for later"} </LoadingButton>
                     <LoadingButton 
                     onClick={() => deleteCart({uuid: cart.uuid}, delCart, dispatch, () => setOpen(false))}
@@ -60,11 +70,15 @@ export function Cart({cart}: {cart: ICart}){
             className="flex flex-col sm:flex-row justify-between shadow hover:shadow-lg sm:p-2 w-[98%] rounded-xl bg-white">
                 <div className="p-2 pb-3 sm:pb-0">
                     <div className="flex space-x-2 sm:space-x-3 items-stretch">
-                        <Link to={"/product/" + cart?.product?.uuid} className="block w-fit">
-                            <img src={cart.product.product_images[0].image_link} className="w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] object-cover rounded sm:rounded-xl"/>
+                        <Link to={cart?.product ? "/product/" + cart?.product?.uuid : "*"} className="block w-fit">
+                            <img src={cart?.product?.product_images[0]?.image_link} className="w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] object-cover rounded sm:rounded-xl"/>
                         </Link>
                         <div className="sm:w-7/12 flex flex-col justify-around">
-                            <CardText>{cart?.product?.name.slice(0, 42) + (cart?.product?.name && cart?.product?.name?.length > 42 ? "..." : "")}</CardText>
+                            <CardText>{
+                                cart?.product ?
+                                cart?.product?.name.slice(0, 42) + (cart?.product?.name && cart?.product?.name?.length > 42 ? "..." : ""):
+                                "Product Doesn't exist"
+                            }</CardText>
                             <p className="font-semibold text-primary-dark-blue sm:hidden">₦ {formatNumber(cart.price)}</p>
                             <small className="text-grey-200 text-xs sm:text-sm font-medium">Qty: {cart.quantity}</small>
                             <div className="hidden sm:block">

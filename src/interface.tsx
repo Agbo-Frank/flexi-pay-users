@@ -297,7 +297,7 @@ export interface ICart{
     created_at: string;
     updated_at: string;
     user: IUser;
-    product: IProduct
+    product: IProduct | null
 }
 
 export interface ISavedItems{
@@ -374,7 +374,7 @@ export interface IDetails extends ICart {
     unit_price: number;
     total_price: number;
     vendor_id: number;
-    product: IProduct
+    product: IProduct | null
 }
 
 export interface ICheckoutDetails {
@@ -415,7 +415,6 @@ export interface IReview {
 
 export interface ISubscription {
     amount_to_be_paid: string;
-    amount: string;
     amount_left: string;
     amount_paid: string;
     is_completed: number;

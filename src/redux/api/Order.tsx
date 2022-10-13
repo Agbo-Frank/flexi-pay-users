@@ -35,19 +35,19 @@ export const OrderApi = createApi({
             }),
             invalidatesTags: ["Checkout"]
         }),
-        getUserOrders: build.query<IResponse<{data: IPagination<IOrder[]>}>, void>({
-            query: () => ({
-                url: "/user/orders",
+        getUserOrders: build.query<IResponse<{data: IPagination<IOrder[]>}>, number>({
+            query: (page) => ({
+                url: "/user/orders?page=" + page.toString(),
                 method: "GET"
             }),
-            providesTags: ["Order"]
+            providesTags: (result, error, arg) => result ? [{type: "Order", id: arg}] : ["Order"]
         }),
-        getUserSubscriptions: build.query<IResponse<IPagination<ISubscription[]>>, void>({
-            query: () => ({
-                url: "/user/subscriptions",
+        getUserSubscriptions: build.query<IResponse<IPagination<ISubscription[]>>, number>({
+            query: (page) => ({
+                url: "/user/subscriptions?page=" + page.toString(),
                 method: "GET"
             }),
-            providesTags: ["Subscription"]
+            providesTags: (result, error, arg) => result ? [{type: "Subscription", id: arg}] : ["Subscription"]
         }),
         cancelSubscription: build.mutation<IResponse<{data: any[] | null}>, {id: string}>({
             query: (body) => ({
@@ -64,6 +64,8 @@ export const {
     useProcessCheckoutMutation,
     useCheckoutMutation,
     useGetUserOrdersQuery,
+    useLazyGetUserOrdersQuery,
     useGetUserSubscriptionsQuery,
+    useLazyGetUserSubscriptionsQuery,
     useCancelSubscriptionMutation
 } = OrderApi

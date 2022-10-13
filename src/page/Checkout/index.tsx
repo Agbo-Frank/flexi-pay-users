@@ -94,7 +94,6 @@ export function CheckOut(){
                     getUserCart({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""})
                         .unwrap()
                         .then(data => {
-                            console.log(data.result.data)
                             if(!data.result.data || data.result.data.length === 0){
                                 navigate('/cart', { replace: true })
                             }

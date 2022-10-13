@@ -47,7 +47,7 @@ export  function Dashboard (): JSX.Element {
             wallet: data?.result.data
         })
     })
-    let { orders } = useGetUserOrdersQuery(undefined, {
+    let { orders } = useGetUserOrdersQuery(1, {
         selectFromResult: ({ data, isLoading }) => ({
             orders: data?.result?.data
         })
