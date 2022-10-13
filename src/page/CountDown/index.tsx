@@ -14,23 +14,23 @@ function CountDown() {
   const dateSeconds = new Date(2022, 9, 13, 22, 0, 0, 0)
   console.log(dateSeconds)
 
-  setInterval(function() {
-    const countDownDate = dateSeconds.getTime();
-    const now = new Date().getTime();
-    const distance = countDownDate - now;
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    // const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    const arr = (val: number) => Array.from(String(val), String)
-    document.getElementById("countDays1")!.innerHTML = String(arr(days)[1] ? arr(days)[0] : 0)
-    document.getElementById("countDays2")!.innerHTML = String(arr(days)[1] || arr(days)[0] || 0)
-    document.getElementById("countHours1")!.innerHTML = String(arr(hours)[1] ? arr(hours)[0] : 0)
-    document.getElementById("countHours2")!.innerHTML = String(arr(hours)[1] || arr(hours)[0] || 0)
-    document.getElementById("countMins1")!.innerHTML = String(arr(minutes)[1] ? arr(minutes)[0] : 0)
-    document.getElementById("countMins2")!.innerHTML = String(arr(minutes)[1] || arr(minutes)[0] || 0)
-    // console.log(seconds);
-  }, 1000);
+  // setInterval(function() {
+  //   const countDownDate = dateSeconds.getTime();
+  //   const now = new Date().getTime();
+  //   const distance = countDownDate - now;
+  //   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  //   const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  //   const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  //   // const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  //   const arr = (val: number) => Array.from(String(val), String)
+  //   document.getElementById("countDays1")!.innerHTML = String(arr(days)[1] ? arr(days)[0] : 0)
+  //   document.getElementById("countDays2")!.innerHTML = String(arr(days)[1] || arr(days)[0] || 0)
+  //   document.getElementById("countHours1")!.innerHTML = String(arr(hours)[1] ? arr(hours)[0] : 0)
+  //   document.getElementById("countHours2")!.innerHTML = String(arr(hours)[1] || arr(hours)[0] || 0)
+  //   document.getElementById("countMins1")!.innerHTML = String(arr(minutes)[1] ? arr(minutes)[0] : 0)
+  //   document.getElementById("countMins2")!.innerHTML = String(arr(minutes)[1] || arr(minutes)[0] || 0)
+  //   // console.log(seconds);
+  // }, 1000);
 
   let formik = FPFormikSubscribe(setLoading)
   return (
