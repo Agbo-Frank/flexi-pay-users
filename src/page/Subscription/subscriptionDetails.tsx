@@ -30,11 +30,11 @@ function SubscriptionDetails({subscription, open, close}: ISubscriptionModal){
                 <div className="m-4 h-fit">
                     <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-lg mb-3">
                         <div className="flex justify-start items-center gap-3">
-                            <p className={`${ subscription.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ subscription.status }</p>
                             <p className="flex gap-2 items-center">
                                 <CalenderIcon color='#555555' size={"14"} />
                                 <p>{moment(subscription.created_at).format('l')}</p>
                             </p>
+                            <p className={`${ subscription.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ subscription.status }</p>
                         </div>
                         {/* <p>Order No: <CopyText text={`${345679}`}/></p> */}
                         <p>Amount Paid: {subscription.amount_paid}</p>
@@ -67,7 +67,7 @@ function SubscriptionDetails({subscription, open, close}: ISubscriptionModal){
                         <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-lg w-full">
                             <div className="leading-7">
                                 <h2 className="font-semibold">Payment Method</h2>
-                                <p className="text-grey-200 text-sm">{ / wallet /.test(subscription.method) ? "Wallet" : "Card"}</p>
+                                <p className="text-grey-200 text-sm">{ /wallet/.test(subscription.method) ? "Wallet" : "Card"}</p>
                             </div>
 
                             <div className="leading-7">

@@ -34,7 +34,9 @@ export function FPFormikLogin(login: ITrigger<ILogin, IAuthResponse>){
         catch(err){
             if(err){
                 let error: any = err
-                formikHelpers.setErrors(error.data.errors)
+                if(error.data.errors){
+                    formikHelpers.setErrors(error.data.errors)
+                }
             }
         }
     }
@@ -83,7 +85,9 @@ export function FPFormikRegister(register: ITrigger<IRegister, IAuthResponse>, r
         catch(err){
             if(err){
                 let error: any = err
-                formikHelpers.setErrors(error.data.errors)
+                if(error.data.errors){
+                    formikHelpers.setErrors(error.data.errors)
+                }
             }
         }
     }
@@ -130,7 +134,9 @@ export function FPFormikForgetPassword(sendRequest: any){
             console.log(err)
             if(err){
                 let error: any = err
-                formikHelpers.setErrors(error.data.errors)
+                if(error.data.errors){
+                    formikHelpers.setErrors(error.data.errors)
+                }
             }
         }
     }
@@ -174,7 +180,9 @@ export function FPFormikResetPassword(reset: any, data: {token: string, email: s
             console.log(err)
             if(err){
                 let error: any = err
-                formikHelpers.setErrors(error.data.errors)
+                if(error.data.errors){
+                    formikHelpers.setErrors(error.data.errors)
+                }
             }
         }
     }

@@ -2,7 +2,7 @@ import ModelWrapper from "../../components/Models/ModelWrapper";
 import TV from '../../asset/monitor.png'
 import MarkCircleIcon from "../../components/icons/MarkCircleIcon";
 import { IOrderModel } from "./orderItem";
-import { formatNumber } from "../../utils";
+import { formatNumber, sliceString } from "../../utils";
 import { CardImg, CardText, CardWrapper } from "../../components";
 import moment from "moment";
 
@@ -48,7 +48,7 @@ function Tracker({order, open, close}: IOrderModel){
                             <div className="flex w-full sm:w-full space-x-2 sm:space-x-4 items-stretch sm:pb-0">
                                 <img src={order.order_detail[0].product.product_images[0].image_link} alt="" className="w-[108px] h-[108px]  object-cover rounded sm:rounded-md"/>
                                 <div className="flex flex-col w-full">
-                                    <CardText>{ order.order_detail[0].product.name }</CardText>
+                                    <CardText>{ sliceString(order.order_detail[0].product.name) }</CardText>
                                     <small className="text-grey-200 text-xs sm:text-sm">Placed on  {moment(order.order_detail[0].created_at).format('L')}</small>
                                     <small className="text-grey-200 text-xs sm:text-sm">orderId: {345679}</small>
                                     <p className={`${ order.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ order.status }</p>

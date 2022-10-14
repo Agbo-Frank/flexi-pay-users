@@ -1,22 +1,17 @@
 
 import { useDispatch } from 'react-redux'
-import { CardActions, CardImg, CardText, CardWrapper, CopyText, ProgressBar } from "../../components"
+import { CardActions, CardImg, CardText, CardWrapper, CopyText, FormInput, ProgressBar } from "../../components"
 // import OrderDetails from "./OrderDetails"
 import Empty from "../../components/Empty"
 import { useState, Dispatch, SetStateAction } from "react"
-import TV from '../../asset/monitor.png'
-import BagIcon from "../../components/icons/Bag"
-import {
-    TrackIcon, 
-    DocIcon, StarIcon
-} from "../../components/icons"
+import {NairaIcon} from "../../components/icons"
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery } from '@mui/material'
 import { IOrder, ISubscription } from '../../interface'
 import moment from 'moment'
 import { formatNumber, sliceString } from '../../utils'
 import { LoadingButton } from '@mui/lab'
-import { useCancelSubscriptionMutation } from '../../redux/api/Order'
-import { cancelSubscription } from './services'
+import { useCancelSubscriptionMutation, useTopUpSubscriptionMutation } from '../../redux/api/Order'
+import { cancelSubscription, FPFormikTopUpSubscription } from './services'
 import SubscriptionDetails from './subscriptionDetails'
 
 
@@ -30,10 +25,13 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
     const matches = useMediaQuery('(min-width:600px)');
     let [open, setOpen] = useState({
         details: false,
-        cancel: false
+        cancel: false,
+        top_up: false
     })
     const dispatch = useDispatch()
     let [cancelSub, {isLoading}] = useCancelSubscriptionMutation()
+    let [topUp, {isLoading: toping}] = useTopUpSubscriptionMutation()
+    const formik = FPFormikTopUpSubscription(topUp, () => setOpen(state => ({...state, top_up: false})))
 
     function getProgress(){
         const amount_left = parseInt(subscription.amount_left)
@@ -51,7 +49,7 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
                     <SubscriptionDetails subscription={subscription} open={open.details} close={() => setOpen(state => ({...state, details: false}))}/>
                 }
                 <Dialog open={open.cancel} onClose={() => setOpen(state => ({...state, cancel: false}))}>
-                    <DialogTitle>Cancel Order</DialogTitle>
+                    <DialogTitle>Cancel Subscription</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             Cancelling this subscription will attract a fee of 25% of your saved up amount.
@@ -65,12 +63,57 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
                         >Abort</Button>
 
                         <LoadingButton
-                        onClick={() => cancelSubscription({id: subscription?.id}, cancelSub, dispatch)}
+                        onClick={() => {
+                            cancelSubscription(
+                                {id: subscription?.id}, 
+                                cancelSub, 
+                                dispatch,
+                                () => setOpen(state => ({...state, cancel: false}))
+                            )
+                        }}
                         loading={isLoading}
                         color="secondary"
                         variant="contained"
                         >
                             Proceed
+                        </LoadingButton>
+                    </DialogActions>
+                </Dialog>
+
+                <Dialog open={open.top_up} onClose={() => setOpen(state => ({...state, top_up: false}))}>
+                    <DialogTitle>Top Up Your Subscription</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Kindly ensure you have a sufficient balance in your wallet
+                        </DialogContentText>
+                        <form className='mt-5'>
+                            <FormInput
+                                type="text" 
+                                name="amount" 
+                                label={ "Enter Amount"} 
+                                Icon={NairaIcon}
+                                formik={formik}
+                            />
+                        </form>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => setOpen(state => ({...state,  cancel: false}))}
+                        >Cancel</Button>
+
+                        <LoadingButton
+                        onClick={() => {
+                            formik.setFieldValue("subscription_id", subscription?.id)
+                            formik.setFieldValue("top_up_method", "wallet")
+                            formik.submitForm()
+                        }}
+                        loading={toping}
+                        color="secondary"
+                        variant="contained"
+                        >
+                            Top up
                         </LoadingButton>
                     </DialogActions>
                 </Dialog>
@@ -93,7 +136,7 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
                     <Button 
                         color="secondary"
                         size={matches ? "large" : "medium"}  
-                        onClick={() => setOpen(state => ({...state, track: true}))}
+                        onClick={() => setOpen(state => ({...state, top_up: true}))}
                         startIcon={<i className="text-white fa-solid fa-plus"></i>}
                         variant="contained">
                             Top up

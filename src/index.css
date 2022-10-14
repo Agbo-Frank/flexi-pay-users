@@ -92,15 +92,15 @@ html{
   background-color: transparent;
 }
 
-.failed{
+.failed, .cancelled{
   background-color: rgba(255, 0, 0, 0.1);
   color: rgba(255, 15, 0, 1);
 }
-.solid.failed{
+.solid.failed, .solid.cancelled{
   background-color: rgba(255, 15, 0, 1);
   color: white;
 }
-.failed.icon{
+.failed.icon, .cancelled.icon{
   color: rgba(255, 15, 0, 1);
   background-color: transparent;
 }
