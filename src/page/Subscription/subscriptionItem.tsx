@@ -42,6 +42,8 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
         return Math.floor(result)
 
     }
+
+    console.log(subscription)
     return(
         <>  <>
                 {
@@ -127,7 +129,7 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
                             <CardText>{ sliceString(subscription.installment.product?.name)}</CardText>
                             {/* <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(subscription.amount)}</p> */}
                             <small className="text-grey-200 text-xs sm:text-sm">Subscribed on  {moment(subscription.created_at).format("MMM Do YY")}</small>
-                            <p className={`${ subscription.is_completed ? 'paid' : 'pending' } py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit my-1`}>{ subscription.is_completed ? 'paid' : 'pending' }</p>
+                            <p className={`${ subscription.status } py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit my-1`}>{ subscription.status }</p>
                             <ProgressBar width={getProgress().toString() + "%"}/>
                         </div>
                     </div>

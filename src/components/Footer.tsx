@@ -126,8 +126,8 @@ const NewFooter = () => {
     let formik = FPFormikSubscribe(setLoading)
     
     return(
-        <div className="w-full p-5 md:px-10 md:py-3 text-white bg-primary-dark-blue">
-            <div className="fp-screen bg-primary-dark-blue h-full flex flex-col sm:flex-row md:p-2">
+        <footer  className="fp-screen boder border-red-700 p-5 md:px-10 md:py-3 text-white bg-primary-dark-blue">
+            <div className="bg-primary-dark-blue h-full flex flex-col sm:flex-row md:p-2">
                 <div className="my-2 sm:my-5 md:my-auto w-full sm:w-1/2 sm:px-5 border-r-0 sm:border-r border-[#EDEEF0] sm:py-4">
                     <p className="mb-2">Contact us/Follow us:</p>
                     <div className="flex flex-row flex-wrap gap-3 sm:gap-5 sm:space-y-0">
@@ -160,8 +160,8 @@ const NewFooter = () => {
                 </div>
             </div>
 
-            <div className="border-y border-[#EDEEF0] bg-primary-dark-blue">
-                <div className="flex fp-screen flex-col md:flex-row space-y-2 sm:space-y-0 justify-between py-5 ">
+            <div className=" bg-primary-dark-blue border-y border-[#EDEEF0] ">
+                <div className="flex flex-col md:flex-row space-y-2 sm:space-y-0 justify-between py-5 bg-primary-dark-blue">
                     <div>
                         <div className="mb-4">
                             <Logo color="white"/>
@@ -195,7 +195,7 @@ const NewFooter = () => {
             <div className="text-center bg-primary-dark-blue">
                 <p className="text-xs sm:text-sm font-light my-3">Copyright © 2022 FlexiPay.com. All rights reserved</p>
             </div>
-        </div>
+        </footer >
     )
 }
 
@@ -204,10 +204,7 @@ const NewFooter = () => {
 export function Footer(){
     const navigate = useNavigate()
     return(
-        <footer className="w-full mt-5">
             <NewFooter />
-            {/* <OldFooter /> */}
-        </footer>
     )
 }
 
