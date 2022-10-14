@@ -1,4 +1,4 @@
-import {  ICheckoutDetails, IOrder, IPagination, IRate, IResponse, ISubscription, TCheckoutMethod } from '../../interface'
+import {  ICheckoutDetails, IOrder, IPagination, IRate, IResponse, ISubscription, ITopUpSubscriptionReq, TCheckoutMethod } from '../../interface'
 import { RootState } from '../store'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { FLEXIPAY_URL } from '../../utils/constants'
@@ -42,12 +42,28 @@ export const OrderApi = createApi({
             }),
             providesTags: (result, error, arg) => result ? [{type: "Order", id: arg}] : ["Order"]
         }),
+        cancelOrder: build.mutation<IResponse<{data: any[] | null}>, {order_id: string | number}>({
+            query: (body) => ({
+                url: "/user/cancel/order",
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ["Order"]
+        }),
         getUserSubscriptions: build.query<IResponse<IPagination<ISubscription[]>>, number>({
             query: (page) => ({
                 url: "/user/subscriptions?page=" + page.toString(),
                 method: "GET"
             }),
             providesTags: (result, error, arg) => result ? [{type: "Subscription", id: arg}] : ["Subscription"]
+        }),
+        topUpSubscription: build.mutation<IResponse<{data: any[] | null}>, ITopUpSubscriptionReq>({
+            query: (body) => ({
+                url: "/user/top-up/subscription",
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ["Subscription"]
         }),
         cancelSubscription: build.mutation<IResponse<{data: any[] | null}>, {id: string | number}>({
             query: (body) => ({
@@ -67,5 +83,7 @@ export const {
     useLazyGetUserOrdersQuery,
     useGetUserSubscriptionsQuery,
     useLazyGetUserSubscriptionsQuery,
-    useCancelSubscriptionMutation
+    useCancelSubscriptionMutation,
+    useTopUpSubscriptionMutation,
+    useCancelOrderMutation
 } = OrderApi

@@ -1,4 +1,6 @@
+import { AnyAction } from "@reduxjs/toolkit"
 import { useFormik } from "formik"
+import { Dispatch } from "react"
 import { useDispatch } from "react-redux"
 import { IResponse, IReview, ITrigger } from "../../interface"
 import { toggleSnackBar } from "../../redux/slice/modal"
@@ -54,6 +56,39 @@ export function FPFormikProductReview(comment: ITrigger<Omit<IReview, 'rate'>, I
     })
 
     return formik
+}
+
+export async function cancelOrder(
+    body: {order_id: string | number}, 
+    canOrder: ITrigger<{order_id: string | number}, IResponse<{data: any[] | null}>>, 
+    dispatch: Dispatch<AnyAction>,
+    done: () => void | any
+){
+    try{
+        let data = await canOrder(body).unwrap()
+        if(data){
+            dispatch(toggleSnackBar({
+                open: true,
+                message: data.message,
+                severity: data.status === 'success' ? 'success' : 'error'
+            }))
+
+            if(data.status === "success"){
+                done()
+            }
+        }
+    }
+    catch(err){
+        if(err){
+            let error: any = err
+
+            dispatch(toggleSnackBar({
+                open: true,
+                severity: 'error',
+                message: error?.data?.message || error?.message
+            }))
+        }
+    }
 }
 
 export default FPFormikProductReview

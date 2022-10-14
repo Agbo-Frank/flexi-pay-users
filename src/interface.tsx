@@ -387,7 +387,7 @@ export interface ICheckoutDetails {
 }
 
 export interface IOrder {
-    id: string;
+    id: string | number;
     order_type: string;
     status: string;
     discount_rate: string;
@@ -395,7 +395,8 @@ export interface IOrder {
     created_at: string | Date;
     updated_at: string | Date;
     customer: Pick<IUser, 'first_name' | 'last_name'>,
-    order_detail: IOrderDetails[]
+    order_detail: IOrderDetails[],
+    shipment_detail: IShipmentDetail
 }
 
 export interface IOrderDetails {
@@ -405,6 +406,14 @@ export interface IOrderDetails {
     product: IProduct;
     created_at: string | Date;
     updated_at: string | Date;
+}
+
+export interface IShipmentDetail {
+    delivery_period: string;
+    delivery_fee: string,
+    tracking_code: string;
+    courier_id:string;
+    product: IProduct;
 }
 
 export interface IReview {
@@ -424,4 +433,10 @@ export interface ISubscription {
     updated_at: string | Date;
     status: string;
     installment: IInstallment  
+}
+
+export interface ITopUpSubscriptionReq{
+    subscription_id: string,
+    amount: number, 
+    top_up_method: string
 }

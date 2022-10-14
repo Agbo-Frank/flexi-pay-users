@@ -21,7 +21,6 @@ export function Subscriptions (){
     useEffect(() => {
         getSubscription(page)
     }, [loading, page])
-    console.log(subscriptions, pagination)
     return(
         <>
             <DashboardWrapper>
@@ -58,8 +57,8 @@ export function Subscriptions (){
                                     Start Shopping
                             </Button>
                         }/> :
-                        subscriptions?.map(subscription => (
-                            <Subscription subscription={subscription}/>
+                        subscriptions?.map((subscription, idx) => (
+                            <Subscription subscription={subscription} key={idx}/>
                         ))
                     }
                 </Wrapper>

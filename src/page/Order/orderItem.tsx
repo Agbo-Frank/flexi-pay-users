@@ -18,6 +18,8 @@ import { formatNumber, sliceString } from '../../utils'
 import ProductReviewForm from './ProductReviewForm'
 import { LoadingButton } from '@mui/lab'
 import backgroundImage from "../../asset/backgroundImage.png"
+import { cancelOrder } from './service'
+import { useCancelOrderMutation } from '../../redux/api/Order'
 
 
 export interface IOrderModel {
@@ -44,6 +46,7 @@ interface IOrderButtons {
 function Buttons ( { order, setOpen, disabled }: IOrderButtons): JSX.Element{
     const matches = useMediaQuery('(min-width:600px)');
     const dispatch = useDispatch()
+
 
     if(order.status === 'processed'){
         return(
@@ -127,7 +130,10 @@ function Order ({ order}: IOrderDetails) {
         review: false,
         cancel: false
     })
+    console.log(order)
     let [disabled] = useState(order.order_detail[0]?.product)
+    const [canOrder, {isLoading}] = useCancelOrderMutation()
+    const dispatch = useDispatch()
     return(
         <>  
             <>
@@ -157,15 +163,22 @@ function Order ({ order}: IOrderDetails) {
                         variant="outlined"
                         color="secondary"
                         onClick={() => setOpen(state => ({...state,  cancel: false}))}
-                        >Cancel </Button>
+                        >Abort </Button>
 
                         <LoadingButton
-                        // onClick={}
-                        // loading={removing}
+                        onClick={() => {
+                            cancelOrder(
+                                {order_id: order.id}, 
+                                canOrder, 
+                                dispatch,
+                                () => setOpen(state => ({...state, cancel: false}))
+                            )
+                        }}
+                        loading={isLoading}
                         color="secondary"
                         variant="contained"
                         >
-                            Confirm
+                            Proceed
                         </LoadingButton>
                     </DialogActions>
                 </Dialog>
@@ -179,7 +192,7 @@ function Order ({ order}: IOrderDetails) {
                         <div className="flex flex-col sm:h-full items-stretch">
                             <CardText>{ disabled === null ? "Product Doesn't exist" : sliceString(order.order_detail[0]?.product?.name) }</CardText>
                             <small className="text-grey-200 text-xs sm:text-sm">Placed on  {moment(order.order_detail[0].created_at).format("MMM Do YY")}</small>
-                            <small className="text-grey-200 text-xs sm:text-sm my-1">orderId: <CopyText text={order.id}/></small>
+                            <small className="text-grey-200 text-xs sm:text-sm my-1">orderId: <CopyText text={typeof order.id === 'number' ? order.id.toString() : order.id}/></small>
                             <p className={`${ order.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ order.status }</p>
                             <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(order.order_detail[0].price)}</p>
                         </div>

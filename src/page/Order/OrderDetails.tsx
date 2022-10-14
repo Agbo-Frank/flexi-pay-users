@@ -30,20 +30,21 @@ function OrderDetails({order, open, close}: IOrderModel){
                 <div className="m-4 h-fit">
                     <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-lg mb-3">
                         <div className="flex justify-start items-center gap-3">
-                            <p className={`${ order.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ order.status }</p>
                             <p className="flex gap-2 items-center">
                                 <CalenderIcon color='#555555' size={"14"} />
                                 <p>{moment(order.order_detail[0].created_at).format('l')}</p>
                             </p>
+                            <p className={`${ order.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ order.status }</p>
                         </div>
                         {/* <p>Order No: <CopyText text={`${345679}`}/></p> */}
                         <p>Quantity: {order.order_detail[0].quantity}</p>
-                        <p>Total: ₦ {formatNumber(`${order.order_detail[0].price}`)}</p>
+                        <p>Total: ₦ {formatNumber(parseFloat(order.order_detail[0].price) * order.order_detail[0].quantity)}</p>
                         <p>Order Placed: {moment(order.order_detail[0].created_at).format('l')}</p>
+                        <p>Order Type: {order.order_type}</p>
                     </div>
                     
                     <div className="flex flex-col sm:flex-row justify-between gap-5 mb-4">
-                        <div className="text-grey-200 text-sm p-3 border border-solid rounded-lg w-full leading-7">
+                        <div className="text-grey-200 text-sm p-3 border border-solid rounded-lg w-full leading-7 sm:w-1/2">
                             {/* <div className="leading-7">
                                 <h2 className="font-semibold">Delivery Method</h2>
                                 <p className="text-grey-200 text-sm">Door Delivery</p>
@@ -68,34 +69,40 @@ function OrderDetails({order, open, close}: IOrderModel){
                                 }
                             </div>
                         </div>
-                        {/* <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-lg w-full sm:w-1/2">
-                            <div className="leading-7">
+                        <div className="text-grey-200 text-sm p-3 border border-solid border-grey-100 rounded-lg w-full sm:w-1/2">
+                            {/* <div className="leading-7">
                                 <h2 className="font-semibold">Delivery Method</h2>
                                 <p className="text-grey-200 text-sm">Installmental </p>
-                            </div>
+                            </div> */}
 
                             <div className="leading-7">
-                                <h2 className="font-semibold">Payment Details</h2>
-                                <p className="capitalize text-grey-200 text-sm mb-2">Installmental</p>
+                                <h2 className="font-semibold">Shipment Details</h2>
+                                {/* <p className="capitalize text-grey-200 text-sm mb-2">Installmental</p> */}
 
                                 <p className="capitalize text-grey-200 text-sm w-9/12">
                                     <p>
-                                        <span className="font-medium">Plan: </span>
-                                        <span>₦ 10,000</span>
+                                        <span className="font-medium">Delivery period: </span>
+                                        <span>{order?.shipment_detail?.delivery_period}</span>
                                     </p>
-
                                     <p>
-                                        <span className="font-medium">Interval: </span>
-                                        <span> Weekly </span>
+                                        <span className="font-medium">Delivery Fee: </span>
+                                        <span>{order?.shipment_detail?.delivery_fee}</span>
                                     </p>
-
                                     <p>
-                                        <span className="font-medium">Total: </span>
-                                        <span>Weekly ₦ 150,000</span>
+                                        <span className="font-medium">Tracking Code: </span>
+                                        <span><CopyText text={order?.shipment_detail?.tracking_code} /></span>
                                     </p>
+                                    <p>
+                                        <span className="font-medium">Courier ID: </span>
+                                        <span><CopyText text={order?.shipment_detail?.courier_id} /></span>
+                                    </p>
+                                    {/* <p>
+                                        <span className="font-medium">Tracking Code: </span>
+                                        <span>{order.shipment_details.tracking_code}</span>
+                                    </p> */}
                                 </p>
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
             </div>
