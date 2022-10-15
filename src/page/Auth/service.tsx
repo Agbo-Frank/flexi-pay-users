@@ -61,7 +61,7 @@ export function FPFormikLogin(login: ITrigger<ILogin, IAuthResponse>){
     })
 }
 
-export function FPFormikRegister(register: ITrigger<IRegister, IAuthResponse>, referee: string | null){
+export function FPFormikRegister(register: ITrigger<IRegister, IAuthResponse>, referee: string | null, cookie: {"flex-pay-cookie"?: any}){
     let navigate = useNavigate()
 
     let initialValues: IRegister = {
@@ -71,7 +71,8 @@ export function FPFormikRegister(register: ITrigger<IRegister, IAuthResponse>, r
         password: '',
         password_confirmation: '',
         phone_number: '',
-        ref: referee
+        ref: referee,
+        guest_id: cookie['flex-pay-cookie']
     }
 
     async function onSubmit (value: IRegister, formikHelpers: FormikHelpers<IRegister | any>){

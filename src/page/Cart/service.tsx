@@ -61,7 +61,6 @@ export async function handleAddToCartClick(
 
     if(uuid){
         try{
-            console.log(id)
             let data = await addToCart({
                 product_uuid: `${id}`,
                 quantity: "1",
@@ -81,7 +80,7 @@ export async function handleAddToCartClick(
                 dispatch(toggleSnackBar({
                     open: true,
                     severity: 'error',
-                    message: error?.data.message
+                    message: error?.data?.message || "An error just occured, Please Try again!"
                 }))
             }
         }

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import { Body, Header, Categories, Footer, Breadcrumb, ProductsSlide } from "../../components"
+import { Body, Header, Categories, Footer, Breadcrumb, ProductsSlide, CopyText } from "../../components"
 import { CartIcon, HeartIcon,  } from "../../components/icons"
 import { useGetProductQuery, useLazyGetOtherProductsFromVendorQuery, useLazyGetRecentlyViewedQuery, useLazyGetSimilarProductsQuery } from "../../redux/api/Product";
 import { LoadingButton } from "@mui/lab";
@@ -129,7 +129,13 @@ export function Product(){
                                 <div className="relative w-full sm:w-6/12 flex flex-col space-y-2 px-2 sm:px-0">
                                     <div>
                                         <h1 className="text-grey-1200 text-xl sm:text-4xl font-medium capitalize">{sliceString(product?.name)}</h1>
-                                        <p className="font-semibold text-sm text-grey-200 my-[6px]">{product?.product_code}</p>
+                                        {
+                                            (product && product?.product_code) &&
+                                            <p className="font-semibold text-sm text-grey-200 my-[6px]">
+                                                <CopyText text={product?.product_code} />
+                                            </p>
+                                            
+                                        }
                                         <div className="flex space-x-3">
                                             <Rating readOnly
                                                 value={parseInt((average_rating / (reviews?.length || 1)).toString())}
@@ -162,7 +168,7 @@ export function Product(){
                                                     <>No Installment Plans</> :
                                                     <>Pay 
                                                         {
-                                                            product.installments.map(installment => <>{" " + installment.amount + " " + installment.frequency}</>)
+                                                            product.installments.map(installment => <>{" " + installment.amount } <span className="capitalize">{ installment.frequency }</span></>)
                                                         }
                                                     </>
                                                 }
