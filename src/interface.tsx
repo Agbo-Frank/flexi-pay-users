@@ -93,7 +93,8 @@ export interface IRegister {
     password: string;
     password_confirmation: string;
     phone_number: string;
-    ref?: string | null
+    ref?: string | null;
+    guest_id?: string | null
 }
 
 export interface ICreateAccountBody {

@@ -4,7 +4,7 @@ import { CardActions, CardImg, CardText, CardWrapper, CopyText, FormInput, Progr
 // import OrderDetails from "./OrderDetails"
 import Empty from "../../components/Empty"
 import { useState, Dispatch, SetStateAction } from "react"
-import {NairaIcon} from "../../components/icons"
+import {DocIcon, NairaIcon, StarIcon, TrackIcon} from "../../components/icons"
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery } from '@mui/material'
 import { IOrder, ISubscription } from '../../interface'
 import moment from 'moment'
@@ -21,6 +21,109 @@ export interface ISubscriptionModal {
     close: () => void | any
 }
 
+interface ISubscriptionButtons {
+    subscription: ISubscription;
+    setOpen: Dispatch<SetStateAction<{
+        details:boolean;
+        cancel: boolean;
+        top_up: boolean
+    }>>,
+    disabled: any
+}
+
+function Buttons ( { subscription, setOpen, disabled }: ISubscriptionButtons): JSX.Element{
+    const matches = useMediaQuery('(min-width:600px)');
+    const dispatch = useDispatch()
+
+
+    if(subscription.status === 'processed'){
+        return(
+            <Button 
+                color="secondary"
+                size={matches ? "large" : "medium"} 
+                variant='contained'
+                startIcon={<TrackIcon color="white" size="17"/>}
+                onClick={() => setOpen(state => ({...state, track: true}))}
+                disabled={disabled === null}
+                >
+                    Track Item
+            </Button>
+        )
+    }
+    else if(subscription.status === 'delivered'){
+        return (
+        <>
+             <Button 
+                color="secondary"
+                size={matches ? "large" : "medium"} 
+                variant='contained'
+                onClick={() => setOpen(state => ({...state, details: true}))}
+                startIcon={<DocIcon color='white' size="17" />}
+                disabled={disabled === null}>
+                    See Details
+            </Button>
+            <Button 
+                color="secondary"
+                size={matches ? "large" : "medium"}  
+                variant="outlined" 
+                startIcon={<StarIcon color="#ff5000" size="17"/>}
+                onClick={() => setOpen(state => ({...state, review: true}))}
+                disabled={disabled === null}>
+                    Review Item
+            </Button>
+        </>
+        )
+    }
+    
+    else if(subscription.status === 'pending' || subscription.status === 'success'){
+        if(subscription.is_completed === 1){
+            return (
+                <Button 
+                    color="secondary"
+                    size={matches ? "large" : "medium"} 
+                    variant='contained'
+                    onClick={() => setOpen(state => ({...state, details: true}))}
+                    startIcon={<DocIcon color='white' size="17" />}
+                    disabled={disabled === null}>
+                        See Details
+                </Button>
+            )
+        }
+        else {
+            return(<>
+                <Button 
+                        color="secondary"
+                        size={matches ? "large" : "medium"}  
+                        onClick={() => setOpen(state => ({...state, top_up: true}))}
+                        startIcon={<i className="text-white fa-solid fa-plus"></i>}
+                        variant="contained">
+                            Top up
+                    </Button>
+                    <Button 
+                        color="secondary"
+                        size={matches ? "large" : "medium"}  
+                        variant="outlined"
+                        onClick={() => setOpen(state => ({...state, cancel: true}))}>
+                            Cancel
+                    </Button>
+            </>)
+        }
+    }
+    else{
+        return (
+            <Button 
+                color="secondary"
+                size={matches ? "large" : "medium"} 
+                variant='contained'
+                onClick={() => setOpen(state => ({...state, details: true}))}
+                startIcon={<DocIcon color='white' size="17" />}
+                disabled={disabled === null}>
+                    See Details
+            </Button>
+        )
+    }
+}
+
 function Subscription ({ subscription }: {subscription: ISubscription}) {
     const matches = useMediaQuery('(min-width:600px)');
     let [open, setOpen] = useState({
@@ -30,6 +133,7 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
     })
     const dispatch = useDispatch()
     let [cancelSub, {isLoading}] = useCancelSubscriptionMutation()
+    let [disabled] = useState(subscription?.installment?.product)
     let [topUp, {isLoading: toping}] = useTopUpSubscriptionMutation()
     const formik = FPFormikTopUpSubscription(topUp, () => setOpen(state => ({...state, top_up: false})))
 
@@ -43,14 +147,23 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
 
     }
 
+    const handleClose = () => {
+        setOpen(state => ({
+            ...state, 
+            details: false,
+            cancel: false,
+            top_up: false
+        }))
+    }
+
     console.log(subscription)
     return(
         <>  <>
                 {
                     open.details &&
-                    <SubscriptionDetails subscription={subscription} open={open.details} close={() => setOpen(state => ({...state, details: false}))}/>
+                    <SubscriptionDetails subscription={subscription} open={open.details} close={handleClose}/>
                 }
-                <Dialog open={open.cancel} onClose={() => setOpen(state => ({...state, cancel: false}))}>
+                <Dialog open={open.cancel} onClose={handleClose}>
                     <DialogTitle>Cancel Subscription</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
@@ -61,7 +174,7 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
                         <Button
                         variant="outlined"
                         color="secondary"
-                        onClick={() => setOpen(state => ({...state,  cancel: false}))}
+                        onClick={handleClose}
                         >Abort</Button>
 
                         <LoadingButton
@@ -102,7 +215,7 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
                         <Button
                         variant="outlined"
                         color="secondary"
-                        onClick={() => setOpen(state => ({...state,  cancel: false}))}
+                        onClick={handleClose}
                         >Cancel</Button>
 
                         <LoadingButton
@@ -110,6 +223,13 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
                             formik.setFieldValue("subscription_id", subscription?.id)
                             formik.setFieldValue("top_up_method", "wallet")
                             formik.submitForm()
+                                .then(data => {
+                                    // if(data){
+                                        formik.resetForm()
+                                    // }
+                                })
+                                .catch(err => console.log(err))
+                            
                         }}
                         loading={toping}
                         color="secondary"
@@ -129,27 +249,19 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
                             <CardText>{ sliceString(subscription.installment.product?.name)}</CardText>
                             {/* <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(subscription.amount)}</p> */}
                             <small className="text-grey-200 text-xs sm:text-sm">Subscribed on  {moment(subscription.created_at).format("MMM Do YY")}</small>
-                            <p className={`${ subscription.status } py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit my-1`}>{ subscription.status }</p>
+                            <p className={`${ subscription.status } py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit my-1`}>
+                                { subscription.is_completed === 1 ? "completed" : subscription.status }
+                            </p>
                             <ProgressBar width={getProgress().toString() + "%"}/>
                         </div>
                     </div>
                 </div>
                 <CardActions>
-                    <Button 
-                        color="secondary"
-                        size={matches ? "large" : "medium"}  
-                        onClick={() => setOpen(state => ({...state, top_up: true}))}
-                        startIcon={<i className="text-white fa-solid fa-plus"></i>}
-                        variant="contained">
-                            Top up
-                    </Button>
-                    <Button 
-                        color="secondary"
-                        size={matches ? "large" : "medium"}  
-                        variant="outlined"
-                        onClick={() => setOpen(state => ({...state, cancel: true}))}>
-                            Cancel
-                    </Button>
+                    <Buttons 
+                        subscription={subscription}
+                        setOpen={setOpen}
+                        disabled={disabled}
+                    />
                 </CardActions>
             </CardWrapper> 
         </>  

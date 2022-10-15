@@ -7,12 +7,16 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { useState } from 'react';
 import { Alert, Collapse } from '@mui/material';
 import { FPFormikRegister } from './service';
+import { useCookies } from 'react-cookie';
+import { FLEXIPAY_COOKIE } from '../../utils/constants';
 
 export function Register() {
     let [register, { isLoading: loading, data }] =  useRegisterMutation()
     let searchParams = useSearchParams()[0]
 
-    let formik = FPFormikRegister(register, searchParams.get('referee'))
+    const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
+
+    let formik = FPFormikRegister(register, searchParams.get('referee'), cookies)
     
   return (
     <AuthenticationForm>
