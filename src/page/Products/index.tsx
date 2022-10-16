@@ -46,7 +46,6 @@ export function Products(){
             filterProduct(filters)
                 .unwrap()
                 .then(result => {
-                    console.log(result)
                     setProducts(result.result.data.data)
                     setPagination(result.result.data)
                     setLoading(false)

@@ -1,19 +1,32 @@
 import { Search } from "@mui/icons-material";
 import { Checkbox, Divider, Rating } from "@mui/material";
+import { useState } from "react";
 import { IFilter } from "../../interface";
+import { serializeFormQuery } from "../../utils";
 
 
 interface IFiltersProps {
-  category: any
+  category: any;
+  searchParams: URLSearchParams;
+  setSearchParams: any
 }
 
 
-export function CategoryFilter({category}: IFiltersProps){
+export function CategoryFilter({category, searchParams, setSearchParams}: IFiltersProps){
+  const [values, setValues] = useState({
+    to: "",
+    from: ""
+  })
+
+  function submitPriceRange(e: React.FormEvent<HTMLFormElement>){
+    e.preventDefault()
+    setSearchParams({...serializeFormQuery(searchParams),from: values.from, to: values.to})
+  }
     
     return(
         <div className="hidden sm:block sm:w-3/12 h-full border bg-white rounded-lg">
           {category?.length && category.map((val: any, index: any)=>(
-            <div className="w-full">
+            <div className="w-full" key={index}>
               <div className="w-full p-5">
                 <div className="flex justify-between">
                   <h3 className="text-[#222222] font-medium text-lg">{val.title}</h3>
@@ -32,11 +45,25 @@ export function CategoryFilter({category}: IFiltersProps){
                 </div>
                 <div className={`w-full ${val.range ? "block" : "hidden"}`}>
                   <p className="font-medium">Set Price Range</p>
-                  <div className="flex justify-between h-[40px] space-x-2 py-1">
-                    <input className="rounded-2xl md:w-[40%] h-full border border-[#E8E5FF] px-3" placeholder="₦ from" />
-                    <input className="rounded-2xl md:w-[40%] h-full border border-[#E8E5FF] px-3" placeholder="₦ to" />
-                    <button className="rounded-2xl md:w-[20%] h-full bg-[#FF5000] text-white hover:opacity-50">OK</button>
-                  </div>
+                  <form 
+                    className="flex justify-between h-[40px] space-x-2 py-1"
+                    onSubmit={submitPriceRange}>
+                      <input 
+                        type="number" 
+                        className="rounded-2xl md:w-[40%] h-full border border-[#E8E5FF] px-3" 
+                        placeholder="₦ from"  
+                        value={values.from}
+                        onChange={(e) => setValues(state => ({...state, from: e.target.value}))}
+                      />
+                      <input 
+                        type="number" 
+                        className="rounded-2xl md:w-[40%] h-full border border-[#E8E5FF] px-3" 
+                        placeholder="₦ to" 
+                        value={values.to}
+                        onChange={(e) => setValues(state => ({...state, to: e.target.value}))}
+                      />
+                      <button className="rounded-2xl md:w-[20%] h-full bg-[#FF5000] text-white hover:opacity-50 " type="submit">OK</button>
+                  </form>
                 </div>
               </div>
               {index - category?.length && (<Divider  />)}

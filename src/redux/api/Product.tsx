@@ -43,7 +43,7 @@ export const ProductApi = createApi({
                 params: body
             }),
             providesTags: (result, error, arg) => {
-                return result ? [{type: 'Product', product: arg.product_uuid, category: arg.vendor_uuid}] : ['Product']
+                return result ? [{type: 'Product', product: arg.product_uuid, vendor: arg.vendor_uuid}] : ['Product']
             }
         }),
         getRecentlyViewed: build.query<IResponse<{data: IProduct[]}>, void>({
@@ -108,6 +108,7 @@ export const {
     useSearchProductQuery,
     useLazySearchProductQuery,
     useGetStoreQuery,
+    useLazyGetStoreQuery,
     useGetSubCategoriesQuery,
     useLazyGetSubCategoriesQuery,
     useGetSimilarProductsQuery,

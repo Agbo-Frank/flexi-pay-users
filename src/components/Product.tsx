@@ -9,10 +9,7 @@ import { IProduct } from '../interface';
 import { formatNumber, sliceString } from '../utils';
 import { GreyLogo } from './icons';
 
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-
 export function ProductCard({product}: {product: IProduct}){
-    console.log(product)
     return(
         <Link to={'/product/' + product.uuid} className="block w-full bg-white rounded-lg h-fit p-2 space-y-4 shadow-sm hover:shadow hover:-translate-y-1 hover:z-30 my-2 overflow-hidden">
             <div className='w-[145px] h-[130px] sm:w-full sm:h-44 overflow-hidden rounded-lg product_image'>
@@ -34,7 +31,7 @@ export function ProductCard({product}: {product: IProduct}){
                     <p className='text-xs text-primary-orange-200 font-medium'>Pay 
                         {
                             // product.installments?.map(installment => (
-                                <span>₦ {product.installments[0].amount} 
+                                <span> ₦ {product.installments[0].amount} 
                                     <span className='capitalize'>
                                         {" " + product.installments[0].frequency}
                                     </span>

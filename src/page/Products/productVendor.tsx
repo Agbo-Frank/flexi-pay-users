@@ -9,6 +9,7 @@ import { FLEXIPAY_VENDOR_URL} from '../../utils/constants'
 
 function ProductVendor({vendor}: {vendor: IStoreDetails | undefined}){
     let navigate = useNavigate()
+    console.log(vendor)
     return(
         <div className="gap-3 sm:gap-5 flex flex-col sm:flex-row justify-between items-stretch bg-white sm:bg-transparent my-3 sm:my-0">
             <div className="w-[87%] relative mx-auto sm:w-9/12 rounded-2xl bg-[#f4f4f4] sm:bg-white">
@@ -22,13 +23,13 @@ function ProductVendor({vendor}: {vendor: IStoreDetails | undefined}){
                         <p>{vendor?.name}</p>
                     </li>
                     <li className="flex text-sm space-x-3 items-center">
-                        <p>Verified Customer’s Reivews</p>
-                        <p>291</p>
+                        <p>Store Description</p>
+                        <p>{vendor?.description}</p>
                     </li>
-                    <li className="flex text-sm space-x-3 items-center">
+                    {/* <li className="flex text-sm space-x-3 items-center">
                         <p>Seller Score</p>
                         <p>94%</p>
-                    </li>
+                    </li> */}
                     {/* <li className="flex text-sm space-x-3 items-center">
                         <p>Number of Followers</p>
                         <p>150</p>

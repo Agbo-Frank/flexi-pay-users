@@ -65,7 +65,13 @@ function ProductDetails({ product }: {product: IProduct | undefined}){
                                     <WarrantyIcon color="#474747" size="50"/>
                                     <div>
                                         <p>Warranty</p>
-                                        <p className="text-sm font-light">This Product Warranty is: <span className="text-primary-orange-200">12 Months</span></p>
+                                        <p className="text-sm font-light">
+                                            {
+                                                !product?.warranty || product.warranty === "null"  ?
+                                                <span>This Product does not have any warranty is</span> :
+                                                <span>This Product Warranty is: <span className="text-primary-orange-200">{product.warranty}</span></span>
+                                            }
+                                        </p>
                                     </div>
                                 </div>
                             </div>

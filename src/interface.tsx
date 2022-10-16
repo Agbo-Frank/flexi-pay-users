@@ -256,6 +256,7 @@ export interface IProduct {
     key_features: string;
     product_code?: string;
     discounted_price?:string;
+    warranty?: string;
     weight?: string;
     category?: {
         uuid: string
@@ -314,7 +315,11 @@ export interface IFilter {
     price?: string;
     product_name?: string;
     latest?: boolean | string;
-    page?: string | number
+    page?: string | number;
+    price_range?: {
+        from: number | null,
+        to: number | null
+    }[]
 }
 
 export interface ICategory {

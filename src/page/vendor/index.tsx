@@ -1,4 +1,4 @@
-import { Button, Checkbox, MenuItem, Pagination, Skeleton } from "@mui/material"
+import { Backdrop, Button, Checkbox, CircularProgress, MenuItem, Pagination, Skeleton } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useSearchParams, useNavigate, useParams } from "react-router-dom"
 import { 
@@ -13,7 +13,8 @@ import { IFilter, IPagination, IProduct } from "../../interface"
 import { 
     useLazyGetProductsQuery, 
     useLazyFilterProductQuery, 
-    useLazySearchProductQuery 
+    useLazySearchProductQuery, 
+    useLazyGetStoreQuery
 } from "../../redux/api/Product"
 import { hasQueryString, serializeFormQuery } from "../../utils"
 import CategoryFilter from "./filter"
@@ -23,7 +24,7 @@ export function Vendor(){
     let [page, setPage] = useState(1)
     let [products, setProducts] = useState<IProduct[]>([])
     let [loading, setLoading] = useState(false)
-    let [pagination, setPagination] = useState<IPagination<IProduct[]>>()
+    let [pagination, setPagination] = useState<IPagination<IProduct[]> | null>()
 
     let { id: vendor_id } = useParams()
 
@@ -35,12 +36,18 @@ export function Vendor(){
         price: "",
         product_name: searchParams.get('search') || "",
         latest: searchParams.get('latest')  || 'false',
-        page
+        page,
+        price_range: [{
+            from: searchParams.has('price_from') ? parseFloat(`${searchParams.get('price_from')}`) : null,
+            to: searchParams.has('price_to') ? parseFloat(`${searchParams.get('price_to')}`) : null
+        }]
     })
+
+    console.log(filters)
 
     let navigate = useNavigate()
     let [filterProduct] = useLazyFilterProductQuery()
-    let [getProducts] = useLazyGetProductsQuery()
+    let [getProducts] = useLazyGetStoreQuery()
 
     useEffect(() => {
         setLoading(true)
@@ -57,11 +64,16 @@ export function Vendor(){
         }
         else {
             
-            getProducts(page)
+            getProducts(`${vendor_id}`)
                 .unwrap()
                 .then(result => {
-                    setProducts(result.result.data)
-                    setPagination(result.result)
+                    if(result.status === "failed"){
+                        navigate("*", {replace: true})
+                    }else{
+                        setProducts(result.result.data)
+                        setPagination(null)
+                    }
+                    
                 })
                 .catch(err => console.log(err))
         }
@@ -85,75 +97,81 @@ export function Vendor(){
         range: true,
         search: false,
       },
-      {
-        id: 2,
-        title: "Discount",
-        subTitle: "",
-        rating: false,
-        list: [
-          {id: 2.1, text: "50% and above", value: "50%>"},
-          {id: 2.2, text: "40% and above", value: "40%"},
-          {id: 2.3, text: "30% and above", value: "30%"},
-          {id: 2.4, text: "20% and above", value: "20%"},
-          {id: 2.5, text: "10% and above", value: "10%"},
-          {id: 2.5, text: "5% and above", value: "5%"},
-        ],
-        range: false,
-        search: false,
-      },
-      {
-        id: 3,
-        title: "Brand",
-        subTitle: "",
-        rating: false,
-        list: [
-          {id: 3.1, text: "Nokia", value: "nokia"},
-          {id: 3.2, text: "Gionee", value: "gionee"},
-          {id: 3.3, text: "Samsung", value: "samsung"},
-          {id: 3.4, text: "Motorola", value: "motorola"},
-          {id: 3.5, text: "iPhone", value: "iPhone"},
-          {id: 3.5, text: "Infinix", value: "infinix"},
-          {id: 3.6, text: "Techno", value: "techno"},
-          {id: 3.7, text: "iTel", value: "iTel"},
-        ],
-        range: false,
-        search: true,
-      },
-      {
-        id: 4,
-        title: "Sizes",
-        subTitle: "",
-        rating: false,
-        list: [
-          {id: 4.1, text: "7.0 inches", value: "7.0"},
-          {id: 4.2, text: "6.4 inches", value: "6.4"},
-          {id: 4.3, text: "6.1 inches", value: "6.1"},
-          {id: 4.4, text: "5.5 inches", value: "5.5"},
-          {id: 4.5, text: "5.0 inches", value: "5.0"},
-          {id: 4.5, text: "4.5 inches", value: "4.5"},
-        ],
-        range: false,
-        search: false,
-      },
-      {
-        id: 5,
-        title: "Ratings",
-        subTitle: "",
-        rating: true,
-        list: [
-          {id: 5.1, text: 5, value: 5},
-          {id: 5.2, text: 4, value: 4},
-          {id: 5.3, text: 3, value: 3},
-          {id: 5.4, text: 2, value: 2},
-          {id: 5.5, text: 1, value: 1},
-        ],
-        range: false,
-        search: false,
-      },
+    //   {
+    //     id: 2,
+    //     title: "Discount",
+    //     subTitle: "",
+    //     rating: false,
+    //     list: [
+    //       {id: 2.1, text: "50% and above", value: "50%>"},
+    //       {id: 2.2, text: "40% and above", value: "40%"},
+    //       {id: 2.3, text: "30% and above", value: "30%"},
+    //       {id: 2.4, text: "20% and above", value: "20%"},
+    //       {id: 2.5, text: "10% and above", value: "10%"},
+    //       {id: 2.5, text: "5% and above", value: "5%"},
+    //     ],
+    //     range: false,
+    //     search: false,
+    //   },
+    //   {
+    //     id: 3,
+    //     title: "Brand",
+    //     subTitle: "",
+    //     rating: false,
+    //     list: [
+    //       {id: 3.1, text: "Nokia", value: "nokia"},
+    //       {id: 3.2, text: "Gionee", value: "gionee"},
+    //       {id: 3.3, text: "Samsung", value: "samsung"},
+    //       {id: 3.4, text: "Motorola", value: "motorola"},
+    //       {id: 3.5, text: "iPhone", value: "iPhone"},
+    //       {id: 3.5, text: "Infinix", value: "infinix"},
+    //       {id: 3.6, text: "Techno", value: "techno"},
+    //       {id: 3.7, text: "iTel", value: "iTel"},
+    //     ],
+    //     range: false,
+    //     search: true,
+    //   },
+    //   {
+    //     id: 4,
+    //     title: "Sizes",
+    //     subTitle: "",
+    //     rating: false,
+    //     list: [
+    //       {id: 4.1, text: "7.0 inches", value: "7.0"},
+    //       {id: 4.2, text: "6.4 inches", value: "6.4"},
+    //       {id: 4.3, text: "6.1 inches", value: "6.1"},
+    //       {id: 4.4, text: "5.5 inches", value: "5.5"},
+    //       {id: 4.5, text: "5.0 inches", value: "5.0"},
+    //       {id: 4.5, text: "4.5 inches", value: "4.5"},
+    //     ],
+    //     range: false,
+    //     search: false,
+    //   },
+    //   {
+    //     id: 5,
+    //     title: "Ratings",
+    //     subTitle: "",
+    //     rating: true,
+    //     list: [
+    //       {id: 5.1, text: 5, value: 5},
+    //       {id: 5.2, text: 4, value: 4},
+    //       {id: 5.3, text: 3, value: 3},
+    //       {id: 5.4, text: 2, value: 2},
+    //       {id: 5.5, text: 1, value: 1},
+    //     ],
+    //     range: false,
+    //     search: false,
+    //   },
     ]
     console.log(vendor_id)
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
+            <Backdrop
+                className="text-[#fff] backdrop-blur z-50"
+                open={loading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <div className="w-full h-fit bg-white sm:bg-grey-500">
                 <Breadcrumb />
                 <div className="block sm:hidden w-11/12 my-2 mx-auto bg-white">
@@ -161,7 +179,9 @@ export function Vendor(){
                 </div>
                 <div className="fp-screen flex flex-col sm:flex-row sm:space-x-6 bg-white sm:bg-grey-500 justify- items-stretch">
                     <CategoryFilter 
-                      category={category}
+                        category={category}
+                        searchParams={searchParams} 
+                        setSearchParams={setSearchParams}
                     />
                     <div className="w-full sm:w-9/12">
                         <div className="rounded-lg bg-white">
@@ -234,7 +254,8 @@ export function Vendor(){
                                 page={pagination?.current_page || page}
                                 showLastButton
                                 showFirstButton
-                                onChange={(e, page) => setPage(page)}/>
+                                onChange={(e, page) => setPage(page)}
+                            />
                         </div>
                     </div>
                 </div>
