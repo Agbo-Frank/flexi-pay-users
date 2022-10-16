@@ -71,7 +71,7 @@ export function Vendor(){
                         navigate("*", {replace: true})
                     }else{
                         setProducts(result.result.data)
-                        setPagination(null)
+                        setPagination(result.result)
                     }
                     
                 })

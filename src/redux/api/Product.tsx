@@ -90,7 +90,7 @@ export const ProductApi = createApi({
             }),
             providesTags: ['Category']
         }),
-        getStore: build.query<IResponse<{data: IProduct[]}>, string>({
+        getStore: build.query<IResponse<IPagination<IProduct[]>>, string>({
             query: (slug) => ({
                 url: "/guest/shop/" + slug
             }),
