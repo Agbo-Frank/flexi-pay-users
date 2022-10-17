@@ -97,12 +97,11 @@ export function Product(){
 
     function DisplayInstallment({installment, id}: {installment: IInstallment, id: number}){
         return(
-            <span>
-                {" " + formatNumber(installment.amount) + " " } 
-                <span className="capitalize">
-                    { installment.frequency[0].toUpperCase() + installment.frequency.slice(1) } {(product && (product?.installments.length - 1 === id)) ? "" : "|" }
-                </span>
-            </span>
+            <Chip 
+                label={formatNumber(installment.amount) + " " + installment.frequency[0].toUpperCase() + installment.frequency.slice(1)} 
+                color="secondary"
+                // variant="ou"
+            />
         )
     }
 
@@ -175,28 +174,18 @@ export function Product(){
                                                 }
                                             </div>
                                             <div className="pt-3">
-                                                <span className="py-2 px-4 bg-[#FF500033] rounded-lg text-[13px] sm:text-base text-[#FF5000] font-medium">
-                                                    {
-                                                        (!product?.installments || product.installments.length === 0) ?
-                                                        <>No Installment Plans</> :
-                                                        <>Pay  
+                                                {
+                                                    (!product?.installments || product.installments.length === 0) ?
+                                                    <>No Installment Plans</> :
+                                                    <div className="flex space-x-2 items-center">
+                                                        <span>Pay</span>
+                                                        <div className="flex flex-nowrap whitespace-nowrap space-x-2">
                                                             {
                                                                 product.installments.map((installment, idx) => <DisplayInstallment installment={installment} id={idx} key={idx}/>)
                                                             }
-                                                        </>
-                                                    }
-                                                </span>
-                                                {/* <div>
-                                                    <div>Installment Plans</div>
-                                                    <div className="flex flex-wrap space-x-1">
-                                                        <Chip label="N 200 Daily" variant="outlined" color="secondary" size="small"/>
-                                                        <Chip label="N 200 Daily" variant="outlined" color="secondary" size="small"/>
-                                                        <Chip label="N 200 Daily" variant="outlined" color="secondary" size="small"/>
-                                                        <Chip label="N 200 Daily" variant="outlined" color="secondary" size="small"/>
-                                                        <Chip label="N 200 Daily" variant="outlined" color="secondary" size="small"/>
+                                                        </div>
                                                     </div>
-                                                </div> */}
-                                                
+                                                }
                                             </div>
                                         </div>
                                         

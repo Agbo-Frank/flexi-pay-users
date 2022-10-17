@@ -4,7 +4,10 @@ import Slider from "react-slick";
 
 export function ProductSlide({images}: {images: string[]}){
     let slide: any = useRef()
-    const [open, setOpen] = useState({
+    const [open, setOpen] = useState<{
+        image: string;
+        open: boolean
+    }>({
         image: "",
         open: false
     })
@@ -32,11 +35,13 @@ export function ProductSlide({images}: {images: string[]}){
                 <Slider ref={slide} {...settings}>
                     {
                         images?.map((image, idx)=> (
-                            <div className='w-full h-[400px] rounded overflow-hidden' key={idx}>
+                            <div 
+                                className='w-full h-[400px] rounded overflow-hidden' key={idx}
+                                onClick={() => setOpen(state => ({...state, open: true, image: image}))}
+                            >
                                 <div className='w-full h-full'>
                                     <div className='w-full h-full'>
-                                        <img src={image} className="object-cover w-full h-full"
-                                        onClick={() => setOpen(state => ({...state, open: true, image: images[idx]}))}/>
+                                        <img src={image} className="object-cover w-full h-full"/>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +91,8 @@ export function ProductSlide({images}: {images: string[]}){
                 images?.map((image, imgIdx) => (
                     <div 
                         className='w-11/12 h-[260px] xs:h-[380px] sm:h-[420px] md::h-auto flex-shrink-0'
-                        onClick={() => setOpen(state => ({...state, open: true, image}))}>
+                        onClick={() => setOpen(state => ({...state, open: true, image}))}
+                        key={imgIdx}>
                         <img src={image} className="object-cover w-[98%] h-full rounded"/>
                     </div>
                 ))
