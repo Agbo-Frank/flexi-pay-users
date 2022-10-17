@@ -94,7 +94,7 @@ export async function confirmOrder(
     else {
         try{
             let data = await checkout({ checkout_method, install_mental_ids }).unwrap()
-            console.log(checkout_method)
+            console.log(checkout_method, data)
             if(data.status === "success"){
                 // checks if the checkout method is by card
                 // if it is by card it redirects you to the payment gate way

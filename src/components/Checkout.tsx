@@ -20,7 +20,7 @@ function CheckoutCard({checkoutdetail}: {checkoutdetail: Partial<IDetails>}){
     return(
         <div className={`w-full flex justify-between mb-5 p-1 shadow-sm hover:shadow rounded-lg ${disabled === null && "opacity-40"}`}>
             <div className="flex w-9/12 gap-3">
-                <img src={disabled === null ? backgroundImage : (checkoutdetail?.product?.product_images[0].image_link || backgroundImage)} className="w-[80px] h-[80px] object-cover rounded-lg" />
+                <img src={disabled === null ? backgroundImage : (checkoutdetail?.product?.product_images[0]?.image_link || backgroundImage)} className="w-[80px] h-[80px] object-cover rounded-lg" />
                 <p className="text-sm text-grey-200 capitalize">{disabled === null ? "Product not found" : sliceString(checkoutdetail?.product?.name)}</p>
             </div>
 

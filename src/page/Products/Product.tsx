@@ -98,7 +98,7 @@ export function Product(){
     function DisplayInstallment({installment, id}: {installment: IInstallment, id: number}){
         return(
             <Chip 
-                label={formatNumber(installment.amount) + " " + installment.frequency[0].toUpperCase() + installment.frequency.slice(1)} 
+                label={"₦ " + formatNumber(installment.amount) + " " + installment.frequency[0].toUpperCase() + installment.frequency.slice(1)} 
                 color="secondary"
                 // variant="ou"
             />
@@ -136,7 +136,7 @@ export function Product(){
                             <div className="bg-white sm:p-7 sm:space-y-10">
                                 <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-8">
                                     <div className="w-full sm:w-5/12">
-                                        <ProductSlide images={product ? product.product_images.map(image => image.image_link) : []}/>
+                                        <ProductSlide images={product ? product.product_images.map(image => image?.image_link) : []}/>
                                     </div>
                                     <div className="relative w-full sm:w-6/12 flex flex-col space-y-2 px-2 sm:px-0">
                                         <div>
@@ -179,7 +179,7 @@ export function Product(){
                                                     <>No Installment Plans</> :
                                                     <div className="flex space-x-2 items-center">
                                                         <span>Pay</span>
-                                                        <div className="flex flex-nowrap whitespace-nowrap space-x-2">
+                                                        <div className="flex flex-nowrap whitespace-nowrap space-x-2 overflow-x-auto scrollbar-hidden">
                                                             {
                                                                 product.installments.map((installment, idx) => <DisplayInstallment installment={installment} id={idx} key={idx}/>)
                                                             }

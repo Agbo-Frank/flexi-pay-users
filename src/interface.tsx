@@ -237,9 +237,9 @@ export interface IModalReducer {
 }
 
 export interface IProductImage {
-    id: number;
-    product_id: number;
-    image: string;
+    id?: number;
+    product_id?: number;
+    image?: string;
     created_at: string;
     updated_at: string;
     image_link: string;

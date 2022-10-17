@@ -49,7 +49,7 @@ function SelectInstallmentPlan(
             components={
                 <div className="w-full flex p-1 gap-3 rounded-lg">
                     {/* <div className="flex w-9/12 gap-3"> */}
-                        <img src={checkoutdetail.product?.product_images[0].image_link} className="w-[60px] h-[60px] object-cover rounded" />
+                        <img src={checkoutdetail.product?.product_images[0]?.image_link} className="w-[60px] h-[60px] object-cover rounded" />
                         <div className='flex flex-col'>
                             <p className="text-sm text-grey-200 capitalize">{sliceString(checkoutdetail.product?.name)}</p>
                             <p className="font-medium text-primary-dark-blue">₦ {formatNumber(checkoutdetail.unit_price || 0)}</p>
@@ -84,8 +84,9 @@ function SelectInstallmentPlan(
                                 installments?.map((installment, idx) => (
                                     <span 
                                         onClick={() => setValue(installment.uuid)}
-                                        className={`border hover:border-primary-blue rounded-md py-2 w-full text-center cursor-pointer text-sm block my-2 ${value === installment.uuid ? "border-primary-blue border-2" : "border-black"}`}>
-                                        Pay N{formatNumber(`${installment.amount}`)} Per {installment.frequency}
+                                        className={`border hover:border-primary-blue rounded-md py-2 w-full text-center cursor-pointer text-sm block my-2 ${value === installment.uuid ? "border-primary-blue border-2" : "border-black"}`}
+                                        key={idx}>
+                                        Pay N{formatNumber(`${installment.amount}`)} {installment.frequency}
                                     </span>
                                 ))
                             }
