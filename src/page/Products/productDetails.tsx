@@ -51,7 +51,22 @@ function ProductDetails({ product }: {product: IProduct | undefined}){
                                     <ReturnIcon color="#474747" size="50"/>
                                     <div>
                                         <p>Returen Policy</p>
-                                        <p className="text-sm font-light">This Product is Eligeble for Returns or Exchanges within: <span className="text-primary-orange-200">1 - 7 Working Days</span></p>
+                                        {
+                                            product?.return_policy === '0'?
+                                            <p className="text-sm font-light">
+                                                This product does not have nay return Policy
+                                            </p>:
+                                            product?.return_policy === "1"?
+                                            <p className="text-sm font-light">
+                                                This Product is Eligible for Returns within A day
+                                            </p>:
+                                            <p className="text-sm font-light">
+                                                This Product is Eligible for Returns or Exchanges within: 
+                                                <span className="text-primary-orange-200">
+                                                    1 - {product?.return_policy}
+                                                </span>
+                                            </p>
+                                        }
                                     </div>
                                 </div>
                             </div>

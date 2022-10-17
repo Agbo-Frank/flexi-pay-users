@@ -98,7 +98,7 @@ export function Product(){
     function DisplayInstallment({installment, id}: {installment: IInstallment, id: number}){
         return(
             <span>
-                {" " + installment.amount + " " } 
+                {" " + formatNumber(installment.amount) + " " } 
                 <span className="capitalize">
                     { installment.frequency[0].toUpperCase() + installment.frequency.slice(1) } {(product && (product?.installments.length - 1 === id)) ? "" : "|" }
                 </span>
@@ -263,7 +263,7 @@ export function Product(){
                                 <ProductsSlide 
                                     products={other_product}
                                     title="other products from this seller" 
-                                    link="/products"
+                                    link={"/" + product?.vendor?.name_slug}
                                     titleCase="uppercase"
                                     loading={loading_other_product}
                                 />
@@ -274,7 +274,7 @@ export function Product(){
                                 <ProductsSlide 
                                     products={similar_product}
                                     title="similar products" 
-                                    link="/products"
+                                    link={"/category/" + product?.uuid}
                                     titleCase="uppercase"
                                     loading={loading_similar_product}
                                 />
@@ -285,7 +285,7 @@ export function Product(){
                                 <ProductsSlide 
                                     products={recently_viewed}
                                     title="recently viewed product" 
-                                    link="/products"
+                                    link={"/products"}
                                     titleCase="uppercase"
                                     loading={loading_recently_viewed}
                                 />

@@ -1,8 +1,13 @@
+import { Dialog } from "@mui/material";
 import { useRef, useState } from "react";
 import Slider from "react-slick";
 
 export function ProductSlide({images}: {images: string[]}){
     let slide: any = useRef()
+    const [open, setOpen] = useState({
+        image: "",
+        open: false
+    })
     let [index, setIndex] = useState(0)
     const settings = {
         infinite: false,
@@ -14,6 +19,14 @@ export function ProductSlide({images}: {images: string[]}){
     let data = [1, 2, 3]
     return(
         <>
+        {
+            open.open &&
+            <Dialog
+                open={open.open}
+                onClose={() => setOpen(state => ({...state, open: false, image: ""}))}>
+                    <img src={open.image}></img>
+            </Dialog>
+        }
         <div className="hidden sm:flex w-full flex-col space-y-3">
             <div className='relative rounded-md overflow-hidden'>
                 <Slider ref={slide} {...settings}>
@@ -21,7 +34,10 @@ export function ProductSlide({images}: {images: string[]}){
                         images?.map((image, idx)=> (
                             <div className='w-full h-[400px] rounded overflow-hidden' key={idx}>
                                 <div className='w-full h-full'>
-                                    <div className='w-full h-full'><img src={image} className="object-cover w-full h-full"/></div>
+                                    <div className='w-full h-full'>
+                                        <img src={image} className="object-cover w-full h-full"
+                                        onClick={() => setOpen(state => ({...state, open: true, image: images[idx]}))}/>
+                                    </div>
                                 </div>
                             </div>
                         ))
@@ -68,7 +84,9 @@ export function ProductSlide({images}: {images: string[]}){
         <div className="sm:hidden flex whitespace-nowrap overflow-x-auto space-x-2 bordder">
             {
                 images?.map((image, imgIdx) => (
-                    <div className='w-11/12 h-[260px] xs:h-[380px] sm:h-[420px] md::h-auto flex-shrink-0'>
+                    <div 
+                        className='w-11/12 h-[260px] xs:h-[380px] sm:h-[420px] md::h-auto flex-shrink-0'
+                        onClick={() => setOpen(state => ({...state, open: true, image}))}>
                         <img src={image} className="object-cover w-[98%] h-full rounded"/>
                     </div>
                 ))

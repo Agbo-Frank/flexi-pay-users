@@ -261,6 +261,7 @@ export interface IProduct {
     category?: {
         uuid: string
     };
+    return_policy: string;
     vendor?: IStoreDetails;
     product_images: IProductImage[];
     installments: IInstallment[]

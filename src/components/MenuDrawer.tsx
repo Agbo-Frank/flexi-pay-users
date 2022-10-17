@@ -77,7 +77,7 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
                         <Item Icon={CartIcon} name="Cart" link="cart" handleClick={close} />
                         <Item Icon={HeartIcon} name="Saved Item" link="saved-items" handleClick={close} />
                         <Item Icon={BagIcon} name="Order" link="order" handleClick={close} />
-                        <Item Icon={SubscriptionIcon} name="Saved Item" link="saved-items" handleClick={close} />
+                        <Item Icon={SubscriptionIcon} name="Subscription" link="subscription" handleClick={close} />
                     </ul>
                     {
                         isAuth ?
