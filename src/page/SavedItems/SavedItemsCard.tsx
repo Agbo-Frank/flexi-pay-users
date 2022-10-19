@@ -69,7 +69,7 @@ export function SavedItem ({savedItem}: {savedItem: ISavedItems}) {
                     loading={isLoading}
                     disabled={disabled === null}
                     onClick={() => {
-                        handleAddToCartClick(savedItem?.product?.uuid, addToCart, dispatch, {cookies, setCookie})
+                        handleAddToCartClick({product_uuid: savedItem?.product?.uuid}, addToCart, dispatch, {cookies, setCookie})
                             .then(() => removeItem())
                     }}
                     startIcon={<CartIcon color='white' size="17" />}

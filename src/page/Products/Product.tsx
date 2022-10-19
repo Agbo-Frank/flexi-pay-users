@@ -118,11 +118,11 @@ export function Product(){
         }
       }, [loading])
 
-    // useEffect(() => {
-    //     if(isAuth){
-    //         getRecentlyViewed()
-    //     }
-    // }, [loading, loading_recently_viewed])
+    useEffect(() => {
+        if(isAuth){
+            getRecentlyViewed()
+        }
+    }, [loading, loading_recently_viewed])
 
     function DisplayInstallment({installment, id}: {installment: IInstallment, id: number}){
         return(
@@ -267,7 +267,7 @@ export function Product(){
                                                 loading={isLoading}
                                                 color="secondary"
                                                 className="w-auto md:w-[900px] text-xs"
-                                                onClick={() => handleAddToCartClick(product?.uuid, addToCart, dispatch, {cookies, setCookie})}>
+                                                onClick={() => handleAddToCartClick({product_uuid: product?.uuid, attribute_id: variations.id}, addToCart, dispatch, {cookies, setCookie})}>
                                                 Add to Cart
                                             </LoadingButton>
                                         </div>
@@ -332,7 +332,7 @@ export function Product(){
                             {
                                 (loading_recently_viewed || (recently_viewed && recently_viewed?.length > 0)) &&
                                 <ProductsSlide 
-                                    products={recently_viewed}
+                                    products={recently_viewed?.map(recently_viewed => recently_viewed.product)}
                                     title="recently viewed product" 
                                     link={"/products"}
                                     titleCase="uppercase"

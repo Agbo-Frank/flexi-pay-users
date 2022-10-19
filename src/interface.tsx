@@ -309,7 +309,8 @@ export interface IPagination<T> {
 }
 
 export interface IAddToCartReq{
-    product_uuid: string;
+    product_uuid: string | undefined;
+    attribute_id?: string | null | undefined;
     quantity: string;
     guest_id: string;
 }

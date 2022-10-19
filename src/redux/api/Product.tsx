@@ -48,7 +48,7 @@ export const ProductApi = createApi({
                 return result ? [{type: 'Product', product: arg.product_uuid, vendor: arg.vendor_uuid}] : ['Product']
             }
         }),
-        getRecentlyViewed: build.query<IResponse<{data: IProduct[]}>, void>({
+        getRecentlyViewed: build.query<IResponse<{data: {product: IProduct}[]}>, void>({
             query: () => ({
                 url: "/guest/product/fetch/recently-viewed",
             }),

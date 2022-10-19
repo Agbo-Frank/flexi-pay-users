@@ -43,7 +43,7 @@ export async function deleteCart(
 
 
 export async function handleAddToCartClick(
-    id: string | undefined, 
+    body: {product_uuid: string | undefined, attribute_id?: string | null | undefined}, 
     addToCart: ITrigger<IAddToCartReq, IResponse<{data: ICart}>>,
     dispatch: Dispatch<AnyAction>,
     {cookies, setCookie}: {cookies: any, setCookie: any},
@@ -62,7 +62,7 @@ export async function handleAddToCartClick(
     if(uuid){
         try{
             let data = await addToCart({
-                product_uuid: `${id}`,
+                ...body,
                 quantity: "1",
                 guest_id:  uuid
             }).unwrap()
