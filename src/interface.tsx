@@ -262,9 +262,30 @@ export interface IProduct {
         uuid: string
     };
     return_policy: string;
+    stock?: string;
     vendor?: IStoreDetails;
     product_images: IProductImage[];
-    installments: IInstallment[]
+    installments: IInstallment[];
+    attributes: IVariations[]
+}
+
+export interface IVariations extends IAttributes {
+    discounted_price?: string;
+    price?: string;
+    quantity?: string;
+    id: string
+}
+
+export interface IAttributes {
+    uuid: number | string;
+    code: string;
+    name: string;
+    frontend_type: 'select' | 'radio' | 'text';
+    is_filterable: boolean;
+    value?: string;
+    is_required: boolean;
+    created_at: string | Date;
+    updated_at: string | Date;
 }
 
 export interface IPagination<T> {

@@ -53,19 +53,23 @@ export const WalletApi = createApi({
             }),
             providesTags: ['Banks']
         }),
-        getTransaction: build.query<IResponse<IGetTransactionResponse>, string>({
+        getTransaction: build.query<IResponse<IGetTransactionResponse>, number>({
             query: (page) => ({
-                url: "/wallet/transactions?page=" + page,
+                url: "/wallet/transactions?page=" + page.toString(),
                 method: "GET",
             }),
-            providesTags: ['UserTransaction']
+            providesTags: (result, error, args) => {
+                return result ? [{type: "Transaction", id: args}] : [{type: "Transaction", id: "error"}]
+            }
         }),
-        getUserTransaction: build.query<IResponse<IPagination<IUserTransacation[]>>, string | number>({
+        getUserTransaction: build.query<IResponse<IPagination<IUserTransacation[]>>, number>({
             query: (page) => ({
-                url: "/user/transactions?page=" + page,
+                url: "/user/transactions?page=" + page.toString(),
                 method: "GET",
             }),
-            providesTags: ['Transaction']
+            providesTags: (result, error, args) => {
+                return result ? [{type: "UserTransaction", id: args}] : [{type: "UserTransaction", id: "error"}]
+            }
         }),
         getWalletDetails: build.query<IResponse<{data: IWalletDetails}>, void>({
             query: () => ({

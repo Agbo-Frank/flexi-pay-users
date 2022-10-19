@@ -4,7 +4,7 @@ import { Body, Header, Categories, Footer, Breadcrumb, ProductsSlide, CopyText }
 import { CartIcon, HeartIcon,  } from "../../components/icons"
 import { useGetProductQuery, useLazyGetOtherProductsFromVendorQuery, useLazyGetRecentlyViewedQuery, useLazyGetSimilarProductsQuery } from "../../redux/api/Product";
 import { LoadingButton } from "@mui/lab";
-import { Backdrop, Chip, CircularProgress, Rating } from "@mui/material"
+import { Backdrop, Button, Chip, CircularProgress, Rating } from "@mui/material"
 import { useAddToCartMutation } from "../../redux/api/Cart";
 import { handleSaveItemClick } from "../../services";
 import { handleAddToCartClick } from "../Cart/service";
@@ -18,14 +18,29 @@ import { FLEXIPAY_COOKIE, FLEXIPAY_REDIRECT, FLEXIPAY_URL } from "../../utils/co
 import { useDispatch, useSelector } from "react-redux";
 import ProductSlide from "./productSlide";
 import { useGetReviewsQuery } from "../../redux/api/Reviews";
-import { useEffect } from "react";
-import { IInstallment } from "../../interface";
+import { useEffect, useState } from "react";
+import { IInstallment, IVariations } from "../../interface";
 import { RootState } from "../../redux/store";
+
+interface IVariants {
+    price?: string;
+    id: string | null;
+    discounted_price?: string;
+    quantity?: string
+}
 
 export function Product(){
     let { slug } = useParams()
 
     const isAuth = useSelector((state: RootState) => state.data.isAuth)
+
+    const [variations, setVariations] = useState<IVariants>({
+        price: "0",
+        id: null,
+        discounted_price: "",
+        quantity: ""
+      })
+    
 
     let { product, loading, error: err } = useGetProductQuery(`${slug}`, {
         refetchOnReconnect: true,
@@ -92,6 +107,17 @@ export function Product(){
         }
     }, [loading, loading_other_product])
 
+    useEffect(() => {
+        if(product){
+          setVariations(state => ({
+            ...state,
+            price: product?.price,
+            discounted_price: product?.discounted_price,
+            quantity: product?.stock 
+          }))
+        }
+      }, [loading])
+
     // useEffect(() => {
     //     if(isAuth){
     //         getRecentlyViewed()
@@ -106,6 +132,14 @@ export function Product(){
                 // variant="ou"
             />
         )
+    }
+
+    function updateProperties(attribute: IVariations){
+        setVariations({
+            price: attribute.price,
+            discounted_price: attribute.discounted_price,
+            id: attribute.id,
+        })
     }
 
     if(err){
@@ -138,7 +172,7 @@ export function Product(){
                         <div className="fp-screen space-y-5 bg-white sm:bg-grey-500">
                             <div className="bg-white sm:p-7 sm:space-y-10">
                                 <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-8">
-                                    <div className="w-full sm:w-5/12">
+                                    <div className="mt-10 sm:mt-0 w-full sm:w-5/12">
                                         <ProductSlide images={product ? product.product_images.map(image => image?.image_link) : []}/>
                                     </div>
                                     <div className="relative w-full sm:w-6/12 flex flex-col space-y-2 px-2 sm:px-0">
@@ -169,10 +203,10 @@ export function Product(){
 
                                         <div className="border-y border-grey-1100 py-3 sm:py-5 my-1 space-y-2">
                                             <div className="flex items-center space-x-3">
-                                                <p className="text-primary-dark-blue font-bold text-2xl">₦ {formatNumber(product?.price || 0)}</p>
+                                                <p className="text-primary-dark-blue font-bold text-2xl">₦ {formatNumber(variations?.price || 0)}</p>
                                                 {
                                                     product?.discounted_price ?
-                                                    <s className="text-[13px] font-light text-grey-200">₦ {formatNumber(product?.discounted_price || 0)}</s>:
+                                                    <s className="text-[13px] font-light text-grey-200">₦ {formatNumber(variations?.discounted_price || 0)}</s>:
                                                     null
                                                 }
                                             </div>
@@ -192,6 +226,29 @@ export function Product(){
                                             </div>
                                         </div>
                                         
+                                        {
+                                            product && product?.attributes.length > 0 &&
+                                            <div>
+                                                <span className="font-medium capitalize text-lg my-2">variation available</span>
+                                                {
+                                                    product?.attributes.map((attribute, idx) => (
+                                                        <div className={"flex flex-col space-y-2 mt-2 "}>
+                                                            <span className="capitalize">{attribute.name}</span>
+                                                            <div className="flex flex-wrap">
+                                                                <Button 
+                                                                    variant="outlined" 
+                                                                    color="secondary" 
+                                                                    className={attribute.id !== variations.id ? "opacity-30 hover:opacity-100" : "" + " hover:opacity-100 "}
+                                                                    onClick={() => updateProperties(attribute)}
+                                                                >
+                                                                    <span className="text-sm">{attribute.value?.toUpperCase()}</span>
+                                                                </Button>
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </div>
+                                        }
                                         <div className="w-full flex flex-col sm:flex-row sm:w-9/12 sm:space-x-6 space-y-3 sm:space-y-0">
                                             <LoadingButton
                                                 startIcon={<HeartIcon color="#FF5000" size="18" />}

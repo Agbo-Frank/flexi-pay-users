@@ -81,8 +81,8 @@ export const ProductApi = createApi({
             }
         }),
         getSubCategories: build.query<IResponse<ICategory>, {page: number, id: string}>({
-            query: (body) => ({
-                url: "/category/fetch/sub/" + body.id
+            query: ({id, page}) => ({
+                url: "/category/fetch/sub/" + id + "?page=" + page
             }),
             providesTags: (result, error, arg) => {
                 return result ? [{type: 'Category', category: arg.id}] : ['Category']
@@ -94,10 +94,13 @@ export const ProductApi = createApi({
             }),
             providesTags: ['Category']
         }),
-        getStore: build.query<IResponse<IPagination<IProduct[]>>, string>({
-            query: (slug) => ({
-                url: "/guest/shop/" + slug
+        getStore: build.query<IResponse<IPagination<IProduct[]>>, {page: number, slug: string}>({
+            query: ({slug, page}) => ({
+                url: "/guest/shop/" + slug + "?page=" + page
             }),
+            providesTags: (result, error, arg) => {
+                return result ? [{type: 'Product', id: arg.slug, page: arg.page}] : [{type: 'Product', id: "error"}]
+            }
         })
     })
 })

@@ -1,21 +1,18 @@
-import { Button, Checkbox, MenuItem, Pagination, Skeleton } from "@mui/material"
+import { Button, Checkbox, Pagination, Skeleton } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
 import { 
-    Body, Categories, 
-    DropDown, Header, 
+    Body,
     ProductCard, Empty,
     ProductCardSkeleton, 
     Breadcrumb,
     SearchBar} from "../../components"
 import { SearchIcon } from "../../components/icons"
-import { IFilter, IPagination, IProduct } from "../../interface"
+import { IFilter } from "../../interface"
 import { 
-    useLazyGetProductsQuery, 
     useLazyFilterProductQuery, 
-    useLazySearchProductQuery 
 } from "../../redux/api/Product"
-import { hasQueryString, serializeFormQuery } from "../../utils"
+import {serializeFormQuery } from "../../utils"
 import Filters from "./filters"
 
 
@@ -60,8 +57,6 @@ export function Products(){
                 </div>
                 <div className="fp-screen flex flex-col sm:flex-row sm:space-x-6 bg-white sm:bg-grey-500 justify- items-stretch">
                     <Filters 
-                        filters={filters} 
-                        setFilters={setFilters}
                         searchParams={searchParams} 
                         setSearchParams={setSearchParams}
                     />

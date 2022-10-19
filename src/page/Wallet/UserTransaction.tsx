@@ -52,7 +52,7 @@ function Row({txn}: {txn: IUserTransacation}){
 
 export function UserTransaction({ open, setOpen}: IWalletBalanceProps){
     let dispatch = useDispatch<AppDispatch>()
-    let [page, setPage] = useState(1)
+    let [page, setPage] = useState(0)
     let [getUserTransaction, {transaction, pagination, isLoading}] = useLazyGetUserTransactionQuery({
         selectFromResult: ({ data, isLoading }) => ({
             transaction: data?.result.data,
@@ -64,15 +64,15 @@ export function UserTransaction({ open, setOpen}: IWalletBalanceProps){
     })
     
     useEffect(() => {
-        getUserTransaction(page.toString())
-    }, [page])
+        getUserTransaction(page + 1)
+    }, [page, isLoading, transaction])
     console.log(transaction)
     return(
         <div className="w-full">
             {
                 isLoading || (transaction && transaction.length > 0) ?
                 <div>
-                <TableContainer className="bg-white rounded-lg" sx={{ maxHeight: 340 }}>
+                <TableContainer className="bg-white rounded-lg" sx={{ maxHeight: 500 }}>
                     <Table sx={{ minWidth: 650 }} stickyHeader aria-label="order table">
                         <TableHead sx={{bgcolor: '#F9F8FF'}}>
                             <TableRow className="text-[#545362]" sx={{bgcolor: '#F9F8FF'}}>
@@ -104,13 +104,12 @@ export function UserTransaction({ open, setOpen}: IWalletBalanceProps){
                 {
                     pagination &&
                     <TablePagination
-                        // rowsPerPageOptions={[pagination.per_page]}
+                        rowsPerPageOptions={[15]}
                         component="div"
-                        count={pagination?.total || 0}
-                        rowsPerPage={pagination?.per_page || 0}
-                        page={pagination?.current_page || 0}
+                        count={pagination ? pagination?.total : -1}
+                        rowsPerPage={15}
+                        page={page}
                         onPageChange={(e, page) => setPage(page)}
-                        // onRowsPerPageChange={handleChangeRowsPerPage}
                         className="bg-white"
                     />
                 }

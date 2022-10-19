@@ -44,7 +44,7 @@ export function CardActions({children, styles}: IWrapperProps){
 
 export function CardImg({ src }: {src: string}){
     return(
-        <img src={src} alt="" className="w-[100px] h-[100px] sm:w-[148px] sm:h-[148px]  object-cover rounded sm:rounded-md"/>
+        <img src={src} alt="" className="w-[100px] h-[100px] sm:w-[148px] sm:h-[148px]  object-cover rounded sm:rounded-md product_image"/>
     )
 }
 
