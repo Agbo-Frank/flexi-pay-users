@@ -9,7 +9,6 @@ import { FLEXIPAY_VENDOR_URL} from '../../utils/constants'
 
 function ProductVendor({vendor}: {vendor: IStoreDetails | undefined}){
     let navigate = useNavigate()
-    console.log(vendor)
     return(
         <div className="gap-3 sm:gap-5 flex flex-col sm:flex-row justify-between items-stretch bg-white sm:bg-transparent my-3 sm:my-0">
             <div className="w-[87%] relative mx-auto sm:w-9/12 rounded-2xl bg-[#f4f4f4] sm:bg-white">

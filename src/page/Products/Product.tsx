@@ -15,14 +15,17 @@ import { formatNumber, sliceString } from "../../utils";
 import { Helmet } from 'react-helmet-async';
 import { useCookies } from "react-cookie";
 import { FLEXIPAY_COOKIE, FLEXIPAY_REDIRECT, FLEXIPAY_URL } from "../../utils/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProductSlide from "./productSlide";
 import { useGetReviewsQuery } from "../../redux/api/Reviews";
 import { useEffect } from "react";
 import { IInstallment } from "../../interface";
+import { RootState } from "../../redux/store";
 
 export function Product(){
     let { slug } = useParams()
+
+    const isAuth = useSelector((state: RootState) => state.data.isAuth)
 
     let { product, loading, error: err } = useGetProductQuery(`${slug}`, {
         refetchOnReconnect: true,
@@ -89,11 +92,11 @@ export function Product(){
         }
     }, [loading, loading_other_product])
 
-    useEffect(() => {
-        if(product?.vendor?.uuid){
-            getRecentlyViewed()
-        }
-    }, [loading])
+    // useEffect(() => {
+    //     if(isAuth){
+    //         getRecentlyViewed()
+    //     }
+    // }, [loading, loading_recently_viewed])
 
     function DisplayInstallment({installment, id}: {installment: IInstallment, id: number}){
         return(

@@ -43,7 +43,6 @@ export function Login() {
                     name="email" 
                     label="Email"
                     formik={formik} />
-    
                     <FormInput 
                     type='password' 
                     Icon={PadLock} 

@@ -64,7 +64,7 @@ export function FormInput({ Icon, type, name, label, formik }: IInputProps): JSX
         }
         <>
           {
-            location.pathname === "/auth/login" && type === 'password' && <Link to="/auth/forget-password" className='text-primary-orange-200 text-xs m-0 p-0 float-right'>Forgetten password?</Link>
+            /login/im.test(location.pathname) && type === 'password' && <Link to="/auth/forget-password" className='text-primary-orange-200 text-xs m-0 p-0 float-right'>Forgetten password?</Link>
           }
         </>
         </>

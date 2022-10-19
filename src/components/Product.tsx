@@ -136,7 +136,7 @@ export function ProductsSlide({products, loading, title, link, titleCase}: {prod
                 <div className='flex space-x-2 whitespace-nowrap overflow-x-auto scrollbar-hidden'> 
                     {
                         data.map(d => (
-                            <ProductCardSkeleton />
+                            <ProductCardSkeleton key={d}/>
                         ))
                     }
                 </div>:

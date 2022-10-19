@@ -26,7 +26,9 @@ export const ProductApi = createApi({
             query: (page) => ({
                 url: "/guest/product/fetch-all?page=" + page
             }),
-            providesTags: ['Product']
+            providesTags: (result, error, args) => {
+                return result ? [{type: "Product", id: args}] : [{type: "Product", id: "error"}]
+            }
         }),
         getSimilarProducts: build.query<IResponse<{data: IPagination<IProduct[]>}>, {product_uuid?: string, category_uuid?: string}>({
             query: (body) => ({
@@ -48,7 +50,7 @@ export const ProductApi = createApi({
         }),
         getRecentlyViewed: build.query<IResponse<{data: IProduct[]}>, void>({
             query: () => ({
-                url: "/guest/product/vendor/fetch/recently-viewed",
+                url: "/guest/product/fetch/recently-viewed",
             }),
             providesTags: ['Product']
         }),
@@ -62,11 +64,13 @@ export const ProductApi = createApi({
         }),
         filterProduct: build.query<IResponse<{data: IPagination<IProduct[]>}>, Partial<IFilter> | any>({
             query: (body) => ({
-                url: '/guest/product/filter',
+                url: '/guest/product/filter?page=' + body.page,
                 method: 'GET',
                 params: body,
-    
-            })
+            }),
+            providesTags: (result, error, arg) => {
+                return result ? [{type: 'Product', id: arg.page}] : ['Product']
+            }
         }),
         getCategories: build.query<IResponse<ICategory[]>, void>({
             query: () => ({

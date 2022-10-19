@@ -1,17 +1,25 @@
 import { useState } from "react"
-import { useNavigate, useSearchParams } from "react-router-dom"
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
+import { serializeFormQuery } from "../utils"
 import { SearchIcon } from "./icons"
 
 
 export function SearchBar(){
-    let searchParams = useSearchParams()[0]
-    let [searchInput, setSearchInput] = useState(searchParams.get('search') || '')
+    let [searchParams, setSearchParams] = useSearchParams()
+    let [searchInput, setSearchInput] = useState(searchParams.get('product_name') || '')
+    const { pathname } = useLocation()
 
     let navigate = useNavigate()
+    const paths = ["/products"]
 
     function search(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault()
-        navigate("/products?search=" + searchInput)
+        if(paths.includes(pathname)){
+            setSearchParams({...serializeFormQuery(searchParams), product_name: searchInput})
+        }
+        else{
+            navigate("/products?product_name=" + searchInput)   
+        }
     }
     
     return(

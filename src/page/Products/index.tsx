@@ -20,12 +20,9 @@ import Filters from "./filters"
 
 
 export function Products(){
-    let [page, setPage] = useState(1)
-    let [products, setProducts] = useState<IProduct[]>([])
-    let [loading, setLoading] = useState(false)
-    let [pagination, setPagination] = useState<IPagination<IProduct[]>>()
-
     let [searchParams, setSearchParams] = useSearchParams()
+
+    let [page, setPage] = useState(searchParams.has("page") ? parseInt(`${searchParams.get('page')}`) : 1)
     
     let [filters, setFilters] = useState<IFilter>({
         parent_category: searchParams.get('parent_category') || "",
@@ -37,33 +34,22 @@ export function Products(){
     })
 
     let navigate = useNavigate()
-    let [filterProduct] = useLazyFilterProductQuery()
-    let [getProducts] = useLazyGetProductsQuery()
+    let [filterProduct, {loading, products, pagination}] = useLazyFilterProductQuery({
+        selectFromResult: ({data, isLoading}) => ({
+            products: data?.result.data.data,
+            loading: isLoading,
+            pagination: data?.result.data
+        })
+    })
 
     useEffect(() => {
-        setLoading(true)
-        if(hasQueryString(searchParams)){
-            filterProduct(filters)
-                .unwrap()
-                .then(result => {
-                    setProducts(result.result.data.data)
-                    setPagination(result.result.data)
-                    setLoading(false)
-                })
-                .catch(err => console.log(err))
-        }
-        else {
-            
-            getProducts(page)
-                .unwrap()
-                .then(result => {
-                    setProducts(result.result.data)
-                    setPagination(result.result)
-                })
-                .catch(err => console.log(err))
-        }
-        setLoading(false)
-    }, [page, searchParams, filters])
+        filterProduct(serializeFormQuery(searchParams))
+    }, [page, searchParams, filters, loading])
+
+    function changePage(page: number) {
+        setSearchParams({...serializeFormQuery(searchParams), page})
+        setPage(page)
+    }
 
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
@@ -111,11 +97,11 @@ export function Products(){
                                     <span>Latest</span>
                                 </div>
                             </div>
-                            <div className={`${products?.length > 0 || loading ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4' : ""} grid gap-2 px-2 sm:px-6 py-1`}>
+                            <div className={`${(products && products?.length > 0) || loading ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4' : ""} grid gap-2 px-2 sm:px-6 py-1`}>
                                 {
+                                    loading  || (products && products?.length > 0) ?
                                     loading ?
                                     [1, 2, 3, 4].map((product, idx) => <ProductCardSkeleton key={idx}/>) :
-                                    products?.length > 0 ? 
                                     products?.map((product, idx) => <ProductCard product={product} key={idx}/>) :
                                     <div className="grid place-items-center w-full">
                                         <Empty 
@@ -144,10 +130,10 @@ export function Products(){
                                 color="secondary"
                                 hideNextButton={pagination?.next_page_url ? true : false}
                                 hidePrevButton={pagination?.prev_page_url ? true : false}
-                                page={pagination?.current_page || page}
+                                page={page}
                                 showLastButton
                                 showFirstButton
-                                onChange={(e, page) => setPage(page)}/>
+                                onChange={(e, page) => changePage(page)}/>
                         </div>
                     </div>
                 </div>

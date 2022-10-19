@@ -21,7 +21,7 @@ export function ForgetPassword() {
                 <Link to="/login" className='py-2  px-8 border border-solid border-grey-100 rounded-full'>Login</Link>
             </div>
         </div>
-        <div className='my-20'>
+        <div className='mx-auto sm:mx-0 mt-5 sm:my-20 px-2 flex flex-col sm:items-center md:text-left md:items-start sm:w-9/12'>
             <div>
             <h2 className='text-primary-dark-blue font-bold text-4xl'>Reset Your Password</h2>
             <small className='block mt-3 text-lg text-grey-300'>A password reset code will be sent to your email</small>
@@ -29,7 +29,7 @@ export function ForgetPassword() {
             </div>
 
             <form className='my-10' onSubmit={formik.handleSubmit}>
-                <div className='flex flex-col justify-start gap-3 w-5/12'>
+                <div className='flex flex-col justify-start gap-3 '>
                     <FormInput 
                     type='email' 
                     Icon={MailIcon} 

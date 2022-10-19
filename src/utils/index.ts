@@ -45,6 +45,7 @@ export function serializeFormQuery(search: URLSearchParams){
   for (let [key, value] of search.entries()){
     params[key] = value
   }
+  console.log(params)
   return params
 }
 export function hasQueryString(search: URLSearchParams){
