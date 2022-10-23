@@ -155,8 +155,6 @@ function Subscription ({ subscription }: {subscription: ISubscription}) {
             top_up: false
         }))
     }
-
-    console.log(subscription)
     return(
         <>  <>
                 {

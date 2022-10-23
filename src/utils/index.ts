@@ -60,6 +60,10 @@ export function sliceString(str: string | undefined, length: number | undefined=
   return str?.slice(0, length) + (str && str.length > length ? "..." : "")
 }
 
+export function formatString(str: string){
+  return str.replace(/_/g, " ")
+}
+
 export function editField(current: any, update: any, field: string) {
   return update[field]=== "" || !update[field]  ? current[field] : update[field]
 }

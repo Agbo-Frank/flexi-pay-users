@@ -21,6 +21,7 @@ import { useGetReviewsQuery } from "../../redux/api/Reviews";
 import { useEffect, useState } from "react";
 import { IInstallment, IVariations } from "../../interface";
 import { RootState } from "../../redux/store";
+import { QuantityController } from "../../components/QuantityController";
 
 interface IVariants {
     price?: string;
@@ -31,6 +32,7 @@ interface IVariants {
 
 export function Product(){
     let { slug } = useParams()
+    const [quantity, setQuantity] = useState(1)
 
     const isAuth = useSelector((state: RootState) => state.data.isAuth)
 
@@ -249,6 +251,15 @@ export function Product(){
                                                 }
                                             </div>
                                         }
+                                        <div className="flex justify-start items-center space-x-2">
+                                            <p>Quantity</p>
+                                            <QuantityController 
+                                                quantity={quantity}
+                                                handleMinusClick={() => setQuantity(state => state - 1)}
+                                                handlePlusClick={() => setQuantity(state => state + 1)}
+                                                disabled={isLoading}
+                                            />
+                                        </div>
                                         <div className="w-full flex flex-col sm:flex-row sm:w-9/12 sm:space-x-6 space-y-3 sm:space-y-0">
                                             <LoadingButton
                                                 startIcon={<HeartIcon color="#FF5000" size="18" />}
@@ -267,7 +278,12 @@ export function Product(){
                                                 loading={isLoading}
                                                 color="secondary"
                                                 className="w-auto md:w-[900px] text-xs"
-                                                onClick={() => handleAddToCartClick({product_uuid: product?.uuid, attribute_id: variations.id}, addToCart, dispatch, {cookies, setCookie})}>
+                                                onClick={() => handleAddToCartClick(
+                                                    {product_uuid: product?.uuid, attribute_id: variations.id, quantity: quantity.toString()}, 
+                                                    addToCart, 
+                                                    dispatch, 
+                                                    {cookies, setCookie
+                                                })}>
                                                 Add to Cart
                                             </LoadingButton>
                                         </div>

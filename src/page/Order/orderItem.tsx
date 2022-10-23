@@ -14,7 +14,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import { IOrder, ISubscription } from '../../interface'
 import moment from 'moment'
 import Tracker from './Tracker'
-import { formatNumber, sliceString } from '../../utils'
+import { formatNumber, formatString, sliceString } from '../../utils'
 import ProductReviewForm from './ProductReviewForm'
 import { LoadingButton } from '@mui/lab'
 import backgroundImage from "../../asset/backgroundImage.png"
@@ -193,7 +193,7 @@ function Order ({ order}: IOrderDetails) {
                             <CardText>{ disabled === null ? "Product Doesn't exist" : sliceString(order.order_detail[0]?.product?.name) }</CardText>
                             <small className="text-grey-200 text-xs sm:text-sm">Placed on  {moment(order.order_detail[0].created_at).format("MMM Do YY")}</small>
                             <small className="text-grey-200 text-xs sm:text-sm my-1">orderId: <CopyText text={typeof order.id === 'number' ? order.id.toString() : order.id}/></small>
-                            <p className={`${ order.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ order.status }</p>
+                            <p className={`${ order.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ formatString(order.status) }</p>
                             <p className="font-semibold text-primary-dark-blue ">₦ {formatNumber(order.order_detail[0].price)}</p>
                         </div>
                     </div>

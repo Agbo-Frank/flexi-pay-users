@@ -50,7 +50,7 @@ export function CardImg({ src }: {src: string}){
 
 export function CardText({children, styles}: IWrapperProps){
     return(
-        <span className={`whitespace-wrap block w-11/12 text-black sm:text-grey-200 font-semibold sm:font-normal text-sm sm:text-base sm:mb-2 capitalize ${styles}`}>
+        <span className={`whitespace-nowrap block w-11/12 text-black sm:text-grey-200 font-semibold sm:font-normal text-sm sm:text-base sm:mb-2 capitalize ${styles}`}>
             {children}
         </span>
     )

@@ -122,7 +122,6 @@ export function CheckOut(){
                 }
             })
             .catch(err => {
-                console.log(err)
                 if(err){
                     dispatch(toggleSnackBar({
                         open: true,

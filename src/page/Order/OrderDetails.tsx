@@ -1,7 +1,7 @@
 import CalenderIcon from "../../components/icons/CalenderIcon";
 import { CardWrapper, CardText, CopyText } from "../../components";
 import ModelWrapper from '../../components/Models/ModelWrapper';
-import { formatNumber } from '../../utils';
+import { formatNumber, formatString } from '../../utils';
 import moment from 'moment';
 import { IOrderModel } from './orderItem';
 
@@ -34,13 +34,13 @@ function OrderDetails({order, open, close}: IOrderModel){
                                 <CalenderIcon color='#555555' size={"14"} />
                                 <p>{moment(order.order_detail[0].created_at).format('l')}</p>
                             </p>
-                            <p className={`${ order.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ order.status }</p>
+                            <p className={`${ order.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ formatString(order.status) }</p>
                         </div>
                         {/* <p>Order No: <CopyText text={`${345679}`}/></p> */}
                         <p>Quantity: {order.order_detail[0].quantity}</p>
                         <p>Total: ₦ {formatNumber(parseFloat(order.order_detail[0].price) * order.order_detail[0].quantity)}</p>
                         <p>Order Placed: {moment(order.order_detail[0].created_at).format('l')}</p>
-                        <p>Order Type: {order.order_type}</p>
+                        <p className="capitalize">Order Type: {order.order_type}</p>
                     </div>
                     
                     <div className="flex flex-col sm:flex-row justify-between gap-5 mb-4">

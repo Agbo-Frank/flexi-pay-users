@@ -31,7 +31,6 @@ export function FPFormikCreateInstallment(createInstallment: ITrigger<Omit<IInst
             }
         }
         catch(err){
-            console.log(err)
             if(err){
                 let error: any = err
                 formikHelpers.setErrors(error.data.errors)
@@ -94,7 +93,7 @@ export async function confirmOrder(
     else {
         try{
             let data = await checkout({ checkout_method, install_mental_ids }).unwrap()
-            console.log(checkout_method, data)
+            
             if(data.status === "success"){
                 // checks if the checkout method is by card
                 // if it is by card it redirects you to the payment gate way
@@ -131,7 +130,7 @@ export async function confirmOrder(
         catch(err){
             if(err){
                 let error: any = err
-                console.log(error)
+                
                 dispatch(toggleSnackBar({
                     open: true,
                     severity: 'error',

@@ -14,7 +14,6 @@ export function ProductReview({ slug }: {slug: string}){
             isLoading
         })
     })
-    console.log(reviews)
     const average_rating = reviews?.reduce((total, review) => {
         return total + (typeof review.rate === 'string' ? parseFloat(`${review.rate}`) : review.rate)
     }, 0) || 0

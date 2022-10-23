@@ -34,7 +34,7 @@ function TrackRec({ name, color, date, style, line = false, active}: ITrackRec){
 }
 
 function Tracker({order, open, close}: IOrderModel){
-    let orderStatus = ['placed', 'pending', 'processed', 'delivered', "failed"]
+    let orderStatus = ['placed', 'in_installment', 'pending', 'processed', 'delivered', "failed"]
     return(
         <ModelWrapper 
             isOpen={open} 

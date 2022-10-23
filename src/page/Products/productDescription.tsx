@@ -26,8 +26,6 @@ function DataDisplay({header, body}: {header: string, body?: string}){
     
     const htmlToReactParser = new Parser();
     const html = htmlToReactParser.parseWithInstructions(body, () => true, processingInstructions);
-    // const reactHtml = renderToStaticMarkup(reactComponent);
-    // console.log(html)
 
     return (
         <div className="mx-2">

@@ -15,6 +15,7 @@ import { useSavedItemMutation } from "../../redux/api/SavedItems"
 import { deleteCart, handleQuantityControlClick } from "./service"
 import { toggleSnackBar } from "../../redux/slice/modal"
 import backgroundImage from "../../asset/backgroundImage.png"
+import { QuantityController } from "../../components/QuantityController"
 
 
 
@@ -106,39 +107,30 @@ export function Cart({cart}: {cart: ICart}){
                     </div>
                     <div className={`flex flex-col justify-end ${disabled === null && "opacity-40"}`}>
                         <p className={`hidden sm:block font-semibold ml-auto text-primary-dark-blue text-lg mb-4 whitespace-nowrap`}>₦ {formatNumber(cart.price)}</p>
-                        <div className="flex justify-between items-center space-x-3">
-                            <div 
-                                className={`rounded-full cursor-pointer font-bold text-white bg-primary-orange-200 w-5 ${(isLoading ||  parseInt(cart.quantity) === 1 || disabled === null ) && "opacity-50"} h-5 flex justify-center items-center text-xl`}
-                                onClick={() => {
-                                    if(disabled !== null){
-                                        if((!isLoading)  && parseInt(cart.quantity) > 1){
-                                            handleQuantityControlClick(
-                                                {quantity: (parseInt(cart.quantity) - 1).toString(), cart_uuid: cart.uuid},
-                                                updateCart,
-                                                dispatch
-                                            )
-                                        }
-                                    }
-                                }}>
-                                <MinusIcon color="white" size="14" />
-                            </div>
-                            <div className="font-medium text-lg">{cart.quantity}</div>
-                            <div 
-                            className={`rounded-full cursor-pointer font-bold text-white bg-primary-orange-200 w-5 h-5 flex ${isLoading || disabled === null  && "opacity-50"} justify-center items-center text-xl`}
-                            onClick={() => {
-                                if(disabled !== null){
-                                    if(!isLoading){
-                                        handleQuantityControlClick(
-                                            {quantity: (parseInt(cart.quantity) + 1).toString(), cart_uuid: cart.uuid},
-                                            updateCart,
-                                            dispatch
-                                        )
-                                    }
+                        <QuantityController 
+                            handleMinusClick={() => {
+                                if(!isLoading){
+                                    handleQuantityControlClick(
+                                        {quantity: (parseInt(cart.quantity) - 1).toString(), cart_uuid: cart.uuid},
+                                        updateCart,
+                                        dispatch
+                                    )
                                 }
-                            }}>
-                                <PlusIcon size="14" color="white" />
-                            </div>
-                        </div>
+                            }}
+
+                            handlePlusClick={() => {
+                                if(!isLoading){
+                                    handleQuantityControlClick(
+                                        {quantity: (parseInt(cart.quantity) + 1).toString(), cart_uuid: cart.uuid},
+                                        updateCart,
+                                        dispatch
+                                    )
+                                }
+                            }}
+
+                            quantity={parseInt(cart.quantity)}
+                            disabled={isLoading}
+                        />
                     </div>
                 </div>
             </div>

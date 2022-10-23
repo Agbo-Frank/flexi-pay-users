@@ -312,7 +312,7 @@ export interface IAddToCartReq{
     product_uuid: string | undefined;
     attribute_id?: string | null | undefined;
     quantity: string;
-    guest_id: string;
+    guest_id?: string;
 }
 
 export interface ICart{

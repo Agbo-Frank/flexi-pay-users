@@ -26,7 +26,6 @@ export function Orders (){
     useEffect(() => {
         getOrder(page)
     }, [loading, page])
-    console.log(orders)
     return(
         <>
             <DashboardWrapper>

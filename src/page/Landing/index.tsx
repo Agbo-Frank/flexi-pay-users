@@ -13,13 +13,24 @@ import cat7 from '../../asset/categories7.png'
 import cat8 from '../../asset/categories8.png'
 import cat9 from '../../asset/categories9.png'
 import cat10 from '../../asset/categories10.png'
-import { HourglassEmptyRounded } from "@mui/icons-material"
-import { SubscriptionIcon } from "../../components/icons"
 
 
 export function Landing(){
     let { products, loadingProduct } = useGetProductsQuery(1, {
-        refetchOnFocus: true,
+        refetchOnReconnect: true,
+        selectFromResult: ({ data, isLoading }) => ({
+            products: data?.result.data,
+            loadingProduct: isLoading
+        }) 
+    })
+    let { products: products_2, loadingProduct: loadingProduct_2 } = useGetProductsQuery(2, {
+        refetchOnReconnect: true,
+        selectFromResult: ({ data, isLoading }) => ({
+            products: data?.result.data,
+            loadingProduct: isLoading
+        }) 
+    })
+    let { products: products_3, loadingProduct: loadingProduct_3 } = useGetProductsQuery(3, {
         refetchOnReconnect: true,
         selectFromResult: ({ data, isLoading }) => ({
             products: data?.result.data,
@@ -74,10 +85,10 @@ export function Landing(){
                     <BannerSlides />
 
                     <ProductsSlide 
-                        products={products}
+                        products={products_2}
                         title="TOP SELLING PRODUCTS" 
                         link="/products"
-                        loading={loadingProduct}
+                        loading={loadingProduct_2}
                     />
 
                     <ProductCategory 
@@ -87,10 +98,10 @@ export function Landing(){
                     />
 
                     <ProductsSlide 
-                        products={products}
+                        products={products_3}
                         title="NEW ARRIVAL" 
                         link="/products"
-                        loading={loadingProduct}
+                        loading={loadingProduct_3}
                     />
                 </div>
 
