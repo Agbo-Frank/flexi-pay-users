@@ -12,13 +12,13 @@ import { GreyLogo } from './icons';
 export function ProductCard({product}: {product: IProduct}){
     return(
         <Link to={'/product/' + product.slug} className="block w-full bg-white rounded-lg h-fit p-2 space-y-4 shadow-sm hover:shadow hover:-translate-y-1 hover:z-30 my-2 overflow-hidden">
-            <div className='w-[145px] h-[130px] sm:w-full sm:h-44 overflow-hidden rounded-lg product_image'>
-                <img src={product.product_images[0].image_link} className="w-full h-full object-cover" alt={product.name}/>
+            <div className='h-[130px] w-full sm:h-44 overflow-hidden rounded-lg product_image'>
+                <img src={product?.product_images[0]?.image_link} className="w-full h-full object-cover" alt={product?.name}/>
             </div>
             <div className='space-y-1'>
-                <p className='text-grey-1200 text-sm capitalize font-light w-full truncate'>{ sliceString(product.name) }</p>
+                <p className='text-grey-1200 text-sm capitalize font-light w-full truncate'>{ sliceString(product?.name) }</p>
                 <div className="flex items-center space-x-3">
-                    <p className="text-primary-dark-blue font-medium text-md whitespace-nowrap truncate">₦ {formatNumber(product.price)}</p>
+                    <p className="text-primary-dark-blue font-medium text-md whitespace-nowrap truncate">₦ {formatNumber(product?.price)}</p>
                     {
                         product?.discounted_price ? 
                         <s className="text-xs font-light text-grey-200 whitespace-nowrap">₦ {formatNumber(product?.discounted_price)}</s> :
@@ -27,7 +27,7 @@ export function ProductCard({product}: {product: IProduct}){
                     
                 </div>
                 {
-                    product.installments.length > 0 ?
+                    product?.installments.length > 0 ?
                     <p className='text-xs text-primary-orange-200 font-medium'>Pay 
                         {
                             // product.installments?.map(installment => (

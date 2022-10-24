@@ -160,6 +160,10 @@ html{
   background-image: url("./asset/productImage.png");
 }
 
+.responsive-grid{
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr))
+}
+
 @keyframes slide-in-right{
   0%{
     transform:translateX(1000px);

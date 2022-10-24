@@ -30,7 +30,7 @@ function DataDisplay({header, body}: {header: string, body?: string}){
     return (
         <div className="mx-2">
             <div className="border py-2 px-3 font-medium text-lg capitalize">{header}</div>
-            <div className="border border-t-0 py-2 px-3 whitespace-pre-wrap">{html|| "Loading..."}</div>
+            <div className="border border-t-0 py-2 px-3 whitespace-pre-wrap overflow-x-hidden">{html|| "Loading..."}</div>
         </div>
     )
 }
