@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import { IInstallment, IVariations } from "../../interface";
 import { RootState } from "../../redux/store";
 import { QuantityController } from "../../components/QuantityController";
+import AttributeDisplay from "./attributeDisplay";
 
 interface IVariants {
     price?: string;
@@ -227,30 +228,6 @@ export function Product(){
                                                 }
                                             </div>
                                         </div>
-                                        
-                                        {
-                                            product && product?.attributes.length > 0 &&
-                                            <div>
-                                                <span className="font-medium capitalize text-lg my-2">variation available</span>
-                                                {
-                                                    product?.attributes.map((attribute, idx) => (
-                                                        <div className={"flex flex-col space-y-2 mt-2 "}>
-                                                            <span className="capitalize">{attribute.name}</span>
-                                                            <div className="flex flex-wrap">
-                                                                <Button 
-                                                                    variant="outlined" 
-                                                                    color="secondary" 
-                                                                    className={attribute.id !== variations.id ? "opacity-30 hover:opacity-100" : "" + " hover:opacity-100 "}
-                                                                    onClick={() => updateProperties(attribute)}
-                                                                >
-                                                                    <span className="text-sm">{attribute.value?.toUpperCase()}</span>
-                                                                </Button>
-                                                            </div>
-                                                        </div>
-                                                    ))
-                                                }
-                                            </div>
-                                        }
                                         <div className="flex justify-start items-center space-x-2">
                                             <p>Quantity</p>
                                             <QuantityController 
@@ -260,6 +237,12 @@ export function Product(){
                                                 disabled={isLoading}
                                             />
                                         </div>
+                                        
+                                        {
+                                            product && product?.attributes.length > 0 &&
+                                            <AttributeDisplay attributes={product?.attributes} setVariations={setVariations} variations={variations}/>
+                                        }
+                                        
                                         <div className="w-full flex flex-col sm:flex-row sm:w-9/12 sm:space-x-6 space-y-3 sm:space-y-0">
                                             <LoadingButton
                                                 startIcon={<HeartIcon color="#FF5000" size="18" />}
