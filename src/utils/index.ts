@@ -61,7 +61,15 @@ export function sliceString(str: string | undefined, length: number | undefined=
 }
 
 export function formatString(str: string){
-  return str.replace(/_/g, " ")
+  let result = str
+  if(/install/g.test(result)){
+    console.log(result)
+    // let index_of_l = str.search("l")
+    result = result.replace("l", "")
+    console.log(result)
+  }
+  result = result.replace(/_/g, " ")
+  return result
 }
 
 export function editField(current: any, update: any, field: string) {

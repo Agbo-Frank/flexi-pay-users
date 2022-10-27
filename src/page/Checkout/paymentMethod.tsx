@@ -101,7 +101,7 @@ export function PaymentMethod(
                 <Tab 
                     label="Instant Payment" 
                     sx={{textTransform: 'capitalize', fontSize: 14, alignItems: 'start'}}/>
-                <Tab label="Installmental Payment" sx={{textTransform: 'capitalize', fontSize: 14, alignItems: 'start'}}/>
+                <Tab label="Instalmental Payment" sx={{textTransform: 'capitalize', fontSize: 14, alignItems: 'start'}}/>
             </Tabs>
 
             {

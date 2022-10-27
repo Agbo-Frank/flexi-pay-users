@@ -17,21 +17,18 @@ import cat10 from '../../asset/categories10.png'
 
 export function Landing(){
     let { products, loadingProduct } = useGetProductsQuery(1, {
-        refetchOnReconnect: true,
         selectFromResult: ({ data, isLoading }) => ({
             products: data?.result.data,
             loadingProduct: isLoading
         }) 
     })
     let { products: products_2, loadingProduct: loadingProduct_2 } = useGetProductsQuery(2, {
-        refetchOnReconnect: true,
         selectFromResult: ({ data, isLoading }) => ({
             products: data?.result.data,
             loadingProduct: isLoading
         }) 
     })
     let { products: products_3, loadingProduct: loadingProduct_3 } = useGetProductsQuery(3, {
-        refetchOnReconnect: true,
         selectFromResult: ({ data, isLoading }) => ({
             products: data?.result.data,
             loadingProduct: isLoading

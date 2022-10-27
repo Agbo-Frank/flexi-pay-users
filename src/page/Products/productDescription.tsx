@@ -9,10 +9,10 @@ function DataDisplay({header, body}: {header: string, body?: string}){
         {
             replaceChildren: true,
             shouldProcessNode: function (node: any) {
-                return node.parent && node.parent.name && node.parent.name === 'h1';
+                return node.parent && node.parent.name && node.parent.name === '';
             },
             processNode: function (node: any, children: any) {
-                return node.data.toUpperCase();
+                return node.data?.toUpperCase();
             }
         },
         {

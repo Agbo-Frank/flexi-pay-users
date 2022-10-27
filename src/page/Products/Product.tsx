@@ -119,7 +119,7 @@ export function Product(){
             quantity: product?.stock 
           }))
         }
-      }, [loading])
+      }, [loading, slug])
 
     useEffect(() => {
         if(isAuth){

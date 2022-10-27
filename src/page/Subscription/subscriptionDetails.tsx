@@ -74,7 +74,7 @@ function SubscriptionDetails({subscription, open, close}: ISubscriptionModal){
 
                                 <p className="capitalize text-grey-200 text-sm w-9/12">
                                 <h2 className="font-semibold">Payment Details</h2>
-                                <p className="capitalize text-grey-200 text-sm mb-2">Installmental</p>
+                                <p className="capitalize text-grey-200 text-sm mb-2">Instalmental</p>
                                 
                                     <p>
                                         <span className="font-medium">Plan: </span>

@@ -14,14 +14,14 @@ function ProductVendor({vendor}: {vendor: IStoreDetails | undefined}){
             <div className="w-[87%] relative mx-auto sm:w-9/12 rounded-2xl bg-[#f4f4f4] sm:bg-white">
                 <p className="p-4 border-b font-medium text-md">Seller Information</p>
                 <ul className="text-grey-1200 space-y-4 p-4">
-                    <li className="flex space-x-3 items-center">
+                    <li className="flex flex-col sm:flex-row space-x-3 items-center">
                         <div className="flex space-x-2 items-center">
                             <StoreIcon color="#222222" size="15"/>
                             <p>Store Name:</p>
                         </div>
                         <p>{vendor?.name}</p>
                     </li>
-                    <li className="flex text-sm space-x-3 items-center">
+                    <li className="flex flex-col sm:flex-row text-sm space-x-3 items-center">
                         <p>Store Description</p>
                         <p>{vendor?.description}</p>
                     </li>
