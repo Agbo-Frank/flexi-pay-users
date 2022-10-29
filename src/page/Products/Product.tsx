@@ -96,7 +96,7 @@ export function Product(){
     let [addToCart, {data, isLoading, error}] = useAddToCartMutation()
     let [savedItem, { isLoading: savingItem,}] = useSavedItemMutation()
 
-    // console.log(product)
+    console.log(product)
 
     useEffect(() => {
         if(product?.category?.uuid){

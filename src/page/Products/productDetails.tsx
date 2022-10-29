@@ -6,7 +6,7 @@ import ProductReview from "./ProductReview";
 
 
 function ProductDetails({ product }: {product: IProduct | undefined}){
-    let tabNames = ['product details', 'delivery', 'return policy', 'reviews', 'warranty']
+    let tabNames = ['product details', 'return policy', 'reviews', 'warranty']
     let [index, setIndex] = useState('product details')
     return(
         <div className="overflow-hidden rounded-2xl">
@@ -83,7 +83,7 @@ function ProductDetails({ product }: {product: IProduct | undefined}){
                                         <p className="text-sm font-light">
                                             {
                                                 !product?.warranty || product.warranty === "null"  ?
-                                                <span>This Product does not have any warranty is</span> :
+                                                <span>This Product does not have any warranty</span> :
                                                 <span>This Product Warranty is: <span className="text-primary-orange-200">{product.warranty}</span></span>
                                             }
                                         </p>

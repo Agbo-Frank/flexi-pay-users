@@ -36,16 +36,16 @@ export function Landing(){
     })
 
     const categories = [
-        {id: 1, img: cat1},
-        {id: 2, img: cat2},
-        {id: 3, img: cat3},
-        {id: 4, img: cat4},
-        {id: 5, img: cat5},
-        {id: 6, img: cat6},
-        {id: 7, img: cat7},
-        {id: 8, img: cat8},
-        {id: 9, img: cat9},
-        {id: 10, img: cat10},
+        {id: 1, img: cat1, link: "/category/54513300-e938-4f21-8bd8-f5d1b0833001", name: "Computing"},
+        {id: 2, img: cat2, link: "/category/5e9c5f59-72a6-44d6-97dc-02f03daffa36", name: "Phone and Tablet"},
+        {id: 3, img: cat3, link: "/category/29ac2cd2-9f4c-41c3-8ad3-846cf0fe0d3b", name: "Electronics"},
+        {id: 4, img: cat4, link: "/category/0050bb9b-be5e-4bf2-987c-72511482edc8", name: "Generators"},
+        {id: 5, img: cat5, link: "/category/8c4ff4c5-a8c8-40cc-855b-812b268c3735", name: "Fashion"},
+        {id: 6, img: cat6, link: "/category/", name: "Food Items"},
+        {id: 7, img: cat7, link: "/category/", name: "health & beauty"},
+        {id: 8, img: cat8, link: "/category/5e9c5f59-72a6-44d6-97dc-02f03daffa36", name: "Mobile accessories"},
+        {id: 9, img: cat9, link: "/category/134d8432-6939-4812-b37b-93e6bf31f7a1", name: "Home Appliances"},
+        // {id: 10, img: cat10, link: "/category/"},
     ]
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
@@ -91,7 +91,7 @@ export function Landing(){
                     <ProductCategory 
                         title="SHOP FROM OUR TOP CATEGORIES"
                         products={categories}
-                        loading={loadingProduct}
+                        loading={false}
                     />
 
                     <ProductsSlide 

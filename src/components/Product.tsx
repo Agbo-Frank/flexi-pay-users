@@ -339,9 +339,9 @@ export function ProductCategory({products, title, link}: {products: any, loading
                 <div className='grid grid-cols-5 gap-2 sm:gap-5'>
                     {
                         products?.map((val: any) => (
-                            <div className="w-full" key={val.id}>
-                                <img alt='flexipay' src={val.img} className="w-full h-full rounded object-cover" />
-                            </div>
+                            <Link to={val.link} className="block w-full" key={val.id}>
+                                <img alt='flexipay' src={val.img} className="w-full h-full rounded object-cover cursor-pointer" />
+                            </Link>
                         ))
                     }
                 </div>
