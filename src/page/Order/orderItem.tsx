@@ -190,7 +190,7 @@ function Order ({ order}: IOrderDetails) {
                     <CardImg src={disabled === null ? backgroundImage : order.order_detail[0]?.product?.product_images[0]?.image_link} />
                     <div>
                         <div className="flex flex-col sm:h-full items-stretch">
-                            <CardText>{ disabled === null ? "Product Doesn't exist" : sliceString(order.order_detail[0]?.product?.name) }</CardText>
+                            <CardText>{ disabled === null ? "Product Doesn't exist" : sliceString(order.order_detail[0]?.product?.name, 25) }</CardText>
                             <small className="text-grey-200 text-xs sm:text-sm">Placed on  {moment(order.order_detail[0].created_at).format("MMM Do YY")}</small>
                             <small className="text-grey-200 text-xs sm:text-sm my-1">orderId: <CopyText text={typeof order.id === 'number' ? order.id.toString() : order.id}/></small>
                             <p className={`${ order.status } text-white py-[1px] px-1 sm:px-2 rounded-sm uppercase text-[9px] sm:text-xs w-fit`}>{ formatString(order.status) }</p>
@@ -202,7 +202,8 @@ function Order ({ order}: IOrderDetails) {
                     <Buttons 
                         order={order}
                         setOpen={setOpen}
-                        disabled={disabled}/>
+                        disabled={disabled}
+                    />
                 </CardActions>
             </CardWrapper> 
         </>  

@@ -82,9 +82,9 @@ function ProductDetails({ product }: {product: IProduct | undefined}){
                                         <p>Warranty</p>
                                         <p className="text-sm font-light">
                                             {
-                                                !product?.warranty || product.warranty === "null"  ?
+                                                !product?.warranty_policy || product?.warranty_policy === "null"  ?
                                                 <span>This Product does not have any warranty</span> :
-                                                <span>This Product Warranty is: <span className="text-primary-orange-200">{product.warranty}</span></span>
+                                                <span>This Product Warranty is: <span className="text-primary-orange-200">{product?.warranty_policy}</span></span>
                                             }
                                         </p>
                                     </div>

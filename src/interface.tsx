@@ -256,7 +256,7 @@ export interface IProduct {
     key_features: string;
     product_code?: string;
     discounted_price?:string;
-    warranty?: string;
+    warranty_policy?: string;
     weight?: string;
     category?: {
         uuid: string

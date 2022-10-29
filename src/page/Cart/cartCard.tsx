@@ -4,7 +4,7 @@ import { ICart } from '../../interface'
 import { useDelCartMutation, useUpdateCartMutation } from '../../redux/api/Cart'
 import { useDispatch } from 'react-redux'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Skeleton, useMediaQuery } from '@mui/material'
-import { formatNumber } from '../../utils'
+import { formatNumber, sliceString } from '../../utils'
 import { Link } from "react-router-dom"
 import product from '../../asset/product1.png'
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -80,7 +80,7 @@ export function Cart({cart}: {cart: ICart}){
                         <div className="sm:w-7/12 flex flex-col justify-around">
                             <CardText>{
                                 disabled !== null  ?
-                                cart?.product?.name.slice(0, 42) + (cart?.product?.name && cart?.product?.name?.length > 42 ? "..." : ""):
+                                sliceString(cart?.product?.name, 15):
                                 "Product Doesn't exist"
                             }</CardText>
                             <p className="font-semibold text-primary-dark-blue sm:hidden">₦ {formatNumber(cart.price)}</p>
