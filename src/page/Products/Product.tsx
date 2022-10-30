@@ -181,7 +181,7 @@ export function Product(){
                                     </div>
                                     <div className="relative w-full sm:w-6/12 flex flex-col space-y-2 px-2 sm:px-0">
                                         <div>
-                                            <h1 className="text-grey-1200 text-xl sm:text-4xl font-medium capitalize">{sliceString(product?.name)}</h1>
+                                            <h1 className="text-grey-1200 text-xl sm:text-4xl font-medium capitalize">{product?.name}</h1>
                                             {
                                                 (product && product?.product_code) &&
                                                 <p className="font-semibold text-sm text-grey-200 my-[6px]">
