@@ -13,6 +13,7 @@ import cat6 from '../../asset/categories6.png'
 import cat7 from '../../asset/categories7.png'
 import cat8 from '../../asset/categories8.png'
 import cat9 from '../../asset/categories9.png'
+import cat10 from '../../asset/categories10.png'
 
 
 export function Landing(){
@@ -45,7 +46,7 @@ export function Landing(){
         {id: 7, img: cat7, link: "/category/", name: "health & beauty"},
         {id: 8, img: cat8, link: "/category/5e9c5f59-72a6-44d6-97dc-02f03daffa36", name: "Mobile accessories"},
         {id: 9, img: cat9, link: "/category/134d8432-6939-4812-b37b-93e6bf31f7a1", name: "Home Appliances"},
-        // {id: 10, img: cat10, link: "/category/"},
+        {id: 10, img: cat10, link: "/category/", name: "Real Estate"},
     ]
     return(
         <Body bgColor="bg-white sm:bg-grey-500">

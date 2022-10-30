@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.ecfbcd50.css",
-    "main.js": "/static/js/main.f9db99a6.js",
+    "main.js": "/static/js/main.bad44cb2.js",
     "static/media/slide3.png": "/static/media/slide3.d67a57c961ec1b516bdd.png",
     "static/media/slide2.png": "/static/media/slide2.81412b3f4f3c9d151baf.png",
     "static/media/slide1.png": "/static/media/slide1.5b117d1feb8b269bb20e.png",
@@ -20,6 +20,7 @@
     "static/media/banner3.png": "/static/media/banner3.61ee687faa394d23086e.png",
     "static/media/Product2.png": "/static/media/Product2.48baea09ed308aaadcc7.png",
     "static/media/banner7.png": "/static/media/banner7.9011f93f5b848a943699.png",
+    "static/media/categories10.png": "/static/media/categories10.a109e5804cce9826501a.png",
     "static/media/categories6.png": "/static/media/categories6.b41ead3c97d6e7a53a01.png",
     "service-worker.js": "/service-worker.js",
     "static/media/categories5.png": "/static/media/categories5.bd91ccb569792f998bfc.png",
@@ -39,10 +40,10 @@
     "index.html": "/index.html",
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "main.ecfbcd50.css.map": "/static/css/main.ecfbcd50.css.map",
-    "main.f9db99a6.js.map": "/static/js/main.f9db99a6.js.map"
+    "main.bad44cb2.js.map": "/static/js/main.bad44cb2.js.map"
   },
   "entrypoints": [
     "static/css/main.ecfbcd50.css",
-    "static/js/main.f9db99a6.js"
+    "static/js/main.bad44cb2.js"
   ]
 }
