@@ -1,9 +1,8 @@
-import { Backdrop, Button, Checkbox, CircularProgress, MenuItem, Pagination, Skeleton } from "@mui/material"
+import { Backdrop, Button, Checkbox, CircularProgress, Pagination, Skeleton } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useSearchParams, useNavigate, useParams } from "react-router-dom"
 import { 
-    Body, Categories, 
-    DropDown, Header, 
+    Body, 
     ProductCard, Empty,
     ProductCardSkeleton, 
     Breadcrumb,
@@ -11,14 +10,11 @@ import {
 import { SearchIcon } from "../../components/icons"
 import { IFilter, IPagination, IProduct } from "../../interface"
 import { 
-    useLazyGetProductsQuery, 
     useLazyFilterProductQuery, 
-    useLazySearchProductQuery, 
     useLazyGetStoreQuery
 } from "../../redux/api/Product"
-import { hasQueryString, serializeFormQuery } from "../../utils"
+import {  serializeFormQuery } from "../../utils"
 import Filters from "../Products/filters"
-import CategoryFilter from "./filter"
 
 
 export function Vendor(){
@@ -64,7 +60,7 @@ export function Vendor(){
             })
             .catch(err => console.log(err))
     }, [page, searchParams, filters])
-    console.log(vendor_id)
+    products = products?.filter((product: IProduct) => product.product_images.length > 0)
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
             <Backdrop

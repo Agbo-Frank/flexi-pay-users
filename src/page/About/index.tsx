@@ -1,6 +1,6 @@
 import { Button, Checkbox, Grid, MenuItem, Pagination, Skeleton } from "@mui/material"
 import { useEffect, useState } from "react"
-import { useSearchParams, useNavigate } from "react-router-dom"
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom"
 import { 
     Body, Categories, 
     DropDown, Header, 
@@ -20,8 +20,6 @@ export function About(){
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
             <div className="w-full h-fit bg-white sm:bg-grey-500">
-                <Header />
-                <Categories />
                 <Breadcrumb />
                 <div className="block sm:hidden w-11/12 my-2 mx-auto bg-white">
                     <SearchBar />

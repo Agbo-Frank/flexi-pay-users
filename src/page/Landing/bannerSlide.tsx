@@ -3,6 +3,7 @@ import Slider from 'react-slick'
 import banner1 from '../../asset/banner1.png'
 import banner2 from '../../asset/banner2.png'
 import banner3 from '../../asset/banner3.png'
+import { LazyLoadImage } from "react-lazy-load-image-component"
 
 
 export function BannerSlides(){
@@ -27,7 +28,7 @@ export function BannerSlides(){
                 {
                     imgs.map((img, idx) => (
                         <div className="w-full h-full rounded-lg overflow-hidden" key={idx}>
-                            <img src={img} alt="banner1" className="object-cover w-full h-full"/>
+                            <LazyLoadImage src={img} alt="banner1" className="object-cover w-full h-full"/>
                         </div>
                     ))
                 }
@@ -39,7 +40,7 @@ export function BannerSlides(){
                         imgs.map((img, imgIdx) => (
                             <div className='w-full' key={imgIdx}>
                                 <div className='w-full rounded-none sm:rounded-xl overflow-hidden h-[250px] sm:h-auto'>
-                                    <img src={img} className="object-cover w-[98%] h-full rounded-xl"/>
+                                    <LazyLoadImage src={img} className="object-cover w-[98%] h-full rounded-xl"/>
                                 </div>
                             </div>
                         ))

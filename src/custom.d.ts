@@ -13,4 +13,5 @@ declare module 'react-transition-group/TransitionGroup'
 declare module 'react-slideshow-image'
 declare module '@mui/material/styles/createTheme'
 declare module "html-to-react"
+declare module "react-router-hash-link"
   

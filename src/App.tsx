@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import './index.css';
 import {
   Carts, CheckOut, Profile,
@@ -23,8 +23,22 @@ import CategoryPage from './page/Category';
 import OrderSummary from './page/Summary';
 import Login from './page/Auth/Login';
 import Register from './page/Auth/Register';
+import { useEffect } from 'react';
 
 function App() {
+  const location = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // document.body.scrollTop = 0;
+    if(/#/.test(location.pathname)){
+      console.log("ok")
+      const href = window.location.href.substring(
+        window.location.href.lastIndexOf('#') + 1,
+      );
+
+      document.getElementById(href)?.scrollIntoView();
+    }
+  }, [location]);
   return (
     <AuthProvider>
       <Routes>

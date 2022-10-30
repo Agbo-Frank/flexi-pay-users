@@ -9,7 +9,7 @@ import {
     SearchBar
 } from "../../components"
 import { SearchIcon } from "../../components/icons"
-import { IFilter, } from "../../interface"
+import { IFilter, IProduct, } from "../../interface"
 import { 
     useLazyGetSubCategoriesQuery
 } from "../../redux/api/Product"
@@ -23,11 +23,12 @@ export function CategoryPage(){
 
     let [searchParams, setSearchParams] = useSearchParams()
 
-    let [getProducts, {products, loading, category}] = useLazyGetSubCategoriesQuery({
+    let [getProducts, {products, loading, category, sub_categories}] = useLazyGetSubCategoriesQuery({
         selectFromResult: ({ data, isLoading }) => ({
             category: data?.result,
             products: data?.result.products,
-            loading: isLoading
+            loading: isLoading,
+            sub_categories: data?.result.sub_categories
         })
     })
     
@@ -45,6 +46,10 @@ export function CategoryPage(){
     useEffect(() => {
         getProducts({page, id: `${id}`})
     }, [page, searchParams, filters, id])
+    
+    console.log(category)
+
+    products = products?.filter((product: IProduct) => product.product_images.length > 0)
 
 
     return(
@@ -56,8 +61,9 @@ export function CategoryPage(){
                 </div>
                 <div className="fp-screen flex flex-col sm:flex-row sm:space-x-6 bg-white sm:bg-grey-500 justify- items-stretch">
                     <Filters 
-                      searchParams={searchParams} 
-                      setSearchParams={setSearchParams}
+                        sub_categories={sub_categories}
+                        searchParams={searchParams} 
+                        setSearchParams={setSearchParams}
                     />
                     <div className="w-full sm:w-9/12">
                         <div className="rounded-lg bg-white">

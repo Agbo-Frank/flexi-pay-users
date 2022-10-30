@@ -17,7 +17,7 @@ import { toggleSnackBar } from "../../redux/slice/modal"
 import backgroundImage from "../../asset/backgroundImage.png"
 import { QuantityController } from "../../components/QuantityController"
 
-
+import { LazyLoadImage } from "react-lazy-load-image-component"
 
 export function Cart({cart}: {cart: ICart}){
     let dispatch = useDispatch()
@@ -75,7 +75,7 @@ export function Cart({cart}: {cart: ICart}){
                 <div className={`p-2 pb-3 sm:pb-0 ${disabled === null && "opacity-40"}`}>
                     <div className="flex space-x-2 sm:space-x-3 items-stretch">
                         <Link to={disabled !== null && cart?.product ? "/product/" + cart?.product?.uuid : "*"} className="block w-fit">
-                            <img src={disabled === null ? backgroundImage : cart?.product?.product_images[0]?.image_link} className="w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] object-cover rounded sm:rounded-xl"/>
+                            <LazyLoadImage src={disabled === null ? backgroundImage : cart?.product?.product_images[0]?.image_link} className="w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] object-cover rounded sm:rounded-xl"/>
                         </Link>
                         <div className="sm:w-7/12 flex flex-col justify-around">
                             <CardText>{

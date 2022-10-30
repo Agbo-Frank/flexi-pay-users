@@ -6,6 +6,7 @@ import { FPFormikSubscribe } from "../page/CountDown/service";
 import { FLEXIPAY_VENDOR_URL } from "../utils/constants";
 import { FacebookIcon, Logo, MailIcon, MasterCardIcon, PhoneIcon, TwitterIcon, VisaIcon, WalletIcon } from "./icons";
 import WhatappIcon from "./icons/Whatapp";
+import { HashLink } from 'react-router-hash-link'
 import { FacebookLink, InstagramLink, MailLink, PhoneLink, TiktokLink, TwitterLink, WhatappLink, YoutubeLink } from "./SoicalLinks";
 import SubscribeInput from "./SubscribeInput";
 
@@ -160,7 +161,7 @@ const NewFooter = () => {
                 </div>
             </div>
 
-            <div className=" bg-primary-dark-blue border-y border-[#EDEEF0] ">
+            <div className="fp-screen bg-primary-dark-blue border-y border-[#EDEEF0] ">
                 <div className="flex flex-col md:flex-row space-y-2 sm:space-y-0 justify-between py-5 bg-primary-dark-blue">
                     <div>
                         <div className="mb-4">
@@ -179,7 +180,7 @@ const NewFooter = () => {
                         <li className="font-medium mb-2 sm:mb-4">About FlexiPay</li>
                         <li className="font-light text-sm cursor-pointer my-2"><Link to="/about-us">About us</Link></li>
                         <li className="font-light text-sm cursor-pointer my-2"><Link to="/support">Contact us</Link></li>
-                    <li className="font-light text-sm cursor-pointer my-2"><Link to="/privacy-policy">Privacy Policy</Link></li>
+                    {/* <li className="font-light text-sm cursor-pointer my-2"><HashLink to="/terms-and-condition#privacy-policy">Privacy Policy</HashLink></li> */}
                     {/* <li className="font-light text-sm cursor-pointer my-2"><Link to="/shipping-policy">Shipping Policy</Link></li> */}
                         <li className="font-light text-sm cursor-pointer my-2"><Link to="/terms-and-condition">Terms & Conditions</Link></li>
                     </ul>

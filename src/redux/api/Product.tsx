@@ -14,6 +14,10 @@ export const ProductApi = createApi({
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
                 headers.set('Content-Type', `application/json`);
+                headers.set("Access-Control-Allow-Origin", "*")
+                headers.set("mode", "no-cors")
+                // headers.set("Access-Control-Allow-Methods", "POST, PUT, PATCH, GET, DELETE, OPTIONS")
+                headers.set("Access-Control-Allow-Headers", "Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization")
             }
           
             return headers

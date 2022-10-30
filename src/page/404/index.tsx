@@ -11,12 +11,14 @@ import img4 from '../../asset/banner8.png'
 import img5 from '../../asset/banner6.png'
 import img6 from '../../asset/banner7.png'
 import { Fade } from "react-slideshow-image"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 // import { Button } from "@mui/material"
 
 
 export function NotFound(){
   const navigate = useNavigate()
+
   const slides = [
     {
       id: 1,

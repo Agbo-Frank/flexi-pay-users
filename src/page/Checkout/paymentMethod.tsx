@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { IDetails, TCheckoutMethod } from "../../interface";
 import { formatNumber } from "../../utils";
 import SelectInstallmentPlan from "./SelectInstallmentPlan";
+import { LazyLoadImage } from "react-lazy-load-image-component"
 
 
 
@@ -27,7 +28,7 @@ function CheckoutCard(
         />
         <div className="w-full flex justify-between mb-2 p-1 shadow-sm hover:shadow rounded-lg border">
             <div className="flex w-9/12 gap-3">
-                <img src={checkoutdetail?.product?.product_images[0].image_link} className="w-[80px] h-[80px] object-cover rounded" />
+                <LazyLoadImage src={checkoutdetail?.product?.product_images[0].image_link} className="w-[80px] h-[80px] object-cover rounded" />
                 <p className="text-sm text-grey-200 capitalize">{checkoutdetail?.product?.name.slice(0, 40) + (checkoutdetail?.product?.name && checkoutdetail?.product?.name?.length > 40 ? "..." : "")}</p>
             </div>
 

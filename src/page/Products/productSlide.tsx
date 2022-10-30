@@ -2,6 +2,7 @@ import { Dialog } from "@mui/material";
 import { useRef, useState } from "react";
 import Slider from "react-slick";
 import ProductSlideDialog from "./productSlideDialog";
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 export function ProductSlide({images}: {images: string[]}){
     let slide: any = useRef()
@@ -28,7 +29,7 @@ export function ProductSlide({images}: {images: string[]}){
                             onClick={() => setOpen(true)}>
                                 <div className='w-full h-full'>
                                     <div className='w-full h-full'>
-                                        <img src={image} className="object-cover w-full h-full"/>
+                                        <LazyLoadImage src={image} className="object-cover w-full h-full"/>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +68,7 @@ export function ProductSlide({images}: {images: string[]}){
                             slide.current.slickGoTo(i)
                         }}>
                             <div className={`absolute block ${index !== i && 'hidden' } group-hover:block w-full h-full bg-white/75`}></div>
-                            <img src={image}  className="object-cover w-full h-full"/>
+                            <LazyLoadImage src={image}  className="object-cover w-full h-full"/>
                         </div>
                     ))
                 }
@@ -80,7 +81,7 @@ export function ProductSlide({images}: {images: string[]}){
                         className='w-11/12 h-[260px] xs:h-[380px] sm:h-[420px] md::h-auto flex-shrink-0'
                         key={imgIdx}
                         onClick={() => setOpen(true)}>
-                        <img src={image} className="object-cover w-[98%] h-full rounded"/>
+                        <LazyLoadImage src={image} className="object-cover w-[98%] h-full rounded"/>
                     </div>
                 ))
             }

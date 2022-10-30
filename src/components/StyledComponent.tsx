@@ -1,6 +1,6 @@
 import React from "react";
 import { IWrapperProps } from "./interface";
-
+import { LazyLoadImage } from "react-lazy-load-image-component"
 
 export function Wrapper({children, styles}: IWrapperProps){
     return(
@@ -44,7 +44,7 @@ export function CardActions({children, styles}: IWrapperProps){
 
 export function CardImg({ src }: {src: string}){
     return(
-        <img src={src} alt="" className="w-[100px] h-[100px] sm:w-[148px] sm:h-[148px]  object-cover rounded sm:rounded-md product_image"/>
+        <LazyLoadImage src={src} alt="" className="w-[100px] h-[100px] sm:w-[148px] sm:h-[148px]  object-cover rounded sm:rounded-md product_image"/>
     )
 }
 

@@ -386,7 +386,7 @@ export function TermsAndCondition(){
                       </div>
                     </div>
 
-                    <div className="w-full">
+                    <div className="w-full" id="privacy-policy">
                       <TextHeader title="Privacy policy" />
                       <div className="text-[#000541] my-3">
                         <ul className="list-disc px-4">

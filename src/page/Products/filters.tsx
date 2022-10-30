@@ -1,28 +1,48 @@
 import { Search } from "@mui/icons-material";
 import { Checkbox, Divider, Rating, Slider } from "@mui/material";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
-import { IFilter } from "../../interface";
-import { useGetCategoriesQuery } from "../../redux/api/Product"
+import { IFilter, ISubCategory } from "../../interface";
+import { useLazyGetCategoriesQuery } from "../../redux/api/Product"
 import { filter_inputs, serializeFormQuery } from "../../utils";
 
 
 interface IFiltersProps {
     searchParams: URLSearchParams;
     setSearchParams: any;
+    sub_categories?: ISubCategory[]
 }
 
 
-export function Filters({searchParams, setSearchParams}: IFiltersProps){
+export function Filters({searchParams, setSearchParams, sub_categories}: IFiltersProps){
     let navigate = useNavigate()
+    let [categories, setCategories] = useState<any[]>()
     const [values, setValues] = useState<any>([1000, 300000])
 
-    let { categories, loading } = useGetCategoriesQuery(undefined, {
+    let [getCategories, { data, loading }] = useLazyGetCategoriesQuery({
         selectFromResult: ({ data, isLoading }) => ({
-            categories: data?.result,
+            data: data?.result,
             loading: isLoading
         })
     })
+
+    useEffect(() => {
+        if(!sub_categories){
+            getCategories()
+                .unwrap()
+                .then(data => {
+                    setCategories(data.result)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+        else{
+            setCategories(sub_categories)
+        }
+    }, [loading, sub_categories])
+
+    categories = sub_categories ? sub_categories : categories
 
     function submitPriceRange(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault()

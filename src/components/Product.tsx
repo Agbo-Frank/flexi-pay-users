@@ -9,11 +9,13 @@ import { IProduct } from '../interface';
 import { formatNumber, sliceString } from '../utils';
 import { GreyLogo } from './icons';
 
+import { LazyLoadImage } from "react-lazy-load-image-component";
+
 export function ProductCard({product}: {product: IProduct}){
     return(
         <Link to={'/product/' + product.slug} className="block w-full bg-white rounded-lg h-fit p-2 space-y-4 shadow-sm hover:shadow hover:-translate-y-1 hover:z-30 my-2 overflow-hidden">
             <div className='h-[130px] w-full sm:h-44 overflow-hidden rounded-lg product_image'>
-                <img src={product?.product_images[0]?.image_link} className="w-full h-full object-cover" alt={product?.name}/>
+                <LazyLoadImage src={product?.product_images[0]?.image_link} className="w-full h-full object-cover" alt={product?.name}/>
             </div>
             <div className='space-y-1'>
                 <p className='text-grey-1200 text-sm capitalize font-light w-full truncate'>{ sliceString(product?.name) }</p>
@@ -117,6 +119,8 @@ export function ProductsSlide({products, loading, title, link, titleCase}: {prod
         slidesToScroll: 2,
     };
     let data = [1, 2, 3, 4, 5]
+
+    products = products?.filter((product: IProduct) => product.product_images.length > 0)
 
     const navigate = useNavigate()
     return(
@@ -340,7 +344,7 @@ export function ProductCategory({products, title, link}: {products: any, loading
                     {
                         products?.map((val: any) => (
                             <Link to={val.link} className="block w-full" key={val.id}>
-                                <img alt='flexipay' src={val.img} className="w-full h-full rounded object-cover cursor-pointer" />
+                                <LazyLoadImage alt='flexipay' src={val.img} className="w-full h-full rounded object-cover cursor-pointer" />
                             </Link>
                         ))
                     }

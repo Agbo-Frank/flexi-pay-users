@@ -2,6 +2,7 @@ import { CategorySlide, Body, Categories, Header, LandingSlide, ProductsSlide, F
 import banner from '../../asset/banner.png'
 import { useGetProductsQuery } from "../../redux/api/Product"
 import BannerSlides from "./bannerSlide"
+import { LazyLoadImage } from "react-lazy-load-image-component"
 
 import cat1 from '../../asset/categories1.png'
 import cat2 from '../../asset/categories2.png'
@@ -12,7 +13,6 @@ import cat6 from '../../asset/categories6.png'
 import cat7 from '../../asset/categories7.png'
 import cat8 from '../../asset/categories8.png'
 import cat9 from '../../asset/categories9.png'
-import cat10 from '../../asset/categories10.png'
 
 
 export function Landing(){
@@ -59,12 +59,12 @@ export function Landing(){
                             <LandingSlide />
                         </div>
                         <div className="hidden sm:block h-full w-3/12 overflow-hidden rounded-xl">
-                            <img src={banner} className="object-cover w-full h-full"/>
+                            <LazyLoadImage src={banner} className="object-cover w-full h-full"/>
                         </div>
                     </div>
 
                     <div className="bg-white rounded-xl py-2 px-1 overflow-x-auto sm:overflow-hidden">
-                        <CategorySlide />
+                        <CategorySlide categories={categories}/>
                     </div>
                     {/* <ProductsBallSlide 
                         products={catTop} 

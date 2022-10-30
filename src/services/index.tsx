@@ -1,9 +1,5 @@
-import { useCookies } from "react-cookie";
-import { FLEXIPAY_COOKIE } from "../utils/constants";
-import { v4 as uuidv4 } from 'uuid';
-import { useDispatch } from "react-redux";
 import { toggleSnackBar } from "../redux/slice/modal";
-import { IAddToCartReq, ICart, IResponse, ITrigger } from "../interface";
+import { IAddToCartReq, IResponse, ITrigger } from "../interface";
 import { Dispatch } from "react";
 import { AnyAction } from "@reduxjs/toolkit";
 

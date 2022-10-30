@@ -146,6 +146,7 @@ export function Product(){
     }
 
     if(err){
+        console.log(err)
         return <Navigate to="*" replace/>
     }
     else{
