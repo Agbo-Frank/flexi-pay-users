@@ -37,6 +37,8 @@ function MenuItem({id, parent, chidren,}: IMenuItemProps){
         })
     })
 
+    let navigate = useNavigate()
+
     useEffect(() => {
         getCategories({page: 1, id: parent.uuid})
     }, [])
@@ -57,6 +59,7 @@ function MenuItem({id, parent, chidren,}: IMenuItemProps){
                                     className="hover:bg-[#C3C3C3]/30 py-1 pl-5 cursor-pointer hover:text-primary-blue"
                                     onMouseEnter={()=> setOpen(state => ({...state, sub: true, category: item}))}
                                     onMouseLeave={()=> setOpen(state => ({...state, sub: false, category: null}))}
+                                    onClick={() => navigate("/category/" + item?.uuid)}
                                 >
                                     {item.name}
                                 </li>

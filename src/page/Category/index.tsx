@@ -1,6 +1,6 @@
 import { Button, Skeleton } from "@mui/material"
 import { useEffect, useState } from "react"
-import { useSearchParams, useNavigate, useParams } from "react-router-dom"
+import { useSearchParams, useNavigate, useParams, useLocation } from "react-router-dom"
 import { 
     Body,
     ProductCard, Empty,
@@ -22,6 +22,7 @@ export function CategoryPage(){
     
 
     let [searchParams, setSearchParams] = useSearchParams()
+    const location = useLocation()
 
     let [getProducts, {products, loading, category, sub_categories}] = useLazyGetSubCategoriesQuery({
         selectFromResult: ({ data, isLoading }) => ({
@@ -45,12 +46,11 @@ export function CategoryPage(){
 
     useEffect(() => {
         getProducts({page, id: `${id}`})
-    }, [page, searchParams, filters, id])
+    }, [page, searchParams, filters, id, location])
     
     console.log(category)
 
     products = products?.filter((product: IProduct) => product.product_images.length > 0)
-
 
     return(
         <Body bgColor="bg-white sm:bg-grey-500">
