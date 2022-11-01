@@ -169,7 +169,7 @@ const NewFooter = () => {
                         </div>
                         <div className="font-light text-sm">
                             <a className="my-4 text-sm" href="tel:+2348108645964">+234 810 8645 964</a>
-                            <address className="my-4">30 First avenue, by federal junction, Ada George Road, PHC</address>
+                            <address className="my-4">27 NTA Road, Rumuokwuta, PHC.</address>
                         </div>
                         <div className="my-4">
                             <p className="text-sm mb-2 sm:mb-4">Get latest updates in your inbox</p>

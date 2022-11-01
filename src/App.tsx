@@ -42,8 +42,8 @@ function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/"  element={<CountDown  />}/>
-        <Route path="/home"  element={<Landing  />}/>
+        {/* <Route path="/"  element={<CountDown  />}/> */}
+        <Route path="/"  element={<Landing  />}/>
         <Route path="/login"  element={<Login  />}/>
         <Route path="/register"  element={<Register  />}/>
         <Route path="/auth/*" element={<Auth />}/>
