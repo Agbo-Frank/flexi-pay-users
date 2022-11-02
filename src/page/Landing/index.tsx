@@ -1,6 +1,6 @@
 import { CategorySlide, Body, Categories, Header, LandingSlide, ProductsSlide, Footer, SearchBar, ProductCategory, Empty } from "../../components"
 import banner from '../../asset/banner.png'
-import { useGetProductsQuery } from "../../redux/api/Product"
+import { useGetProductsQuery, useGetSubCategoriesQuery } from "../../redux/api/Product"
 import BannerSlides from "./bannerSlide"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 
@@ -14,9 +14,17 @@ import cat7 from '../../asset/categories7.png'
 import cat8 from '../../asset/categories8.png'
 import cat9 from '../../asset/categories9.png'
 import cat10 from '../../asset/categories10.png'
+import { useState } from "react"
 
 
 export function Landing(){
+    const [category_ids] = useState({
+        smart_phones: "f7b1cad2-7255-4bad-aba9-f4a9b5e02d65",
+        tv: "af4389b5-a06a-4751-94c2-961877673fc0",
+        home_applience: "b15de1d2-83e8-447b-8717-bf748fd3225e",
+        laptops: ""
+    })
+
     let { products, loadingProduct } = useGetProductsQuery(1, {
         selectFromResult: ({ data, isLoading }) => ({
             products: data?.result.data,
@@ -29,11 +37,42 @@ export function Landing(){
             loadingProduct: isLoading
         }) 
     })
+
     let { products: products_3, loadingProduct: loadingProduct_3 } = useGetProductsQuery(3, {
         selectFromResult: ({ data, isLoading }) => ({
             products: data?.result.data,
             loadingProduct: isLoading
         }) 
+    })
+
+    // Phone and Tablet
+    let {smart_phones, smart_phones_loading} = useGetSubCategoriesQuery({page: 1, id: category_ids.smart_phones}, {
+        selectFromResult: ({ data, isLoading }) => ({
+            category: data?.result,
+            smart_phones: data?.result.products,
+            smart_phones_loading: isLoading,
+            sub_categories: data?.result.sub_categories
+        })
+    })
+
+    // TVs
+    let {tvs, tvs_loading} = useGetSubCategoriesQuery({page: 1, id: category_ids.tv}, {
+        selectFromResult: ({ data, isLoading }) => ({
+            category: data?.result,
+            tvs: data?.result.products,
+            tvs_loading: isLoading,
+            sub_categories: data?.result.sub_categories
+        })
+    })
+
+    // HOME APPLIENCES
+    let {home_appliences, home_appliences_loading} = useGetSubCategoriesQuery({page: 1, id: category_ids.home_applience}, {
+        selectFromResult: ({ data, isLoading }) => ({
+            category: data?.result,
+            home_appliences: data?.result.products,
+            home_appliences_loading: isLoading,
+            sub_categories: data?.result.sub_categories
+        })
     })
 
     const categories = [
@@ -73,6 +112,45 @@ export function Landing(){
                     /> */}
 
                     <ProductsSlide 
+                        products={smart_phones} 
+                        title="PHONES"
+                        link={"/category/" + category_ids.smart_phones}
+                        loading={smart_phones_loading}
+                    />
+
+                    <ProductsSlide 
+                        products={tvs} 
+                        title="TVs"
+                        link={"/category/" + category_ids.tv}
+                        loading={tvs_loading}
+                    />
+
+                    <ProductsSlide 
+                        products={home_appliences} 
+                        title="HOME APPLIANCES"
+                        link={"/category/" + category_ids.home_applience}
+                        loading={home_appliences_loading}
+                    />
+
+                    <ProductCategory 
+                        title="SHOP FROM OUR TOP CATEGORIES"
+                        products={categories}
+                        loading={false}
+                    />
+                    <ProductsSlide 
+                        products={products}
+                        title="NEW ARRIVAL" 
+                        link="/products"
+                        loading={loadingProduct}
+                    />
+                    {/* <ProductsSlide 
+                        products={products} 
+                        title="LAPTOPS"
+                        link="/products"
+                        loading={loadingProduct}
+                    />   */}
+
+                    <ProductsSlide 
                         products={products} 
                         title="FEATURED PRODUCTS"
                         link="/products"
@@ -80,7 +158,7 @@ export function Landing(){
                     />
                     {/* <ProductsSlideDummy /> */}
 
-                    <BannerSlides />
+                    {/* <BannerSlides /> */}
 
                     <ProductsSlide 
                         products={products_2}
@@ -89,18 +167,6 @@ export function Landing(){
                         loading={loadingProduct_2}
                     />
 
-                    <ProductCategory 
-                        title="SHOP FROM OUR TOP CATEGORIES"
-                        products={categories}
-                        loading={false}
-                    />
-
-                    <ProductsSlide 
-                        products={products_3}
-                        title="NEW ARRIVAL" 
-                        link="/products"
-                        loading={loadingProduct_3}
-                    />
                 </div>
 
                 <Footer />

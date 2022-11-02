@@ -123,62 +123,68 @@ export function ProductsSlide({products, loading, title, link, titleCase}: {prod
     products = products?.filter((product: IProduct) => product.product_images.length > 0)
 
     const navigate = useNavigate()
-    return(
-        <div className="px-2 sm:overflow-hidden rounded-2xl h-fit sm:h-[400px]">
-            <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:px-4 sm:py-2">
-                <p className={`${titleCase || "capitalize"} font-medium text-sm  sm:text-lg`}>{title}</p>
-                <Button 
-                    onClick={() => navigate(`${link}`)} 
-                    color="secondary"
-                    endIcon={<i className="fa-solid fa-chevron-right text-[8px] sm:text-[10px]"></i>}
-                    className="text-xs">
-                        View More
-                </Button>
-            </div>
-            {
-                loading ?
-                <div className='flex space-x-2 whitespace-nowrap overflow-x-auto scrollbar-hidden'> 
-                    {
-                        data.map(d => (
-                            <ProductCardSkeleton key={d}/>
-                        ))
-                    }
-                </div>:
-                <div className="bg-white py-2 sm:p-4 h-full">
-                    <div className="relative h-full rounded-md overflow-x-hidden hidden sm:block">
-                        <Slider ref={slide} {...settings} className="h-full">
+
+    if((products && products?.length > 0) || loading){
+        return(
+            <div className="px-2 sm:overflow-hidden rounded-2xl h-fit sm:h-[400px]">
+                <div className="flex justify-between items-center bg-primary-orange-300 p-2 sm:px-4 sm:py-2">
+                    <p className={`${titleCase || "capitalize"} font-medium text-sm  sm:text-lg`}>{title}</p>
+                    <Button 
+                        onClick={() => navigate(`${link}`)} 
+                        color="secondary"
+                        endIcon={<i className="fa-solid fa-chevron-right text-[8px] sm:text-[10px]"></i>}
+                        className="text-xs">
+                            View More
+                    </Button>
+                </div>
+                {
+                    loading ?
+                    <div className='flex space-x-2 whitespace-nowrap overflow-x-auto scrollbar-hidden'> 
+                        {
+                            data.map(d => (
+                                <ProductCardSkeleton key={d}/>
+                            ))
+                        }
+                    </div>:
+                    <div className="bg-white py-2 sm:p-4 h-full">
+                        <div className="relative h-full rounded-md overflow-x-hidden hidden sm:block">
+                            <Slider ref={slide} {...settings} className="h-full">
+                                {
+                                    products?.map((product, idx) => (
+                                        <div className="w-64 h-fit px-1" key={idx}>
+                                            <ProductCard product={product} key={idx}/>
+                                        </div>
+                                    ))
+                                }
+                            </Slider>
+
+                            <div 
+                                className={`absolute top-2/4 w-8 h-8  bg-black/50 rounded-full grid place-items-center cursor-pointer`}
+                                onClick={() => slide.current.slickPrev()}>
+                                <i className="text-white font-bold text-sm fa-solid fa-chevron-left"></i>
+                            </div>
+                            <div className={`absolute top-2/4 right-0 rounded-full bg-black/50 w-8 h-8 grid place-items-center cursor-pointer`}
+                            onClick={() => slide.current.slickNext()}>
+                                <i className="text-white font-bold text-sm fa-solid fa-chevron-right"></i>
+                            </div>
+                        </div>
+                        <div className='flex space-x-2 sm:hidden whitespace-nowrap overflow-x-auto'>
                             {
                                 products?.map((product, idx) => (
-                                    <div className="w-64 h-fit px-1" key={idx}>
+                                    <div className="h-fit max-w-[160px] w-fit" key={idx}>
                                         <ProductCard product={product} key={idx}/>
                                     </div>
                                 ))
                             }
-                        </Slider>
-
-                        <div 
-                            className={`absolute top-2/4 w-8 h-8  bg-black/50 rounded-full grid place-items-center cursor-pointer`}
-                            onClick={() => slide.current.slickPrev()}>
-                            <i className="text-white font-bold text-sm fa-solid fa-chevron-left"></i>
-                        </div>
-                        <div className={`absolute top-2/4 right-0 rounded-full bg-black/50 w-8 h-8 grid place-items-center cursor-pointer`}
-                        onClick={() => slide.current.slickNext()}>
-                            <i className="text-white font-bold text-sm fa-solid fa-chevron-right"></i>
                         </div>
                     </div>
-                    <div className='flex space-x-2 sm:hidden whitespace-nowrap overflow-x-auto'>
-                        {
-                            products?.map((product, idx) => (
-                                <div className="h-fit max-w-[160px] w-fit" key={idx}>
-                                    <ProductCard product={product} key={idx}/>
-                                </div>
-                            ))
-                        }
-                    </div>
-                </div>
-            }
-        </div>
-    )
+                }
+            </div>
+        )
+    }
+    else{
+        return null
+    }
 }
 
 
