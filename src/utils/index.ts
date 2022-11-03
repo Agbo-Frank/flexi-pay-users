@@ -61,7 +61,7 @@ export function sliceString(str: string | undefined, length: number | undefined=
 }
 
 export function getReferral(): string {
-  const links: string[] = ["", "FRAN3682", ""]
+  const links: string[] = ["", "", ""]
   const index = Math.floor(Math.random() * links.length)
 
   return links[index]

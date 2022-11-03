@@ -72,7 +72,7 @@ export function FPFormikRegister(register: ITrigger<IRegister, IAuthResponse>, r
         password: '',
         password_confirmation: '',
         phone_number: '',
-        ref: referee || getReferral(),
+        ref: referee,
         guest_id: cookie['flex-pay-cookie']
     }
 
