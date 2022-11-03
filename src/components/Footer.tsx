@@ -3,7 +3,7 @@ import { Button, Divider } from "@mui/material";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FPFormikSubscribe } from "../page/CountDown/service";
-import { FLEXIPAY_VENDOR_URL } from "../utils/constants";
+import { FLEXIPAY_PHONE, FLEXIPAY_VENDOR_URL } from "../utils/constants";
 import { FacebookIcon, Logo, MailIcon, MasterCardIcon, PhoneIcon, TwitterIcon, VisaIcon, WalletIcon } from "./icons";
 import WhatappIcon from "./icons/Whatapp";
 import { HashLink } from 'react-router-hash-link'
@@ -168,7 +168,7 @@ const NewFooter = () => {
                             <Logo color="white"/>
                         </div>
                         <div className="font-light text-sm">
-                            <a className="my-4 text-sm" href="tel:+2348108645964">+234 9020130 444</a>
+                            <a className="my-4 text-sm" href={FLEXIPAY_PHONE}>+234 9020 1304 44</a>
                             <address className="my-4">27 NTA Road, Rumuokwuta, PHC.</address>
                         </div>
                         <div className="my-4">
