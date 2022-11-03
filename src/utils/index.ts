@@ -60,6 +60,13 @@ export function sliceString(str: string | undefined, length: number | undefined=
   return str?.slice(0, length) + (str && str.length > length ? "..." : "")
 }
 
+export function getReferral(): string {
+  const links: string[] = ["", "FRAN3682", ""]
+  const index = Math.floor(Math.random() * links.length)
+
+  return links[index]
+
+}
 export function formatString(str: string){
   let result = str
   if(/install/g.test(result)){

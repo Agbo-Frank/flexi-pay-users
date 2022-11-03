@@ -168,7 +168,7 @@ const NewFooter = () => {
                             <Logo color="white"/>
                         </div>
                         <div className="font-light text-sm">
-                            <a className="my-4 text-sm" href="tel:+2348108645964">+234 810 8645 964</a>
+                            <a className="my-4 text-sm" href="tel:+2348108645964">+234 9020130 444</a>
                             <address className="my-4">27 NTA Road, Rumuokwuta, PHC.</address>
                         </div>
                         <div className="my-4">
@@ -188,7 +188,7 @@ const NewFooter = () => {
                     <ul>
                         <li className="font-medium mb-2 sm:mb-4">Make Money on FlexiPay</li>
                         <li className="font-light text-sm cursor-pointer my-2"><a href={FLEXIPAY_VENDOR_URL}>Become a Vendor</a></li>
-                        <li className="font-light text-sm cursor-pointer my-2"><Link to="/partner">Become an affiliate partner</Link></li>
+                        <li className="font-light text-sm cursor-pointer my-2"><Link to="/">Become an affiliate partner</Link></li>
                     </ul>
                 </div>
             </div>

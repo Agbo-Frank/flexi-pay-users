@@ -3,6 +3,7 @@ import { useAuth } from '../../context/Auth';
 import { useFormik, FormikHelpers, FormikConfig } from 'formik';
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { IAuthResponse, ILogin, IRegister, IResetPassword, ITrigger } from '../../interface';
+import { getReferral } from '../../utils';
 
 export function FPFormikLogin(login: ITrigger<ILogin, IAuthResponse>){
     let navigate = useNavigate();
@@ -71,7 +72,7 @@ export function FPFormikRegister(register: ITrigger<IRegister, IAuthResponse>, r
         password: '',
         password_confirmation: '',
         phone_number: '',
-        ref: referee,
+        ref: referee || getReferral(),
         guest_id: cookie['flex-pay-cookie']
     }
 
