@@ -131,7 +131,7 @@ export function AddressBook(){
                                                                 color="secondary"
                                                                 checked={address.is_default === 1 ? true : false}
                                                             />} 
-                                                        label="Francis Agbo" 
+                                                        label={address.name} 
                                                         className="w-full"  
                                                     />
                                                     <div className="ml-7 text-grey-200 text-sm">

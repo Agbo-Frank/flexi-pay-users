@@ -56,6 +56,8 @@ export function CheckOut(){
         })
     })
 
+    console.log(data, error)
+
     let [getUserCart, {carts, loadingCart}] = useLazyGetUserCartQuery({
         selectFromResult: ({data, isLoading}) => ({
             carts: data?.result.data,
