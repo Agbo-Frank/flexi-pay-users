@@ -55,7 +55,7 @@ function Item ({ Icon, name, link, handleClick}: Item): JSX.Element {
 
 export function Header(){
     let {signout} = useAuth()
-    const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
+    const [cookies] = useCookies([FLEXIPAY_COOKIE]);
 
     let [getUser, {data: user, isLoading: loading}] = useLazyGetUserQuery()
     let [getCart, { carts }] = useLazyGetUserCartQuery({
@@ -134,8 +134,8 @@ export function Header(){
                                 <Button color="#FF5000" onClick={() => navigate('/register')}><p className="text-sm font-medium">Register</p></Button>
                             </div>:
                             <>
-                                <ul className="hidden sm:flex justify-evenly items-center w-3/6">
-                                    <Badge color="secondary" overlap="circular" badgeContent={1}>
+                                <ul className="hidden sm:flex justify-end items-center w-3/6">
+                                    {/* <Badge color="secondary" overlap="circular" badgeContent={1}>
                                         <Avatar sx={{bgcolor: '#000326', width: 44, height: 44}}>
                                             <MessageIcon size="20" color="#F9F8FF"/> 
                                         </Avatar>
@@ -148,7 +148,7 @@ export function Header(){
                                         <Avatar sx={{bgcolor: '#000326', width: 44, height: 44}}>
                                             <BellIcon size="20" color="#F9F8FF"/> 
                                         </Avatar>
-                                    </Badge>
+                                    </Badge> */}
                                     <Badge  
                                         color="secondary" 
                                         overlap="circular" 

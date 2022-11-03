@@ -27,7 +27,7 @@ export function Filters({searchParams, setSearchParams, sub_categories}: IFilter
     })
 
     useEffect(() => {
-        if(!sub_categories){
+        if(!sub_categories || sub_categories.length === 0){
             getCategories()
                 .unwrap()
                 .then(data => {
@@ -42,7 +42,7 @@ export function Filters({searchParams, setSearchParams, sub_categories}: IFilter
         }
     }, [loading, sub_categories])
 
-    categories = sub_categories ? sub_categories : categories
+    // categories = sub_categories ? sub_categories : categories
 
     function submitPriceRange(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault()
