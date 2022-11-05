@@ -74,7 +74,7 @@ export function Cart({cart}: {cart: ICart}){
             className="flex flex-col sm:flex-row justify-between shadow hover:shadow-lg sm:p-2 w-[98%] rounded-xl bg-white">
                 <div className={`p-2 pb-3 sm:pb-0 ${disabled === null && "opacity-40"}`}>
                     <div className="flex space-x-2 sm:space-x-3 items-stretch">
-                        <Link to={disabled !== null && cart?.product ? "/product/" + cart?.product?.uuid : "*"} className="block w-fit">
+                        <Link to={disabled !== null && cart?.product ? "/product/" + cart?.product?.slug : "*"} className="block w-fit">
                             <LazyLoadImage src={disabled === null ? backgroundImage : cart?.product?.product_images[0]?.image_link} className="w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] object-cover rounded sm:rounded-xl"/>
                         </Link>
                         <div className="sm:w-7/12 flex flex-col justify-around">
