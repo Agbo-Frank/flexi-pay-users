@@ -15,6 +15,32 @@ import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
 declare const self: ServiceWorkerGlobalScope;
+declare const caches: Cache | any
+
+const assets = [
+  '/',
+  '/index.html',
+  'https://api.flexipay.ng/api/category/fetch/sub/f7b1cad2-7255-4bad-aba9-f4a9b5e02d65?page=1',
+  'https://api.flexipay.ng/api/category/fetch/parent',
+  'https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2',
+  'https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459WdhyyTh89ZNpQ.woff2',
+  'https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/webfonts/fa-brands-400.woff2',
+  'https://www.smartsuppchat.com/loader.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css',
+  '/pages/fallback.html',
+  "https://api.flexipay.ng/api/category/fetch/sub/af4389b5-a06a-4751-94c2-961877673fc0?page=1",
+  "/static/media/categories4.b213849b515b1a508a72.png",
+  "/static/media/categories3.a9227bf9f5d5a3bec4f3.png",
+  "/static/media/categories1.7f74ceddf7ca666de4d0.png",
+  "/static/media/categories2.60c132b790d803ba0376.png",
+  "/static/media/slide1.5b117d1feb8b269bb20e.png",
+  "/static/media/categories5.bd91ccb569792f998bfc.png",
+  "/static/media/categories6.b41ead3c97d6e7a53a01.png"
+];
+
+const dynamicCacheName = 'flexipay-dynamic-v1';
+const staticCacheName = 'flexipay-dynamic-v1';
 
 clientsClaim();
 
@@ -60,6 +86,17 @@ registerRoute(
   createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
 );
 
+// cache size limit function
+const limitCacheSize = (name: string, size: number) => {
+  caches.open(name).then((cache: any) => {
+    cache.keys().then((keys: any) => {
+      if(keys.length > size){
+        cache.delete(keys[0]).then(limitCacheSize(name, size));
+      }
+    });
+  });
+};
+
 // An example runtime caching route for requests that aren't handled by the
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(
@@ -71,7 +108,7 @@ registerRoute(
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 30 }),
+      new ExpirationPlugin({ maxEntries: 60 }),
     ],
   })
 );
@@ -85,3 +122,36 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+
+// install event
+self.addEventListener('install', evt => {
+  //console.log('service worker installed');
+  evt.waitUntil(
+    caches.open(staticCacheName).then((cache: any) => {
+      console.log('caching shell assets');
+      cache.addAll(assets);
+    })
+  );
+});
+
+// fetch events
+self.addEventListener('fetch', evt => {
+  if(evt.request.url.indexOf('firestore.googleapis.com') === -1){
+    evt.respondWith(
+      caches.match(evt.request).then((cacheRes: any) => {
+        return cacheRes || fetch(evt.request).then(fetchRes => {
+          return caches.open(dynamicCacheName).then((cache: any) => {
+            cache.put(evt.request.url, fetchRes.clone());
+            // check cached items size
+            limitCacheSize(dynamicCacheName, 15);
+            return fetchRes;
+          })
+        });
+      }).catch(() => {
+        if(evt.request.url.indexOf('.html') > -1){
+          return caches.match('/*');
+        } 
+      })
+    );
+  }
+});

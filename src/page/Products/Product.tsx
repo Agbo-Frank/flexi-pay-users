@@ -45,12 +45,13 @@ export function Product(){
       })
     
 
-    let { product, loading, error: err } = useGetProductQuery(`${slug}`, {
+    let { product, loading, error: err, isUninitialized} = useGetProductQuery(`${slug}`, {
         refetchOnReconnect: true,
-        selectFromResult: ({data, isLoading, error}) => ({
+        selectFromResult: ({data, isLoading, error, isUninitialized}) => ({
             product: data && data?.result?.data,
             loading: isLoading,
-            error
+            error,
+            isUninitialized
         })
     })
 
@@ -145,15 +146,12 @@ export function Product(){
         })
     }
 
-    if(err){
-        console.log(err)
-        return <Navigate to="*" replace/>
-    }
-    else{
+    
+    // if(!isUninitialized && !loading && product){
         return(
             <>
                 <Helmet prioritizeSeoTags>
-                    <title className="capitalize">{product?.name + "| FlexiPay"}</title>
+                    <title className="capitalize">{product?.name + " | FlexiPay"}</title>
                     <meta property="og:image" content={product?.product_images[0].image_link} />
                     <meta property="og:type" content="website" />
                     <meta property="og:site_name" content="Flexipay Nigeria" />
@@ -346,7 +344,7 @@ export function Product(){
                 </Body>
             </>
         )
-    }
+    // }
 }
 
 export default Product

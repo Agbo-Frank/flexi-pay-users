@@ -91,7 +91,7 @@ export function Header(){
 
     let {pathname} = useLocation()
 
-    let paths = ["/", "/home", "/profile", "/dashboard", "/wallet"]
+    let paths = ["/"]
 
     return(
         <>  
@@ -235,8 +235,12 @@ export function Header(){
                                     className="sm:hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF]"
                                     onClick={() => {
                                         if(isAuth){
-                                            // setOpenDrawer(state => ({...state, sideBar: true}))
-                                            navigate("/dashboard")
+                                            // if(paths.includes(pathname)){
+                                                setOpenDrawer(state => ({...state, sideBar: true}))
+                                            // }
+                                            // else{
+                                            //     navigate("/dashboard")
+                                            // }
                                         }
                                         else{
                                             navigate("/login")

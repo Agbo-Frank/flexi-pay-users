@@ -78,7 +78,7 @@ export function ProductSlide({images}: {images: string[]}){
             {
                 images?.map((image, imgIdx) => (
                     <div 
-                        className='w-11/12 h-[260px] xs:h-[380px] sm:h-[420px] md::h-auto flex-shrink-0'
+                        className='w-11/12 h-[260px] xs:h-[380px] sm:h-[420px] md:h-auto flex-shrink-0'
                         key={imgIdx}
                         onClick={() => setOpen(true)}>
                         <LazyLoadImage src={image} className="object-cover w-[98%] h-full rounded"/>

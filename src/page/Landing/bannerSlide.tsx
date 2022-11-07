@@ -28,7 +28,7 @@ export function BannerSlides(){
                 {
                     imgs.map((img, idx) => (
                         <div className="w-full h-full rounded-lg overflow-hidden" key={idx}>
-                            <LazyLoadImage src={img} alt="banner1" className="object-cover w-full h-full"/>
+                            <img src={img} alt="banner1" className="object-cover w-full h-full"/>
                         </div>
                     ))
                 }
@@ -40,7 +40,7 @@ export function BannerSlides(){
                         imgs.map((img, imgIdx) => (
                             <div className='w-full' key={imgIdx}>
                                 <div className='w-full rounded-none sm:rounded-xl overflow-hidden h-[250px] sm:h-auto'>
-                                    <LazyLoadImage src={img} className="object-cover w-[98%] h-full rounded-xl"/>
+                                    <img src={img} className="object-cover w-[98%] h-full rounded-xl"/>
                                 </div>
                             </div>
                         ))
