@@ -225,6 +225,7 @@ export interface IModalReducer {
         type: "edit" | "create";
         body: IDeliveryAddress | null
     },
+    logout: boolean,
     addCreditCard: boolean,
     withdrawalForm: boolean,
     editProfile: boolean;

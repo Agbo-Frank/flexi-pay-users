@@ -12,6 +12,7 @@ let initialState: IModalReducer = {
   addCreditCard: false,
   withdrawalForm: false,
   editProfile: false,
+  logout: false,
   snackBar: {
     open: false,
     message: "",
@@ -47,6 +48,9 @@ export const modalSlice = createSlice({
       state.snackBar.message = action.payload.message
       state.snackBar.open = action.payload.open
       state.snackBar.severity = action.payload.severity
+    },
+    toggleLogout: (state) => {
+      state.logout = !state.logout
     }
   },
 })
@@ -58,7 +62,8 @@ export const {
   toggleWithdrawalForm,
   toggleEditProfile,
   toggleAddressBook,
-  toggleSnackBar
+  toggleSnackBar,
+  toggleLogout
 } = modalSlice.actions
 
 export default modalSlice.reducer

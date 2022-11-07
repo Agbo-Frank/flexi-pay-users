@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import Iicon from "./interface"
 import { useLogoutMutation } from "../redux/api/Auth"
 import { useLazyGetUserQuery } from "../redux/api/User"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../redux/store"
 import { Avatar, Badge, IconButton, Skeleton } from "@mui/material"
 import { Drawer, SearchBar } from "."
@@ -24,6 +24,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { MenuDrawer, SideBarDrawer } from './'
 import WestIcon from '@mui/icons-material/West';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { toggleLogout } from "../redux/slice/modal"
+import { LogoutModal } from "./Models"
 
 interface Item {
     Icon: React.FC<Iicon>;
@@ -53,8 +55,35 @@ function Item ({ Icon, name, link, handleClick}: Item): JSX.Element {
     )
 }
 
+function HeaderDropDown({open, close}: {open: boolean, close: () => any | void}){
+    const dispatch = useDispatch()
+    return(
+        <div className="hidden sm:block absolute overflow-hidden w-48 rounded-xl z-50">
+            <Slide top when={open} duration={300}>
+                <ul className={`${open ? 'block' : 'hidden'} translate-y-2 text-sm top-full rounded-xl z-50 bg-white shadow-lg pb-1`}>
+                    <Item Icon={UserIcon} name="Profile" link="profile" handleClick={close} />
+                    <Item Icon={WalletIcon} name="Wallet" link="wallet" handleClick={close} />
+                    <Item Icon={BagIcon} name="Order" link="order" handleClick={close} />
+                    <Item Icon={HeartIcon} name="Saved Item" link="saved-items" handleClick={close} />
+
+                    <li className="w-10/12 mx-auto mb-2">
+                        <Button 
+                            color="#FF5000" 
+                            onClick={() => dispatch(toggleLogout())}
+                        >
+                            <div className='flex items-center gap-3'>
+                                <LogOutIcon color="white" size="15"/> 
+                                <p className='text-white font-semibold text-sm'>Logout</p>
+                            </div>
+                        </Button>
+                    </li>
+                </ul>
+            </Slide>
+        </div>
+    )
+}
+
 export function Header(){
-    let {signout} = useAuth()
     const [cookies] = useCookies([FLEXIPAY_COOKIE]);
 
     let [getUser, {data: user, isLoading: loading}] = useLazyGetUserQuery()
@@ -75,14 +104,11 @@ export function Header(){
         }
     }, [isAuth])
 
-    let [logout, {isLoading: loggingOut}] = useLogoutMutation({
-        fixedCacheKey: 'logout',
-    })
-    let [toggle, setToggle] = useState(false)
-    let [openDrawer, setOpenDrawer] = useState({
+    let [open, setOpen] = useState({
         notification: false,
         menu: false,
-        sideBar: false
+        sideBar: false,
+        header_dropdown: false
     })
 
     let navigate = useNavigate()
@@ -95,8 +121,9 @@ export function Header(){
 
     return(
         <>  
-            <MenuDrawer open={openDrawer.menu} close={() => setOpenDrawer(state => ({...state, menu: false}))}/>
-            <SideBarDrawer open={openDrawer.sideBar} close={() => setOpenDrawer(state => ({...state, sideBar: false}))}/>
+            <MenuDrawer open={open.menu} close={() => setOpen(state => ({...state, menu: false}))}/>
+            <SideBarDrawer open={open.sideBar} close={() => setOpen(state => ({...state, sideBar: false}))}/>
+            <LogoutModal />
             <header className="bg-white w-full shadow sm:shadow-none sticky top-0 right-0 left-0 z-[100]">
                 <div className="fp-screen flex justify-between py-2 sm:py-5 bg-white items-center sm:items-end">
                     <div className="flex items-center gap-2">
@@ -105,7 +132,7 @@ export function Header(){
                             paths.includes(pathname) ?
                             <IconButton 
                                 className="sm:hidden"
-                                onClick={() => setOpenDrawer(state => ({...state, menu: true}))}>
+                                onClick={() => setOpen(state => ({...state, menu: true}))}>
                                 <MenuIcon />
                             </IconButton> :
                             <IconButton 
@@ -144,7 +171,7 @@ export function Header(){
                                         color="secondary" 
                                         overlap="circular" 
                                         badgeContent={9}
-                                        onClick={() => setOpenDrawer(state => ({...state, notification: !state.notification}))}>
+                                        onClick={() => setOpen(state => ({...state, notification: !state.notification}))}>
                                         <Avatar sx={{bgcolor: '#000326', width: 44, height: 44}}>
                                             <BellIcon size="20" color="#F9F8FF"/> 
                                         </Avatar>
@@ -177,37 +204,13 @@ export function Header(){
                                             </div>
                                             <div 
                                                 className="hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full sm:flex justify-center items-center cursor-pointer border border-[#E8E5FF] mr-3"
-                                                onClick={() => setToggle(state => !state)}>
+                                                onClick={() => setOpen(state => ({...state, header_dropdown: true}))}>
                                                 <ProfilBG size={matches ? "20" : "15"} color="#000541"/>
                                             </div>
                                             {/* <Avatar /> */}
                                         </div>
                                     }
-                                    <div className="hidden sm:block absolute overflow-hidden w-48 rounded-xl z-50">
-                                        <Slide top when={toggle} duration={300}>
-                                            <ul className={`${toggle ? 'block' : 'hidden'} translate-y-2 text-sm top-full rounded-xl z-50 bg-white shadow-lg pb-1`}>
-                                                <Item Icon={UserIcon} name="Profile" link="profile" handleClick={() => setToggle(false)} />
-                                                <Item Icon={WalletIcon} name="Wallet" link="wallet" handleClick={() => setToggle(false)} />
-                                                <Item Icon={BagIcon} name="Order" link="order" handleClick={() => setToggle(false)} />
-                                                <Item Icon={HeartIcon} name="Saved Item" link="saved-items" handleClick={() => setToggle(false)} />
-
-                                                <li className="w-10/12 mx-auto mb-2">
-                                                    <Button color="#FF5000" onClick={signout}>
-                                                        <div className='flex items-center gap-3'>
-                                                            {
-                                                                loggingOut ? 
-                                                                <div className='w-5 h-5'><Spinner /></div>:
-                                                                <>
-                                                                    <LogOutIcon color="white" size="15"/> 
-                                                                    <p className='text-white font-semibold text-sm'>Logout</p>
-                                                                </>
-                                                            }
-                                                        </div>
-                                                    </Button>
-                                                </li>
-                                            </ul>
-                                        </Slide>
-                                    </div>
+                                    <HeaderDropDown open={open.header_dropdown} close={() => setOpen(state => ({...state, header_dropdown: false}))}/>
                                 </div>
                             </>
                         }
@@ -236,7 +239,7 @@ export function Header(){
                                     onClick={() => {
                                         if(isAuth){
                                             // if(paths.includes(pathname)){
-                                                setOpenDrawer(state => ({...state, sideBar: true}))
+                                                setOpen(state => ({...state, sideBar: true}))
                                             // }
                                             // else{
                                             //     navigate("/dashboard")
@@ -253,7 +256,7 @@ export function Header(){
                     </div>
                 </div>
             </header>
-            <Drawer open={openDrawer.notification} close={() => setOpenDrawer(state => ({...state, notification: false}))}/>
+            <Drawer open={open.notification} close={() => setOpen(state => ({...state, notification: false}))}/>
         </>
     )
 }

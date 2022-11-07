@@ -3,7 +3,7 @@ import './index.css';
 import {
   Carts, CheckOut, Profile,
   Orders, Dashboard, SavedItems, 
-  Wallet, Product, Products,
+  Wallet, Products, Product,
   Contact, Landing,
   Auth,
   Subscriptions,
