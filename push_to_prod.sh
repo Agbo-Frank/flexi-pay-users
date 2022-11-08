@@ -3,5 +3,5 @@
 npm run build
 git add .
 git commit -m $1
-git push prod
+git push origin prod
 
