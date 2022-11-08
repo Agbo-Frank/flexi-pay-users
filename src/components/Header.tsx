@@ -15,7 +15,7 @@ import { useLogoutMutation } from "../redux/api/Auth"
 import { useLazyGetUserQuery } from "../redux/api/User"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../redux/store"
-import { Avatar, Badge, IconButton, Skeleton } from "@mui/material"
+import { Avatar, Badge, ClickAwayListener, IconButton, Skeleton } from "@mui/material"
 import { Drawer, SearchBar } from "."
 import { useLazyGetUserCartQuery } from "../redux/api/Cart"
 import { useCookies } from "react-cookie"
@@ -210,7 +210,10 @@ export function Header(){
                                             {/* <Avatar /> */}
                                         </div>
                                     }
-                                    <HeaderDropDown open={open.header_dropdown} close={() => setOpen(state => ({...state, header_dropdown: false}))}/>
+                                    {/* <ClickAwayListener
+                                    onClickAway={() => setOpen(state => ({...state, header_dropdown: false}))}> */}
+                                        <HeaderDropDown open={open.header_dropdown} close={() => setOpen(state => ({...state, header_dropdown: false}))}/>
+                                    {/* </ClickAwayListener> */}
                                 </div>
                             </>
                         }
