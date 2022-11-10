@@ -47,7 +47,10 @@ function MenuItem({id, parent, chidren,}: IMenuItemProps){
         className="relative"
         onMouseEnter={handleOpen}
         onMouseLeave={handleClose}>
-            <div className="text-grey-600 cursor-pointer py-3 capitalize">{parent.name.toLowerCase()}</div>
+            <div 
+                className="text-grey-600 cursor-pointer py-3 capitalize"
+                onClick={() => navigate("/category/" + parent.uuid)}
+            >{parent.name.toLowerCase()}</div>
             <div className="absolute flex">
                 {
                     open.main &&
@@ -89,7 +92,6 @@ function AllCategories(){
             loading: isLoading
         })
     })
-    // console.log(open.category)
 
     useEffect(() => {
         getCategories()
@@ -112,7 +114,9 @@ function AllCategories(){
                                 <li 
                                     onMouseEnter={() => setOpen(state => ({...state, sub: true, category: item}))}
                                     onMouseLeave={() => setOpen(state => ({...state, sub: false, category: null}))} 
-                                    onClick={() => navigate("/category/" + item.uuid)}
+                                    onClick={() => {
+                                        navigate("/category/" + item.uuid)
+                                    }}
                                     key={idx} 
                                     className="hover:bg-[#C3C3C3]/30 py-2 pl-5 cursor-pointer hover:text-primary-blue whitespace-nowrap truncate">
                                     {item.name}

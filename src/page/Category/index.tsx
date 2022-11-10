@@ -1,4 +1,4 @@
-import { Button, Skeleton } from "@mui/material"
+import { Button, Pagination, Skeleton } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useSearchParams, useNavigate, useParams, useLocation } from "react-router-dom"
 import { 
@@ -11,27 +11,42 @@ import {
 import { SearchIcon } from "../../components/icons"
 import { IFilter, IProduct, } from "../../interface"
 import { 
+    useLazyGetCategoryProductsQuery,
     useLazyGetSubCategoriesQuery
 } from "../../redux/api/Product"
+import { serializeFormQuery } from "../../utils"
 import Filters from "../Products/filters"
 
 
 export function CategoryPage(){
-    let [page, setPage] = useState(1)
-    let { id } = useParams()
-    
-
     let [searchParams, setSearchParams] = useSearchParams()
+    let [page, setPage] = useState(searchParams.has("page") ? parseInt(`${searchParams.get('page')}`) : 1)
+    let { id } = useParams()
+
     const location = useLocation()
 
-    let [getProducts, {products, loading, category, sub_categories}] = useLazyGetSubCategoriesQuery({
+    let [getProducts, {products, loading, pagination}] = useLazyGetCategoryProductsQuery({
+        selectFromResult: ({ data, isLoading }) => ({
+            pagination: data?.result,
+            products: data?.result.data,
+            loading: isLoading,
+        })
+    })
+
+    let [getCategory, {category, loading_category, sub_categories}] = useLazyGetSubCategoriesQuery({
         selectFromResult: ({ data, isLoading }) => ({
             category: data?.result,
-            products: data?.result.products,
-            loading: isLoading,
+            loading_category: isLoading,
             sub_categories: data?.result.sub_categories
         })
     })
+
+    function changePage(page: number) {
+        setSearchParams({...serializeFormQuery(searchParams), page})
+        setPage(page)
+    }
+
+
     
     let [filters, setFilters] = useState<IFilter>({
         parent_category: searchParams.get('parent_category') || "",
@@ -46,9 +61,9 @@ export function CategoryPage(){
 
     useEffect(() => {
         getProducts({page, id: `${id}`})
-    }, [page, searchParams, filters, id, location])
-    
-    console.log(category)
+        getCategory({page, id: `${id}`})
+        console.log(id)
+    }, [page, searchParams, filters, id, location.pathname])
 
     products = products?.filter((product: IProduct) => product.product_images.length > 0)
 
@@ -99,6 +114,19 @@ export function CategoryPage(){
                                     </div>
                                 }
                             </div>
+                        </div>
+                        <div className="ml-auto float-right my-5">
+                            <Pagination 
+                                count={pagination?.last_page} 
+                                variant="outlined" 
+                                shape="rounded" 
+                                color="secondary"
+                                hideNextButton={pagination?.next_page_url ? true : false}
+                                hidePrevButton={pagination?.prev_page_url ? true : false}
+                                page={page}
+                                showLastButton
+                                showFirstButton
+                                onChange={(e, page) => changePage(page)}/>
                         </div>
                     </div>
                 </div>

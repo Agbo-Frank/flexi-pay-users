@@ -84,6 +84,14 @@ export const ProductApi = createApi({
                 return result ? [{type: 'Category', category: 'parent'}] : ['Category']
             }
         }),
+        getCategoryProducts: build.query<IResponse<IPagination<IProduct[]>>, {id: string, page: number}>({
+            query: ({id, page}) => ({
+                url: "/category/fetch/category/products/" + id + "?page=" + page.toString()
+            }),
+            providesTags: (result, error, {id, page}) => {
+                return result ? [{type: 'Category', id, page}] : ['Category']
+            }
+        }),
         getSubCategories: build.query<IResponse<ICategory>, {page: number, id: string}>({
             query: ({id, page}) => ({
                 url: "/category/fetch/sub/" + id + "?page=" + page
@@ -126,5 +134,7 @@ export const {
     useLazyGetSimilarProductsQuery,
     useGetRecentlyViewedQuery,
     useLazyGetRecentlyViewedQuery,
-    useLazyGetOtherProductsFromVendorQuery
+    useLazyGetOtherProductsFromVendorQuery,
+    useLazyGetCategoryProductsQuery,
+    useGetCategoryProductsQuery
 } = ProductApi
