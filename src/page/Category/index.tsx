@@ -87,7 +87,7 @@ export function CategoryPage(){
                                 <p>{
                                     loading ?
                                     <Skeleton width={150} sx={{fontSize: 16}}/>: 
-                                    `${(products && products?.length) || 0} Results Found`
+                                    `${(pagination && pagination.total ) || 0} Results Found`
                                 }</p>
                             </div>
                             <div className={`${(products && products?.length > 0) || loading ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4' : ""} grid gap-2 px-2 sm:px-6 py-1`}>
