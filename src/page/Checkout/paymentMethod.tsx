@@ -68,33 +68,33 @@ function Options({type, setCheckoutData}: {type: number, setCheckoutData: React.
                 }}
             >
                 {/* "install_mental_via_card", "install_mental_via_wallet", "directly_via_wallet", "directly_via_card" */}
-            <div className="px-3">
-                <FormControlLabel 
-                    value={type === 0 ? "directly_via_wallet" : "install_mental_via_wallet"} 
-                    control={<Radio size="small" />} 
-                    label="By Wallet" 
-                />
-            </div>
-
-            <div className="px-3">
-                {
-                    type === 0 ?
+                <div className="px-3">
                     <FormControlLabel 
-                        value={type === 0 ? "directly_via_card" : "install_mental_via_card"} 
-                        control={<Radio size="small"/>} 
-                        label="By Card" 
-                    /> : null
-                }
-                {
-                    type !== 0 && 
-                    <div>
-                        <Alert variant="standard" severity="info" className="w-fit">
-                            Please note that product will be delivered on payment completion 
-                        </Alert>
-                    </div>
-                }
-            </div>
-                
+                        value={type === 0 ? "directly_via_wallet" : "install_mental_via_wallet"} 
+                        control={<Radio size="small" />} 
+                        label="By Wallet" 
+                    />
+                </div>
+
+                <div className="px-3">
+                    {/* {
+                        type === 0 ? */}
+                        <FormControlLabel 
+                            value={type === 0 ? "directly_via_card" : "install_mental_via_card"} 
+                            control={<Radio size="small"/>} 
+                            label="By Card" 
+                        /> 
+                        {/* : null */}
+                    {/* } */}
+                    {
+                        type !== 0 && 
+                        <div>
+                            <Alert variant="standard" severity="info" className="w-fit">
+                                Please note that product will be delivered on payment completion 
+                            </Alert>
+                        </div>
+                    }
+                </div>
             </RadioGroup>
         </div> 
     )
