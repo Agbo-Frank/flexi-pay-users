@@ -9,6 +9,7 @@ import {
     SearchBar
 } from "../../components"
 import { SearchIcon } from "../../components/icons"
+import { FilterModal } from "../../components/Models"
 import { IFilter, IProduct, } from "../../interface"
 import { 
     useLazyGetCategoryProductsQuery,
@@ -16,6 +17,8 @@ import {
 } from "../../redux/api/Product"
 import { serializeFormQuery } from "../../utils"
 import Filters from "../Products/filters"
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
+import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
 
 
 export function CategoryPage(){
@@ -46,7 +49,7 @@ export function CategoryPage(){
         setPage(page)
     }
 
-
+    let [open_filter_modal, setOpenFilterModal] = useState(false)
     
     let [filters, setFilters] = useState<IFilter>({
         parent_category: searchParams.get('parent_category') || "",
@@ -130,6 +133,29 @@ export function CategoryPage(){
                         </div>
                     </div>
                 </div>
+                <div className="flex justify-between text-white sm:hidden sticky right-0 left-0 bottom-0 z-50 h-[45px] w-screen bg-primary-dark-blue divide-x-2 divide-neutral-200">
+                    <div className="w-3/12 h-full border-r border-white/60">
+                        <Button className="w-full">
+                            <GridViewRoundedIcon className="text-white"/>
+                        </Button>
+                    </div>
+                    <Button 
+                    onClick={() => setOpenFilterModal(true)}
+                    className=" w-4/12 h-full grid place-items-center px-5">
+                        <span className="text-white font-semibold text-[16px]">FILTERS</span>
+                    </Button>
+                    <div className="grid place-items-center font-semibold text-[16px] w-5/12 h-full border-r border-white/60">
+                        <select className="bg-transparent">
+                            <option>LATEST</option>
+                        </select>
+                    </div>
+                </div>
+                <FilterModal 
+                    open={open_filter_modal}
+                    searchParams={searchParams} 
+                    setSearchParams={setSearchParams}
+                    close={() => setOpenFilterModal(false)}
+                />
             </div>
         </Body>
     )

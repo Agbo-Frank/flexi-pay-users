@@ -43,11 +43,17 @@ export function getColor(status: string){
 export function serializeFormQuery(search: URLSearchParams){
   let params: any = {}
   for (let [key, value] of search.entries()){
-    params[key] = value
+    if(key === "price_range"){
+      params[key] = JSON.parse(value)
+    }
+    else{
+      params[key] = value
+    }
   }
   console.log(params)
   return params
 }
+
 export function hasQueryString(search: URLSearchParams){
   let keys = []
   for (let key of search.keys()){

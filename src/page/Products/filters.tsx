@@ -1,8 +1,8 @@
 import { Search } from "@mui/icons-material";
 import { Checkbox, Divider, Rating, Slider } from "@mui/material";
 import { useEffect, useState } from "react"
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
-import { IFilter, ISubCategory } from "../../interface";
+import { useNavigate } from "react-router-dom"
+import { ISubCategory } from "../../interface";
 import { useLazyGetCategoriesQuery } from "../../redux/api/Product"
 import { filter_inputs, serializeFormQuery } from "../../utils";
 
@@ -15,7 +15,6 @@ interface IFiltersProps {
 
 
 export function Filters({searchParams, setSearchParams, sub_categories}: IFiltersProps){
-    let navigate = useNavigate()
     let [categories, setCategories] = useState<any[]>()
     const [values, setValues] = useState<any>([1000, 300000])
 
