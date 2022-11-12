@@ -77,15 +77,16 @@ function Options({type, setCheckoutData}: {type: number, setCheckoutData: React.
                 </div>
 
                 <div className="px-3">
-                    {/* {
-                        type === 0 ? */}
+                    //add card option for installment
+                    {
+                        type === 0 ?
                         <FormControlLabel 
                             value={type === 0 ? "directly_via_card" : "install_mental_via_card"} 
                             control={<Radio size="small"/>} 
                             label="By Card" 
                         /> 
-                        {/* : null */}
-                    {/* } */}
+                        : null
+                    }
                     {
                         type !== 0 && 
                         <div>
