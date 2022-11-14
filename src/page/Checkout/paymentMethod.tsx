@@ -77,7 +77,7 @@ function Options({type, setCheckoutData}: {type: number, setCheckoutData: React.
                 </div>
 
                 <div className="px-3">
-                    //add card option for installment
+                    {/* add card option for installment */}
                     {
                         type === 0 ?
                         <FormControlLabel 
