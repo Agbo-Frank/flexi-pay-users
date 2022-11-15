@@ -65,7 +65,7 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
             }}
             className="block sm:hiddden">
             <ClickAwayListener onClickAway={close}>
-                <div className="max-w-[450px] w-[280px] min-h-full max-h-full h-fit box-border bg-primary-dark-blue py-5 px-4">
+                <div className="max-w-[450px] w-[280px] h-fit box-border bg-primary-dark-blue py-5 px-4">
                     <div className="flex justify-between items-start">
                         <WhiteLogo />
                         <IconButton onClick={close} sx={{width: 30, height: 30}}>
