@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Drawer, Button as MuiButton, IconButton, ClickAwayListener } from "@mui/material";
+import { Drawer, Button as MuiButton, IconButton, ClickAwayListener, Skeleton } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -113,7 +113,16 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
                         <h3 className="text-primary-orange-200 font-medium">CATEGORIES</h3>
                         <ul className="py-3">
                             {
-                                !loading && categories?.length && 
+                                loading ? 
+                                <div>
+                                    <Skeleton />
+                                    <Skeleton />
+                                    <Skeleton />
+                                    <Skeleton />
+                                    <Skeleton />
+                                    <Skeleton />
+                                </div>:
+                                categories?.length && 
                                 categories?.map((category, idx) => 
                                     <li 
                                         key={idx} 
