@@ -242,7 +242,7 @@ export function Categories (): JSX.Element {
                     href={FLEXIPAY_VENDOR_URL}
                     target="_blank"
                     className="w-fit h-fit p-1 overflow-hidden rounded-md">
-                    <div className="relative flex w-fit h-fit overflow-hidden rounded-md">
+                    <div className="relative flex w-fit h-fit overflow-hidden rounded-md p-1">
                         <div className="absolute inline-flex top-0 left-0 rounded-md animate-ping h-full w-full bg-white"></div>
                         <a className="relative py-2 rounded-md px-4 text-sm bg-white text-primary-orange-200">Sell on <span className="text-primary-blue">FlexiPay</span></a>
                     </div>

@@ -22,10 +22,11 @@ import { useCookies } from "react-cookie"
 import { FLEXIPAY_COOKIE } from "../utils/constants"
 import MenuIcon from '@mui/icons-material/Menu';
 import { MenuDrawer, SideBarDrawer } from './'
-import WestIcon from '@mui/icons-material/West';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { toggleLogout } from "../redux/slice/modal"
 import { LogoutModal } from "./Models"
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 interface Item {
     Icon: React.FC<Iicon>;
@@ -138,7 +139,7 @@ export function Header(){
                             <IconButton 
                                 className="sm:hidden"
                                 onClick={() => navigate(-1)}>
-                                <WestIcon />
+                                <ArrowBackIcon />
                             </IconButton>)
                         }
                         <Logo />

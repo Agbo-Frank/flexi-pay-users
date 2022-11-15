@@ -78,6 +78,9 @@ html{
   color: #1900FE;
   background-color: transparent;
 }
+.MuiDrawer-root {
+
+}
 
 .pending{
   background-color: #FFF9F7;

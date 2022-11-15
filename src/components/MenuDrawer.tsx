@@ -33,7 +33,7 @@ function Item ({ Icon, name, link, handleClick}: Item): JSX.Element {
             navigate(`/${link}`)
         }}
         >
-            <Icon size="15" color={active ? "#1900FE" :"white"}/>
+            <Icon size="15" color={active ? "#FF5000" :"white"}/>
             <p>{name}</p>
         </li>
     )
@@ -60,12 +60,12 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
             anchor='left'
             open={open}
             sx={{
-                maxWidth: 450,
+                // maxWidth: 450,
                 width: '100%'
             }}
             className="block sm:hiddden">
             <ClickAwayListener onClickAway={close}>
-                <div className="max-w-[450px] w-[280px] h-screen  bg-primary-dark-blue py-5 px-4">
+                <div className="max-w-[450px] w-[280px] min-h-full max-h-full h-fit box-border bg-primary-dark-blue py-5 px-4">
                     <div className="flex justify-between items-start">
                         <WhiteLogo />
                         <IconButton onClick={close} sx={{width: 30, height: 30}}>
@@ -109,9 +109,9 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
                                 onClick={() => navigate('/register')}>Register</MuiButton>
                         </div>
                     }
-                    <div className="border-y border-white my-5 py-5">
+                    <div className="border-y bg-primary-dark-blue border-white my-5 py-3 h-fit">
                         <h3 className="text-primary-orange-200 font-medium">CATEGORIES</h3>
-                        <ul className="my-3">
+                        <ul className="py-3">
                             {
                                 !loading && categories?.length && 
                                 categories?.map((category, idx) => 
@@ -126,14 +126,33 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
                             }
                         </ul>
                     </div>
+                    {/* <div className="border-y bg-primary-dark-blue border-white my-5 py-5">
+                        
+                        <ul className="my-3">
+                            {
+                                !loading && categories?.length && 
+                                categories?.map((category, idx) => 
+                                    <li 
+                                        key={idx} 
+                                        className="text-white mb-2" 
+                                        onClick={() => navigate("/category/" + category.uuid)}
+                                    >
+                                        {category.name}
+                                    </li>
+                                )
+                            }
+                        </ul>
+                    </div> */}
+
                     <a
                         href="https://vendor.flexipay.ng"
-                        target="_blank" className="w-full h-fit  overflow-hidden rounded-xl">
-                        <div className="relative flex w-full h-fit overflow-hidden rounded-xl p-1">
-                            <div className="absolute inline-flex top-0 left-0 rounded-xl animate-ping h-full w-full bg-white"></div>
-                            <a className="relative py-2 rounded-xl text-center bg-white text-primary-orange-200 w-full">Sell on <span className="text-primary-blue">FlexiPay</span></a>
+                        target="_blank" className="w-full h-fit  overflow-hidden rounded-md">
+                        <div className="relative flex w-full h-fit overflow-hidden rounded-md p-1">
+                            <div className="absolute inline-flex top-0 left-0 rounded-md animate-ping h-full w-full bg-white"></div>
+                            <a className="relative py-2 rounded-md text-center bg-white text-primary-orange-200 w-full">Sell on <span className="text-primary-blue">FlexiPay</span></a>
                         </div>
                     </a>
+                    
                 </div>
             </ClickAwayListener>
         </Drawer>
@@ -141,3 +160,8 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
 }
 
 export default MenuDrawer
+
+
+
+
+

@@ -15,7 +15,7 @@ export function ProductCard({product}: {product: IProduct}){
     return(
         <Link to={'/product/' + product.slug} className="block w-full bg-white rounded-lg h-fit p-2 space-y-4 shadow-sm hover:shadow hover:-translate-y-1 hover:z-30 my-2 overflow-hidden">
             <div className='h-[130px] w-full sm:h-44 overflow-hidden rounded-lg product_image'>
-                <LazyLoadImage src={product?.product_images[0]?.image_link} className="w-full h-full object-cover" alt={product?.name}/>
+                <LazyLoadImage src={product?.product_images[0]?.image_link} className="w-full h-full object-cover sm:object-fill md:object-cover" alt={product?.name}/>
             </div>
             <div className='space-y-1'>
                 <p className='text-grey-1200 text-sm capitalize font-light w-full truncate'>{ sliceString(product?.name) }</p>
