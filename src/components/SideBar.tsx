@@ -13,6 +13,8 @@ import Iicon from "./icons/interface";
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useLogoutMutation } from "../redux/api/Auth";
 import { useAuth } from "../context/Auth";
+import { toggleLogout } from "../redux/slice/modal";
+import { useDispatch } from "react-redux";
 
 interface ISideBarItem {
     active?: boolean,
@@ -53,14 +55,9 @@ export function SideBarItem ({ active = false, Icon, name, link, handleClick}: I
 }
 
 function SideBar(): JSX.Element {
-    const location = useLocation();
     const [currentLocation, setLocation] = useState('')
 
-    let [logout, {isLoading: loggingOut}] = useLogoutMutation({
-        fixedCacheKey: 'logout',
-    })
-
-    let {signout} = useAuth()
+    const dispatch = useDispatch()
 
   return (
     <div className="hidden sm:block w-2/12 h-fit bg-white pt-9 pb-2 rounded-xl">
@@ -108,16 +105,10 @@ function SideBar(): JSX.Element {
 
         </div>
         <div 
-            onClick={signout}
+            onClick={() => dispatch(toggleLogout())}
             className="bg-primary-dark-blue py-6 px-3 rounded-xl flex space-x-3 text-white mt-24 justify-center items-center mr-2 ml-5">
-            {
-                    loggingOut ? 
-                    <div className='w-5 h-5'><Spinner /></div>:
-                    <>
-                        <LogOutIcon color="white" size="15"/> 
-                        <p className='text-white font-semibold text-sm'>Logout</p>
-                    </>
-                }
+            <LogOutIcon color="white" size="15"/> 
+            <p className='text-white font-semibold text-sm'>Logout</p>
         </div>
     </div>
   );

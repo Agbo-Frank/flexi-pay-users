@@ -1,11 +1,12 @@
 import { LoadingButton } from "@mui/lab";
 import { Drawer, Button as MuiButton, IconButton, ClickAwayListener, Skeleton } from "@mui/material";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/Auth";
 import { useLogoutMutation } from "../redux/api/Auth";
 import { useGetCategoriesQuery } from "../redux/api/Product";
+import { toggleLogout } from "../redux/slice/modal";
 import { RootState } from "../redux/store";
 import Button from "./Button";
 import { BagIcon, CartIcon, DashboardIcon, HeartIcon, LoginIcon, LogOutIcon, Spinner, SubscriptionIcon, UserIcon, WhiteLogo } from "./icons";
@@ -41,12 +42,9 @@ function Item ({ Icon, name, link, handleClick}: Item): JSX.Element {
 
 
 export function MenuDrawer({ open, close }: {open: boolean, close: () => void | any}){
-    let {signout} = useAuth()
     let isAuth = useSelector((state: RootState) => state.data.isAuth)
     let navigate = useNavigate()
-    let [logout, {isLoading: loggingOut}] = useLogoutMutation({
-        fixedCacheKey: 'logout',
-    })
+    const dispatch = useDispatch()
 
     let { categories, loading } = useGetCategoriesQuery(undefined, {
         selectFromResult: ({ data, isLoading }) => ({
@@ -84,9 +82,8 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
                         <LoadingButton 
                             variant="outlined" 
                             color="secondary" 
-                            onClick={signout}
+                            onClick={() => dispatch(toggleLogout())}
                             fullWidth
-                            loading={loggingOut}
                             size="large"
                             startIcon={<LoginIcon size="14" color="#FF5000"/>}>
                                 Logout

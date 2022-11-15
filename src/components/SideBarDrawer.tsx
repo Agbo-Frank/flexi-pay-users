@@ -1,9 +1,10 @@
 import { Drawer, Button, IconButton, ClickAwayListener } from "@mui/material";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/Auth";
 import { useLogoutMutation } from "../redux/api/Auth";
+import { toggleLogout } from "../redux/slice/modal";
 import { RootState } from "../redux/store";
 import { BagIcon, CartIcon, DashboardIcon, HeadPhoneIcon, HeartIcon, LoginIcon, LogOutIcon, ProfilBG, Spinner, UserIcon, WalletIcon, WhiteLogo } from "./icons";
 import Iicon from "./interface";
@@ -38,7 +39,7 @@ function Item ({ Icon, name, link, handleClick}: Item): JSX.Element {
 
 export function SideBarDrawer({ open, close }: {open: boolean, close: () => void | any}){
     let {signout} = useAuth()
-    let navigate = useNavigate()
+    const dispatch = useDispatch()
     let [logout, {isLoading: loggingOut}] = useLogoutMutation({
         fixedCacheKey: 'logout',
     })
@@ -122,7 +123,10 @@ export function SideBarDrawer({ open, close }: {open: boolean, close: () => void
                         color="secondary"
                         fullWidth
                         size="large"
-                        className="mt-24">Logout</Button>
+                        className="mt-24"
+                        onClick={() => dispatch(toggleLogout())}>
+                            Logout
+                    </Button>
                 </div>
             </ClickAwayListener>
         </Drawer>
