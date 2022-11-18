@@ -50,7 +50,7 @@ function ProductDetails({ product }: {product: IProduct | undefined}){
                                 <div className="flex items-center space-x-2">
                                     <ReturnIcon color="#474747" size="50"/>
                                     <div>
-                                        <p>Returen Policy</p>
+                                        <p>Return Policy</p>
                                         {
                                             product?.return_policy === '0'?
                                             <p className="text-sm font-light">

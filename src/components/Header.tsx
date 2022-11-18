@@ -221,8 +221,8 @@ export function Header(){
                         {
                             !loading &&
                             <div className="sm:hidden flex gap-2 justify-end items-center mr-3">
-                                {
-                                    isAuth &&
+                                {/* {
+                                    isAuth && */}
                                     <Badge  
                                         color="secondary" 
                                         overlap="circular"
@@ -237,7 +237,7 @@ export function Header(){
                                             <CartIcon size={matches ? "20" : "15"} color="#000541"/>
                                         </div>
                                     </Badge>
-                                }
+                                {/* } */}
                                 <div 
                                     className="sm:hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF]"
                                     onClick={() => {

@@ -11,13 +11,14 @@ import { GreyLogo } from './icons';
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-export function ProductCard({product}: {product: IProduct}){
+export function ProductCard({product, is_row = false}: {product: IProduct, is_row?: boolean}){
+    let matches = useMediaQuery("(min-width:600px)")
     return(
-        <Link to={'/product/' + product.slug} className="block w-full bg-white rounded-lg h-fit p-2 space-y-4 shadow-sm hover:shadow hover:-translate-y-1 hover:z-30 my-2 overflow-hidden">
-            <div className='h-[130px] w-full sm:h-44 overflow-hidden rounded-lg product_image'>
+        <Link to={'/product/' + product.slug} className={`flex ${is_row && !matches ? 'flex-row space-x-3' : "flex-col"} w-full bg-white rounded-lg h-fit p-2 space-y-4 shadow-sm hover:shadow hover:-translate-y-1 hover:z-30 my-2 overflow-hidden`}>
+            <div className={`h-[130px] ${is_row && !matches? "w-5/12":  "w-full"} sm:h-44 overflow-hidden rounded-lg bg-white`}>
                 <LazyLoadImage src={product?.product_images[0]?.image_link} className="w-full h-full object-cover sm:object-fill md:object-cover" alt={product?.name}/>
             </div>
-            <div className='space-y-1'>
+            <div className={`space-y-1 ${is_row && !matches? "w-7/12":  "w-full"}`}>
                 <p className='text-grey-1200 text-sm capitalize font-light w-full truncate'>{ sliceString(product?.name) }</p>
                 <div className="flex items-center space-x-3">
                     <p className="text-primary-dark-blue font-medium text-md whitespace-nowrap truncate">₦ {formatNumber(product?.price)}</p>
@@ -109,7 +110,7 @@ export function ProductCardSkeleton(){
 }
 
 export function ProductsSlide({products, loading, title, link, titleCase}: {products: IProduct[] | undefined, loading: boolean, title: string, link?: string, titleCase?: string}){
-    let matches = useMediaQuery("(min-width:600px)")
+    let matches = useMediaQuery("(min-width:640px)")
     let slide: any = useRef()
     const settings = {
         infinite: false,

@@ -25,7 +25,10 @@ export function Vendor(){
     let [products, setProducts] = useState<IProduct[]>([])
     let [loading, setLoading] = useState(false)
     let [pagination, setPagination] = useState<IPagination<IProduct[]> | null>()
-    let [open_filter_modal, setOpenFilterModal] = useState(false)
+    let [filter_toggler, setFilterToggler] = useState({
+        modal: false,
+        is_row: false
+    })
 
     let { id: vendor_id } = useParams()
 
@@ -118,12 +121,12 @@ export function Vendor(){
                                     <span>Latest</span>
                                 </div>
                             </div>
-                            <div className={`${products?.length > 0 || loading ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4' : ""} grid gap-2 px-2 sm:px-6 py-1`}>
+                            <div className={`${products?.length > 0 || loading ? `${filter_toggler.is_row ? 'grid-cols-1' : 'grid-cols-2'} sm:grid-cols-3 md:grid-cols-4` : ""} grid gap-2 px-2 sm:px-6 py-1`}>
                                 {
                                     loading ?
                                     [1, 2, 3, 4].map((product, idx) => <ProductCardSkeleton key={idx}/>) :
                                     products?.length > 0 ? 
-                                    products?.map((product, idx) => <ProductCard product={product} key={idx}/>) :
+                                    products?.map((product, idx) => <ProductCard is_row={filter_toggler.is_row} product={product} key={idx}/>) :
                                     <div className="grid place-items-center w-full">
                                         <Empty 
                                             title="No Search Results"
@@ -161,13 +164,19 @@ export function Vendor(){
                 </div>
                 <div className="flex justify-between text-white sm:hidden sticky right-0 left-0 bottom-0 z-50 h-[45px] w-screen bg-primary-dark-blue divide-x-2 divide-neutral-200">
                     <div className="w-3/12 h-full border-r border-white/60">
-                        <Button className="w-full">
-                            <GridViewRoundedIcon className="text-white"/>
+                        <Button 
+                            className="w-full"
+                            onClick={() => setFilterToggler(state => ({...state, is_row: !state.is_row}))}>
+                                {
+                                    filter_toggler.is_row ? 
+                                    <GridViewRoundedIcon className="text-white"/> :
+                                    <ViewListRoundedIcon className="text-white"/>
+                                }
                         </Button>
                     </div>
                     <Button 
-                    onClick={() => setOpenFilterModal(true)}
-                    className=" w-4/12 h-full grid place-items-center px-5">
+                        onClick={() => setFilterToggler(state => ({...state, modal: true}))}
+                        className=" w-4/12 h-full grid place-items-center px-5">
                         <span className="text-white font-semibold text-[16px]">FILTERS</span>
                     </Button>
                     <div className="grid place-items-center font-semibold text-[16px] w-5/12 h-full border-r border-white/60">
@@ -177,10 +186,10 @@ export function Vendor(){
                     </div>
                 </div>
                 <FilterModal
-                    open={open_filter_modal}
+                    open={filter_toggler.modal}
                     searchParams={searchParams} 
                     setSearchParams={setSearchParams}
-                    close={() => setOpenFilterModal(false)}
+                    close={() => setFilterToggler(state => ({...state, modal: false}))}
                 />
             </div>
         </Body>
