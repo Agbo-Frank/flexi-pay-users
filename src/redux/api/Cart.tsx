@@ -50,6 +50,13 @@ export const CartApi = createApi({
             }),
             invalidatesTags: ['Cart']
         }),
+        emptyCart: build.mutation<IResponse<{data: null}>, void>({
+            query: () => ({
+                url: "/guest/cart/destroy",
+                method: 'POST'
+            }),
+            invalidatesTags: ['Cart']
+        }),
     })
 })
 
@@ -58,5 +65,6 @@ export const {
     useGetUserCartQuery,
     useLazyGetUserCartQuery,
     useDelCartMutation,
-    useUpdateCartMutation
+    useUpdateCartMutation,
+    useEmptyCartMutation
 } = CartApi

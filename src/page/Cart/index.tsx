@@ -5,7 +5,7 @@ import DashboardWrapper from "../../components/DashboardWrapper"
 import CheckoutSummary from "../../components/Checkout"
 import { useState } from "react"
 import Cart, { CartSkeleton } from "./cartCard"
-import { useGetUserCartQuery } from "../../redux/api/Cart"
+import { useEmptyCartMutation, useGetUserCartQuery } from "../../redux/api/Cart"
 import { Wrapper, WrapperHeader } from "../../components"
 import { Button, Skeleton, useMediaQuery } from "@mui/material"
 import { useCookies } from "react-cookie"
@@ -13,6 +13,7 @@ import { FLEXIPAY_COOKIE } from "../../utils/constants"
 import { useNavigate } from "react-router-dom"
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { LoadingButton } from "@mui/lab"
 
 
 export function Carts (){
@@ -28,6 +29,8 @@ export function Carts (){
         refetchOnFocus: true,
         refetchOnReconnect: true
     })
+
+    let [emptyCart, {isLoading: emptying}] = useEmptyCartMutation()
 
     let navigate = useNavigate()
 
@@ -69,12 +72,16 @@ export function Carts (){
 
                             {
                                 matches ?
-                                <Button
+                                <LoadingButton
                                     color="secondary"
+                                    loading={emptying}
                                     size={matches ? "medium" : "small"}
-                                    startIcon={<TrashIcon color="#FF5000" size="16" />}>
+                                    onClick={() => emptyCart()}
+                                    // onClick={() => emptyCart()}
+                                    startIcon={<TrashIcon color="#FF5000" size="16" />}
+                                >
                                         Empty Cart
-                                </Button> :
+                                </LoadingButton> :
                                 <Button
                                     color="primary"
                                     size={matches ? "medium" : "small"}
