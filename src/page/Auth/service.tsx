@@ -17,7 +17,7 @@ export function FPFormikLogin(login: ITrigger<ILogin, IAuthResponse>){
     }
 
     async function onSubmit (value: ILogin, formikHelpers: FormikHelpers<ILogin| any>){
-        console.log(value)
+        // console.log(value)
         try{
             let data = await login(value).unwrap()
             
@@ -26,7 +26,7 @@ export function FPFormikLogin(login: ITrigger<ILogin, IAuthResponse>){
                     navigate('/auth/verify/email?email=' + value.email, { replace: true })
                 }
                 else{
-                    signIn(`${data.data.token}`, () => {
+                    signIn(`${data.token}`, () => {
                         navigate(pathname)
                     })
                 }
