@@ -71,7 +71,10 @@ export interface IFundWalletResponse{
 
 export interface IAuthResponse extends IResponse<IUser> {
     is_verified?: boolean;
-    token?: string
+    data: {
+        token?: string,
+        roles?: string
+    }
 }
 
 export interface ILogin {

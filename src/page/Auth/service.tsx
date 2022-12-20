@@ -26,7 +26,7 @@ export function FPFormikLogin(login: ITrigger<ILogin, IAuthResponse>){
                     navigate('/auth/verify/email?email=' + value.email, { replace: true })
                 }
                 else{
-                    signIn(`${data.token}`, () => {
+                    signIn(`${data.data.token}`, () => {
                         navigate(pathname)
                     })
                 }
