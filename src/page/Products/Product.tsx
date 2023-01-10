@@ -234,14 +234,14 @@ export function Product(){
                                                             {
                                                                 product.installments.map((installment, idx) => <DisplayInstallment installment={installment} id={idx} key={idx}/>)
                                                             }
+                                                            <Chip 
+                                                                label={"₦ " + formatNumber(variations?.price || 0)} 
+                                                                color="secondary"
+                                                                className=""
+                                                                onClick={() => setInstallmentPlan(null)}
+                                                                variant={installment_plan ? "outlined" : "filled" }
+                                                            />
                                                         </div>
-                                                        <Chip 
-                                                            label={"₦ " + formatNumber(variations?.price || 0)} 
-                                                            color="secondary"
-                                                            className=""
-                                                            onClick={() => setInstallmentPlan(null)}
-                                                            variant={installment_plan ? "outlined" : "filled" }
-                                                        />
                                                     </div>
                                                 }
                                             </div>
