@@ -38,7 +38,8 @@ export function Product(){
     let { slug } = useParams()
     const [quantity, setQuantity] = useState(1)
     const [installment_plan, setInstallmentPlan] = useState<null | string>(null)
-    const [checkout_method, setCheckoutMethod] = useState<string>("directly_via_card")
+    // const [checkout_method, setCheckoutMethod] = useState<string>("directly_via_card")
+    // const [by_installment, setByInstallment] = useState(false)
 
     const isAuth = useSelector((state: RootState) => state.data.isAuth)
 
@@ -234,6 +235,13 @@ export function Product(){
                                                                 product.installments.map((installment, idx) => <DisplayInstallment installment={installment} id={idx} key={idx}/>)
                                                             }
                                                         </div>
+                                                        <Chip 
+                                                            label={"₦ " + formatNumber(variations?.price || 0)} 
+                                                            color="secondary"
+                                                            className=""
+                                                            onClick={() => setInstallmentPlan(null)}
+                                                            variant={installment_plan ? "outlined" : "filled" }
+                                                        />
                                                     </div>
                                                 }
                                             </div>
@@ -254,7 +262,7 @@ export function Product(){
                                         }
 
                                         <div className="w-full flex flex-col sm:flex-row sm:space-x-3 space-y-3 sm:space-y-0">
-                                            <LoadingButton
+                                            {/* <LoadingButton
                                                 // startIcon={<HeartIcon color="#FF5000" size="18" />}
                                                 variant="outlined"
                                                 size="large"
@@ -269,31 +277,33 @@ export function Product(){
                                                     directCheckout("directly_via_card", dispatch, checkout, [])
                                                 }}>
                                                 Pay now
-                                            </LoadingButton>
+                                            </LoadingButton> */}
                                             <LoadingButton
                                                 // startIcon={<CartIcon  color="white" size="18" />}
                                                 variant="contained"
-                                                // fullWidth
+                                                fullWidth
                                                 size="large"
-                                                loading={checkingout && checkout_method === "install_mental_via_card"}
+                                                loading={checkingout}
                                                 color="secondary"
-                                                className="w-auto md:w-1/2 text-xs"
+                                                className="w-auto text-xs"
                                                 onClick={() => {
-                                                    if(installment_plan){
-                                                        if(checkout_method !== "install_mental_via_card"){
-                                                            setCheckoutMethod("install_mental_via_card")
-                                                        }
-
-                                                        directCheckout("install_mental_via_card", dispatch, checkout, [installment_plan])
-                                                    }else{
-                                                        dispatch(toggleSnackBar({
-                                                            message: "Please select a plan",
-                                                            open: true,
-                                                            severity: 'error'
-                                                        }))
-                                                    }
+                                                    // if(installment_plan){
+                                                        directCheckout(
+                                                            installment_plan ? "install_mental_via_card" : "directly_via_wallet", 
+                                                            dispatch, 
+                                                            checkout, 
+                                                            installment_plan ? [installment_plan] : []
+                                                        )
+                                                    // }
+                                                    // else{
+                                                    //     dispatch(toggleSnackBar({
+                                                    //         message: "Please select a plan",
+                                                    //         open: true,
+                                                    //         severity: 'error'
+                                                    //     }))
+                                                    // }
                                                 }}>
-                                                Subscribe
+                                                {installment_plan ? "Subscribe" : "Pay now"}
                                             </LoadingButton>
                                         </div>
                                         

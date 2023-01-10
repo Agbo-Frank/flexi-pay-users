@@ -15,7 +15,9 @@ function ProductDetails({ product }: {product: IProduct | undefined}){
                     tabNames.map((tab, i) => (
                         <p 
                         className={`capitalize p-4 text-sm ${index === tab && 'bg-white text-[#1900FE] sm:text-primary-orange-200'} hover:bg-white sm:hover:text-primary-orange-200 hover:text-[#1900FE] cursor-pointer font-semibold`}
-                        onClick={() => setIndex(tab)}>{tab}</p>
+                        onClick={() => setIndex(tab)}
+                        key={i}
+                        >{tab}</p>
                     ))
                 }
             </div>

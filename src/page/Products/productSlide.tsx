@@ -66,7 +66,9 @@ export function ProductSlide({images}: {images: string[]}){
                         onClick={() => {
                             setIndex(i)
                             slide.current.slickGoTo(i)
-                        }}>
+                        }}
+                        key={i}
+                        >
                             <div className={`absolute block ${index !== i && 'hidden' } group-hover:block w-full h-full bg-white/75`}></div>
                             <LazyLoadImage src={image}  className="object-cover w-full h-full"/>
                         </div>
