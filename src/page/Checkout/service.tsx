@@ -72,8 +72,8 @@ export async function confirmOrder(
     checkout_method: TCheckoutMethod | "", 
     dispatch: Dispatch<AnyAction>, 
     checkout: ITrigger<{checkout_method: TCheckoutMethod, install_mental_ids: string[] | undefined}, IResponse<{data: {link: string}}>>, 
-    install_mental_ids: string[] | undefined = [],
-    done: () => void | null
+    install_mental_ids: (string[] | undefined) = [],
+    done?: () => void | null
 ){
     let methods = ["directly_via_wallet", "install_mental_via_card", "install_mental_via_wallet", "directly_via_card"]
     if(checkout_method == ""){
@@ -116,7 +116,80 @@ export async function confirmOrder(
                         severity: data.status === 'success' ? 'success' : 'error'
                     }))
 
-                    done()
+                    // done()
+                }
+            }
+            else{
+                dispatch(toggleSnackBar({
+                    message: data.message || "An error just occured Please try again",
+                    open: true,
+                    severity: 'error'
+                }))
+            }
+        }
+        catch(err){
+            if(err){
+                let error: any = err
+                
+                dispatch(toggleSnackBar({
+                    open: true,
+                    severity: 'error',
+                    message: error?.data?.message || "An error just occured Please try again"
+                }))
+            }
+        }
+    }
+}
+
+export async function directCheckout(
+    checkout_method: TCheckoutMethod | "", 
+    dispatch: Dispatch<AnyAction>, 
+    checkout: ITrigger<{checkout_method: TCheckoutMethod, install_mental_ids: string[] | undefined}, IResponse<{data: {link: string}}>>, 
+    install_mental_ids: string[] | undefined = [],
+    done?: () => void | null
+){
+    let methods = ["directly_via_wallet", "install_mental_via_card", "install_mental_via_wallet", "directly_via_card"]
+    if(checkout_method == ""){
+        dispatch(toggleSnackBar({
+            open: true,
+            message: "Please select a checkout method",
+            severity: 'error'
+        }))
+    }
+    else if(!methods.includes(checkout_method)){
+        dispatch(toggleSnackBar({
+            open: true,
+            message: "Please select a valid checkout method",
+            severity: 'error'
+        }))
+    }
+    else {
+        try{
+            let data = await checkout({ checkout_method, install_mental_ids }).unwrap()
+            
+            if(data.status === "success"){
+                // checks if the checkout method is by card
+                // if it is by card it redirects you to the payment gate way
+                if(/card/.test(checkout_method)){
+                    if(validURL(data.result.data.link)){
+                        window.location.replace(data.result.data.link)
+                    }
+                    else{
+                        dispatch(toggleSnackBar({
+                            message: "Invalid URL, Try again",
+                            open: true,
+                            severity: 'error'
+                        }))
+                    }
+                }
+                else{
+                    dispatch(toggleSnackBar({
+                        message: data.message || "An error just occured Please try again",
+                        open: true,
+                        severity: data.status === 'success' ? 'success' : 'error'
+                    }))
+
+                    // done()
                 }
             }
             else{

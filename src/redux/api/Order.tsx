@@ -20,6 +20,14 @@ export const OrderApi = createApi({
     reducerPath: 'Order',
     tagTypes: ['Product', 'Order', 'Subscription', "Checkout"],
     endpoints: (build) => ({
+        directCheckout: build.mutation<IResponse<{data: {link: string}}>, {checkout_method: TCheckoutMethod, install_mental_ids: string[] | undefined}>({
+            query: (body) => ({
+                url: "/checkout/installment",
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ['Order',  'Subscription']
+        }),
         checkout: build.mutation<IResponse<{data: {link: string}}>, {checkout_method: TCheckoutMethod, install_mental_ids: string[] | undefined}>({
             query: (body) => ({
                 url: "/checkout",
@@ -85,5 +93,6 @@ export const {
     useLazyGetUserSubscriptionsQuery,
     useCancelSubscriptionMutation,
     useTopUpSubscriptionMutation,
-    useCancelOrderMutation
+    useCancelOrderMutation,
+    useDirectCheckoutMutation
 } = OrderApi

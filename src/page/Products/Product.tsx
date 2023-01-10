@@ -23,6 +23,9 @@ import { IInstallment, IVariations } from "../../interface";
 import { RootState } from "../../redux/store";
 import { QuantityController } from "../../components/QuantityController";
 import AttributeDisplay from "./attributeDisplay";
+import { useCheckoutMutation, useDirectCheckoutMutation } from "../../redux/api/Order";
+import { directCheckout } from "../Checkout/service"
+import { toggleSnackBar } from "../../redux/slice/modal";
 
 interface IVariants {
     price?: string;
@@ -34,6 +37,8 @@ interface IVariants {
 export function Product(){
     let { slug } = useParams()
     const [quantity, setQuantity] = useState(1)
+    const [installment_plan, setInstallmentPlan] = useState<null | string>(null)
+    const [checkout_method, setCheckoutMethod] = useState<string>("directly_via_card")
 
     const isAuth = useSelector((state: RootState) => state.data.isAuth)
 
@@ -91,13 +96,13 @@ export function Product(){
         return total + (typeof review.rate === 'string' ? parseFloat(`${review.rate}`) : review.rate)
     }, 0) || 0
 
-    const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
+    // const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
     const dispatch = useDispatch()
 
     let [addToCart, {data, isLoading, error}] = useAddToCartMutation()
     let [savedItem, { isLoading: savingItem,}] = useSavedItemMutation()
 
-    console.log(product)
+    // console.log(product)
 
     useEffect(() => {
         if(product?.category?.uuid){
@@ -133,7 +138,9 @@ export function Product(){
             <Chip 
                 label={"₦ " + formatNumber(installment.amount) + " " + installment.frequency[0].toUpperCase() + installment.frequency.slice(1)} 
                 color="secondary"
-                // variant="ou"
+                className=""
+                onClick={() => setInstallmentPlan(installment.uuid)}
+                variant={installment.uuid === installment_plan ? "filled" : "outlined"}
             />
         )
     }
@@ -145,6 +152,10 @@ export function Product(){
             id: attribute.id,
         })
     }
+
+    let [checkout, { isLoading: checkingout }] = useDirectCheckoutMutation()
+
+    // console.log(product?.installments)
 
     
     // if(!isUninitialized && !loading && product){
@@ -241,8 +252,52 @@ export function Product(){
                                             product && product?.attributes.length > 0 &&
                                             <AttributeDisplay attributes={product?.attributes} setVariations={setVariations} variations={variations}/>
                                         }
+
+                                        <div className="w-full flex flex-col sm:flex-row sm:space-x-3 space-y-3 sm:space-y-0">
+                                            <LoadingButton
+                                                // startIcon={<HeartIcon color="#FF5000" size="18" />}
+                                                variant="outlined"
+                                                size="large"
+                                                // fullWidth
+                                                loading={checkingout && checkout_method === "directly_via_card"}
+                                                color="secondary"
+                                                className="w-auto md:w-1/2 text-xs"
+                                                onClick={() => {
+                                                    if(checkout_method !== "directly_via_card"){
+                                                        setCheckoutMethod("directly_via_card")
+                                                    }
+                                                    directCheckout("directly_via_card", dispatch, checkout, [])
+                                                }}>
+                                                Pay now
+                                            </LoadingButton>
+                                            <LoadingButton
+                                                // startIcon={<CartIcon  color="white" size="18" />}
+                                                variant="contained"
+                                                // fullWidth
+                                                size="large"
+                                                loading={checkingout && checkout_method === "install_mental_via_card"}
+                                                color="secondary"
+                                                className="w-auto md:w-1/2 text-xs"
+                                                onClick={() => {
+                                                    if(installment_plan){
+                                                        if(checkout_method !== "install_mental_via_card"){
+                                                            setCheckoutMethod("install_mental_via_card")
+                                                        }
+
+                                                        directCheckout("install_mental_via_card", dispatch, checkout, [installment_plan])
+                                                    }else{
+                                                        dispatch(toggleSnackBar({
+                                                            message: "Please select a plan",
+                                                            open: true,
+                                                            severity: 'error'
+                                                        }))
+                                                    }
+                                                }}>
+                                                Subscribe
+                                            </LoadingButton>
+                                        </div>
                                         
-                                        <div className="w-full flex flex-col sm:flex-row sm:w-9/12 sm:space-x-6 space-y-3 sm:space-y-0">
+                                        {/* <div className="w-full flex flex-col sm:flex-row sm:w-9/12 sm:space-x-6 space-y-3 sm:space-y-0">
                                             <LoadingButton
                                                 startIcon={<HeartIcon color="#FF5000" size="18" />}
                                                 variant="outlined"
@@ -268,7 +323,7 @@ export function Product(){
                                                 })}>
                                                 Add to Cart
                                             </LoadingButton>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                                 <div className="flex justify-between my-2 sm:my-0 px-2 sm:px-0">
