@@ -1,4 +1,4 @@
-import {  ICheckoutDetails, IOrder, IPagination, IRate, IResponse, ISubscription, ITopUpSubscriptionReq, TCheckoutMethod } from '../../interface'
+import {  ICheckoutData, ICheckoutDetails, IOrder, IPagination, IRate, IResponse, ISubscription, ITopUpSubscriptionReq, TCheckoutMethod } from '../../interface'
 import { RootState } from '../store'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { FLEXIPAY_URL } from '../../utils/constants'
@@ -20,7 +20,7 @@ export const OrderApi = createApi({
     reducerPath: 'Order',
     tagTypes: ['Product', 'Order', 'Subscription', "Checkout"],
     endpoints: (build) => ({
-        directCheckout: build.mutation<IResponse<{data: {link: string}}>, {checkout_method: TCheckoutMethod, install_mental_ids: string[] | undefined}>({
+        directCheckout: build.mutation<IResponse<{data: {link: string}}>, ICheckoutData>({
             query: (body) => ({
                 url: "/checkout/installment",
                 method: "POST",

@@ -3,7 +3,7 @@ import { FormikHelpers, useFormik } from 'formik';
 import { Dispatch } from 'react';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
-import { IInstallment, IResponse, ITrigger } from '../../interface';
+import { ICheckoutData, IInstallment, IResponse, ITrigger } from '../../interface';
 import { toggleSnackBar } from '../../redux/slice/modal';
 import { TCheckoutMethod  } from '../../interface';
 import { validURL } from '../../utils';
@@ -144,7 +144,8 @@ export async function confirmOrder(
 export async function directCheckout(
     checkout_method: TCheckoutMethod | "", 
     dispatch: Dispatch<AnyAction>, 
-    checkout: ITrigger<{checkout_method: TCheckoutMethod, install_mental_ids: string[] | undefined}, IResponse<{data: {link: string}}>>, 
+    checkout: ITrigger<ICheckoutData, IResponse<{data: {link: string}}>>, 
+    {quantity, product_uuid }: {quantity: number, product_uuid: string},
     install_mental_ids: string[] | undefined = [],
     done?: () => void | null
 ){
@@ -165,7 +166,7 @@ export async function directCheckout(
     }
     else {
         try{
-            let data = await checkout({ checkout_method, install_mental_ids }).unwrap()
+            let data = await checkout({ checkout_method, install_mental_ids, quantity, product_uuid }).unwrap()
             
             if(data.status === "success"){
                 // checks if the checkout method is by card

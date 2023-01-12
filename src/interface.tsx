@@ -471,3 +471,10 @@ export interface ITopUpSubscriptionReq{
     amount: number, 
     top_up_method: string
 }
+
+export interface ICheckoutData {
+    checkout_method: TCheckoutMethod, 
+    install_mental_ids: string[] | undefined,
+    product_uuid: string,
+    quantity: number
+}

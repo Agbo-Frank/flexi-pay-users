@@ -231,9 +231,6 @@ export function Product(){
                                                     <div className="flex space-x-2 items-center">
                                                         <span>Pay</span>
                                                         <div className="flex flex-nowrap whitespace-nowrap space-x-2 overflow-x-auto scrollbar-hidden">
-                                                            {
-                                                                product.installments.map((installment, idx) => <DisplayInstallment installment={installment} id={idx} key={idx}/>)
-                                                            }
                                                             <Chip 
                                                                 label={"₦ " + formatNumber(variations?.price || 0)} 
                                                                 color="secondary"
@@ -241,6 +238,9 @@ export function Product(){
                                                                 onClick={() => setInstallmentPlan(null)}
                                                                 variant={installment_plan ? "outlined" : "filled" }
                                                             />
+                                                            {
+                                                                product.installments.map((installment, idx) => <DisplayInstallment installment={installment} id={idx} key={idx}/>)
+                                                            }
                                                         </div>
                                                     </div>
                                                 }
@@ -289,9 +289,10 @@ export function Product(){
                                                 onClick={() => {
                                                     // if(installment_plan){
                                                         directCheckout(
-                                                            installment_plan ? "install_mental_via_card" : "directly_via_wallet", 
+                                                            installment_plan ? "install_mental_via_wallet" : "directly_via_wallet", 
                                                             dispatch, 
                                                             checkout, 
+                                                            {quantity, product_uuid: `${product?.uuid}`},
                                                             installment_plan ? [installment_plan] : []
                                                         )
                                                     // }
