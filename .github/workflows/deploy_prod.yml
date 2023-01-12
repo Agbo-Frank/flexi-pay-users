@@ -9,16 +9,10 @@ on:
 
 jobs:
   build:
-
+    name: Deploy
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+    - name: Updating Flexipay user interface....
       uses: appleboy/ssh-action@v0.1.7
       with:
         host: ${{ secrets.HOST }}
