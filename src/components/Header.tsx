@@ -88,11 +88,11 @@ export function Header(){
     const [cookies] = useCookies([FLEXIPAY_COOKIE]);
 
     let [getUser, {data: user, isLoading: loading}] = useLazyGetUserQuery()
-    let [getCart, { carts }] = useLazyGetUserCartQuery({
-        selectFromResult: ({data}) => ({
-            carts: data?.result.data,
-        })
-    })
+    // let [getCart, { carts }] = useLazyGetUserCartQuery({
+    //     selectFromResult: ({data}) => ({
+    //         carts: data?.result.data,
+    //     })
+    // })
     let isAuth = useSelector((state: RootState) => state.data.isAuth)
     const matches = useMediaQuery('(min-width:640px)');
 
@@ -100,9 +100,9 @@ export function Header(){
         if(isAuth){
             getUser()
         }
-        if(isAuth || cookies["flex-pay-cookie"]){
-            getCart({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""})
-        }
+        // if(isAuth || cookies["flex-pay-cookie"]){
+        //     getCart({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""})
+        // }
     }, [isAuth])
 
     let [open, setOpen] = useState({
@@ -177,7 +177,7 @@ export function Header(){
                                             <BellIcon size="20" color="#F9F8FF"/> 
                                         </Avatar>
                                     </Badge> */}
-                                    <Badge  
+                                    {/* <Badge  
                                         color="secondary" 
                                         overlap="circular" 
                                         badgeContent={carts?.length}
@@ -185,7 +185,7 @@ export function Header(){
                                         <Avatar sx={{bgcolor: '#000326', width: 44, height: 44}}>
                                             <CartIcon size="20" color="#F9F8FF"/> 
                                         </Avatar>
-                                    </Badge>
+                                    </Badge> */}
                                 </ul>
 
                                 <div className="relative z-50">
@@ -223,7 +223,7 @@ export function Header(){
                             <div className="sm:hidden flex gap-2 justify-end items-center mr-3">
                                 {/* {
                                     isAuth && */}
-                                    <Badge  
+                                    {/* <Badge  
                                         color="secondary" 
                                         overlap="circular"
                                         badgeContent={carts?.length}
@@ -236,7 +236,7 @@ export function Header(){
                                             className="sm:hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF]">
                                             <CartIcon size={matches ? "20" : "15"} color="#000541"/>
                                         </div>
-                                    </Badge>
+                                    </Badge> */}
                                 {/* } */}
                                 <div 
                                     className="sm:hidden w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-full flex justify-center items-center cursor-pointer border border-[#E8E5FF]"

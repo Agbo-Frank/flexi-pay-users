@@ -32,11 +32,11 @@ export  function Dashboard (): JSX.Element {
 
     const [cookies, setCookie, removeCookie] = useCookies([FLEXIPAY_COOKIE]);
 
-    let { carts } = useGetUserCartQuery({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""}, {
-        selectFromResult: ({ data }) => ({
-            carts: data?.result.data,
-        })
-    })
+    // let { carts } = useGetUserCartQuery({guest_id: cookies["flex-pay-cookie"]? cookies["flex-pay-cookie"] : ""}, {
+    //     selectFromResult: ({ data }) => ({
+    //         carts: data?.result.data,
+    //     })
+    // })
     let { savedItems } = useGetUserSavedItemsQuery(undefined, {
         selectFromResult: ({ data }) => ({
             savedItems: data?.result.data,
@@ -65,7 +65,7 @@ export  function Dashboard (): JSX.Element {
             <div className="bg-white sm:bg-transparent">
                 <div className="flex py-3 sm:py-4 whitespace-nowrap overflow-x-auto justify-between space-x-5 sm:space-x-2 px-2">
                     <Card Icon={HeartIcon} count={savedItems?.length || 0} name="saved items" />
-                    <Card Icon={CartIcon} count={carts?.length || 0} name="cart items"/>
+                    {/* <Card Icon={CartIcon} count={carts?.length || 0} name="cart items"/> */}
                     <Card Icon={BagIcon} count={orders?.total || 0} name="order items"/>
                     <Card Icon={NairaIcon} count={user?.reserved_account?.account_number ? formatNumber(`${wallet?.balance}`) : 0} name="balance"/>
                 </div>

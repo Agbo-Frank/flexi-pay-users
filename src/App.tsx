@@ -48,7 +48,7 @@ function App() {
         <Route path="/register"  element={<Register  />}/>
         <Route path="/auth/*" element={<Auth />}/>
         <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>}/>
-        <Route path='/cart' element={<Carts />} />
+        {/* <Route path='/cart' element={<Carts />} /> */}
         <Route path='/order' element={<RequireAuth><Orders /></RequireAuth>} />
         <Route path='/subscription' element={<RequireAuth><Subscriptions /></RequireAuth>} />
         <Route path='/products' element={<Products />} />

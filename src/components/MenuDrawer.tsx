@@ -72,7 +72,7 @@ export function MenuDrawer({ open, close }: {open: boolean, close: () => void | 
                     </div>
                     <ul className={`text-sm top-full shadow-lg pb-1 mt-4`}>
                         <Item Icon={DashboardIcon} name="Dashboard" link="dashboard" handleClick={close} />
-                        <Item Icon={CartIcon} name="Cart" link="cart" handleClick={close} />
+                        {/* <Item Icon={CartIcon} name="Cart" link="cart" handleClick={close} /> */}
                         <Item Icon={HeartIcon} name="Saved Item" link="saved-items" handleClick={close} />
                         <Item Icon={BagIcon} name="Order" link="order" handleClick={close} />
                         <Item Icon={SubscriptionIcon} name="Subscription" link="subscription" handleClick={close} />

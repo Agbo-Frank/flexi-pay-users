@@ -72,9 +72,9 @@ export function SideBarDrawer({ open, close }: {open: boolean, close: () => void
                         Icon={WalletIcon} name="wallet" link="wallet"
                         handleClick={setLocation}/>
 
-                        <SideBarItem 
+                        {/* <SideBarItem 
                         Icon={CartIcon} name="cart" link="cart"
-                        handleClick={setLocation}/>
+                        handleClick={setLocation}/> */}
 
                         <SideBarItem 
                         Icon={HeartIcon} name="saved items" link="saved-items"
