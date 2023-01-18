@@ -293,7 +293,7 @@ export function Product(){
                                                             dispatch, 
                                                             checkout, 
                                                             {quantity, product_uuid: `${product?.uuid}`},
-                                                            installment_plan ? [installment_plan] : []
+                                                            installment_plan ? installment_plan : ""
                                                         )
                                                     // }
                                                     // else{

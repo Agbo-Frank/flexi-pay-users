@@ -146,7 +146,7 @@ export async function directCheckout(
     dispatch: Dispatch<AnyAction>, 
     checkout: ITrigger<ICheckoutData, IResponse<{data: {link: string}}>>, 
     {quantity, product_uuid }: {quantity: number, product_uuid: string},
-    install_mental_ids: string[] | undefined = [],
+    install_mental_ids: string | undefined,
     done?: () => void | null
 ){
     let methods = ["directly_via_wallet", "install_mental_via_card", "install_mental_via_wallet", "directly_via_card"]
